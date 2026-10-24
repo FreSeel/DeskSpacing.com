@@ -13,10 +13,10 @@ export default defineConfig({
     emptyOutDir: true,
     reportCompressedSize: false,
     lib: {
-      entry: 'js/share-url.js',
-      formats: ['iife'],
-      name: 'DeskSpacingSharing',
-      fileName: () => 'js/share-url.js',
+      entry: { planner: 'src/main.js', 'share-url': 'js/share-url.js' },
+      formats: ['es'],
+      fileName: (_format, name) =>
+        name === 'planner' ? 'src/main.js' : 'js/share-url.js',
     },
   },
 });

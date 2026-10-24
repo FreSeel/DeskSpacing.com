@@ -1,0 +1,888 @@
+{
+  "modernDesk": [
+    0,
+    30.7,
+    -53,
+    1.5707963267948966,
+    "GLTFs/desks/standing desks/standing desk 1 - 23.8Dx51.7Wx30.3H.glb"
+  ],
+  "drawerDesk": [
+    0,
+    1,
+    -38,
+    3.141592653589793,
+    "desks/regular_desk_1.glb"
+  ],
+  "standingDesk": [
+    0,
+    30,
+    -51,
+    4.71238898038469,
+    "GLTFs/desks/standing desks/standing desk 2 - 28.4Dx55Wx29.7H.glb"
+  ],
+  "linnmonDesk39": [
+    0,
+    31.2,
+    -55,
+    1.5707963267948966,
+    "GLTFs/desks/linnmon desks/linnmon desk - 24Dx39Wx30.3H.glb"
+  ],
+  "linnmonDesk47": [
+    0,
+    31.2,
+    -55,
+    1.5707963267948966,
+    "GLTFs/desks/linnmon desks/linnmon desk - 24Dx47Wx30.3H.glb"
+  ],
+  "linnmonDesk59": [
+    0,
+    31.2,
+    -55,
+    1.5707963267948966,
+    "GLTFs/desks/linnmon desks/linnmon desk - 24Dx59Wx30.3H.glb"
+  ],
+  "alexDesk61": [
+    0,
+    29,
+    -50,
+    4.71238898038469,
+    "GLTFs/desks/alex desks/alex desk - 40Dx61Wx28.7H.glb"
+  ],
+  "alexDesk67": [
+    0,
+    29,
+    -50,
+    4.71238898038469,
+    "GLTFs/desks/alex desks/alex desk - 31Dx67Wx28.7H.glb"
+  ],
+  "alexDesk79": [
+    0,
+    29,
+    -50,
+    4.71238898038469,
+    "GLTFs/desks/alex desks/alex desk - 24Dx79Wx28.7H.glb"
+  ],
+  "bekantLShapedLeft": [
+    0,
+    31,
+    -55,
+    4.71238898038469,
+    "GLTFs/desks/L shaped desks/L shaped desk left.glb"
+  ],
+  "bekantLShapedRight": [
+    0,
+    31,
+    -55,
+    4.71238898038469,
+    "GLTFs/desks/L shaped desks/L shaped desk right.glb"
+  ],
+  "customDesk": [
+    0,
+    30.2,
+    -53
+  ],
+  "small16x9Monitor22": [
+    0,
+    31.300000000000004,
+    -57,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 monitor/16_9 monitor 3 22in.glb",
+    "22\"",
+    "58.42cm"
+  ],
+  "small16x9Monitor23": [
+    0,
+    31.300000000000004,
+    -57,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 monitor/16_9 monitor 3 23in.glb",
+    "23\"",
+    "60.96cm"
+  ],
+  "small16x9Monitor24": [
+    0,
+    31.300000000000004,
+    -57,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 monitor/16_9 monitor 3 24in.glb",
+    "24\"",
+    "60.96cm"
+  ],
+  "small16x9Monitor25": [
+    0,
+    31.300000000000004,
+    -57,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 monitor/16_9 monitor 3 25in.glb",
+    "25\"",
+    "63.5cm"
+  ],
+  "small16x9Monitor27": [
+    0,
+    31.300000000000004,
+    -57,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 monitor/16_9 monitor 3 27in.glb",
+    "27\"",
+    "68.58cm"
+  ],
+  "small16x9Monitor28": [
+    0,
+    31.300000000000004,
+    -57,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 monitor/16_9 monitor 3 28in.glb",
+    "28\"",
+    "71.12cm"
+  ],
+  "small16x9Monitor31": [
+    0,
+    31.300000000000004,
+    -57,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 monitor/16_9 monitor 3 31.5in.glb",
+    "31.5\"",
+    "80.01cm"
+  ],
+  "small16x9Monitor22NoStand": [
+    0,
+    43.6,
+    -57,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 monitors no stand/16_9 monitor 3 22in no stand.glb",
+    "22\"",
+    "56cm"
+  ],
+  "small16x9Monitor23NoStand": [
+    0,
+    43.6,
+    -57,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 monitors no stand/16_9 monitor 3 23in no stand.glb",
+    "23\"",
+    "58cm"
+  ],
+  "small16x9Monitor24NoStand": [
+    0,
+    43.6,
+    -57,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 monitors no stand/16_9 monitor 3 24in no stand.glb",
+    "24\"",
+    "61cm"
+  ],
+  "small16x9Monitor25NoStand": [
+    0,
+    43.6,
+    -57,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 monitors no stand/16_9 monitor 3 25in no stand.glb",
+    "25\"",
+    "64cm"
+  ],
+  "small16x9Monitor27NoStand": [
+    0,
+    43.6,
+    -57,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 monitors no stand/16_9 monitor 3 27in no stand.glb",
+    "27\"",
+    "69cm"
+  ],
+  "small16x9Monitor28NoStand": [
+    0,
+    43.6,
+    -57,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 monitors no stand/16_9 monitor 3 28in no stand.glb",
+    "28\"",
+    "71cm"
+  ],
+  "small16x9Monitor31NoStand": [
+    0,
+    43.6,
+    -57,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 monitors no stand/16_9 monitor 3 31.5in no stand.glb",
+    "31.5\"",
+    "80cm"
+  ],
+  "largeCurved16x9Monitor25": [
+    0,
+    31.200000000000003,
+    -59.5,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 curved monitors/curved 16 9 monitor 25in.glb",
+    "25\"",
+    "64cm"
+  ],
+  "largeCurved16x9Monitor27": [
+    0,
+    31.200000000000003,
+    -59.5,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 curved monitors/curved 16 9 monitor 27in.glb",
+    "27\"",
+    "69cm"
+  ],
+  "largeCurved16x9Monitor31": [
+    0,
+    31.200000000000003,
+    -59.5,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 curved monitors/curved 16 9 monitor 31.5in.glb",
+    "31.5\"",
+    "80cm"
+  ],
+  "largeCurved16x9Monitor34": [
+    0,
+    31.200000000000003,
+    -59.5,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 curved monitors/curved 16 9 monitor 34in.glb",
+    "34\"",
+    "102cm"
+  ],
+  "largeCurved16x9Monitor25NoStand": [
+    0,
+    43.6,
+    -59.5,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 curved monitors no stand/curved 16 9 monitor 25in no stand.glb",
+    "25\"",
+    "64cm"
+  ],
+  "largeCurved16x9Monitor27NoStand": [
+    0,
+    43.6,
+    -59.5,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 curved monitors no stand/curved 16 9 monitor  27in.glb",
+    "27\"",
+    "69cm"
+  ],
+  "largeCurved16x9Monitor31NoStand": [
+    0,
+    43.6,
+    -59.5,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 curved monitors no stand/curved large 16 9 monitor 31.5in no stand.glb",
+    "31.5\"",
+    "80cm"
+  ],
+  "largeCurved16x9Monitor34NoStand": [
+    0,
+    43.6,
+    -59.5,
+    4.71238898038469,
+    "GLTFs/monitors/16 9 curved monitors no stand/curved large 16 9 monitor 34in no stand.glb",
+    "34\"",
+    "86cm"
+  ],
+  "curved21x9Monitor30": [
+    0,
+    31.300000000000004,
+    -60.5,
+    0,
+    "GLTFs/monitors/21 9 curved monitors/Ultrwide Monitor 1 30in.glb",
+    "30\"",
+    "76cm"
+  ],
+  "curved21x9Monitor34": [
+    0,
+    31.300000000000004,
+    -60.5,
+    0,
+    "GLTFs/monitors/21 9 curved monitors/Ultrwide Monitor 1 34in.glb",
+    "34\"",
+    "86cm"
+  ],
+  "curved21x9Monitor38": [
+    0,
+    31.300000000000004,
+    -60.5,
+    0,
+    "GLTFs/monitors/21 9 curved monitors/Ultrwide Monitor 1 38in.glb",
+    "38\"",
+    "97cm"
+  ],
+  "curved21x9Monitor30NoStand": [
+    0,
+    43.6,
+    -60.5,
+    0,
+    "GLTFs/monitors/21 9 curved monitors no stand/Ultrwide Monitor 1 30in no stand.glb",
+    "30\"",
+    "76cm"
+  ],
+  "curved21x9Monitor34NoStand": [
+    0,
+    43.6,
+    -60.5,
+    0,
+    "GLTFs/monitors/21 9 curved monitors no stand/Ultrwide Monitor 1 34in no stand.glb",
+    "34\"",
+    "86cm"
+  ],
+  "curved21x9Monitor38NoStand": [
+    0,
+    43.6,
+    -60.5,
+    0,
+    "GLTFs/monitors/21 9 curved monitors no stand/Ultrwide Monitor 1 38in no stand.glb",
+    "38\"",
+    "97cm"
+  ],
+  "curved32x9Monitor43": [
+    0,
+    31.300000000000004,
+    -56.8,
+    1.5707963267948966,
+    "GLTFs/monitors/32 9 monitors/32_9 monitor 43.4in.glb",
+    "43.4\"",
+    "110cm"
+  ],
+  "curved32x9Monitor49": [
+    0,
+    31.300000000000004,
+    -56.8,
+    1.5707963267948966,
+    "GLTFs/monitors/32 9 monitors/32_9 monitor 49in.glb",
+    "49\"",
+    "124cm"
+  ],
+  "curved32x9Monitor43NoStand": [
+    0,
+    43.6,
+    -56.8,
+    1.5707963267948966,
+    "GLTFs/monitors/32 9 monitors no stand/32_9 monitor 43.4in.glb",
+    "43.4\"",
+    "110cm"
+  ],
+  "curved32x9Monitor49NoStand": [
+    0,
+    43.6,
+    -56.8,
+    1.5707963267948966,
+    "GLTFs/monitors/32 9 monitors no stand/32_9 monitor 49in.glb",
+    "49\"",
+    "124cm"
+  ],
+  "flat21x9Monitor25": [
+    0,
+    31.300000000000004,
+    -59,
+    4.71238898038469,
+    "GLTFs/monitors/21 9 monitors/21 9 monitor 2 non curved 25in.glb",
+    "25\"",
+    "64cm"
+  ],
+  "flat21x9Monitor29": [
+    0,
+    31.300000000000004,
+    -59,
+    4.71238898038469,
+    "GLTFs/monitors/21 9 monitors/21 9 monitor 2 non curved 29in.glb",
+    "29\"",
+    "74cm"
+  ],
+  "flat21x9Monitor34": [
+    0,
+    31.300000000000004,
+    -59,
+    4.71238898038469,
+    "GLTFs/monitors/21 9 monitors/21 9 monitor 2 non curved 34in.glb",
+    "34\"",
+    "86cm"
+  ],
+  "flat21x9Monitor25NoStand": [
+    0,
+    43.6,
+    -59,
+    4.71238898038469,
+    "GLTFs/monitors/21 9 monitors no stand/21 9 monitor 2 non curved 25in no stand.glb",
+    "25\"",
+    "64cm"
+  ],
+  "flat21x9Monitor29NoStand": [
+    0,
+    43.6,
+    -59,
+    4.71238898038469,
+    "GLTFs/monitors/21 9 monitors no stand/21 9 monitor 2 non curved 29in no stand.glb",
+    "29\"",
+    "74cm"
+  ],
+  "flat21x9Monitor34NoStand": [
+    0,
+    43.6,
+    -59,
+    4.71238898038469,
+    "GLTFs/monitors/21 9 monitors no stand/21 9 monitor 2 non curved 34in no stand.glb",
+    "34\"",
+    "86cm"
+  ],
+  "default60PercentKeyboardAllGrey": [
+    -3,
+    31.35,
+    -50,
+    4.71238898038469,
+    "GLTFs/keyboards/60 keyboards/60 Keyboard 1 allGrey.glb",
+    "4.3\" L x 12\" W x 1.4\" H",
+    "11cm L x 30cm W x 4cm "
+  ],
+  "default60PercentKeyboardAllWhite": [
+    -3,
+    31.35,
+    -50,
+    4.71238898038469,
+    "GLTFs/keyboards/60 keyboards/60 Keyboard 1 allWhite.glb",
+    "4.3\" L x 12\" W x 1.4\" H",
+    "11cm L x 30cm W x 4cm "
+  ],
+  "default60PercentKeyboardMinimalist": [
+    -3,
+    31.35,
+    -50,
+    4.71238898038469,
+    "GLTFs/keyboards/60 keyboards/60 Keyboard 1 minimalist 1.glb",
+    "4.3\" L x 12\" W x 1.4\" H",
+    "11cm L x 30cm W x 4cm "
+  ],
+  "default60PercentKeyboardNightrunner": [
+    -3,
+    31.35,
+    -50,
+    4.71238898038469,
+    "GLTFs/keyboards/60 keyboards/60 Keyboard 1 nightrunner.glb",
+    "4.3\" L x 12\" W x 1.4\" H",
+    "11cm L x 30cm W x 4cm "
+  ],
+  "default60PercentKeyboardOBW": [
+    -3,
+    31.35,
+    -50,
+    4.71238898038469,
+    "GLTFs/keyboards/60 keyboards/60 Keyboard 1 obw.glb",
+    "4.3\" L x 12\" W x 1.4\" H",
+    "11cm L x 30cm W x 4cm "
+  ],
+  "default60PercentKeyboardWGR": [
+    -3,
+    31.35,
+    -50,
+    4.71238898038469,
+    "GLTFs/keyboards/60 keyboards/60 Keyboard 1 wgr.glb",
+    "4.3\" L x 12\" W x 1.4\" H",
+    "11cm L x 30cm W x 4cm "
+  ],
+  "default60PercentKeyboardYPGrad": [
+    -3,
+    31.35,
+    -50,
+    4.71238898038469,
+    "GLTFs/keyboards/60 keyboards/60 Keyboard 1 ypGrad.glb",
+    "4.3\" L x 12\" W x 1.4\" H",
+    "11cm L x 30cm W x 4cm "
+  ],
+  "75PercentKeyboardAllGrey": [
+    -4,
+    31.35,
+    -50,
+    4.71238898038469,
+    "GLTFs/keyboards/60 keyboards/60 Keyboard 2 allGrey.glb",
+    "4.3\" L x 12.5\" W x 1.4\" H",
+    "11cm L x 32cm W x 4cm "
+  ],
+  "75PercentKeyboardAllWhite": [
+    -4,
+    31.35,
+    -50,
+    4.71238898038469,
+    "GLTFs/keyboards/60 keyboards/60 Keyboard 2 allWhite.glb",
+    "4.3\" L x 12.5\" W x 1.4\" H",
+    "11cm L x 32cm W x 4cm "
+  ],
+  "75PercentKeyboardMinimalist": [
+    -4,
+    31.35,
+    -50,
+    4.71238898038469,
+    "GLTFs/keyboards/60 keyboards/60 Keyboard 2 minimalist.glb",
+    "4.3\" L x 12.5\" W x 1.4\" H",
+    "11cm L x 32cm W x 4cm "
+  ],
+  "75PercentKeyboardNightrunner": [
+    -4,
+    31.35,
+    -50,
+    4.71238898038469,
+    "GLTFs/keyboards/60 keyboards/60 Keyboard 2 nightRunner.glb",
+    "4.3\" L x 12.5\" W x 1.4\" H",
+    "11cm L x 32cm W x 4cm "
+  ],
+  "75PercentKeyboardOBW": [
+    -4,
+    31.35,
+    -50,
+    4.71238898038469,
+    "GLTFs/keyboards/60 keyboards/60 Keyboard 2 obw.glb",
+    "4.3\" L x 12.5\" W x 1.4\" H",
+    "11cm L x 32cm W x 4cm "
+  ],
+  "75PercentKeyboardWGR": [
+    -4,
+    31.35,
+    -50,
+    4.71238898038469,
+    "GLTFs/keyboards/60 keyboards/60 Keyboard 2 wgr.glb",
+    "4.3\" L x 12.5\" W x 1.4\" H",
+    "11cm L x 32cm W x 4cm "
+  ],
+  "75PercentKeyboard8008": [
+    -4,
+    31.35,
+    -50,
+    4.71238898038469,
+    "GLTFs/keyboards/60 keyboards/60 Keyboard 2 8008.glb",
+    "4.3\" L x 12.5\" W x 1.4\" H",
+    "11cm L x 32cm W x 4cm "
+  ],
+  "defaultFullKeyboardAllGrey": [
+    -6,
+    31.35,
+    -49,
+    4.71238898038469,
+    "GLTFs/keyboards/full size keyboards/full size keyboard allGrey.glb",
+    "5.5\" L x 18\" W x 1.5\" H",
+    "14cm L x 46cm W x 4cm "
+  ],
+  "defaultFullKeyboardAllWhite": [
+    -6,
+    31.35,
+    -49,
+    4.71238898038469,
+    "GLTFs/keyboards/full size keyboards/full size keyboard white.glb",
+    "5.5\" L x 18\" W x 1.5\" H",
+    "14cm L x 46cm W x 4cm "
+  ],
+  "defaultFullKeyboardNightrunner": [
+    -6,
+    31.35,
+    -49,
+    4.71238898038469,
+    "GLTFs/keyboards/full size keyboards/full size keyboard nightRunner.glb",
+    "5.5\" L x 18\" W x 1.5\" H",
+    "14cm L x 46cm W x 4cm "
+  ],
+  "defaultFullKeyboardWGR": [
+    -6,
+    31.35,
+    -49,
+    4.71238898038469,
+    "GLTFs/keyboards/full size keyboards/full size keyboard wgr.glb",
+    "5.5\" L x 18\" W x 1.5\" H",
+    "14cm L x 46cm W x 4cm "
+  ],
+  "defaultFullKeyboardOBW": [
+    -6,
+    31.35,
+    -49,
+    4.71238898038469,
+    "GLTFs/keyboards/full size keyboards/full size keyboard obw.glb",
+    "5.5\" L x 18\" W x 1.5\" H",
+    "14cm L x 46cm W x 4cm "
+  ],
+  "defaultFullKeyboardYPGrade": [
+    -6,
+    31.35,
+    -49,
+    4.71238898038469,
+    "GLTFs/keyboards/full size keyboards/full size keyboard ypGrad.glb",
+    "5.5\" L x 18\" W x 1.5\" H",
+    "14cm L x 46cm W x 4cm "
+  ],
+  "TKLKeyboardAllGrey": [
+    -5,
+    31.35,
+    -49,
+    4.71238898038469,
+    "GLTFs/keyboards/tkl keyboards/tkl keyboard allGrey.glb"
+  ],
+  "TKLKeyboardAllWhite": [
+    -5,
+    31.35,
+    -49,
+    4.71238898038469,
+    "GLTFs/keyboards/tkl keyboards/tkl keyboard allWhite.glb"
+  ],
+  "TKLKeyboardOBW": [
+    -5,
+    31.35,
+    -49,
+    4.71238898038469,
+    "GLTFs/keyboards/tkl keyboards/tkl keyboard obw.glb"
+  ],
+  "TKLKeyboardWGR": [
+    -5,
+    31.35,
+    -49,
+    4.71238898038469,
+    "GLTFs/keyboards/tkl keyboards/tkl keyboard wgr.glb"
+  ],
+  "TKLKeyboardYGB": [
+    -5,
+    31.35,
+    -49,
+    4.71238898038469,
+    "GLTFs/keyboards/tkl keyboards/tkl keyboard ygb.glb"
+  ],
+  "TKLKeyboardYPGrade": [
+    -5,
+    31.35,
+    -49,
+    4.71238898038469,
+    "GLTFs/keyboards/tkl keyboards/tkl keyboard ypGrad.glb"
+  ],
+  "TKLKeyboard8008": [
+    -5,
+    31.35,
+    -49,
+    4.71238898038469,
+    "GLTFs/keyboards/tkl keyboards/tkl keyboard 8008.glb"
+  ],
+  "mediumRGBMousepad": [
+    12,
+    31.25,
+    -50,
+    4.71238898038469,
+    "mousepads/medium_rgb_mousepad.glb",
+    ""
+  ],
+  "QCKSmall": [
+    9,
+    31.25,
+    -50,
+    1.5707963267948966,
+    "GLTFs/mice and mousepads/small qck mousepad - 8.4Dx9.8W.glb",
+    "8.4\" L x 9.8\" W",
+    "21cm L x 25cm"
+  ],
+  "QCKMedium": [
+    9,
+    31.25,
+    -50,
+    1.5707963267948966,
+    "GLTFs/mice and mousepads/medium qck mousepad - 10.6Dx12.6W.glb",
+    "10.6\" L x 12.6\" W",
+    "27cm L x 32cm"
+  ],
+  "QCKLarge": [
+    9,
+    31.25,
+    -53,
+    1.5707963267948966,
+    "GLTFs/mice and mousepads/large qck mousepad - 15.7Dx17.7W.glb",
+    "15.7\" L x 17.7\" W",
+    "40cm L x 45cm"
+  ],
+  "QCKXXL": [
+    1,
+    31.35,
+    -52,
+    3.141592653589793,
+    "GLTFs/mice and mousepads/qck mousepad XXL.glb",
+    "15.7\" L x 17.7\" W",
+    "40cm L x 45cm"
+  ],
+  "defaultMouse": [
+    9,
+    31.2,
+    -50,
+    3.141592653589793,
+    "GLTFs/mice and mousepads/mouse 1 - 4.1Dx2.2Wx1.6H.glb",
+    "4.1\" L x 2.2\" W x 1.6\" H",
+    "10cm L x 6cm W x 4cm "
+  ],
+  "MXMaster3": [
+    9,
+    31.2,
+    -50,
+    1.5707963267948966,
+    "GLTFs/mice and mousepads/mouse 2 - 4.9Dx3.5Wx2H.glb",
+    "4.9\" L x 43.5\" W x 2\" H",
+    "12cm L x 110cm W x 5cm "
+  ],
+  "deskSpacingSpeakerPrimary": [
+    -18,
+    31.3,
+    -57,
+    -1.5707963267948966,
+    "GLTFs/speakers/speakers 1 primary - 7.4Dx5.8Wx9.5H.glb",
+    "7.4\" L x 5.8\" W x 9.5\" H",
+    "19cm L x 15cm W x 24cm"
+  ],
+  "deskSpacingSpeakerSecondary": [
+    18,
+    31.3,
+    -57,
+    -1.5707963267948966,
+    "GLTFs/speakers/speakers 1 secondary - 7.4Dx5.8Wx9.5H.glb",
+    "7.4\" L x 5.8\" W x 9.5\" H",
+    "19cm L x 15cm W x 24cm"
+  ],
+  "deskSpacingSoundBar": [
+    0,
+    31.33,
+    -53,
+    1.5707963267948966,
+    "GLTFs/speakers/speaker bar 1 - 2.5Dx16Wx2.8H.glb",
+    "2.5\" L x 16\" W x 2.8\" H",
+    "6cm L x 41cm W x 7cm "
+  ],
+  "studioMonitorSpeakerPrimary": [
+    -18,
+    31.3,
+    -57,
+    -1.5707963267948966,
+    "GLTFs/speakers/speakers 2 primary - 8.3Dx7.3Wx10.3H.glb",
+    "8.3\" L x 7.3\" W x 10.3\" H",
+    "21cm L x 19cm W x 26cm"
+  ],
+  "studioMonitorSpeakerSecondary": [
+    18,
+    31.3,
+    -57,
+    -1.5707963267948966,
+    "GLTFs/speakers/speakers 2 secondary - 8.3Dx7.3Wx10.3H.glb",
+    "8.3\" L x 7.3\" W x 10.3\" H",
+    "21cm L x 19cm W x 26cm"
+  ],
+  "yetiUSBMic": [
+    -20,
+    31.3,
+    -50,
+    -1.5707963267948966,
+    "GLTFs/music objects/blue yeti.glb"
+  ],
+  "audioInterface": [
+    -20,
+    31.3,
+    -58,
+    -1.5707963267948966,
+    "GLTFs/music objects/audio interface.glb"
+  ],
+  "modernLaptop13": [
+    -17,
+    31.44,
+    -55,
+    -1.5707963267948966,
+    "GLTFs/laptops/13 inch laptop.glb",
+    ""
+  ],
+  "modernLaptop15": [
+    -17,
+    31.44,
+    -55,
+    -1.5707963267948966,
+    "GLTFs/laptops/15 inch laptop.glb",
+    ""
+  ],
+  "modernLaptop17": [
+    -17,
+    31.44,
+    -55,
+    -1.5707963267948966,
+    "GLTFs/laptops/17 inch laptop.glb",
+    ""
+  ],
+  "modernComputerTower": [
+    18,
+    31.7,
+    -50,
+    1.5707963267948966,
+    "GLTFs/computer towers/desktop - 8.27Wx16.5Dx19.5H.glb",
+    "8.3\" L x 16.5\" W x 19.5\" H",
+    "21cm L x 42cm W x 50cm "
+  ],
+  "miniITXTower": [
+    18,
+    31.7,
+    -50,
+    0,
+    "GLTFs/computer towers/desktop 2 small - 16.7Dx13.6Wx14.3H.glb",
+    "16.7\" L x 13.6\" W x 14.3\" H",
+    "42cm L x 35cm W x 36cm "
+  ],
+  "regularBook": [
+    -70,
+    -22.58,
+    -32,
+    3.141592653589793,
+    "GLTFs/YYadditional decorations/book.glb",
+    ""
+  ],
+  "coffeeCup": [
+    51,
+    31.39,
+    -50,
+    0,
+    "GLTFs/YYadditional decorations/coffee cup.glb",
+    ""
+  ],
+  "MIDIKeyboard": [
+    -20,
+    31.23,
+    -50,
+    4.71238898038469,
+    "GLTFs/YYadditional decorations/midi keyboard 1 - 7.1Dx12.5Wx1.5H.glb",
+    "7.1\" L x 12.5\" W x 1.5\" H",
+    "18cm L x 32cm W x 4cm "
+  ],
+  "basicLamp": [
+    30,
+    31.14,
+    -50,
+    4.71238898038469,
+    "GLTFs/lamps/lamp 1 - 8Dx5Wx9.7H.glb",
+    "8\" L x 5\" W x 9.7\" H",
+    "20cm L x 13cm W x 25cm "
+  ],
+  "modernLamp": [
+    30,
+    31.150000000000002,
+    -50,
+    4.71238898038469,
+    "GLTFs/lamps/lamp 2 - 10.2Dx4Wx8.3H.glb",
+    "10.2\" L x 4\" W x 8.3\" H",
+    "26cm L x 10cm W x 21cm "
+  ],
+  "modernOfficeChair": [
+    0,
+    2.8,
+    -50,
+    4.71238898038469,
+    "GLTFs/chairs/office chair - 46.6Dx33.2Wx32.1H.glb",
+    "10.2\" L x 4\" W x 8.3\" H",
+    "26cm L x 10cm W x 21cm "
+  ],
+  "simpleChair": [
+    0,
+    2.8,
+    -50,
+    3.141592653589793,
+    "GLTFs/chairs/simple chair - 36.9Dx14.5Wx18.5H.glb",
+    "10.2\" L x 4\" W x 8.3\" H",
+    "26cm L x 10cm W x 21cm "
+  ],
+  "gamingChair": [
+    0,
+    3.5,
+    -40,
+    1.5707963267948966,
+    "GLTFs/chairs/gaming chair.glb",
+    "10.2\" L x 4\" W x 8.3\" H",
+    "26cm L x 10cm W x 21cm "
+  ]
+}
