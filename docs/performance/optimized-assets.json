@@ -1,0 +1,72 @@
+[
+  {
+    "product": "modernDesk",
+    "original": "GLTFs/desks/standing desks/standing desk 1 - 23.8Dx51.7Wx30.3H.glb",
+    "target": "optimized-models/modernDesk.glb",
+    "originalBytes": 13644040,
+    "optimizedBytes": 6380204,
+    "originalSha256": "e15a0e77deadf3b853263d1dad29e63bcdef873f81546ceec836b2e0d0d77efe",
+    "optimizedSha256": "5024798e4d4be6f33b8848bf32d07d142cbd5710cec22d113a6b6000343102a8",
+    "verified": "Exact per-corner attributes, triangle order/winding (cyclic corner rotation allowed), node matrices/hierarchy, material factors and decoded RGBA pixels",
+    "textureDimensions": [
+      [
+        2000,
+        2000
+      ]
+    ]
+  },
+  {
+    "product": "small16x9Monitor28",
+    "original": "GLTFs/monitors/16 9 monitor/16_9 monitor 3 28in.glb",
+    "target": "optimized-models/small16x9Monitor28.glb",
+    "originalBytes": 2085140,
+    "optimizedBytes": 1071800,
+    "originalSha256": "9c38b9cef79960355ab7eb3d681698ac702cfdce3390d3ee4cccab348c6bc9c5",
+    "optimizedSha256": "829777ebb9e33d18052fc639dad7de86942625314f1dab8037aed8f6dd09489b",
+    "verified": "Exact per-corner attributes, triangle order/winding (cyclic corner rotation allowed), node matrices/hierarchy, material factors and decoded RGBA pixels",
+    "textureDimensions": []
+  },
+  {
+    "product": "defaultMouse",
+    "original": "GLTFs/mice and mousepads/mouse 1 - 4.1Dx2.2Wx1.6H.glb",
+    "target": "optimized-models/defaultMouse.glb",
+    "originalBytes": 1070080,
+    "optimizedBytes": 676656,
+    "originalSha256": "b343ca605813b306c8f61954a020666171c709f5d0edffa7040ecc9d67ba0272",
+    "optimizedSha256": "e55b2356e9d361d3d57a90c3a554bcab8fd8b2947ae2e3f670d60330a2e96ad2",
+    "verified": "Exact per-corner attributes, triangle order/winding (cyclic corner rotation allowed), node matrices/hierarchy, material factors and decoded RGBA pixels",
+    "textureDimensions": []
+  },
+  {
+    "product": "default60PercentKeyboardAllGrey",
+    "original": "GLTFs/keyboards/60 keyboards/60 Keyboard 1 allGrey.glb",
+    "target": "optimized-models/default60PercentKeyboardAllGrey.glb",
+    "originalBytes": 12018984,
+    "optimizedBytes": 6356424,
+    "originalSha256": "c7a7a7362d5ca09865ed15d7a5785f6a8e744bd3f5caca74711bf68804f228dc",
+    "optimizedSha256": "920c75e7f143d637a4e90b9c3cc9b198f4b15ad83474f32caaf51a2cdd2e45e3",
+    "verified": "Exact per-corner attributes, triangle order/winding (cyclic corner rotation allowed), node matrices/hierarchy, material factors and decoded RGBA pixels",
+    "textureDimensions": [
+      [
+        2048,
+        2048
+      ]
+    ]
+  },
+  {
+    "product": "QCKSmall",
+    "original": "GLTFs/mice and mousepads/small qck mousepad - 8.4Dx9.8W.glb",
+    "target": "optimized-models/QCKSmall.glb",
+    "originalBytes": 236576,
+    "optimizedBytes": 121752,
+    "originalSha256": "bdcb6a7b3339cf800b0fe855fc091dcb7c544bb98ed5cf588be1f463b9553a0b",
+    "optimizedSha256": "a4d646481fd3526097dd9b7eb17c923f49522e294d107152da922fbd6cfd5d54",
+    "verified": "Exact per-corner attributes, triangle order/winding (cyclic corner rotation allowed), node matrices/hierarchy, material factors and decoded RGBA pixels",
+    "textureDimensions": [
+      [
+        200,
+        200
+      ]
+    ]
+  }
+]

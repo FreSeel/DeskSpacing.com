@@ -11,6 +11,7 @@ import { createFeedback } from '../ui/feedback.js';
 import { bindPlannerUI } from '../ui/bindPlannerUI.js';
 
 export function createApp({ THREE, host, document }) {
+  host.performance.mark('planner:init-start');
   const canvas = document.getElementById('threeCanvas');
   const view = createScene({
     THREE,
@@ -18,10 +19,17 @@ export function createApp({ THREE, host, document }) {
     container: document.getElementById('rightSideContainer'),
     host,
   });
+  host.performance.mark('planner:scene-ready');
+  host.performance.measure(
+    'planner:scene-init',
+    'planner:init-start',
+    'planner:scene-ready',
+  );
   const factory = createObjectFactory({ THREE });
   const state = createObjectStore({
     scene: view.scene,
     disposeObject: factory.dispose,
+    onChange: view.invalidateScene,
   });
   const selection = createSelection({
     THREE,
@@ -37,6 +45,8 @@ export function createApp({ THREE, host, document }) {
     getLocation: () => host.location.href,
   });
   const feedback = createFeedback(document);
+  feedback.loading(true);
+  canvas.setAttribute('aria-busy', 'true');
   const cleanup = [
     bindPointer({
       host,
@@ -61,25 +71,35 @@ export function createApp({ THREE, host, document }) {
     }),
   ];
   let disposed = false;
-  const ready = sharing.loadFromUrl().catch(async (error) => {
-    if (disposed) return;
-    feedback.error(error);
-    // Invalid initial links get the same usable defaults as a fresh visit.
-    // A later failed restore preserves the current setup in actions.restore().
-    if (
-      readSetupParameter(host.location.href) !== null &&
-      state.objects.length === 0
-    ) {
-      await actions.initialize().catch((failure) => {
-        if (!disposed) feedback.error(failure);
-      });
-    }
-  });
+  const ready = sharing
+    .loadFromUrl()
+    .then(() => undefined)
+    .catch(async (error) => {
+      if (disposed) return;
+      feedback.error(error);
+      // Invalid initial links get the same usable defaults as a fresh visit.
+      // A later failed restore preserves the current setup in actions.restore().
+      if (
+        readSetupParameter(host.location.href) !== null &&
+        state.objects.length === 0
+      ) {
+        await actions.initialize().catch((failure) => {
+          if (!disposed) feedback.error(failure);
+        });
+      }
+    })
+    .finally(() => {
+      if (disposed) return;
+      feedback.loading(false);
+      canvas.setAttribute('aria-busy', 'false');
+      host.performance.mark('planner:assets-ready');
+    });
   function dispose() {
     if (disposed) return;
     disposed = true;
     cleanup.forEach((remove) => remove());
     actions.reset();
+    factory.disposeAll();
     feedback.dispose();
     view.dispose();
   }

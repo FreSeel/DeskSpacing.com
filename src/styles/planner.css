@@ -228,7 +228,8 @@ label {
 }
 
 /* Load/restore failures are visible without interrupting canvas interaction. */
-.planner-feedback {
+.planner-feedback,
+.planner-loading {
   position: absolute;
   z-index: 20;
   top: 1rem;
@@ -238,4 +239,8 @@ label {
   background: #2a363b;
   color: white;
   border: 1px solid #cc5353;
+}
+
+.planner-loading {
+  border-color: #6b9eaf;
 }

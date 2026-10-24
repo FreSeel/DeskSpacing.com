@@ -35,6 +35,8 @@ async function ready(page, count = 6) {
     .locator('#starterModal .modal-footer [data-bs-dismiss=modal]')
     .click();
   await expect(page.locator('#starterModal')).toBeHidden();
+  // Bootstrap removes the backdrop after the modal itself becomes hidden.
+  await expect(page.locator('.modal-backdrop')).toHaveCount(0);
   await expect
     .poll(() => page.evaluate(() => window.planner.state.objects?.length))
     .toBe(count);
@@ -266,7 +268,7 @@ test('Popper 2 positions mobile planner tooltips using the retained theme', asyn
   const link = page.locator('[data-bs-toggle="tooltip"]').first();
   // Open the relevant accordion via its data API before hovering the affiliate link.
   const panel = await link.evaluate(
-    (element) => element.closest('.collapse').id,
+    (element) => element.closest('.collapse, .collapsing').id,
   );
   await page.locator(`[data-bs-target="#${panel}"]`).first().click();
   await link.hover();
@@ -300,12 +302,13 @@ async function openProduct(page, attribute, id, replace = false) {
     `[data-action="add"][data-${attribute}="${id}"]${replace ? '[data-replace]' : ':not([data-replace])'}`,
   );
   const panel = await button.evaluate(
-    (element) => element.closest('.collapse').id,
+    (element) => element.closest('.collapse, .collapsing').id,
   );
   if (!(await page.locator(`#${panel}`).isVisible())) {
     await page.locator(`[data-bs-target="#${panel}"]`).first().click();
     await expect(page.locator(`#${panel}`)).toBeVisible();
   }
+  await expect(page.locator(`#${panel}`)).not.toHaveClass(/collapsing/);
   return button;
 }
 
@@ -452,7 +455,16 @@ test('the camera orbits and resets; object translation and rotation use the live
   await ready(page);
   const cameraPose = () =>
     page.evaluate(() => window.planner.view.camera.position.toArray());
+  await page.evaluate(() => window.planner.selection.unselectPickedObject());
   const initialCamera = await cameraPose();
+  await page.evaluate(
+    () =>
+      new Promise((resolve) =>
+        window.requestAnimationFrame(() =>
+          window.requestAnimationFrame(resolve),
+        ),
+      ),
+  );
   const canvas = page.locator('#threeCanvas');
   const bounds = await canvas.boundingBox();
   await page.mouse.move(
@@ -465,8 +477,9 @@ test('the camera orbits and resets; object translation and rotation use the live
     bounds.y + bounds.height * 0.45,
     { steps: 10 },
   );
+  // Observe movement while the pointer gesture is active.
+  await expect.poll(cameraPose).not.toEqual(initialCamera);
   await page.mouse.up();
-  expect(await cameraPose()).not.toEqual(initialCamera);
   await page.locator('[data-action="reset-camera"]').last().click();
   await expect.poll(cameraPose).toEqual(initialCamera);
 
@@ -477,14 +490,11 @@ test('the camera orbits and resets; object translation and rotation use the live
   // Locate an actual visible X-axis handle from the pinned engine, then drag it.
   const handle = await page.evaluate(() => {
     const { camera, transformControls } = window.planner.view;
-    transformControls.updateMatrixWorld(true);
-    const gizmo = transformControls.children.find((child) => child.gizmo);
+    const helper = transformControls.getHelper();
+    helper.updateMatrixWorld(true);
+    const gizmo = helper.children.find((child) => child.gizmo);
     const arrow = gizmo.gizmo.translate.children.find(
-      (child) =>
-        child.name === 'X' &&
-        child.visible &&
-        child.type === 'Mesh' &&
-        child.tag === 'fwd',
+      (child) => child.name === 'X' && child.visible && child.type === 'Mesh',
     );
     arrow.geometry.computeBoundingBox();
     const point = arrow.geometry.boundingBox.getCenter(arrow.position.clone());
@@ -513,12 +523,13 @@ test('the camera orbits and resets; object translation and rotation use the live
   ).toBe('rotate');
   const ring = await page.evaluate(() => {
     const { camera, transformControls } = window.planner.view;
-    transformControls.updateMatrixWorld(true);
-    const gizmo = transformControls.children.find((child) => child.gizmo);
+    const helper = transformControls.getHelper();
+    helper.updateMatrixWorld(true);
+    const gizmo = helper.children.find((child) => child.gizmo);
     const ring = gizmo.picker.rotate.children.find(
       (child) => child.name === 'Y',
     );
-    const point = ring.position.clone().set(0.7, 0, 0.7);
+    const point = ring.position.clone().set(0.35, 0, 0.35);
     ring.localToWorld(point);
     point.project(camera);
     const rect = document.getElementById('threeCanvas').getBoundingClientRect();

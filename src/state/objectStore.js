@@ -1,6 +1,10 @@
 // Owns membership and identity. Three.js transforms remain the source of truth;
 // saving takes a plain-data snapshot rather than maintaining a second mutable copy.
-export function createObjectStore({ scene, disposeObject }) {
+export function createObjectStore({
+  scene,
+  disposeObject,
+  onChange = () => {},
+}) {
   const objects = [];
   let generation = 0;
   let deskOffset = 0;
@@ -37,6 +41,7 @@ export function createObjectStore({ scene, disposeObject }) {
       object.rotation.set(...record.rotation);
       objects.push(object);
       scene.add(object);
+      onChange();
       return object;
     },
     remove(object) {
@@ -45,6 +50,7 @@ export function createObjectStore({ scene, disposeObject }) {
       objects.splice(index, 1);
       scene.remove(object);
       disposeObject(object);
+      onChange();
       return true;
     },
     clear() {

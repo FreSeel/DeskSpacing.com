@@ -11,7 +11,8 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    reportCompressedSize: false,
+    reportCompressedSize: true,
+    minify: true,
     lib: {
       entry: { planner: 'src/main.js', 'share-url': 'js/share-url.js' },
       formats: ['es'],

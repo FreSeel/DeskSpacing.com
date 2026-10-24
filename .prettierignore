@@ -26,3 +26,5 @@ package-lock.json
 
 !/src/
 !/docs/ARCHITECTURE.md
+
+!/docs/PERFORMANCE.md

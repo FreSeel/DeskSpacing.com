@@ -103,3 +103,11 @@ and hosting-size constraints are unchanged.
 
 Legacy CSS source-map and Three.js power-of-two texture warnings can still appear;
 these are not missing runtime assets and are not used to skip assertions.
+
+## Rendering and asset performance
+
+See [PERFORMANCE.md](PERFORMANCE.md) for the reproducible benchmark, raw results,
+Three.js migration details and visual verification limits. `npm run assets:audit`
+inspects the catalog; `npm run assets:optimize` regenerates and validates the five
+startup model copies without modifying originals. Start a production preview
+before running `npm run perf:profile -- local`.

@@ -17,6 +17,7 @@ export const assetDirectories = [
   'keyboards',
   'lamps',
   'monitors',
+  'optimized-models',
   'mousepads',
   'mouses',
   'rooms',
@@ -24,18 +25,20 @@ export const assetDirectories = [
   'ultrawideMonitor',
 ];
 
-// Pin CDN replacements and engine files to npm; preserve customized root addons.
+// Legacy routes retain their npm r116 engine; the desktop bundles modern ES modules.
 export const dependencies = {
-  'three.min.js': 'three/build/three.min.js',
+  'three.min.js': 'three-legacy/build/three.min.js',
   'three/examples/js/controls/DragControls.js':
-    'three/examples/js/controls/DragControls.js',
+    'three-legacy/examples/js/controls/DragControls.js',
   'three/examples/js/controls/TransformControls.js':
-    'three/examples/js/controls/TransformControls.js',
+    'three-legacy/examples/js/controls/TransformControls.js',
   'three/examples/js/loaders/DRACOLoader.js':
-    'three/examples/js/loaders/DRACOLoader.js',
+    'three-legacy/examples/js/loaders/DRACOLoader.js',
   'vendor/popper.min.js': '@popperjs/core/dist/umd/popper.min.js',
   'vendor/bootstrap.min.js': 'bootstrap/dist/js/bootstrap.min.js',
   'vendor/THREE-LICENSE.txt': 'three/LICENSE',
+  'vendor/THREE-LEGACY-LICENSE.txt': 'three-legacy/LICENSE',
+  'vendor/MESHOPT-LICENSE.txt': 'meshoptimizer/LICENSE.md',
   'vendor/POPPER-LICENSE.txt': '@popperjs/core/LICENSE.md',
   'vendor/GSAP-README.md': 'gsap/README.md',
   'vendor/gsap.min.js': 'gsap/dist/gsap.min.js',

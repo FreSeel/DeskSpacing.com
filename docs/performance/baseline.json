@@ -1,0 +1,4904 @@
+{
+  "label": "baseline",
+  "date": "2026-10-24T15:09:20.435Z",
+  "conditions": {
+    "base": "http://127.0.0.1:4173/DeskSpacing.com/",
+    "browser": "156.0.8078.4",
+    "viewport": [
+      1280,
+      800
+    ],
+    "dpr": 1,
+    "platform": "darwin 27.0.0 arm64",
+    "cpu": "Apple M2 Max",
+    "node": "v24.22.1",
+    "network": "localhost, cache disabled, third parties blocked, no throttle",
+    "renderer": "ANGLE SwiftShader (software WebGL)"
+  },
+  "results": [
+    {
+      "landingLoadMs": 40.59999996423721,
+      "startup": {
+        "navigation": {
+          "name": "http://127.0.0.1:4173/DeskSpacing.com/mainApp.html",
+          "entryType": "navigation",
+          "startTime": 0,
+          "duration": 2623,
+          "navigationId": 2769,
+          "initiatorType": "navigation",
+          "deliveryType": "",
+          "nextHopProtocol": "http/1.1",
+          "renderBlockingStatus": "non-blocking",
+          "contentType": "text/html",
+          "contentEncoding": "gzip",
+          "workerStart": 0,
+          "workerRouterEvaluationStart": 0,
+          "workerCacheLookupStart": 0,
+          "workerMatchedSourceType": "",
+          "workerFinalSourceType": "",
+          "redirectStart": 0,
+          "redirectEnd": 0,
+          "fetchStart": 0,
+          "domainLookupStart": 0,
+          "domainLookupEnd": 0,
+          "connectStart": 0,
+          "secureConnectionStart": 0,
+          "connectEnd": 0,
+          "requestStart": 1,
+          "responseStart": 1.899999976158142,
+          "firstInterimResponseStart": 0,
+          "finalResponseHeadersStart": 1.899999976158142,
+          "responseEnd": 2.699999988079071,
+          "transferSize": 8847,
+          "encodedBodySize": 8547,
+          "decodedBodySize": 157498,
+          "responseStatus": 200,
+          "serverTiming": [],
+          "unloadEventStart": 2.800000011920929,
+          "unloadEventEnd": 2.800000011920929,
+          "domInteractive": 369.69999998807907,
+          "domContentLoadedEventStart": 606.0999999642372,
+          "domContentLoadedEventEnd": 606.3000000119209,
+          "domComplete": 2622.300000011921,
+          "loadEventStart": 2622.300000011921,
+          "loadEventEnd": 2623,
+          "type": "navigate",
+          "redirectCount": 0,
+          "activationStart": 0,
+          "criticalCHRestart": 0,
+          "notRestoredReasons": null,
+          "confidence": {
+            "randomizedTriggerRate": 0.4994798,
+            "value": "low"
+          }
+        },
+        "editorReadyMs": 3210.199999988079,
+        "sceneInitMs": 234.69999998807907,
+        "resources": [
+          {
+            "name": "https://www.googletagmanager.com/gtag/js?id=UA-172455339-1",
+            "type": "script",
+            "transfer": 0,
+            "encoded": 0,
+            "duration": 322.80000001192093
+          },
+          {
+            "name": "https://fonts.googleapis.com/css?family=Raleway",
+            "type": "link",
+            "transfer": 0,
+            "encoded": 0,
+            "duration": 325.30000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/css/icomoon.css",
+            "type": "link",
+            "transfer": 3836,
+            "encoded": 3536,
+            "duration": 328.80000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/css/bootstrap-compat.css",
+            "type": "link",
+            "transfer": 618,
+            "encoded": 318,
+            "duration": 327.69999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/src/styles/planner.css",
+            "type": "link",
+            "transfer": 1398,
+            "encoded": 1098,
+            "duration": 328
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/customDeskLightAlderwood.jpg",
+            "type": "img",
+            "transfer": 11967,
+            "encoded": 11667,
+            "duration": 328.10000002384186
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/standing%20desk%201.jpg",
+            "type": "img",
+            "transfer": 13162,
+            "encoded": 12862,
+            "duration": 328.30000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/standing%20desk%202.jpg",
+            "type": "img",
+            "transfer": 12944,
+            "encoded": 12644,
+            "duration": 330.60000002384186
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/linnmon%20desk.jpg",
+            "type": "img",
+            "transfer": 7902,
+            "encoded": 7602,
+            "duration": 331
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/alex%20desk.jpg",
+            "type": "img",
+            "transfer": 13608,
+            "encoded": 13308,
+            "duration": 331.30000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/bootstrap.min.css",
+            "type": "link",
+            "transfer": 26932,
+            "encoded": 26632,
+            "duration": 332.5
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/L%20shaped%20desk.jpg",
+            "type": "img",
+            "transfer": 11601,
+            "encoded": 11301,
+            "duration": 336.0999999642372
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/16_9%20monitor%203.jpg",
+            "type": "img",
+            "transfer": 9836,
+            "encoded": 9536,
+            "duration": 337.69999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/curved%20large%2016%209%20monitor.jpg",
+            "type": "img",
+            "transfer": 9863,
+            "encoded": 9563,
+            "duration": 337.89999997615814
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/21%209%20monitor%202%20non%20curved.jpg",
+            "type": "img",
+            "transfer": 9860,
+            "encoded": 9560,
+            "duration": 338.10000002384186
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/Ultrwide%20Monitor%201.jpg",
+            "type": "img",
+            "transfer": 10577,
+            "encoded": 10277,
+            "duration": 338.30000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/32_9%20monitor.jpg",
+            "type": "img",
+            "transfer": 10318,
+            "encoded": 10018,
+            "duration": 338.4000000357628
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/default60PercentKeyboardAllGrey.jpg",
+            "type": "img",
+            "transfer": 13644,
+            "encoded": 13344,
+            "duration": 339
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/75PercentKeyboardAllGrey.jpg",
+            "type": "img",
+            "transfer": 13076,
+            "encoded": 12776,
+            "duration": 340.30000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/defaultFullKeyboardAllGrey.jpg",
+            "type": "img",
+            "transfer": 14470,
+            "encoded": 14170,
+            "duration": 340.5999999642372
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/TKLKeyboardAllGrey.jpg",
+            "type": "img",
+            "transfer": 14321,
+            "encoded": 14021,
+            "duration": 341
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/mouse%202.jpg",
+            "type": "img",
+            "transfer": 13826,
+            "encoded": 13526,
+            "duration": 341.19999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/Mouse%201%20textured.jpg",
+            "type": "img",
+            "transfer": 10687,
+            "encoded": 10387,
+            "duration": 341.30000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/small%20qck%20mousepad.jpg",
+            "type": "img",
+            "transfer": 7559,
+            "encoded": 7259,
+            "duration": 341.89999997615814
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/medium%20qck%20mousepad.jpg",
+            "type": "img",
+            "transfer": 8827,
+            "encoded": 8527,
+            "duration": 342.30000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/large%20qck%20mousepad.jpg",
+            "type": "img",
+            "transfer": 9370,
+            "encoded": 9070,
+            "duration": 343.30000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/qck%20mousepad%20XXL.jpg",
+            "type": "img",
+            "transfer": 8563,
+            "encoded": 8263,
+            "duration": 343.4000000357628
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/speakers%201.jpg",
+            "type": "img",
+            "transfer": 16800,
+            "encoded": 16500,
+            "duration": 343.80000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/speaker%20bar%201.jpg",
+            "type": "img",
+            "transfer": 10324,
+            "encoded": 10024,
+            "duration": 343.9000000357628
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/speakers%202%20primary.jpg",
+            "type": "img",
+            "transfer": 12786,
+            "encoded": 12486,
+            "duration": 344.2000000476837
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/blue%20yeti.jpg",
+            "type": "img",
+            "transfer": 10458,
+            "encoded": 10158,
+            "duration": 345.2000000476837
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/audio%20interface.jpg",
+            "type": "img",
+            "transfer": 15849,
+            "encoded": 15549,
+            "duration": 345.60000002384186
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/midi%20keyboard%201.jpg",
+            "type": "img",
+            "transfer": 18688,
+            "encoded": 18388,
+            "duration": 345.9000000357628
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/13%20inch%20laptop.jpg",
+            "type": "img",
+            "transfer": 12716,
+            "encoded": 12416,
+            "duration": 346.10000002384186
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/15%20inch%20laptop.jpg",
+            "type": "img",
+            "transfer": 13440,
+            "encoded": 13140,
+            "duration": 346.30000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/17%20inch%20laptop.jpg",
+            "type": "img",
+            "transfer": 13626,
+            "encoded": 13326,
+            "duration": 346.5
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/desktop%201.jpg",
+            "type": "img",
+            "transfer": 12431,
+            "encoded": 12131,
+            "duration": 347.10000002384186
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/desktop%202%20small.jpg",
+            "type": "img",
+            "transfer": 20916,
+            "encoded": 20616,
+            "duration": 348.30000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/cube%20primitive.jpg",
+            "type": "img",
+            "transfer": 7044,
+            "encoded": 6744,
+            "duration": 348.19999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/primitive%20sphere.jpg",
+            "type": "img",
+            "transfer": 7437,
+            "encoded": 7137,
+            "duration": 348.69999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/office%20chair.jpg",
+            "type": "img",
+            "transfer": 14932,
+            "encoded": 14632,
+            "duration": 348.7999999523163
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/simple%20chair.jpg",
+            "type": "img",
+            "transfer": 15337,
+            "encoded": 15037,
+            "duration": 348.89999997615814
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/gaming%20chair.jpg",
+            "type": "img",
+            "transfer": 13928,
+            "encoded": 13628,
+            "duration": 349
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/book.jpg",
+            "type": "img",
+            "transfer": 12503,
+            "encoded": 12203,
+            "duration": 349.7999999523163
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/coffee%20cup.jpg",
+            "type": "img",
+            "transfer": 10707,
+            "encoded": 10407,
+            "duration": 349.7999999523163
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/lamp%201.jpg",
+            "type": "img",
+            "transfer": 9993,
+            "encoded": 9693,
+            "duration": 350.10000002384186
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/lamp%202.jpg",
+            "type": "img",
+            "transfer": 11883,
+            "encoded": 11583,
+            "duration": 350.30000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%202.gif",
+            "type": "img",
+            "transfer": 408346,
+            "encoded": 408046,
+            "duration": 351.80000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%203.gif",
+            "type": "img",
+            "transfer": 406349,
+            "encoded": 406049,
+            "duration": 352.4000000357628
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%204.gif",
+            "type": "img",
+            "transfer": 268260,
+            "encoded": 267960,
+            "duration": 352.4000000357628
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%201.gif",
+            "type": "img",
+            "transfer": 4938529,
+            "encoded": 4938229,
+            "duration": 363.9000000357628
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/src/main.js",
+            "type": "script",
+            "transfer": 10357,
+            "encoded": 10057,
+            "duration": 329.39999997615814
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/OrbitControls.js",
+            "type": "script",
+            "transfer": 5443,
+            "encoded": 5143,
+            "duration": 332.69999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/GLTFLoader.js",
+            "type": "script",
+            "transfer": 19349,
+            "encoded": 19049,
+            "duration": 334.39999997615814
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/three/examples/js/controls/TransformControls.js",
+            "type": "script",
+            "transfer": 8279,
+            "encoded": 7979,
+            "duration": 333.89999997615814
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/three.min.js",
+            "type": "script",
+            "transfer": 154641,
+            "encoded": 154341,
+            "duration": 346
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%205.gif",
+            "type": "img",
+            "transfer": 711778,
+            "encoded": 711478,
+            "duration": 353.19999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%206.gif",
+            "type": "img",
+            "transfer": 1361375,
+            "encoded": 1361075,
+            "duration": 357.5999999642372
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%207.gif",
+            "type": "img",
+            "transfer": 2106026,
+            "encoded": 2105726,
+            "duration": 363.30000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/vendor/popper.min.js",
+            "type": "script",
+            "transfer": 7667,
+            "encoded": 7367,
+            "duration": 333.5
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/js/ui.js",
+            "type": "script",
+            "transfer": 1205,
+            "encoded": 905,
+            "duration": 334.39999997615814
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/vendor/bootstrap.min.js",
+            "type": "script",
+            "transfer": 16906,
+            "encoded": 16606,
+            "duration": 334.19999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/fonts/icomoon/icomoon.ttf?lir4dr",
+            "type": "css",
+            "transfer": 85716,
+            "encoded": 85416,
+            "duration": 7.699999988079071
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/GLTFs/desks/standing%20desks/standing%20desk%201%20-%2023.8Dx51.7Wx30.3H.glb",
+            "type": "xmlhttprequest",
+            "transfer": 13644340,
+            "encoded": 13644040,
+            "duration": 2097.7999999523163
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/GLTFs/mice%20and%20mousepads/mouse%201%20-%204.1Dx2.2Wx1.6H.glb",
+            "type": "xmlhttprequest",
+            "transfer": 1070380,
+            "encoded": 1070080,
+            "duration": 6.800000011920929
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/GLTFs/monitors/16%209%20monitor/16_9%20monitor%203%2028in.glb",
+            "type": "xmlhttprequest",
+            "transfer": 2085440,
+            "encoded": 2085140,
+            "duration": 10.100000023841858
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/GLTFs/keyboards/60%20keyboards/60%20Keyboard%201%20allGrey.glb",
+            "type": "xmlhttprequest",
+            "transfer": 12019284,
+            "encoded": 12018984,
+            "duration": 2099.800000011921
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/textures/darkParquet.jpg",
+            "type": "img",
+            "transfer": 156694,
+            "encoded": 156394,
+            "duration": 8.900000035762787
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/GLTFs/mice%20and%20mousepads/small%20qck%20mousepad%20-%208.4Dx9.8W.glb",
+            "type": "xmlhttprequest",
+            "transfer": 236876,
+            "encoded": 236576,
+            "duration": 8.100000023841858
+          }
+        ]
+      },
+      "scripts": [
+        {
+          "path": "src/main.js",
+          "bytes": 48560,
+          "gzipBytes": 10057
+        },
+        {
+          "path": "OrbitControls.js",
+          "bytes": 23815,
+          "gzipBytes": 5143
+        },
+        {
+          "path": "GLTFLoader.js",
+          "bytes": 81360,
+          "gzipBytes": 19049
+        },
+        {
+          "path": "three/examples/js/controls/TransformControls.js",
+          "bytes": 45661,
+          "gzipBytes": 7979
+        },
+        {
+          "path": "three.min.js",
+          "bytes": 618895,
+          "gzipBytes": 154341
+        },
+        {
+          "path": "vendor/popper.min.js",
+          "bytes": 20122,
+          "gzipBytes": 7367
+        },
+        {
+          "path": "js/ui.js",
+          "bytes": 905,
+          "gzipBytes": 419
+        },
+        {
+          "path": "vendor/bootstrap.min.js",
+          "bytes": 60539,
+          "gzipBytes": 16606
+        }
+      ],
+      "idle": {
+        "samples": [
+          {
+            "time": 5983.199999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 5983.800000011921,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 6159.599999964237,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 6336.800000011921,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 6685.399999976158,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 6862,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 7043.199999988079,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 7232.699999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 7421.099999964237,
+            "cpuMs": 0.40000003576278687,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 7607.099999964237,
+            "cpuMs": 0.20000004768371582,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 7793.899999976158,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          }
+        ],
+        "resources": {
+          "memory": {
+            "geometries": 22,
+            "textures": 5
+          },
+          "programs": 6,
+          "render": {
+            "frame": 39,
+            "calls": 13,
+            "triangles": 270374,
+            "points": 0,
+            "lines": 0
+          },
+          "heapBytes": 89688258,
+          "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+          "camera": [
+            0,
+            61.27639300930197,
+            21.18381105308002
+          ],
+          "objects": [
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Monitor",
+              "product": "small16x9Monitor28",
+              "position": [
+                0,
+                31.300000000000004,
+                -57
+              ],
+              "rotation": [
+                0,
+                4.71238898038469,
+                0
+              ]
+            },
+            {
+              "type": "PrimitiveBoxFloorFurnitureNoSelect",
+              "product": "floor",
+              "position": [
+                0,
+                0,
+                -40
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "dimensions": [
+                100,
+                2,
+                70
+              ],
+              "texture": "darkParquet"
+            },
+            {
+              "type": "Mousepad",
+              "product": "QCKSmall",
+              "position": [
+                9,
+                31.25,
+                -50
+              ],
+              "rotation": [
+                0,
+                1.5707963267948966,
+                0
+              ]
+            },
+            {
+              "type": "DeskNoSelect",
+              "product": "modernDesk",
+              "position": [
+                0,
+                30.7,
+                -53
+              ],
+              "rotation": [
+                0,
+                1.5707963267948966,
+                0
+              ]
+            },
+            {
+              "type": "Keyboard",
+              "product": "default60PercentKeyboardAllGrey",
+              "position": [
+                -3,
+                31.35,
+                -50
+              ],
+              "rotation": [
+                0,
+                4.71238898038469,
+                0
+              ]
+            }
+          ],
+          "pixelRatio": 1
+        }
+      },
+      "orbit": {
+        "durationMs": 10144,
+        "samples": [
+          {
+            "time": 8535.300000011921,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 8687.399999976158,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 8864.300000011921,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 9039.699999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 9220.599999964237,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 9397.599999964237,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 9573.300000011921,
+            "cpuMs": 0.3999999761581421,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 9750.199999988079,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 9926.099999964237,
+            "cpuMs": 0.20000004768371582,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 10102.699999988079,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 10279.099999964237,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 10455.300000011921,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 10631.099999964237,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 10805.800000011921,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 10980.899999976158,
+            "cpuMs": 0.40000003576278687,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 11154.199999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 11328.800000011921,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 11502.699999988079,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 11675.099999964237,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 11845.300000011921,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 12019.800000011921,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 12194.599999964237,
+            "cpuMs": 0.20000004768371582,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 12368,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 12543,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 12716.199999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 12890.399999976158,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 13062.599999964237,
+            "cpuMs": 0.20000004768371582,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 13235,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 13408.599999964237,
+            "cpuMs": 0.20000004768371582,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 13579.5,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 13752,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 13922.099999964237,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 14092.5,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 14262.399999976158,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 14435,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 14603.800000011921,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 14775.800000011921,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 14947.199999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 15117.099999964237,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 15288.5,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 15459.899999976158,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 15629.800000011921,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 15801.199999988079,
+            "cpuMs": 0.3999999761581421,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 15967.399999976158,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 16135.599999964237,
+            "cpuMs": 0.20000004768371582,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 16303.300000011921,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 16469.899999976158,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 16635.899999976158,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 16807,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 16976.099999964237,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 17141.69999998808,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 17301.399999976158,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 17468.899999976158,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 17639.399999976158,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 17806.5,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 17974.099999964237,
+            "cpuMs": 0.20000004768371582,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 18141.099999964237,
+            "cpuMs": 0.20000004768371582,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 18305,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 18473.80000001192,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 18643.19999998808,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          }
+        ]
+      },
+      "beforeDuplicates": {
+        "memory": {
+          "geometries": 22,
+          "textures": 5
+        },
+        "programs": 6,
+        "render": {
+          "frame": 102,
+          "calls": 13,
+          "triangles": 270374,
+          "points": 0,
+          "lines": 0
+        },
+        "heapBytes": 31586834,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "camera": [
+          0,
+          61.27639300930197,
+          21.183811053080014
+        ],
+        "objects": [
+          {
+            "type": "Mouse",
+            "product": "defaultMouse",
+            "position": [
+              9,
+              31.2,
+              -50
+            ],
+            "rotation": [
+              0,
+              3.141592653589793,
+              0
+            ]
+          },
+          {
+            "type": "Monitor",
+            "product": "small16x9Monitor28",
+            "position": [
+              0,
+              31.300000000000004,
+              -57
+            ],
+            "rotation": [
+              0,
+              4.71238898038469,
+              0
+            ]
+          },
+          {
+            "type": "PrimitiveBoxFloorFurnitureNoSelect",
+            "product": "floor",
+            "position": [
+              0,
+              0,
+              -40
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "dimensions": [
+              100,
+              2,
+              70
+            ],
+            "texture": "darkParquet"
+          },
+          {
+            "type": "Mousepad",
+            "product": "QCKSmall",
+            "position": [
+              9,
+              31.25,
+              -50
+            ],
+            "rotation": [
+              0,
+              1.5707963267948966,
+              0
+            ]
+          },
+          {
+            "type": "DeskNoSelect",
+            "product": "modernDesk",
+            "position": [
+              0,
+              30.7,
+              -53
+            ],
+            "rotation": [
+              0,
+              1.5707963267948966,
+              0
+            ]
+          },
+          {
+            "type": "Keyboard",
+            "product": "default60PercentKeyboardAllGrey",
+            "position": [
+              -3,
+              31.35,
+              -50
+            ],
+            "rotation": [
+              0,
+              4.71238898038469,
+              0
+            ]
+          }
+        ],
+        "pixelRatio": 1
+      },
+      "duplicates": {
+        "durationMs": 30.599999964237213,
+        "resources": {
+          "memory": {
+            "geometries": 52,
+            "textures": 5
+          },
+          "programs": 6,
+          "render": {
+            "frame": 106,
+            "calls": 50,
+            "triangles": 407408,
+            "points": 0,
+            "lines": 4
+          },
+          "heapBytes": 54750011,
+          "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+          "camera": [
+            0,
+            61.27639300930197,
+            21.18381105308002
+          ],
+          "objects": [
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Monitor",
+              "product": "small16x9Monitor28",
+              "position": [
+                0,
+                31.300000000000004,
+                -57
+              ],
+              "rotation": [
+                0,
+                4.71238898038469,
+                0
+              ]
+            },
+            {
+              "type": "PrimitiveBoxFloorFurnitureNoSelect",
+              "product": "floor",
+              "position": [
+                0,
+                0,
+                -40
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "dimensions": [
+                100,
+                2,
+                70
+              ],
+              "texture": "darkParquet"
+            },
+            {
+              "type": "Mousepad",
+              "product": "QCKSmall",
+              "position": [
+                9,
+                31.25,
+                -50
+              ],
+              "rotation": [
+                0,
+                1.5707963267948966,
+                0
+              ]
+            },
+            {
+              "type": "DeskNoSelect",
+              "product": "modernDesk",
+              "position": [
+                0,
+                30.7,
+                -53
+              ],
+              "rotation": [
+                0,
+                1.5707963267948966,
+                0
+              ]
+            },
+            {
+              "type": "Keyboard",
+              "product": "default60PercentKeyboardAllGrey",
+              "position": [
+                -3,
+                31.35,
+                -50
+              ],
+              "rotation": [
+                0,
+                4.71238898038469,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            }
+          ],
+          "pixelRatio": 1
+        }
+      },
+      "afterDelete": {
+        "memory": {
+          "geometries": 22,
+          "textures": 5
+        },
+        "programs": 6,
+        "render": {
+          "frame": 109,
+          "calls": 13,
+          "triangles": 270374,
+          "points": 0,
+          "lines": 0
+        },
+        "heapBytes": 31690119,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "camera": [
+          0,
+          61.27639300930197,
+          21.18381105308002
+        ],
+        "objects": [
+          {
+            "type": "Mouse",
+            "product": "defaultMouse",
+            "position": [
+              9,
+              31.2,
+              -50
+            ],
+            "rotation": [
+              0,
+              3.141592653589793,
+              0
+            ]
+          },
+          {
+            "type": "Monitor",
+            "product": "small16x9Monitor28",
+            "position": [
+              0,
+              31.300000000000004,
+              -57
+            ],
+            "rotation": [
+              0,
+              4.71238898038469,
+              0
+            ]
+          },
+          {
+            "type": "PrimitiveBoxFloorFurnitureNoSelect",
+            "product": "floor",
+            "position": [
+              0,
+              0,
+              -40
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "dimensions": [
+              100,
+              2,
+              70
+            ],
+            "texture": "darkParquet"
+          },
+          {
+            "type": "Mousepad",
+            "product": "QCKSmall",
+            "position": [
+              9,
+              31.25,
+              -50
+            ],
+            "rotation": [
+              0,
+              1.5707963267948966,
+              0
+            ]
+          },
+          {
+            "type": "DeskNoSelect",
+            "product": "modernDesk",
+            "position": [
+              0,
+              30.7,
+              -53
+            ],
+            "rotation": [
+              0,
+              1.5707963267948966,
+              0
+            ]
+          },
+          {
+            "type": "Keyboard",
+            "product": "default60PercentKeyboardAllGrey",
+            "position": [
+              -3,
+              31.35,
+              -50
+            ],
+            "rotation": [
+              0,
+              4.71238898038469,
+              0
+            ]
+          }
+        ],
+        "pixelRatio": 1
+      },
+      "disposed": {
+        "geometries": 0,
+        "textures": 0
+      },
+      "errors": []
+    },
+    {
+      "landingLoadMs": 31.100000023841858,
+      "startup": {
+        "navigation": {
+          "name": "http://127.0.0.1:4173/DeskSpacing.com/mainApp.html",
+          "entryType": "navigation",
+          "startTime": 0,
+          "duration": 445.69999998807907,
+          "navigationId": 8988,
+          "initiatorType": "navigation",
+          "deliveryType": "",
+          "nextHopProtocol": "http/1.1",
+          "renderBlockingStatus": "non-blocking",
+          "contentType": "text/html",
+          "contentEncoding": "gzip",
+          "workerStart": 0,
+          "workerRouterEvaluationStart": 0,
+          "workerCacheLookupStart": 0,
+          "workerMatchedSourceType": "",
+          "workerFinalSourceType": "",
+          "redirectStart": 0,
+          "redirectEnd": 0,
+          "fetchStart": 0.10000002384185791,
+          "domainLookupStart": 0.10000002384185791,
+          "domainLookupEnd": 0.10000002384185791,
+          "connectStart": 0.10000002384185791,
+          "secureConnectionStart": 0,
+          "connectEnd": 0.10000002384185791,
+          "requestStart": 1,
+          "responseStart": 1.899999976158142,
+          "firstInterimResponseStart": 0,
+          "finalResponseHeadersStart": 1.899999976158142,
+          "responseEnd": 2.699999988079071,
+          "transferSize": 8847,
+          "encodedBodySize": 8547,
+          "decodedBodySize": 157498,
+          "responseStatus": 200,
+          "serverTiming": [],
+          "unloadEventStart": 3,
+          "unloadEventEnd": 3,
+          "domInteractive": 45.5,
+          "domContentLoadedEventStart": 84.69999998807907,
+          "domContentLoadedEventEnd": 84.89999997615814,
+          "domComplete": 445.10000002384186,
+          "loadEventStart": 445.10000002384186,
+          "loadEventEnd": 445.69999998807907,
+          "type": "navigate",
+          "redirectCount": 0,
+          "activationStart": 0,
+          "criticalCHRestart": 0,
+          "notRestoredReasons": null,
+          "confidence": {
+            "randomizedTriggerRate": 0.4994798,
+            "value": "low"
+          }
+        },
+        "editorReadyMs": 1821.6000000238419,
+        "sceneInitMs": 37.5,
+        "resources": [
+          {
+            "name": "https://www.googletagmanager.com/gtag/js?id=UA-172455339-1",
+            "type": "script",
+            "transfer": 0,
+            "encoded": 0,
+            "duration": 3.800000011920929
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/css/icomoon.css",
+            "type": "link",
+            "transfer": 3836,
+            "encoded": 3536,
+            "duration": 9.599999964237213
+          },
+          {
+            "name": "https://fonts.googleapis.com/css?family=Raleway",
+            "type": "link",
+            "transfer": 0,
+            "encoded": 0,
+            "duration": 5.300000011920929
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/css/bootstrap-compat.css",
+            "type": "link",
+            "transfer": 618,
+            "encoded": 318,
+            "duration": 8.600000023841858
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/src/styles/planner.css",
+            "type": "link",
+            "transfer": 1398,
+            "encoded": 1098,
+            "duration": 9.200000047683716
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/bootstrap.min.css",
+            "type": "link",
+            "transfer": 26932,
+            "encoded": 26632,
+            "duration": 12.200000047683716
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/customDeskLightAlderwood.jpg",
+            "type": "img",
+            "transfer": 11967,
+            "encoded": 11667,
+            "duration": 8.600000023841858
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/standing%20desk%201.jpg",
+            "type": "img",
+            "transfer": 13162,
+            "encoded": 12862,
+            "duration": 8.699999988079071
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/standing%20desk%202.jpg",
+            "type": "img",
+            "transfer": 12944,
+            "encoded": 12644,
+            "duration": 11.5
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/linnmon%20desk.jpg",
+            "type": "img",
+            "transfer": 7902,
+            "encoded": 7602,
+            "duration": 12.699999988079071
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/alex%20desk.jpg",
+            "type": "img",
+            "transfer": 13608,
+            "encoded": 13308,
+            "duration": 12.799999952316284
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/L%20shaped%20desk.jpg",
+            "type": "img",
+            "transfer": 11601,
+            "encoded": 11301,
+            "duration": 17.5
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/16_9%20monitor%203.jpg",
+            "type": "img",
+            "transfer": 9836,
+            "encoded": 9536,
+            "duration": 18
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/curved%20large%2016%209%20monitor.jpg",
+            "type": "img",
+            "transfer": 9863,
+            "encoded": 9563,
+            "duration": 20.299999952316284
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/21%209%20monitor%202%20non%20curved.jpg",
+            "type": "img",
+            "transfer": 9860,
+            "encoded": 9560,
+            "duration": 20.399999976158142
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/Ultrwide%20Monitor%201.jpg",
+            "type": "img",
+            "transfer": 10577,
+            "encoded": 10277,
+            "duration": 20.599999964237213
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/32_9%20monitor.jpg",
+            "type": "img",
+            "transfer": 10318,
+            "encoded": 10018,
+            "duration": 20.69999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/default60PercentKeyboardAllGrey.jpg",
+            "type": "img",
+            "transfer": 13644,
+            "encoded": 13344,
+            "duration": 20.799999952316284
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/75PercentKeyboardAllGrey.jpg",
+            "type": "img",
+            "transfer": 13076,
+            "encoded": 12776,
+            "duration": 22.799999952316284
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/defaultFullKeyboardAllGrey.jpg",
+            "type": "img",
+            "transfer": 14470,
+            "encoded": 14170,
+            "duration": 22.899999976158142
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/TKLKeyboardAllGrey.jpg",
+            "type": "img",
+            "transfer": 14321,
+            "encoded": 14021,
+            "duration": 23.100000023841858
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/mouse%202.jpg",
+            "type": "img",
+            "transfer": 13826,
+            "encoded": 13526,
+            "duration": 23.30000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/Mouse%201%20textured.jpg",
+            "type": "img",
+            "transfer": 10687,
+            "encoded": 10387,
+            "duration": 23.600000023841858
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/small%20qck%20mousepad.jpg",
+            "type": "img",
+            "transfer": 7559,
+            "encoded": 7259,
+            "duration": 25.100000023841858
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/medium%20qck%20mousepad.jpg",
+            "type": "img",
+            "transfer": 8827,
+            "encoded": 8527,
+            "duration": 25.19999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/large%20qck%20mousepad.jpg",
+            "type": "img",
+            "transfer": 9370,
+            "encoded": 9070,
+            "duration": 25.19999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/qck%20mousepad%20XXL.jpg",
+            "type": "img",
+            "transfer": 8563,
+            "encoded": 8263,
+            "duration": 25.30000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/speakers%201.jpg",
+            "type": "img",
+            "transfer": 16800,
+            "encoded": 16500,
+            "duration": 25.399999976158142
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/speaker%20bar%201.jpg",
+            "type": "img",
+            "transfer": 10324,
+            "encoded": 10024,
+            "duration": 27.30000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/speakers%202%20primary.jpg",
+            "type": "img",
+            "transfer": 12786,
+            "encoded": 12486,
+            "duration": 27.80000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/blue%20yeti.jpg",
+            "type": "img",
+            "transfer": 10458,
+            "encoded": 10158,
+            "duration": 27.80000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/audio%20interface.jpg",
+            "type": "img",
+            "transfer": 15849,
+            "encoded": 15549,
+            "duration": 28.400000035762787
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/midi%20keyboard%201.jpg",
+            "type": "img",
+            "transfer": 18688,
+            "encoded": 18388,
+            "duration": 30
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/13%20inch%20laptop.jpg",
+            "type": "img",
+            "transfer": 12716,
+            "encoded": 12416,
+            "duration": 30.19999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/15%20inch%20laptop.jpg",
+            "type": "img",
+            "transfer": 13440,
+            "encoded": 13140,
+            "duration": 30.30000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/17%20inch%20laptop.jpg",
+            "type": "img",
+            "transfer": 13626,
+            "encoded": 13326,
+            "duration": 30.5
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/desktop%201.jpg",
+            "type": "img",
+            "transfer": 12431,
+            "encoded": 12131,
+            "duration": 30.80000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/desktop%202%20small.jpg",
+            "type": "img",
+            "transfer": 20916,
+            "encoded": 20616,
+            "duration": 30.899999976158142
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/cube%20primitive.jpg",
+            "type": "img",
+            "transfer": 7044,
+            "encoded": 6744,
+            "duration": 31.600000023841858
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/primitive%20sphere.jpg",
+            "type": "img",
+            "transfer": 7437,
+            "encoded": 7137,
+            "duration": 32.299999952316284
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/office%20chair.jpg",
+            "type": "img",
+            "transfer": 14932,
+            "encoded": 14632,
+            "duration": 32.69999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/simple%20chair.jpg",
+            "type": "img",
+            "transfer": 15337,
+            "encoded": 15037,
+            "duration": 32.799999952316284
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/gaming%20chair.jpg",
+            "type": "img",
+            "transfer": 13928,
+            "encoded": 13628,
+            "duration": 33
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/book.jpg",
+            "type": "img",
+            "transfer": 12503,
+            "encoded": 12203,
+            "duration": 33.09999996423721
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/coffee%20cup.jpg",
+            "type": "img",
+            "transfer": 10707,
+            "encoded": 10407,
+            "duration": 33.19999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/lamp%201.jpg",
+            "type": "img",
+            "transfer": 9993,
+            "encoded": 9693,
+            "duration": 33.799999952316284
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/lamp%202.jpg",
+            "type": "img",
+            "transfer": 11883,
+            "encoded": 11583,
+            "duration": 34.69999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%203.gif",
+            "type": "img",
+            "transfer": 406349,
+            "encoded": 406049,
+            "duration": 37.89999997615814
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%202.gif",
+            "type": "img",
+            "transfer": 408346,
+            "encoded": 408046,
+            "duration": 37.799999952316284
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%201.gif",
+            "type": "img",
+            "transfer": 4938529,
+            "encoded": 4938229,
+            "duration": 82.19999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%204.gif",
+            "type": "img",
+            "transfer": 268260,
+            "encoded": 267960,
+            "duration": 37.40000003576279
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%205.gif",
+            "type": "img",
+            "transfer": 711778,
+            "encoded": 711478,
+            "duration": 38.40000003576279
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/src/main.js",
+            "type": "script",
+            "transfer": 10357,
+            "encoded": 10057,
+            "duration": 10.899999976158142
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/OrbitControls.js",
+            "type": "script",
+            "transfer": 5443,
+            "encoded": 5143,
+            "duration": 14.099999964237213
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/three/examples/js/controls/TransformControls.js",
+            "type": "script",
+            "transfer": 8279,
+            "encoded": 7979,
+            "duration": 14.399999976158142
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/GLTFLoader.js",
+            "type": "script",
+            "transfer": 19349,
+            "encoded": 19049,
+            "duration": 16.5
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/three.min.js",
+            "type": "script",
+            "transfer": 154641,
+            "encoded": 154341,
+            "duration": 27.599999964237213
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%206.gif",
+            "type": "img",
+            "transfer": 1361375,
+            "encoded": 1361075,
+            "duration": 39
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%207.gif",
+            "type": "img",
+            "transfer": 2106026,
+            "encoded": 2105726,
+            "duration": 81.19999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/vendor/popper.min.js",
+            "type": "script",
+            "transfer": 7667,
+            "encoded": 7367,
+            "duration": 14.600000023841858
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/vendor/bootstrap.min.js",
+            "type": "script",
+            "transfer": 16906,
+            "encoded": 16606,
+            "duration": 16.400000035762787
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/js/ui.js",
+            "type": "script",
+            "transfer": 1205,
+            "encoded": 905,
+            "duration": 16.600000023841858
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/fonts/icomoon/icomoon.ttf?lir4dr",
+            "type": "css",
+            "transfer": 85716,
+            "encoded": 85416,
+            "duration": 12.100000023841858
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/GLTFs/desks/standing%20desks/standing%20desk%201%20-%2023.8Dx51.7Wx30.3H.glb",
+            "type": "xmlhttprequest",
+            "transfer": 13644340,
+            "encoded": 13644040,
+            "duration": 511
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/GLTFs/monitors/16%209%20monitor/16_9%20monitor%203%2028in.glb",
+            "type": "xmlhttprequest",
+            "transfer": 2085440,
+            "encoded": 2085140,
+            "duration": 11.699999988079071
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/GLTFs/mice%20and%20mousepads/mouse%201%20-%204.1Dx2.2Wx1.6H.glb",
+            "type": "xmlhttprequest",
+            "transfer": 1070380,
+            "encoded": 1070080,
+            "duration": 9.5
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/GLTFs/mice%20and%20mousepads/small%20qck%20mousepad%20-%208.4Dx9.8W.glb",
+            "type": "xmlhttprequest",
+            "transfer": 236876,
+            "encoded": 236576,
+            "duration": 10
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/GLTFs/keyboards/60%20keyboards/60%20Keyboard%201%20allGrey.glb",
+            "type": "xmlhttprequest",
+            "transfer": 12019284,
+            "encoded": 12018984,
+            "duration": 505.39999997615814
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/textures/darkParquet.jpg",
+            "type": "img",
+            "transfer": 156694,
+            "encoded": 156394,
+            "duration": 12.400000035762787
+          }
+        ]
+      },
+      "scripts": [
+        {
+          "path": "src/main.js",
+          "bytes": 48560,
+          "gzipBytes": 10057
+        },
+        {
+          "path": "OrbitControls.js",
+          "bytes": 23815,
+          "gzipBytes": 5143
+        },
+        {
+          "path": "three/examples/js/controls/TransformControls.js",
+          "bytes": 45661,
+          "gzipBytes": 7979
+        },
+        {
+          "path": "GLTFLoader.js",
+          "bytes": 81360,
+          "gzipBytes": 19049
+        },
+        {
+          "path": "three.min.js",
+          "bytes": 618895,
+          "gzipBytes": 154341
+        },
+        {
+          "path": "vendor/popper.min.js",
+          "bytes": 20122,
+          "gzipBytes": 7367
+        },
+        {
+          "path": "vendor/bootstrap.min.js",
+          "bytes": 60539,
+          "gzipBytes": 16606
+        },
+        {
+          "path": "js/ui.js",
+          "bytes": 905,
+          "gzipBytes": 419
+        }
+      ],
+      "idle": {
+        "samples": [
+          {
+            "time": 2763,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 2945.800000011921,
+            "cpuMs": 0.3999999761581421,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 3125.100000023842,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 3303.5,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 3481.600000023842,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 3657.100000023842,
+            "cpuMs": 0.3999999761581421,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 3832.699999988079,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 4012.600000023842,
+            "cpuMs": 0.3999999761581421,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 4191.300000011921,
+            "cpuMs": 0.3999999761581421,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 4368.300000011921,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 4545.300000011921,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 4721.300000011921,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          }
+        ],
+        "resources": {
+          "memory": {
+            "geometries": 22,
+            "textures": 5
+          },
+          "programs": 6,
+          "render": {
+            "frame": 30,
+            "calls": 13,
+            "triangles": 270374,
+            "points": 0,
+            "lines": 0
+          },
+          "heapBytes": 74824413,
+          "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+          "camera": [
+            0,
+            61.27639300930197,
+            21.18381105308002
+          ],
+          "objects": [
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "PrimitiveBoxFloorFurnitureNoSelect",
+              "product": "floor",
+              "position": [
+                0,
+                0,
+                -40
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "dimensions": [
+                100,
+                2,
+                70
+              ],
+              "texture": "darkParquet"
+            },
+            {
+              "type": "Monitor",
+              "product": "small16x9Monitor28",
+              "position": [
+                0,
+                31.300000000000004,
+                -57
+              ],
+              "rotation": [
+                0,
+                4.71238898038469,
+                0
+              ]
+            },
+            {
+              "type": "Mousepad",
+              "product": "QCKSmall",
+              "position": [
+                9,
+                31.25,
+                -50
+              ],
+              "rotation": [
+                0,
+                1.5707963267948966,
+                0
+              ]
+            },
+            {
+              "type": "Keyboard",
+              "product": "default60PercentKeyboardAllGrey",
+              "position": [
+                -3,
+                31.35,
+                -50
+              ],
+              "rotation": [
+                0,
+                4.71238898038469,
+                0
+              ]
+            },
+            {
+              "type": "DeskNoSelect",
+              "product": "modernDesk",
+              "position": [
+                0,
+                30.7,
+                -53
+              ],
+              "rotation": [
+                0,
+                1.5707963267948966,
+                0
+              ]
+            }
+          ],
+          "pixelRatio": 1
+        }
+      },
+      "orbit": {
+        "durationMs": 10302,
+        "samples": [
+          {
+            "time": 5442.300000011921,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 5604.100000023842,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 5786.899999976158,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 5964.699999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 6147.800000011921,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 6326.800000011921,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 6506,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 6681.800000011921,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 6854.800000011921,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 7031.100000023842,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 7211,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 7401.5,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 7573.300000011921,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 7747.600000023842,
+            "cpuMs": 0.3999999761581421,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 7922.600000023842,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 8094.899999976158,
+            "cpuMs": 0.20000004768371582,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 8270,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 8444.800000011921,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 8620.5,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 8794.100000023842,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 8968.800000011921,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 9143.300000011921,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 9318.600000023842,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 9493.600000023842,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 9667.800000011921,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 9841.699999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 10015,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 10187.800000011921,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 10362.699999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 10535.300000011921,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 10708.399999976158,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 10881.899999976158,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 11054.5,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 11226.199999988079,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 11400.100000023842,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 11572.399999976158,
+            "cpuMs": 0.40000003576278687,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 11742.899999976158,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 11913,
+            "cpuMs": 0.3999999761581421,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 12083.300000011921,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 12253.199999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 12424.100000023842,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 12594.199999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 12766.199999988079,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 12938.399999976158,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 13109.399999976158,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 13282.5,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 13456.699999988079,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 13631.899999976158,
+            "cpuMs": 0.40000003576278687,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 13807.100000023842,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 13979.899999976158,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 14155.100000023842,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 14330.100000023842,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 14505.399999976158,
+            "cpuMs": 0.20000004768371582,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 14676.5,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 14847.800000011921,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 15019.5,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 15192,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 15364.300000011921,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 15535.600000023842,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 15708.699999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          }
+        ]
+      },
+      "beforeDuplicates": {
+        "memory": {
+          "geometries": 22,
+          "textures": 5
+        },
+        "programs": 6,
+        "render": {
+          "frame": 93,
+          "calls": 13,
+          "triangles": 270374,
+          "points": 0,
+          "lines": 0
+        },
+        "heapBytes": 31554899,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "camera": [
+          0,
+          61.27639300930197,
+          21.183811053080014
+        ],
+        "objects": [
+          {
+            "type": "Mouse",
+            "product": "defaultMouse",
+            "position": [
+              9,
+              31.2,
+              -50
+            ],
+            "rotation": [
+              0,
+              3.141592653589793,
+              0
+            ]
+          },
+          {
+            "type": "PrimitiveBoxFloorFurnitureNoSelect",
+            "product": "floor",
+            "position": [
+              0,
+              0,
+              -40
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "dimensions": [
+              100,
+              2,
+              70
+            ],
+            "texture": "darkParquet"
+          },
+          {
+            "type": "Monitor",
+            "product": "small16x9Monitor28",
+            "position": [
+              0,
+              31.300000000000004,
+              -57
+            ],
+            "rotation": [
+              0,
+              4.71238898038469,
+              0
+            ]
+          },
+          {
+            "type": "Mousepad",
+            "product": "QCKSmall",
+            "position": [
+              9,
+              31.25,
+              -50
+            ],
+            "rotation": [
+              0,
+              1.5707963267948966,
+              0
+            ]
+          },
+          {
+            "type": "Keyboard",
+            "product": "default60PercentKeyboardAllGrey",
+            "position": [
+              -3,
+              31.35,
+              -50
+            ],
+            "rotation": [
+              0,
+              4.71238898038469,
+              0
+            ]
+          },
+          {
+            "type": "DeskNoSelect",
+            "product": "modernDesk",
+            "position": [
+              0,
+              30.7,
+              -53
+            ],
+            "rotation": [
+              0,
+              1.5707963267948966,
+              0
+            ]
+          }
+        ],
+        "pixelRatio": 1
+      },
+      "duplicates": {
+        "durationMs": 33.5,
+        "resources": {
+          "memory": {
+            "geometries": 52,
+            "textures": 5
+          },
+          "programs": 6,
+          "render": {
+            "frame": 97,
+            "calls": 50,
+            "triangles": 407408,
+            "points": 0,
+            "lines": 4
+          },
+          "heapBytes": 54752984,
+          "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+          "camera": [
+            0,
+            61.27639300930197,
+            21.18381105308002
+          ],
+          "objects": [
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "PrimitiveBoxFloorFurnitureNoSelect",
+              "product": "floor",
+              "position": [
+                0,
+                0,
+                -40
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "dimensions": [
+                100,
+                2,
+                70
+              ],
+              "texture": "darkParquet"
+            },
+            {
+              "type": "Monitor",
+              "product": "small16x9Monitor28",
+              "position": [
+                0,
+                31.300000000000004,
+                -57
+              ],
+              "rotation": [
+                0,
+                4.71238898038469,
+                0
+              ]
+            },
+            {
+              "type": "Mousepad",
+              "product": "QCKSmall",
+              "position": [
+                9,
+                31.25,
+                -50
+              ],
+              "rotation": [
+                0,
+                1.5707963267948966,
+                0
+              ]
+            },
+            {
+              "type": "Keyboard",
+              "product": "default60PercentKeyboardAllGrey",
+              "position": [
+                -3,
+                31.35,
+                -50
+              ],
+              "rotation": [
+                0,
+                4.71238898038469,
+                0
+              ]
+            },
+            {
+              "type": "DeskNoSelect",
+              "product": "modernDesk",
+              "position": [
+                0,
+                30.7,
+                -53
+              ],
+              "rotation": [
+                0,
+                1.5707963267948966,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            }
+          ],
+          "pixelRatio": 1
+        }
+      },
+      "afterDelete": {
+        "memory": {
+          "geometries": 22,
+          "textures": 5
+        },
+        "programs": 6,
+        "render": {
+          "frame": 100,
+          "calls": 13,
+          "triangles": 270374,
+          "points": 0,
+          "lines": 0
+        },
+        "heapBytes": 31653096,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "camera": [
+          0,
+          61.27639300930197,
+          21.18381105308002
+        ],
+        "objects": [
+          {
+            "type": "Mouse",
+            "product": "defaultMouse",
+            "position": [
+              9,
+              31.2,
+              -50
+            ],
+            "rotation": [
+              0,
+              3.141592653589793,
+              0
+            ]
+          },
+          {
+            "type": "PrimitiveBoxFloorFurnitureNoSelect",
+            "product": "floor",
+            "position": [
+              0,
+              0,
+              -40
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "dimensions": [
+              100,
+              2,
+              70
+            ],
+            "texture": "darkParquet"
+          },
+          {
+            "type": "Monitor",
+            "product": "small16x9Monitor28",
+            "position": [
+              0,
+              31.300000000000004,
+              -57
+            ],
+            "rotation": [
+              0,
+              4.71238898038469,
+              0
+            ]
+          },
+          {
+            "type": "Mousepad",
+            "product": "QCKSmall",
+            "position": [
+              9,
+              31.25,
+              -50
+            ],
+            "rotation": [
+              0,
+              1.5707963267948966,
+              0
+            ]
+          },
+          {
+            "type": "Keyboard",
+            "product": "default60PercentKeyboardAllGrey",
+            "position": [
+              -3,
+              31.35,
+              -50
+            ],
+            "rotation": [
+              0,
+              4.71238898038469,
+              0
+            ]
+          },
+          {
+            "type": "DeskNoSelect",
+            "product": "modernDesk",
+            "position": [
+              0,
+              30.7,
+              -53
+            ],
+            "rotation": [
+              0,
+              1.5707963267948966,
+              0
+            ]
+          }
+        ],
+        "pixelRatio": 1
+      },
+      "disposed": {
+        "geometries": 0,
+        "textures": 0
+      },
+      "errors": []
+    },
+    {
+      "landingLoadMs": 31.399999976158142,
+      "startup": {
+        "navigation": {
+          "name": "http://127.0.0.1:4173/DeskSpacing.com/mainApp.html",
+          "entryType": "navigation",
+          "startTime": 0,
+          "duration": 109.40000003576279,
+          "navigationId": 6314,
+          "initiatorType": "navigation",
+          "deliveryType": "",
+          "nextHopProtocol": "http/1.1",
+          "renderBlockingStatus": "non-blocking",
+          "contentType": "text/html",
+          "contentEncoding": "gzip",
+          "workerStart": 0,
+          "workerRouterEvaluationStart": 0,
+          "workerCacheLookupStart": 0,
+          "workerMatchedSourceType": "",
+          "workerFinalSourceType": "",
+          "redirectStart": 0,
+          "redirectEnd": 0,
+          "fetchStart": 0,
+          "domainLookupStart": 0,
+          "domainLookupEnd": 0,
+          "connectStart": 0,
+          "secureConnectionStart": 0,
+          "connectEnd": 0,
+          "requestStart": 1,
+          "responseStart": 2,
+          "firstInterimResponseStart": 0,
+          "finalResponseHeadersStart": 2,
+          "responseEnd": 2.800000011920929,
+          "transferSize": 8847,
+          "encodedBodySize": 8547,
+          "decodedBodySize": 157498,
+          "responseStatus": 200,
+          "serverTiming": [],
+          "unloadEventStart": 2.900000035762787,
+          "unloadEventEnd": 2.900000035762787,
+          "domInteractive": 45.69999998807907,
+          "domContentLoadedEventStart": 85.40000003576279,
+          "domContentLoadedEventEnd": 85.5,
+          "domComplete": 108.90000003576279,
+          "loadEventStart": 108.90000003576279,
+          "loadEventEnd": 109.40000003576279,
+          "type": "navigate",
+          "redirectCount": 0,
+          "activationStart": 0,
+          "criticalCHRestart": 0,
+          "notRestoredReasons": null,
+          "confidence": {
+            "randomizedTriggerRate": 0.4994798,
+            "value": "high"
+          }
+        },
+        "editorReadyMs": 1737.6000000238419,
+        "sceneInitMs": 37.799999952316284,
+        "resources": [
+          {
+            "name": "https://fonts.googleapis.com/css?family=Raleway",
+            "type": "link",
+            "transfer": 0,
+            "encoded": 0,
+            "duration": 4.100000023841858
+          },
+          {
+            "name": "https://www.googletagmanager.com/gtag/js?id=UA-172455339-1",
+            "type": "script",
+            "transfer": 0,
+            "encoded": 0,
+            "duration": 4
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/src/styles/planner.css",
+            "type": "link",
+            "transfer": 1398,
+            "encoded": 1098,
+            "duration": 8.899999976158142
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/css/icomoon.css",
+            "type": "link",
+            "transfer": 3836,
+            "encoded": 3536,
+            "duration": 9.199999988079071
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/bootstrap.min.css",
+            "type": "link",
+            "transfer": 26932,
+            "encoded": 26632,
+            "duration": 11
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/css/bootstrap-compat.css",
+            "type": "link",
+            "transfer": 618,
+            "encoded": 318,
+            "duration": 8.199999988079071
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/customDeskLightAlderwood.jpg",
+            "type": "img",
+            "transfer": 11967,
+            "encoded": 11667,
+            "duration": 8.5
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/standing%20desk%201.jpg",
+            "type": "img",
+            "transfer": 13162,
+            "encoded": 12862,
+            "duration": 8.899999976158142
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/standing%20desk%202.jpg",
+            "type": "img",
+            "transfer": 12944,
+            "encoded": 12644,
+            "duration": 10.5
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/linnmon%20desk.jpg",
+            "type": "img",
+            "transfer": 7902,
+            "encoded": 7602,
+            "duration": 10.800000011920929
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/alex%20desk.jpg",
+            "type": "img",
+            "transfer": 13608,
+            "encoded": 13308,
+            "duration": 10.900000035762787
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/L%20shaped%20desk.jpg",
+            "type": "img",
+            "transfer": 11601,
+            "encoded": 11301,
+            "duration": 15.5
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/16_9%20monitor%203.jpg",
+            "type": "img",
+            "transfer": 9836,
+            "encoded": 9536,
+            "duration": 16.5
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/curved%20large%2016%209%20monitor.jpg",
+            "type": "img",
+            "transfer": 9863,
+            "encoded": 9563,
+            "duration": 16.69999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/21%209%20monitor%202%20non%20curved.jpg",
+            "type": "img",
+            "transfer": 9860,
+            "encoded": 9560,
+            "duration": 16.899999976158142
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/Ultrwide%20Monitor%201.jpg",
+            "type": "img",
+            "transfer": 10577,
+            "encoded": 10277,
+            "duration": 17.099999964237213
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/32_9%20monitor.jpg",
+            "type": "img",
+            "transfer": 10318,
+            "encoded": 10018,
+            "duration": 17.099999964237213
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/default60PercentKeyboardAllGrey.jpg",
+            "type": "img",
+            "transfer": 13644,
+            "encoded": 13344,
+            "duration": 18.899999976158142
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/75PercentKeyboardAllGrey.jpg",
+            "type": "img",
+            "transfer": 13076,
+            "encoded": 12776,
+            "duration": 19.099999964237213
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/defaultFullKeyboardAllGrey.jpg",
+            "type": "img",
+            "transfer": 14470,
+            "encoded": 14170,
+            "duration": 19.399999976158142
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/TKLKeyboardAllGrey.jpg",
+            "type": "img",
+            "transfer": 14321,
+            "encoded": 14021,
+            "duration": 19.599999964237213
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/mouse%202.jpg",
+            "type": "img",
+            "transfer": 13826,
+            "encoded": 13526,
+            "duration": 19.899999976158142
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/Mouse%201%20textured.jpg",
+            "type": "img",
+            "transfer": 10687,
+            "encoded": 10387,
+            "duration": 21.599999964237213
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/small%20qck%20mousepad.jpg",
+            "type": "img",
+            "transfer": 7559,
+            "encoded": 7259,
+            "duration": 21.700000047683716
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/medium%20qck%20mousepad.jpg",
+            "type": "img",
+            "transfer": 8827,
+            "encoded": 8527,
+            "duration": 22.100000023841858
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/large%20qck%20mousepad.jpg",
+            "type": "img",
+            "transfer": 9370,
+            "encoded": 9070,
+            "duration": 22.600000023841858
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/qck%20mousepad%20XXL.jpg",
+            "type": "img",
+            "transfer": 8563,
+            "encoded": 8263,
+            "duration": 22.700000047683716
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/speakers%201.jpg",
+            "type": "img",
+            "transfer": 16800,
+            "encoded": 16500,
+            "duration": 23
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/speaker%20bar%201.jpg",
+            "type": "img",
+            "transfer": 10324,
+            "encoded": 10024,
+            "duration": 23.700000047683716
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/speakers%202%20primary.jpg",
+            "type": "img",
+            "transfer": 12786,
+            "encoded": 12486,
+            "duration": 24.100000023841858
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/blue%20yeti.jpg",
+            "type": "img",
+            "transfer": 10458,
+            "encoded": 10158,
+            "duration": 24.600000023841858
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/audio%20interface.jpg",
+            "type": "img",
+            "transfer": 15849,
+            "encoded": 15549,
+            "duration": 24.80000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/midi%20keyboard%201.jpg",
+            "type": "img",
+            "transfer": 18688,
+            "encoded": 18388,
+            "duration": 24.799999952316284
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/13%20inch%20laptop.jpg",
+            "type": "img",
+            "transfer": 12716,
+            "encoded": 12416,
+            "duration": 25.099999964237213
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/15%20inch%20laptop.jpg",
+            "type": "img",
+            "transfer": 13440,
+            "encoded": 13140,
+            "duration": 26
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/17%20inch%20laptop.jpg",
+            "type": "img",
+            "transfer": 13626,
+            "encoded": 13326,
+            "duration": 27.599999964237213
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/desktop%201.jpg",
+            "type": "img",
+            "transfer": 12431,
+            "encoded": 12131,
+            "duration": 27.5
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/desktop%202%20small.jpg",
+            "type": "img",
+            "transfer": 20916,
+            "encoded": 20616,
+            "duration": 27.69999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/cube%20primitive.jpg",
+            "type": "img",
+            "transfer": 7044,
+            "encoded": 6744,
+            "duration": 28.30000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/primitive%20sphere.jpg",
+            "type": "img",
+            "transfer": 7437,
+            "encoded": 7137,
+            "duration": 28.5
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/office%20chair.jpg",
+            "type": "img",
+            "transfer": 14932,
+            "encoded": 14632,
+            "duration": 29.100000023841858
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/simple%20chair.jpg",
+            "type": "img",
+            "transfer": 15337,
+            "encoded": 15037,
+            "duration": 29.80000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/gaming%20chair.jpg",
+            "type": "img",
+            "transfer": 13928,
+            "encoded": 13628,
+            "duration": 29.900000035762787
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/book.jpg",
+            "type": "img",
+            "transfer": 12503,
+            "encoded": 12203,
+            "duration": 30
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/coffee%20cup.jpg",
+            "type": "img",
+            "transfer": 10707,
+            "encoded": 10407,
+            "duration": 30.400000035762787
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/lamp%201.jpg",
+            "type": "img",
+            "transfer": 9993,
+            "encoded": 9693,
+            "duration": 30.600000023841858
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Model%20thumbnails/lamp%202.jpg",
+            "type": "img",
+            "transfer": 11883,
+            "encoded": 11583,
+            "duration": 30.69999998807907
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%201.gif",
+            "type": "img",
+            "transfer": 4938529,
+            "encoded": 4938229,
+            "duration": 81
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/OrbitControls.js",
+            "type": "script",
+            "transfer": 5443,
+            "encoded": 5143,
+            "duration": 10.800000011920929
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/three/examples/js/controls/TransformControls.js",
+            "type": "script",
+            "transfer": 8279,
+            "encoded": 7979,
+            "duration": 12.800000011920929
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/GLTFLoader.js",
+            "type": "script",
+            "transfer": 19349,
+            "encoded": 19049,
+            "duration": 13.5
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/three.min.js",
+            "type": "script",
+            "transfer": 154641,
+            "encoded": 154341,
+            "duration": 27.700000047683716
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%202.gif",
+            "type": "img",
+            "transfer": 408346,
+            "encoded": 408046,
+            "duration": 31.600000023841858
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%203.gif",
+            "type": "img",
+            "transfer": 406349,
+            "encoded": 406049,
+            "duration": 32.60000002384186
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%204.gif",
+            "type": "img",
+            "transfer": 268260,
+            "encoded": 267960,
+            "duration": 33.80000001192093
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%205.gif",
+            "type": "img",
+            "transfer": 711778,
+            "encoded": 711478,
+            "duration": 34.40000003576279
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%206.gif",
+            "type": "img",
+            "transfer": 1361375,
+            "encoded": 1361075,
+            "duration": 39.90000003576279
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/Click%20Through%20Tutorial/slide%207.gif",
+            "type": "img",
+            "transfer": 2106026,
+            "encoded": 2105726,
+            "duration": 42.40000003576279
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/src/main.js",
+            "type": "script",
+            "transfer": 10357,
+            "encoded": 10057,
+            "duration": 8.899999976158142
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/vendor/popper.min.js",
+            "type": "script",
+            "transfer": 7667,
+            "encoded": 7367,
+            "duration": 12.399999976158142
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/js/ui.js",
+            "type": "script",
+            "transfer": 1205,
+            "encoded": 905,
+            "duration": 12.699999988079071
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/vendor/bootstrap.min.js",
+            "type": "script",
+            "transfer": 16906,
+            "encoded": 16606,
+            "duration": 13.899999976158142
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/fonts/icomoon/icomoon.ttf?lir4dr",
+            "type": "css",
+            "transfer": 85716,
+            "encoded": 85416,
+            "duration": 6.700000047683716
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/GLTFs/desks/standing%20desks/standing%20desk%201%20-%2023.8Dx51.7Wx30.3H.glb",
+            "type": "xmlhttprequest",
+            "transfer": 13644340,
+            "encoded": 13644040,
+            "duration": 706.3000000119209
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/GLTFs/mice%20and%20mousepads/mouse%201%20-%204.1Dx2.2Wx1.6H.glb",
+            "type": "xmlhttprequest",
+            "transfer": 1070380,
+            "encoded": 1070080,
+            "duration": 6.699999988079071
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/GLTFs/monitors/16%209%20monitor/16_9%20monitor%203%2028in.glb",
+            "type": "xmlhttprequest",
+            "transfer": 2085440,
+            "encoded": 2085140,
+            "duration": 10.300000011920929
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/GLTFs/keyboards/60%20keyboards/60%20Keyboard%201%20allGrey.glb",
+            "type": "xmlhttprequest",
+            "transfer": 12019284,
+            "encoded": 12018984,
+            "duration": 705.1000000238419
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/GLTFs/mice%20and%20mousepads/small%20qck%20mousepad%20-%208.4Dx9.8W.glb",
+            "type": "xmlhttprequest",
+            "transfer": 236876,
+            "encoded": 236576,
+            "duration": 10.699999988079071
+          },
+          {
+            "name": "http://127.0.0.1:4173/DeskSpacing.com/textures/darkParquet.jpg",
+            "type": "img",
+            "transfer": 156694,
+            "encoded": 156394,
+            "duration": 11.299999952316284
+          }
+        ]
+      },
+      "scripts": [
+        {
+          "path": "OrbitControls.js",
+          "bytes": 23815,
+          "gzipBytes": 5143
+        },
+        {
+          "path": "three/examples/js/controls/TransformControls.js",
+          "bytes": 45661,
+          "gzipBytes": 7979
+        },
+        {
+          "path": "GLTFLoader.js",
+          "bytes": 81360,
+          "gzipBytes": 19049
+        },
+        {
+          "path": "three.min.js",
+          "bytes": 618895,
+          "gzipBytes": 154341
+        },
+        {
+          "path": "src/main.js",
+          "bytes": 48560,
+          "gzipBytes": 10057
+        },
+        {
+          "path": "vendor/popper.min.js",
+          "bytes": 20122,
+          "gzipBytes": 7367
+        },
+        {
+          "path": "js/ui.js",
+          "bytes": 905,
+          "gzipBytes": 419
+        },
+        {
+          "path": "vendor/bootstrap.min.js",
+          "bytes": 60539,
+          "gzipBytes": 16606
+        }
+      ],
+      "idle": {
+        "samples": [
+          {
+            "time": 2678.600000023842,
+            "cpuMs": 0.3999999761581421,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 2861.5,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 3040,
+            "cpuMs": 0.40000003576278687,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 3219.600000023842,
+            "cpuMs": 0.3999999761581421,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 3399.300000011921,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 3578.400000035763,
+            "cpuMs": 0.3999999761581421,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 3757,
+            "cpuMs": 0.40000003576278687,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 3937.300000011921,
+            "cpuMs": 0.3999999761581421,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 4115.900000035763,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 4295.699999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 4472.900000035763,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          }
+        ],
+        "resources": {
+          "memory": {
+            "geometries": 21,
+            "textures": 5
+          },
+          "programs": 6,
+          "render": {
+            "frame": 27,
+            "calls": 13,
+            "triangles": 270374,
+            "points": 0,
+            "lines": 0
+          },
+          "heapBytes": 87821586,
+          "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+          "camera": [
+            0,
+            61.27639300930197,
+            21.18381105308002
+          ],
+          "objects": [
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "PrimitiveBoxFloorFurnitureNoSelect",
+              "product": "floor",
+              "position": [
+                0,
+                0,
+                -40
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "dimensions": [
+                100,
+                2,
+                70
+              ],
+              "texture": "darkParquet"
+            },
+            {
+              "type": "Monitor",
+              "product": "small16x9Monitor28",
+              "position": [
+                0,
+                31.300000000000004,
+                -57
+              ],
+              "rotation": [
+                0,
+                4.71238898038469,
+                0
+              ]
+            },
+            {
+              "type": "Mousepad",
+              "product": "QCKSmall",
+              "position": [
+                9,
+                31.25,
+                -50
+              ],
+              "rotation": [
+                0,
+                1.5707963267948966,
+                0
+              ]
+            },
+            {
+              "type": "Keyboard",
+              "product": "default60PercentKeyboardAllGrey",
+              "position": [
+                -3,
+                31.35,
+                -50
+              ],
+              "rotation": [
+                0,
+                4.71238898038469,
+                0
+              ]
+            },
+            {
+              "type": "DeskNoSelect",
+              "product": "modernDesk",
+              "position": [
+                0,
+                30.7,
+                -53
+              ],
+              "rotation": [
+                0,
+                1.5707963267948966,
+                0
+              ]
+            }
+          ],
+          "pixelRatio": 1
+        }
+      },
+      "orbit": {
+        "durationMs": 10252,
+        "samples": [
+          {
+            "time": 5209.199999988079,
+            "cpuMs": 0.10000002384185791,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 5363.400000035763,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 5541.699999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 5719.600000023842,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 5902.300000011921,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 6081.600000023842,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 6261.800000011921,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 6438,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 6614.600000023842,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 6792,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 6968.699999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 7145,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 7320.300000011921,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 7494.400000035763,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 7668.600000023842,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 7843.600000023842,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 8018.699999988079,
+            "cpuMs": 0.20000004768371582,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 8193.800000011921,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 8368.900000035763,
+            "cpuMs": 0.3999999761581421,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 8543.400000035763,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 8716.300000011921,
+            "cpuMs": 0.10000002384185791,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 8891.300000011921,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 9064.800000011921,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 9238,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 9413.600000023842,
+            "cpuMs": 0.3999999761581421,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 9587.199999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 9760,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 9932.199999988079,
+            "cpuMs": 0.20000004768371582,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 10104.300000011921,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 10277.5,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 10452.600000023842,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 10623.900000035763,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 10795,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 10967.300000011921,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 11138.800000011921,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 11310.199999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 11481.600000023842,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 11652.699999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 11823.100000023842,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 11992.600000023842,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 12163.400000035763,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 12334.600000023842,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 12507,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 12677.900000035763,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 12849.699999988079,
+            "cpuMs": 0.20000004768371582,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 13023.699999988079,
+            "cpuMs": 0.20000004768371582,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 13197.300000011921,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 13372.400000035763,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 13542.5,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 13712.100000023842,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 13886.199999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 14060.199999988079,
+            "cpuMs": 0.30000001192092896,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 14236.199999988079,
+            "cpuMs": 0.20000004768371582,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 14405.699999988079,
+            "cpuMs": 0.20000004768371582,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 14580.300000011921,
+            "cpuMs": 0.10000002384185791,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 14753.600000023842,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 14926.100000023842,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 15092.900000035763,
+            "cpuMs": 0.2999999523162842,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 15260.5,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          },
+          {
+            "time": 15426.300000011921,
+            "cpuMs": 0.19999998807907104,
+            "calls": 13,
+            "triangles": 270374
+          }
+        ]
+      },
+      "beforeDuplicates": {
+        "memory": {
+          "geometries": 21,
+          "textures": 5
+        },
+        "programs": 6,
+        "render": {
+          "frame": 90,
+          "calls": 13,
+          "triangles": 270374,
+          "points": 0,
+          "lines": 0
+        },
+        "heapBytes": 31552987,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "camera": [
+          0,
+          61.27639300930197,
+          21.183811053080014
+        ],
+        "objects": [
+          {
+            "type": "Mouse",
+            "product": "defaultMouse",
+            "position": [
+              9,
+              31.2,
+              -50
+            ],
+            "rotation": [
+              0,
+              3.141592653589793,
+              0
+            ]
+          },
+          {
+            "type": "PrimitiveBoxFloorFurnitureNoSelect",
+            "product": "floor",
+            "position": [
+              0,
+              0,
+              -40
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "dimensions": [
+              100,
+              2,
+              70
+            ],
+            "texture": "darkParquet"
+          },
+          {
+            "type": "Monitor",
+            "product": "small16x9Monitor28",
+            "position": [
+              0,
+              31.300000000000004,
+              -57
+            ],
+            "rotation": [
+              0,
+              4.71238898038469,
+              0
+            ]
+          },
+          {
+            "type": "Mousepad",
+            "product": "QCKSmall",
+            "position": [
+              9,
+              31.25,
+              -50
+            ],
+            "rotation": [
+              0,
+              1.5707963267948966,
+              0
+            ]
+          },
+          {
+            "type": "Keyboard",
+            "product": "default60PercentKeyboardAllGrey",
+            "position": [
+              -3,
+              31.35,
+              -50
+            ],
+            "rotation": [
+              0,
+              4.71238898038469,
+              0
+            ]
+          },
+          {
+            "type": "DeskNoSelect",
+            "product": "modernDesk",
+            "position": [
+              0,
+              30.7,
+              -53
+            ],
+            "rotation": [
+              0,
+              1.5707963267948966,
+              0
+            ]
+          }
+        ],
+        "pixelRatio": 1
+      },
+      "duplicates": {
+        "durationMs": 26.100000023841858,
+        "resources": {
+          "memory": {
+            "geometries": 51,
+            "textures": 5
+          },
+          "programs": 6,
+          "render": {
+            "frame": 94,
+            "calls": 50,
+            "triangles": 407408,
+            "points": 0,
+            "lines": 4
+          },
+          "heapBytes": 54661616,
+          "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+          "camera": [
+            0,
+            61.27639300930197,
+            21.18381105308002
+          ],
+          "objects": [
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "PrimitiveBoxFloorFurnitureNoSelect",
+              "product": "floor",
+              "position": [
+                0,
+                0,
+                -40
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "dimensions": [
+                100,
+                2,
+                70
+              ],
+              "texture": "darkParquet"
+            },
+            {
+              "type": "Monitor",
+              "product": "small16x9Monitor28",
+              "position": [
+                0,
+                31.300000000000004,
+                -57
+              ],
+              "rotation": [
+                0,
+                4.71238898038469,
+                0
+              ]
+            },
+            {
+              "type": "Mousepad",
+              "product": "QCKSmall",
+              "position": [
+                9,
+                31.25,
+                -50
+              ],
+              "rotation": [
+                0,
+                1.5707963267948966,
+                0
+              ]
+            },
+            {
+              "type": "Keyboard",
+              "product": "default60PercentKeyboardAllGrey",
+              "position": [
+                -3,
+                31.35,
+                -50
+              ],
+              "rotation": [
+                0,
+                4.71238898038469,
+                0
+              ]
+            },
+            {
+              "type": "DeskNoSelect",
+              "product": "modernDesk",
+              "position": [
+                0,
+                30.7,
+                -53
+              ],
+              "rotation": [
+                0,
+                1.5707963267948966,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            },
+            {
+              "type": "Mouse",
+              "product": "defaultMouse",
+              "position": [
+                9,
+                31.2,
+                -50
+              ],
+              "rotation": [
+                0,
+                3.141592653589793,
+                0
+              ]
+            }
+          ],
+          "pixelRatio": 1
+        }
+      },
+      "afterDelete": {
+        "memory": {
+          "geometries": 21,
+          "textures": 5
+        },
+        "programs": 6,
+        "render": {
+          "frame": 97,
+          "calls": 13,
+          "triangles": 270374,
+          "points": 0,
+          "lines": 0
+        },
+        "heapBytes": 31652924,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "camera": [
+          0,
+          61.27639300930197,
+          21.18381105308002
+        ],
+        "objects": [
+          {
+            "type": "Mouse",
+            "product": "defaultMouse",
+            "position": [
+              9,
+              31.2,
+              -50
+            ],
+            "rotation": [
+              0,
+              3.141592653589793,
+              0
+            ]
+          },
+          {
+            "type": "PrimitiveBoxFloorFurnitureNoSelect",
+            "product": "floor",
+            "position": [
+              0,
+              0,
+              -40
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "dimensions": [
+              100,
+              2,
+              70
+            ],
+            "texture": "darkParquet"
+          },
+          {
+            "type": "Monitor",
+            "product": "small16x9Monitor28",
+            "position": [
+              0,
+              31.300000000000004,
+              -57
+            ],
+            "rotation": [
+              0,
+              4.71238898038469,
+              0
+            ]
+          },
+          {
+            "type": "Mousepad",
+            "product": "QCKSmall",
+            "position": [
+              9,
+              31.25,
+              -50
+            ],
+            "rotation": [
+              0,
+              1.5707963267948966,
+              0
+            ]
+          },
+          {
+            "type": "Keyboard",
+            "product": "default60PercentKeyboardAllGrey",
+            "position": [
+              -3,
+              31.35,
+              -50
+            ],
+            "rotation": [
+              0,
+              4.71238898038469,
+              0
+            ]
+          },
+          {
+            "type": "DeskNoSelect",
+            "product": "modernDesk",
+            "position": [
+              0,
+              30.7,
+              -53
+            ],
+            "rotation": [
+              0,
+              1.5707963267948966,
+              0
+            ]
+          }
+        ],
+        "pixelRatio": 1
+      },
+      "disposed": {
+        "geometries": 0,
+        "textures": 0
+      },
+      "errors": []
+    }
+  ]
+}

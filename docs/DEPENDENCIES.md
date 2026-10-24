@@ -16,7 +16,7 @@ installation is not modified; use `nvm install && nvm use` before `npm ci`.
 | TweenMax/TimelineLite       | vendored GSAP 1.20.2                   | **gsap 3.15.0**, current stable. Marketing timelines retain their original durations, offsets, easing and triggers.                                   |
 | ScrollMagic and GSAP bridge | vendored 2.0.5 and animation.gsap      | **Removed from pages/output**, replaced by maintained GSAP ScrollTrigger in the same package.                                                         |
 | ScrollMagic debug plugin    | vendored addIndicators                 | **Removed from pages/output**, never used by active application code.                                                                                 |
-| Three.js                    | npm 0.116.1                            | **Retained**, blocked migration described below. Registry latest is 0.186.1.                                                                          |
+| Three.js                    | npm 0.116.1                            | **0.186.1** for the desktop ES-module planner; separate `three-legacy` r116 alias for retained older routes.                                          |
 
 The old jQuery, Popper, Bootstrap JS, TweenMax, ScrollMagic, animation bridge and
 debug files remain in the checkout for provenance but are excluded from `dist/`.
@@ -42,25 +42,29 @@ dependencies only from an existing macOS node_modules tree. `npm ci` verifies it
 
 ### Three.js core and custom addons
 
-Current Three.js no longer provides the classic global distribution/addon layout
-used by the planner. The root OrbitControls and GLTFLoader differ from the original
-vendored r116 versions. The application also uses legacy geometry names, old color
-encoding/gamma configuration and implicit globals. Substituting 0.186.1 would require
-coordinated core/addon/module changes and could change model hierarchy, lighting,
-selection and appearance. The earlier task explicitly separated that migration.
+The desktop planner now imports **Three.js 0.186.1** and its matching GLTFLoader,
+OrbitControls, TransformControls, SkeletonUtils and Meshopt decoder through npm.
+Explicit exports permit tree shaking. It no longer loads the root global engine
+or addons. The root GLTFLoader and OrbitControls were compared against npm r116;
+their differences were whitespace only.
 
-Recommended next step: migrate core and matching upstream addons together to
-current Three.js in a dedicated change, with fixed-camera render comparisons,
-legacy share fixtures and interaction tests for all retained planner pages. An
-intermediate r125+ migration can address the known advisory sooner, but still needs
-compatibility testing; it is not claimed safe merely because it installs. A reviewed
-backport of the upstream Color parser patch is a possible interim alternative and
-would need targeted tests and explicit patch maintenance. Replacing the whole engine
-with Babylon.js is maintained but is a much larger rewrite, not a drop-in upgrade.
+The alias **three-legacy@npm:three@0.116.1** serves the existing classic URLs used
+by mobile, old and prototype pages. These large inline applications are retained
+without an unverified engine substitution. Their DragControls/DRACOLoader URLs
+also stay on r116. The desktop uses neither addon: dragging is handled by
+TransformControls and no catalog asset requires Draco. Modern Meshopt decoding is
+bundled with the active engine for the verified optimized GLBs.
 
-The retained `three/` archive and root copies are not evidence of modern support;
-the build serves the pinned npm core, required matching addons and custom root
-addons. Do not run `npm audit fix --force` to change the engine without this work.
+Color-space APIs, physically based light intensities, the historical ACES curve,
+TransformControls.getHelper(), pointer events, pan defaults and sphere detail
+semantics were handled explicitly. WebGL 2 is required by the modern renderer.
+See [PERFORMANCE.md](PERFORMANCE.md) for visual tests and measured trade-offs.
+
+Build-time asset tools are pinned: `@gltf-transform/{core,extensions,functions}`
+4.5.1, `meshoptimizer` 1.3.0 and `sharp` 0.35.5. They are development dependencies;
+the runtime decoder comes from the matching Three.js package. Scripts write
+verified copies and never overwrite original models. Three.js and Meshopt license files accompany the build under `vendor/`;
+minification may remove source comments.
 
 ### Bootstrap/Bootswatch CSS and template assets
 
@@ -76,7 +80,8 @@ claim that Bootstrap supports mixing major versions out of the box.
 
 `npm audit` now reports **one high-severity finding**, down from three vulnerable
 packages. Bootstrap and jQuery findings were removed by upgrading/removing them.
-The remaining finding is [CVE-2020-28496 / GHSA-fq6p-x6j3-cmmq](https://github.com/advisories/GHSA-fq6p-x6j3-cmmq),
+The remaining finding applies to the retained `three-legacy` alias, not the
+modern desktop engine: [CVE-2020-28496 / GHSA-fq6p-x6j3-cmmq](https://github.com/advisories/GHSA-fq6p-x6j3-cmmq),
 a denial-of-service issue in Three.js RGB/HSL color parsing before 0.125.0. No new
 untrusted color-input feature was introduced. This is not a proof of
 non-exploitability; the finding remains open and `npm audit` intentionally exits 1.

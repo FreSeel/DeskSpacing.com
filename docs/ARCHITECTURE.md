@@ -1,8 +1,9 @@
 # DeskSpacing architecture
 
 The desktop planner at `/mainApp.html` uses vanilla JavaScript ES modules. There
-is no application framework or global application state. Three.js stays pinned to
-0.116.1, including the existing customized root addons. Model URLs, authored
+is no application framework or global application state. The desktop uses npm
+Three.js 0.186.1 with matching ES-module addons. Older pages retain a separate
+`three-legacy` r116 package. Model IDs, original URLs, authored
 coordinates, visual settings, product IDs and the legacy sharing format are
 compatibility boundaries.
 
@@ -16,15 +17,15 @@ been removed.
 | Location                        | Responsibility                                                                                                                                                                 |
 | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `mainApp.html`                  | Existing catalog cards, forms, menus, tutorials and dialogs. Buttons use `data-action`, `data-product` or `data-family`; no embedded application JavaScript or event handlers. |
-| `src/main.js`                   | Entrypoint; injects the pinned `window.THREE` engine once and exports the composed `app` lifecycle.                                                                            |
+| `src/main.js`                   | Entrypoint; injects explicit npm engine exports once and exports the composed `app` lifecycle.                                                                                 |
 | `src/app/createApp.js`          | Composes services, starts default/URL loading, handles startup failure, and tears down the app.                                                                                |
 | `src/app/pageSetup.js`          | Existing analytics initialization and desktop-only mobile notice.                                                                                                              |
-| `src/scene/createScene.js`      | Renderer, camera, lights, fog, OrbitControls, TransformControls, resize handling and animation loop.                                                                           |
+| `src/scene/createScene.js`      | Renderer, camera, lights, fog, OrbitControls, TransformControls, resize handling and demand rendering.                                                                         |
 | `src/catalog/products.js`       | Stable product IDs, legacy types, asset paths, authored positions/rotations, display dimensions, textures and desk offsets.                                                    |
 | `src/catalog/configuration.js`  | Default setup, product families, primitive defaults, variant resolution and placement calculations. No DOM or Three.js dependency.                                             |
-| `src/models/modelLoader.js`     | Promise-based GLTFLoader boundary; preserves the legacy model-root convention and adds load errors.                                                                            |
+| `src/models/modelLoader.js`     | GLTFLoader boundary with shared, reference-counted templates, a bounded idle cache, Meshopt decoding and the legacy first-root convention.                                     |
 | `src/models/objectFactory.js`   | Builds model or primitive instances, loads primitive textures, and owns their resources.                                                                                       |
-| `src/models/resources.js`       | Disposes each geometry, material and texture once per owned model hierarchy.                                                                                                   |
+| `src/models/resources.js`       | Disposes owned geometries, materials, textures, skeletons and ImageBitmaps; estimates cache retention.                                                                         |
 | `src/state/objectStore.js`      | Scene membership, instance names, desk offset and generation tokens.                                                                                                           |
 | `src/state/actions.js`          | Add, replace, remove, desk changes, reset, default initialization and transactional restoration. No DOM dependency.                                                            |
 | `src/interactions/selection.js` | Maps raycast hits to registered roots, selects, deselects and deletes.                                                                                                         |
@@ -71,10 +72,13 @@ The public lifecycle object exposes `state`, `actions`, `selection`, `sharing`,
 their own test-only inspection alias; production does not publish `objectsArr`,
 `scene`, `renderer` or inline-handler globals.
 
-The animation loop and rendering quality are deliberately retained. Projection
-updates occur when resizing; orbit updates/rendering still run every frame.
-Demand rendering, pixel-ratio caps and shadow tuning need separate performance
-and visual validation.
+The render scheduler coalesces changes, follows OrbitControls damping/change
+events, and stops when idle or hidden. Store mutations and gizmo object changes
+invalidate shadows; camera motion reuses the shadow map. Device pixel ratio is
+capped at 2. See [PERFORMANCE.md](PERFORMANCE.md) for measured results and the
+explicit color, light, tone-mapping and control compatibility decisions. Direct
+transform/material edits outside actions must call `view.invalidateScene()`;
+camera-only animation code must call `view.invalidate()`.
 
 ## Lifecycle of a 3D object
 
@@ -106,12 +110,14 @@ The store owns membership, identity and desk offset; selection owns its current
 root. Live Three.js transforms are authoritative. Saving reads a fresh plain-data
 snapshot, so gizmo movement cannot leave a second state model out of sync.
 
-Each model load currently owns independent resources. There is **no parsed-model
-cache or clone sharing**: the browser may reuse HTTP responses, but GPU resources
-are not shared across instances. Introducing a parsed cache requires bounded
-retention, reference counting or equivalent ownership, plus special handling for
-skinned models. Independent ownership makes deletion and failed-load cleanup
-predictable without introducing a new caching framework.
+Model requests are deduplicated by URL, including pending requests. Instances use
+SkeletonUtils cloning and independent materials/transforms with shared immutable
+geometries/textures. Reference counts protect surviving instances. Unused templates
+are retained up to an estimated 32 MiB budget and evicted in least-recently-used
+order; active templates are not counted against that idle budget. Full app disposal
+releases the cache, including loads completing after shutdown. Primitive resources
+remain independently owned. Original paths stay in the catalog; a generated
+`optimizedModels.js` manifest redirects five verified startup assets to copies.
 
 ## Adding a product or model
 
@@ -142,7 +148,8 @@ product entry, its asset/thumbnail and one select option.
 
 Custom desks and reference shapes use `primitives`. The DOM adapter preserves the
 legacy mapping of L/W/H inputs to Three.js width/height/depth; custom desks have
-one-inch thickness. Reference spheres retain `OctahedronBufferGeometry(radius, 5)`.
+one-inch thickness. Reference spheres retain the r116 tessellation of `OctahedronBufferGeometry(radius, 5)`
+(modern `OctahedronGeometry(radius, 31)`).
 Display dimensions are descriptive legacy strings, not a source for geometry.
 Some strings are known to be inconsistent; this extraction does not reinterpret
 or correct model measurements.
@@ -180,8 +187,9 @@ Starting a new restore/reset invalidates earlier pending loads.
 
 ## Verification and remaining work
 
-`npm run check` passed ESLint/Prettier, 42 unit tests, the production build and
-13 Chromium browser tests under `/DeskSpacing.com/`, using Node 24.22.1.
+The extraction originally passed 42 unit tests and 13 Chromium browser tests.
+Current migration/performance verification is recorded in
+[PERFORMANCE.md](PERFORMANCE.md), including the added cache and rendering tests.
 
 Unit coverage includes baseline catalog paths/coordinates/dimensions, variant
 resolution, primitive placement, both legacy codecs, malformed/bounded input,
@@ -213,8 +221,8 @@ Deliberately retained or deferred:
 - Catalog card markup, some duplicate HTML IDs, inline presentation styles and
   hidden unfinished settings remain. Product metadata is centralized, but cards
   are not yet generated from configuration.
-- Dependency upgrades, model compression/pruning, demand rendering, a parsed-model
-  cache and full touch/accessibility work are separate tasks. No performance
-  improvement or complete visual parity across every model is claimed.
+- Model simplification, broader texture optimization and full touch/accessibility
+  work remain separate tasks. The measured performance scope and visual comparison
+  limits are documented in PERFORMANCE.md.
 - Browser verification uses Chromium software WebGL. Real GPU devices,
   Firefox/WebKit and production hosting need their own checks.

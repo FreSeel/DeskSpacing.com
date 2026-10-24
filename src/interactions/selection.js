@@ -13,6 +13,7 @@ export function createSelection({
   removeObject,
 }) {
   const raycaster = new THREE.Raycaster();
+  const hits = [];
   const selection = {
     pickedObject: null,
     pickEnabled: true,
@@ -37,16 +38,25 @@ export function createSelection({
     },
     mouseSelect(position) {
       if (!selection.pickEnabled) return;
-      const objects = getObjects();
+      const objects = getObjects().filter(
+        (object) => !object.userData.type.includes('NoSelect'),
+      );
+      const roots = new Set(objects);
+      camera.updateMatrixWorld();
+      for (const object of objects) object.updateWorldMatrix(true, true);
       raycaster.setFromCamera(position, camera);
       // Raycaster orders hits by distance. Resolve nested meshes to the owned root.
-      for (const hit of raycaster.intersectObjects(objects, true)) {
-        const root = findObjectRoot(hit.object, objects);
+      hits.length = 0;
+      raycaster.intersectObjects(objects, true, hits);
+      for (const hit of hits) {
+        let root = hit.object;
+        while (root && !roots.has(root)) root = root.parent;
         if (root && !root.userData.type.includes('NoSelect')) {
           selection.pick(root);
           break;
         }
       }
+      hits.length = 0;
     },
   };
   return selection;

@@ -16,19 +16,29 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "npm run build && playwright test",
-    "check": "npm run lint && npm run format:check && npm test && npm run test:e2e"
+    "check": "npm run lint && npm run format:check && npm test && npm run test:e2e",
+    "perf:profile": "node scripts/profile.js",
+    "assets:audit": "node scripts/audit-assets.js",
+    "assets:optimize": "node scripts/optimize-assets.js",
+    "perf:compare": "node scripts/compare-performance.js"
   },
   "dependencies": {
     "@popperjs/core": "2.11.8",
     "bootstrap": "5.3.8",
     "gsap": "3.15.0",
-    "three": "0.116.1"
+    "three": "0.186.1",
+    "three-legacy": "npm:three@0.116.1"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
+    "@gltf-transform/core": "4.5.1",
+    "@gltf-transform/extensions": "4.5.1",
+    "@gltf-transform/functions": "4.5.1",
     "@playwright/test": "1.64.1",
     "eslint": "10.13.0",
+    "meshoptimizer": "1.3.0",
     "prettier": "3.9.10",
+    "sharp": "0.35.5",
     "vite": "8.3.5",
     "vitest": "5.0.5"
   }

@@ -1,0 +1,2370 @@
+{
+  "models": [
+    {
+      "path": "GLTFs/desks/standing desks/standing desk 1 - 23.8Dx51.7Wx30.3H.glb",
+      "bytes": 13644040,
+      "triangles": 102144,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2000,
+          "height": 2000,
+          "format": "png",
+          "bytes": 3713696
+        }
+      ]
+    },
+    {
+      "path": "desks/regular_desk_1.glb",
+      "missing": true
+    },
+    {
+      "path": "GLTFs/desks/standing desks/standing desk 2 - 28.4Dx55Wx29.7H.glb",
+      "bytes": 4668368,
+      "triangles": 42084,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 894,
+          "height": 894,
+          "format": "png",
+          "bytes": 533867
+        },
+        {
+          "width": 200,
+          "height": 200,
+          "format": "png",
+          "bytes": 2214
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/desks/linnmon desks/linnmon desk - 24Dx39Wx30.3H.glb",
+      "bytes": 195376,
+      "triangles": 1952,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/desks/linnmon desks/linnmon desk - 24Dx47Wx30.3H.glb",
+      "bytes": 193140,
+      "triangles": 1952,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/desks/linnmon desks/linnmon desk - 24Dx59Wx30.3H.glb",
+      "bytes": 194656,
+      "triangles": 1952,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/desks/alex desks/alex desk - 40Dx61Wx28.7H.glb",
+      "bytes": 5787072,
+      "triangles": 44228,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "png",
+          "bytes": 1196717
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/desks/alex desks/alex desk - 31Dx67Wx28.7H.glb",
+      "bytes": 5779336,
+      "triangles": 44228,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "png",
+          "bytes": 1196717
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/desks/alex desks/alex desk - 24Dx79Wx28.7H.glb",
+      "bytes": 5275560,
+      "triangles": 44228,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "png",
+          "bytes": 1196717
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/desks/L shaped desks/L shaped desk left.glb",
+      "bytes": 2331180,
+      "triangles": 13056,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "png",
+          "bytes": 1139788
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/desks/L shaped desks/L shaped desk right.glb",
+      "bytes": 2331064,
+      "triangles": 13056,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "png",
+          "bytes": 1139788
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/monitors/16 9 monitor/16_9 monitor 3 22in.glb",
+      "bytes": 2086900,
+      "triangles": 22784,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 monitor/16_9 monitor 3 23in.glb",
+      "bytes": 2085968,
+      "triangles": 22784,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 monitor/16_9 monitor 3 24in.glb",
+      "bytes": 2086072,
+      "triangles": 22784,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 monitor/16_9 monitor 3 25in.glb",
+      "bytes": 2100952,
+      "triangles": 22784,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 monitor/16_9 monitor 3 27in.glb",
+      "bytes": 2054584,
+      "triangles": 22464,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 monitor/16_9 monitor 3 28in.glb",
+      "bytes": 2085140,
+      "triangles": 22784,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 monitor/16_9 monitor 3 31.5in.glb",
+      "bytes": 2047044,
+      "triangles": 22464,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 monitors no stand/16_9 monitor 3 22in no stand.glb",
+      "bytes": 1791552,
+      "triangles": 19456,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 monitors no stand/16_9 monitor 3 23in no stand.glb",
+      "bytes": 1791200,
+      "triangles": 19456,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 monitors no stand/16_9 monitor 3 24in no stand.glb",
+      "bytes": 1791004,
+      "triangles": 19456,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 monitors no stand/16_9 monitor 3 25in no stand.glb",
+      "bytes": 1791524,
+      "triangles": 19456,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 monitors no stand/16_9 monitor 3 27in no stand.glb",
+      "bytes": 1792996,
+      "triangles": 19456,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 monitors no stand/16_9 monitor 3 28in no stand.glb",
+      "bytes": 1791620,
+      "triangles": 19456,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 monitors no stand/16_9 monitor 3 31.5in no stand.glb",
+      "bytes": 1785320,
+      "triangles": 19456,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 curved monitors/curved 16 9 monitor 25in.glb",
+      "bytes": 3237984,
+      "triangles": 32800,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 curved monitors/curved 16 9 monitor 27in.glb",
+      "bytes": 3212032,
+      "triangles": 32800,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 curved monitors/curved 16 9 monitor 31.5in.glb",
+      "bytes": 3265336,
+      "triangles": 32800,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 curved monitors/curved 16 9 monitor 34in.glb",
+      "bytes": 3265208,
+      "triangles": 32800,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 curved monitors no stand/curved 16 9 monitor 25in no stand.glb",
+      "bytes": 2031084,
+      "triangles": 21696,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 curved monitors no stand/curved 16 9 monitor  27in.glb",
+      "bytes": 1515908,
+      "triangles": 21696,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 curved monitors no stand/curved large 16 9 monitor 31.5in no stand.glb",
+      "bytes": 2045672,
+      "triangles": 21696,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/16 9 curved monitors no stand/curved large 16 9 monitor 34in no stand.glb",
+      "bytes": 2044996,
+      "triangles": 21696,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/21 9 curved monitors/Ultrwide Monitor 1 30in.glb",
+      "bytes": 2249032,
+      "triangles": 24064,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/21 9 curved monitors/Ultrwide Monitor 1 34in.glb",
+      "bytes": 4613456,
+      "triangles": 46336,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/21 9 curved monitors/Ultrwide Monitor 1 38in.glb",
+      "bytes": 4613000,
+      "triangles": 46336,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/21 9 curved monitors no stand/Ultrwide Monitor 1 30in no stand.glb",
+      "bytes": 1465200,
+      "triangles": 15680,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/21 9 curved monitors no stand/Ultrwide Monitor 1 34in no stand.glb",
+      "bytes": 1470448,
+      "triangles": 15680,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/21 9 curved monitors no stand/Ultrwide Monitor 1 38in no stand.glb",
+      "bytes": 1470444,
+      "triangles": 15680,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/32 9 monitors/32_9 monitor 43.4in.glb",
+      "bytes": 4741492,
+      "triangles": 52740,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/32 9 monitors/32_9 monitor 49in.glb",
+      "bytes": 5351820,
+      "triangles": 52768,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/32 9 monitors no stand/32_9 monitor 43.4in.glb",
+      "bytes": 1490772,
+      "triangles": 15648,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/32 9 monitors no stand/32_9 monitor 49in.glb",
+      "bytes": 1490772,
+      "triangles": 15648,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/21 9 monitors/21 9 monitor 2 non curved 25in.glb",
+      "bytes": 1591964,
+      "triangles": 17152,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/21 9 monitors/21 9 monitor 2 non curved 29in.glb",
+      "bytes": 1628796,
+      "triangles": 17152,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/21 9 monitors/21 9 monitor 2 non curved 34in.glb",
+      "bytes": 1610040,
+      "triangles": 17152,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/21 9 monitors no stand/21 9 monitor 2 non curved 25in no stand.glb",
+      "bytes": 889876,
+      "triangles": 9056,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/21 9 monitors no stand/21 9 monitor 2 non curved 29in no stand.glb",
+      "bytes": 893936,
+      "triangles": 9056,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/monitors/21 9 monitors no stand/21 9 monitor 2 non curved 34in no stand.glb",
+      "bytes": 889412,
+      "triangles": 9056,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/keyboards/60 keyboards/60 Keyboard 1 allGrey.glb",
+      "bytes": 12018984,
+      "triangles": 129496,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 189520
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/60 keyboards/60 Keyboard 1 allWhite.glb",
+      "bytes": 11664884,
+      "triangles": 129496,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 193369
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/60 keyboards/60 Keyboard 1 minimalist 1.glb",
+      "bytes": 12069868,
+      "triangles": 129496,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 181973
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/60 keyboards/60 Keyboard 1 nightrunner.glb",
+      "bytes": 12512224,
+      "triangles": 129496,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 624329
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/60 keyboards/60 Keyboard 1 obw.glb",
+      "bytes": 11827776,
+      "triangles": 129496,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 339372
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/60 keyboards/60 Keyboard 1 wgr.glb",
+      "bytes": 11802884,
+      "triangles": 129496,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 329897
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/60 keyboards/60 Keyboard 1 ypGrad.glb",
+      "bytes": 12568508,
+      "triangles": 129496,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 613986
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/60 keyboards/60 Keyboard 2 allGrey.glb",
+      "bytes": 13062708,
+      "triangles": 141784,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 189520
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/60 keyboards/60 Keyboard 2 allWhite.glb",
+      "bytes": 13065988,
+      "triangles": 141784,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 193369
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/60 keyboards/60 Keyboard 2 minimalist.glb",
+      "bytes": 13055164,
+      "triangles": 141784,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 181973
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/60 keyboards/60 Keyboard 2 nightRunner.glb",
+      "bytes": 13496948,
+      "triangles": 141784,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 624329
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/60 keyboards/60 Keyboard 2 obw.glb",
+      "bytes": 13212560,
+      "triangles": 141784,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 339372
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/60 keyboards/60 Keyboard 2 wgr.glb",
+      "bytes": 13202516,
+      "triangles": 141784,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 329897
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/60 keyboards/60 Keyboard 2 8008.glb",
+      "bytes": 12753024,
+      "triangles": 141784,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 218086
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/full size keyboards/full size keyboard allGrey.glb",
+      "bytes": 13133352,
+      "triangles": 215866,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 187847
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/full size keyboards/full size keyboard white.glb",
+      "bytes": 13323832,
+      "triangles": 215866,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 193369
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/full size keyboards/full size keyboard nightRunner.glb",
+      "bytes": 19551692,
+      "triangles": 215866,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 624329
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/full size keyboards/full size keyboard wgr.glb",
+      "bytes": 19257260,
+      "triangles": 215866,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 329897
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/full size keyboards/full size keyboard obw.glb",
+      "bytes": 19266920,
+      "triangles": 215866,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 339372
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/full size keyboards/full size keyboard ypGrad.glb",
+      "bytes": 19541604,
+      "triangles": 215866,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 613986
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/tkl keyboards/tkl keyboard allGrey.glb",
+      "bytes": 15899228,
+      "triangles": 179320,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 189520
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/tkl keyboards/tkl keyboard allWhite.glb",
+      "bytes": 15903468,
+      "triangles": 179320,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 193369
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/tkl keyboards/tkl keyboard obw.glb",
+      "bytes": 16048700,
+      "triangles": 179320,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 339372
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/tkl keyboards/tkl keyboard wgr.glb",
+      "bytes": 16039352,
+      "triangles": 179320,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 329897
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/tkl keyboards/tkl keyboard ygb.glb",
+      "bytes": 16327368,
+      "triangles": 179320,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 618040
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/tkl keyboards/tkl keyboard ypGrad.glb",
+      "bytes": 16323316,
+      "triangles": 179320,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 613986
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/keyboards/tkl keyboards/tkl keyboard 8008.glb",
+      "bytes": 16003444,
+      "triangles": 179320,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 218086
+        }
+      ]
+    },
+    {
+      "path": "mousepads/medium_rgb_mousepad.glb",
+      "bytes": 555876,
+      "triangles": 7104,
+      "roots": 2,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 1282,
+          "height": 867,
+          "format": "jpeg",
+          "bytes": 56218
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/mice and mousepads/small qck mousepad - 8.4Dx9.8W.glb",
+      "bytes": 236576,
+      "triangles": 2242,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 200,
+          "height": 200,
+          "format": "png",
+          "bytes": 6282
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/mice and mousepads/medium qck mousepad - 10.6Dx12.6W.glb",
+      "bytes": 236892,
+      "triangles": 2242,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 200,
+          "height": 200,
+          "format": "png",
+          "bytes": 6282
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/mice and mousepads/large qck mousepad - 15.7Dx17.7W.glb",
+      "bytes": 236244,
+      "triangles": 2242,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 200,
+          "height": 200,
+          "format": "png",
+          "bytes": 6282
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/mice and mousepads/qck mousepad XXL.glb",
+      "bytes": 234400,
+      "triangles": 2242,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 200,
+          "height": 200,
+          "format": "png",
+          "bytes": 6282
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/mice and mousepads/mouse 1 - 4.1Dx2.2Wx1.6H.glb",
+      "bytes": 1070080,
+      "triangles": 13696,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/mice and mousepads/mouse 2 - 4.9Dx3.5Wx2H.glb",
+      "bytes": 2335868,
+      "triangles": 30408,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/speakers/speakers 1 primary - 7.4Dx5.8Wx9.5H.glb",
+      "bytes": 8120780,
+      "triangles": 36304,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "png",
+          "bytes": 2003771
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "png",
+          "bytes": 1139788
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "png",
+          "bytes": 1367025
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/speakers/speakers 1 secondary - 7.4Dx5.8Wx9.5H.glb",
+      "bytes": 6081964,
+      "triangles": 15836,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "png",
+          "bytes": 2003771
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "png",
+          "bytes": 1139788
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "png",
+          "bytes": 1367025
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/speakers/speaker bar 1 - 2.5Dx16Wx2.8H.glb",
+      "bytes": 1480800,
+      "triangles": 6072,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 900,
+          "height": 900,
+          "format": "png",
+          "bytes": 875395
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/speakers/speakers 2 primary - 8.3Dx7.3Wx10.3H.glb",
+      "bytes": 2078632,
+      "triangles": 41792,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/speakers/speakers 2 secondary - 8.3Dx7.3Wx10.3H.glb",
+      "bytes": 1299780,
+      "triangles": 31040,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/music objects/blue yeti.glb",
+      "bytes": 12528164,
+      "triangles": 29396,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 5974404
+        },
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 3613302
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/music objects/audio interface.glb",
+      "bytes": 1117660,
+      "triangles": 3292,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 1500,
+          "height": 770,
+          "format": "png",
+          "bytes": 463443
+        },
+        {
+          "width": 1500,
+          "height": 471,
+          "format": "png",
+          "bytes": 323767
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/laptops/13 inch laptop.glb",
+      "bytes": 4398004,
+      "triangles": 48280,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/laptops/15 inch laptop.glb",
+      "bytes": 4366556,
+      "triangles": 48280,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/laptops/17 inch laptop.glb",
+      "bytes": 5411280,
+      "triangles": 59596,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/computer towers/desktop - 8.27Wx16.5Dx19.5H.glb",
+      "bytes": 3589188,
+      "triangles": 38776,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/computer towers/desktop 2 small - 16.7Dx13.6Wx14.3H.glb",
+      "bytes": 6865220,
+      "triangles": 66350,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 1200,
+          "height": 1200,
+          "format": "png",
+          "bytes": 614006
+        },
+        {
+          "width": 1282,
+          "height": 867,
+          "format": "png",
+          "bytes": 45563
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/YYadditional decorations/book.glb",
+      "bytes": 9668,
+      "triangles": 76,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/YYadditional decorations/coffee cup.glb",
+      "bytes": 24876716,
+      "triangles": 19200,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 4000,
+          "height": 5500,
+          "format": "png",
+          "bytes": 23075738
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/YYadditional decorations/midi keyboard 1 - 7.1Dx12.5Wx1.5H.glb",
+      "bytes": 6249944,
+      "triangles": 51376,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 1920,
+          "height": 1120,
+          "format": "png",
+          "bytes": 1455528
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/lamps/lamp 1 - 8Dx5Wx9.7H.glb",
+      "bytes": 1261840,
+      "triangles": 13440,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/lamps/lamp 2 - 10.2Dx4Wx8.3H.glb",
+      "bytes": 3602192,
+      "triangles": 18880,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "png",
+          "bytes": 1838918
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/chairs/office chair - 46.6Dx33.2Wx32.1H.glb",
+      "bytes": 6100088,
+      "triangles": 60400,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "jpeg",
+          "bytes": 1365733
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "jpeg",
+          "bytes": 486209
+        },
+        {
+          "width": 200,
+          "height": 200,
+          "format": "jpeg",
+          "bytes": 13699
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/chairs/simple chair - 36.9Dx14.5Wx18.5H.glb",
+      "bytes": 4595280,
+      "triangles": 60480,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": []
+    },
+    {
+      "path": "GLTFs/chairs/gaming chair.glb",
+      "bytes": 8605444,
+      "triangles": 99512,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "jpeg",
+          "bytes": 1365733
+        }
+      ]
+    }
+  ],
+  "images": [
+    {
+      "path": "textures/alderFineWoodTexture.jpg",
+      "bytes": 3184581,
+      "width": 2048,
+      "height": 2048,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "textures/darkWalnut.jpg",
+      "bytes": 2596399,
+      "width": 2200,
+      "height": 2200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "textures/italianOak.jpg",
+      "bytes": 1271384,
+      "width": 2000,
+      "height": 2000,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "textures/zebranoWood.jpg",
+      "bytes": 4596693,
+      "width": 3030,
+      "height": 2476,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "textures/darkParquet.jpg",
+      "bytes": 156394,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "textures/lightParquetNORM.jpg",
+      "bytes": 3979681,
+      "width": 3072,
+      "height": 3072,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/13 inch laptop.jpg",
+      "bytes": 12416,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/15 inch laptop.jpg",
+      "bytes": 13140,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/16 9 monitor 4 43_.jpg",
+      "bytes": 9923,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/16_9 monitor 3 no stand.jpg",
+      "bytes": 9308,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/16_9 monitor 3.jpg",
+      "bytes": 9536,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/16x9 curved monitor 2 23.5in.jpg",
+      "bytes": 11332,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/17 inch laptop.jpg",
+      "bytes": 13326,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/21 9 monitor 2 non curved no stand.jpg",
+      "bytes": 7853,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/21 9 monitor 2 non curved.jpg",
+      "bytes": 9560,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/32_9 monitor no stand.jpg",
+      "bytes": 8741,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/32_9 monitor.jpg",
+      "bytes": 10018,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/75PercentKeyboard8008.jpg",
+      "bytes": 14711,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/75PercentKeyboardAllGrey.jpg",
+      "bytes": 12776,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/75PercentKeyboardAllWhite.jpg",
+      "bytes": 13680,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/75PercentKeyboardMinimalist.jpg",
+      "bytes": 14835,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/75PercentKeyboardNightrunner.jpg",
+      "bytes": 15009,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/75PercentKeyboardOBW.jpg",
+      "bytes": 14998,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/75PercentKeyboardWGR.jpg",
+      "bytes": 13857,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/L shaped desk.jpg",
+      "bytes": 11301,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/Mouse 1 textured.jpg",
+      "bytes": 10387,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/TKLKeyboard8008.jpg",
+      "bytes": 13427,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/TKLKeyboardAllGrey.jpg",
+      "bytes": 14021,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/TKLKeyboardAllWhite.jpg",
+      "bytes": 14370,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/TKLKeyboardOBW.jpg",
+      "bytes": 15105,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/TKLKeyboardWGR.jpg",
+      "bytes": 14347,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/TKLKeyboardYGB.jpg",
+      "bytes": 14679,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/TKLKeyboardYPGrade.jpg",
+      "bytes": 16730,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/Ultrwide Monitor 1 no stand.jpg",
+      "bytes": 8343,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/Ultrwide Monitor 1.jpg",
+      "bytes": 10277,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/alex desk.jpg",
+      "bytes": 13308,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/audio interface.jpg",
+      "bytes": 15549,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/aukey lamp.jpg",
+      "bytes": 10520,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/blue yeti.jpg",
+      "bytes": 10158,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/book.jpg",
+      "bytes": 12203,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/coffee cup.jpg",
+      "bytes": 10407,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/cube primitive.jpg",
+      "bytes": 6744,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/curved large 16 9 monitor no stand.jpg",
+      "bytes": 6995,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/curved large 16 9 monitor.jpg",
+      "bytes": 9563,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/custom desk alder.jpg",
+      "bytes": 11667,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/custom desk dark walnut.jpg",
+      "bytes": 10557,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/custom desk italian oak.jpg",
+      "bytes": 12078,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/custom desk zebrano.jpg",
+      "bytes": 14591,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/customDeskDarkWalnut.jpg",
+      "bytes": 10557,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/customDeskItalianOak.jpg",
+      "bytes": 12078,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/customDeskLightAlderwood.jpg",
+      "bytes": 11667,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/customDeskZebranoWood.jpg",
+      "bytes": 14591,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/default60PercentKeyboardAllGrey.jpg",
+      "bytes": 13344,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/default60PercentKeyboardAllWhite.jpg",
+      "bytes": 12649,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/default60PercentKeyboardMinimalist.jpg",
+      "bytes": 14246,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/default60PercentKeyboardNightrunner.jpg",
+      "bytes": 15289,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/default60PercentKeyboardOBW.jpg",
+      "bytes": 14540,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/default60PercentKeyboardWGR.jpg",
+      "bytes": 14778,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/default60PercentKeyboardYPGrad.jpg",
+      "bytes": 16562,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/defaultFullKeyboardAllGrey.jpg",
+      "bytes": 14170,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/defaultFullKeyboardAllWhite.jpg",
+      "bytes": 13636,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/defaultFullKeyboardNightrunner.jpg",
+      "bytes": 15567,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/defaultFullKeyboardOBW.jpg",
+      "bytes": 16787,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/defaultFullKeyboardWGR.jpg",
+      "bytes": 13404,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/defaultFullKeyboardYPGrade.jpg",
+      "bytes": 16504,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/desktop 1.jpg",
+      "bytes": 12131,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/desktop 2 small.jpg",
+      "bytes": 20616,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/desktop 3.jpg",
+      "bytes": 16126,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/desktop 4 sliger mini black.jpg",
+      "bytes": 16651,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/desktop 4 sliger mini white.jpg",
+      "bytes": 19457,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/favicon.png",
+      "bytes": 4452,
+      "width": 100,
+      "height": 100,
+      "format": "png",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/gaming chair.jpg",
+      "bytes": 13628,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/headphone stand.jpg",
+      "bytes": 14739,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/ipad 10.5in.jpg",
+      "bytes": 7379,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/lamp 1.jpg",
+      "bytes": 9693,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/lamp 2.jpg",
+      "bytes": 11583,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/large qck mousepad.jpg",
+      "bytes": 9070,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/linnmon desk.jpg",
+      "bytes": 7602,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/logo desk.png",
+      "bytes": 52993,
+      "width": 1024,
+      "height": 1024,
+      "format": "png",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/malm desk black.jpg",
+      "bytes": 11424,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/malm desk dark ash.jpg",
+      "bytes": 14931,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/malm desk white.jpg",
+      "bytes": 8010,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/medium qck mousepad.jpg",
+      "bytes": 8527,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/microphone 2.jpg",
+      "bytes": 12286,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/midi keyboard 1.jpg",
+      "bytes": 18388,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/monitor shelf 2.jpg",
+      "bytes": 6637,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/monitor shelf.jpg",
+      "bytes": 10426,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/mouse 2.jpg",
+      "bytes": 13526,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/mouse 3.jpg",
+      "bytes": 13787,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/office chair.jpg",
+      "bytes": 14632,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/output platform.jpg",
+      "bytes": 16775,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/primitive sphere.jpg",
+      "bytes": 7137,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/qck mousepad XXL.jpg",
+      "bytes": 8263,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/regular desk 1.jpg",
+      "bytes": 13213,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/rubiks cube.jpg",
+      "bytes": 21097,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/simple chair.jpg",
+      "bytes": 15037,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/slim keyboard.jpg",
+      "bytes": 9421,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/small qck mousepad.jpg",
+      "bytes": 7259,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/speaker bar 1.jpg",
+      "bytes": 10024,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/speakers 1.jpg",
+      "bytes": 16500,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/speakers 2 primary.jpg",
+      "bytes": 12486,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/speakers 3 primary.jpg",
+      "bytes": 12250,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/speakers 4 black.jpg",
+      "bytes": 12317,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/speakers 5 primary.jpg",
+      "bytes": 13433,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/standing desk 1.jpg",
+      "bytes": 12862,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/standing desk 2 light wood top.jpg",
+      "bytes": 14557,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/standing desk 2 white top.jpg",
+      "bytes": 9726,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/standing desk 2.jpg",
+      "bytes": 12644,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/tablet stand w tablet 10.5in.jpg",
+      "bytes": 12520,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/tkl keyboard 8008.jpg",
+      "bytes": 13427,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/tkl keyboard allGrey.jpg",
+      "bytes": 14021,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/tkl keyboard allWhite.jpg",
+      "bytes": 14370,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/tkl keyboard obw.jpg",
+      "bytes": 15105,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/tkl keyboard wgr.jpg",
+      "bytes": 14347,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/tkl keyboard ygb.jpg",
+      "bytes": 14679,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/tkl keyboard ypGrad.jpg",
+      "bytes": 16730,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/tv 1 43in.jpg",
+      "bytes": 8495,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/wall texture panel.jpg",
+      "bytes": 11710,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/xbox controller black.jpg",
+      "bytes": 13175,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/xbox controller white and black.jpg",
+      "bytes": 12334,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/xbox controller white.jpg",
+      "bytes": 10833,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/xbox.jpg",
+      "bytes": 12279,
+      "width": 200,
+      "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Click Through Tutorial/slide 1.gif",
+      "bytes": 4938229,
+      "width": 1914,
+      "height": 1056,
+      "format": "gif",
+      "pages": 76
+    },
+    {
+      "path": "Click Through Tutorial/slide 2.gif",
+      "bytes": 408046,
+      "width": 1914,
+      "height": 1056,
+      "format": "gif",
+      "pages": 93
+    },
+    {
+      "path": "Click Through Tutorial/slide 3.gif",
+      "bytes": 406049,
+      "width": 1914,
+      "height": 1056,
+      "format": "gif",
+      "pages": 108
+    },
+    {
+      "path": "Click Through Tutorial/slide 4.gif",
+      "bytes": 267960,
+      "width": 1914,
+      "height": 1062,
+      "format": "gif",
+      "pages": 114
+    },
+    {
+      "path": "Click Through Tutorial/slide 5.gif",
+      "bytes": 711478,
+      "width": 1914,
+      "height": 1056,
+      "format": "gif",
+      "pages": 131
+    },
+    {
+      "path": "Click Through Tutorial/slide 6.gif",
+      "bytes": 1361075,
+      "width": 1914,
+      "height": 1052,
+      "format": "gif",
+      "pages": 184
+    },
+    {
+      "path": "Click Through Tutorial/slide 7.gif",
+      "bytes": 2105726,
+      "width": 1914,
+      "height": 1055,
+      "format": "gif",
+      "pages": 114
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+// Explicit exports keep the injected engine boundary tree-shakeable.
+export {
+  BoxGeometry,
+  Color,
+  CustomToneMapping,
+  Fog,
+  Group,
+  HemisphereLight,
+  LinearSRGBColorSpace,
+  Mesh,
+  MeshLambertMaterial,
+  OctahedronGeometry,
+  PCFShadowMap,
+  PerspectiveCamera,
+  Raycaster,
+  Scene,
+  ShaderChunk,
+  SpotLight,
+  SRGBColorSpace,
+  TextureLoader,
+  WebGLRenderer,
+} from 'three';

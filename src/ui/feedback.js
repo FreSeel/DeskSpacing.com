@@ -4,7 +4,16 @@ export function createFeedback(document) {
   message.setAttribute('role', 'alert');
   message.hidden = true;
   document.getElementById('rightSideContainer').append(message);
+  const loading = document.createElement('p');
+  loading.className = 'planner-loading';
+  loading.setAttribute('role', 'status');
+  loading.textContent = 'Loading your setup…';
+  loading.hidden = true;
+  document.getElementById('rightSideContainer').append(loading);
   return {
+    loading(active) {
+      loading.hidden = !active;
+    },
     clear() {
       message.hidden = true;
       message.textContent = '';
@@ -16,6 +25,7 @@ export function createFeedback(document) {
     },
     dispose() {
       message.remove();
+      loading.remove();
     },
   };
 }

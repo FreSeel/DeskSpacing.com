@@ -46,7 +46,7 @@ it('publishes stable asset paths and pinned dependencies without repository inte
     await readFile(path.join(output, 'src/styles/planner.css'), 'utf8'),
   ).toBe('planner style');
   expect(await readFile(path.join(output, 'three.min.js'), 'utf8')).toBe(
-    'pinned: three/build/three.min.js',
+    'pinned: three-legacy/build/three.min.js',
   );
   for (const file of [
     'CNAME',

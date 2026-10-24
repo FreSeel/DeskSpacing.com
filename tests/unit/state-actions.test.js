@@ -160,7 +160,7 @@ describe('object state and asynchronous actions', () => {
   });
   it('disposes each shared resource once within an owned model hierarchy', () => {
     const root = new THREE.Group();
-    const geometry = new THREE.BoxBufferGeometry();
+    const geometry = new THREE.BoxGeometry();
     const texture = new THREE.Texture();
     const material = new THREE.MeshLambertMaterial({ map: texture });
     root.add(

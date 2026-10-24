@@ -1,16 +1,11 @@
 export function bindPointer({
-  host,
-  document,
   canvas,
   selection,
   controls,
   transformControls,
 }) {
   let pickedTransform = false;
-  let rightMouseMove = false;
-  const enablePicking = () => {
-    selection.pickEnabled = true;
-  };
+  const position = { x: 0, y: 0 };
   const onTransformDown = () => {
     pickedTransform = true;
     controls.enabled = false;
@@ -18,30 +13,31 @@ export function bindPointer({
   const onTransformUp = () => {
     controls.enabled = true;
   };
-  function onMouseDown(event) {
-    rightMouseMove = event.button === 2;
+  const cancelDrag = () => {
+    pickedTransform = false;
+    transformControls.pointerUp(null);
+    controls.enabled = true;
+  };
+  function onPointerDown(event) {
+    if (event.button !== 0) return;
+    selection.pickEnabled = true;
     if (!pickedTransform) {
       const rect = canvas.getBoundingClientRect();
-      selection.mouseSelect({
-        x: ((event.clientX - rect.left) / rect.width) * 2 - 1,
-        y: ((event.clientY - rect.top) / rect.height) * -2 + 1,
-      });
+      position.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      position.y = ((event.clientY - rect.top) / rect.height) * -2 + 1;
+      selection.mouseSelect(position);
     }
     pickedTransform = false;
   }
-  function onMouseMove(event) {
-    if (rightMouseMove) event.stopImmediatePropagation();
-  }
-  canvas.addEventListener('click', enablePicking);
+  // Registered after the controls, so a gizmo press can suppress object picking.
   transformControls.addEventListener('mouseDown', onTransformDown);
   transformControls.addEventListener('mouseUp', onTransformUp);
-  host.addEventListener('mousedown', onMouseDown);
-  document.addEventListener('mousemove', onMouseMove);
+  canvas.addEventListener('pointerdown', onPointerDown);
+  canvas.addEventListener('pointercancel', cancelDrag);
   return () => {
-    canvas.removeEventListener('click', enablePicking);
     transformControls.removeEventListener('mouseDown', onTransformDown);
     transformControls.removeEventListener('mouseUp', onTransformUp);
-    host.removeEventListener('mousedown', onMouseDown);
-    document.removeEventListener('mousemove', onMouseMove);
+    canvas.removeEventListener('pointerdown', onPointerDown);
+    canvas.removeEventListener('pointercancel', cancelDrag);
   };
 }
