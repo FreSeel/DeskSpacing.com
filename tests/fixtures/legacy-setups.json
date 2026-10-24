@@ -1,0 +1,4 @@
+{
+  "desktop": "[ ^PrimitiveBoxFloorFurnitureNoSelect|floor|0,0,-40,|0,0,0,|100,2,70,|darkParquet|^ DeskNoSelect|modernDesk|0,30.7,-53,|0,1.5707963267948966,0,| Monitor|small16x9Monitor28|0,31.300000000000004,-57,|0,4.71238898038469,0,| Mouse|defaultMouse|9,31.2,-50,|0,3.141592653589793,0,| ]",
+  "mobile": "[ *FurniturePrimitiveBoxDeskNoSelect|customDesk|0,30.2,-53,|0,0,0,|50,1,20,|italianOak|* *PrimitiveBox|referenceBox|-12.456730542942143,33.2,-54.65369349806694,|0,0.906999410493721,0,|5,5,10,|null|* FurnitureChair|modernOfficeChair|0,2.8,-50,|0,4.71238898038469,0,| *PrimitiveSphere|referenceSphere|1,32,-57,|0,0,0,|2,-1,-1,|null|* ]"
+}

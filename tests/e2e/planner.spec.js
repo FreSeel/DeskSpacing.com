@@ -254,3 +254,11 @@ test('Popper 2 positions mobile planner tooltips using the retained theme', asyn
   expect(box.width).toBeGreaterThan(0);
   expect(box.x).toBeGreaterThanOrEqual(0);
 });
+
+test('unrelated and malformed setup queries retain a usable default scene', async ({ page }) => {
+  for (const query of ['?utm_source=test', '?hasOwnProperty=x&customSetup=%5B%20', '?customSetup=%']) {
+    await page.goto(`mainApp.html${query}`);
+    await ready(page);
+    expect((await snapshot(page)).find((object) => object.product === 'modernDesk')).toBeDefined();
+  }
+});
