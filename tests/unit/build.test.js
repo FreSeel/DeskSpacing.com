@@ -15,6 +15,7 @@ it('publishes stable asset paths and pinned dependencies without repository inte
     'vite.config.js': 'private tooling',
     'GLTFs/model with spaces.glb': 'model',
     'js/share-url.js': 'unbundled script',
+    'src/styles/planner.css': 'planner style',
     'js/jquery-3.2.1.slim.min.js': 'retired jquery',
     'js/ScrollMagic.min.js': 'retired scrollmagic',
     'three/examples/models/unreferenced.glb': 'vendor example',
@@ -41,6 +42,9 @@ it('publishes stable asset paths and pinned dependencies without repository inte
   expect(await readFile(path.join(output, 'js/share-url.js'), 'utf8')).toBe(
     'built script',
   );
+  expect(
+    await readFile(path.join(output, 'src/styles/planner.css'), 'utf8'),
+  ).toBe('planner style');
   expect(await readFile(path.join(output, 'three.min.js'), 'utf8')).toBe(
     'pinned: three/build/three.min.js',
   );

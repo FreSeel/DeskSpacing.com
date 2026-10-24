@@ -61,6 +61,14 @@ export function isRootAsset(name) {
 }
 
 export async function copySite(root, outDir) {
+  // Planner CSS is owned separately from the retained legacy page themes.
+  try {
+    await cp(path.join(root, 'src/styles'), path.join(outDir, 'src/styles'), {
+      recursive: true,
+    });
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+  }
   for (const entry of await readdir(root, { withFileTypes: true })) {
     if (
       (entry.isDirectory() && assetDirectories.includes(entry.name)) ||
@@ -96,8 +104,8 @@ export function legacySite() {
       config = value;
     },
     configureServer(server) {
-      // HTML must remain classic scripts: converting it to ESM changes global binding
-      // and execution order. Vite still serves assets and watches for full reloads.
+      // Serve retained HTML without rewriting its static model/thumbnail URLs.
+      // The desktop page loads an ES module; older pages keep classic scripts.
       server.middlewares.use(async (req, res, next) => {
         try {
           const url = new URL(req.url, 'http://localhost');

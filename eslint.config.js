@@ -14,6 +14,7 @@ export default [
     files: [
       '*.config.js',
       'scripts/**/*.js',
+      'src/**/*.js',
       'tests/**/*.js',
       'js/share-url.js',
       'js/main.js',

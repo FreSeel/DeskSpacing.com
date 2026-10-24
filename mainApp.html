@@ -6,55 +6,14 @@
     <link rel="icon" href="favicon.png">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-172455339-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
 
-        gtag('config', 'UA-172455339-1');
-    </script>
     <link rel="stylesheet" href="css/icomoon.css">
-    <script language="Javascript">
-        var isMobile = {
-            Android: function () {
-                return navigator.userAgent.match(/Android/i);
-            },
-            BlackBerry: function () {
-                return navigator.userAgent.match(/BlackBerry/i);
-            },
-            iOS: function () {
-                return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-            },
-            Opera: function () {
-                return navigator.userAgent.match(/Opera Mini/i);
-            },
-            Windows: function () {
-                return navigator.userAgent.match(/IEMobile/i);
-            },
-            any: function () {
-                return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
-            }
-        };
-        window.onload = function () {
-            var mobile = (/iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));
 
-            if (isMobile.any()) {
-                alert("Welcome to DeskSpacing! Unfortunately DeskSpacing is an experience for users on desktop only for now. If you are interested in a mobile version of the app, let us know at deskspacing@gmail.com . Sorry for the inconvenience! ");
-            }
-            /*if (mobile) {
-                alert("Welcome to DeskSpacing! Unfortunately DeskSpacing is an experience for users on desktop only for now. If you are interested in a mobile version of the app, let us know at deskspacing@gmail.com . Sorry for the inconvenience! ");
-            } else {
-            }*/
-        }
-    </script>
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link rel="stylesheet" href="bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="src/styles/planner.css" />
 
     <link rel="stylesheet" href="css/bootstrap-compat.css">
 </head>
@@ -105,16 +64,9 @@
             <div class="row flex-grow-1" id="UIRow">
 
                 <div class="col-md-4 col-md-push-8" style="height: 100%; padding: 0px; max-width: 600px;">
-                    <!--max-width: 600px;-->
+
                     <div class="menuCol">
-                        <!--<h1 class="navbarTitle text-white">DeskSpacing</h1>
-                        <p class="underTitleText">Created by Cooper Lappenbusch and Travers Sorenson &copy;</p>
-                        <div class="text-center keybindButton">
-                            <button type="button" class="btn btn-outline-success text-center keybindButton mr-1"
-                                data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                Controls Help
-                            </button>
-                        </div>-->
+
                         <div class="accordion" id="accordionExample">
                             <div class="card text-white z-depth-0 bordered">
                                 <div class="card-header" id="headingOne" data-bs-toggle="collapse"
@@ -150,13 +102,13 @@
                                                         <div class="smallParagraphBreak">&nbsp</div>
                                                         <div class="text-center">
                                                             <p>Length: &nbsp;<input id="customDeskW" type="text"
-                                                                    onkeypress="validate(event)"
-                                                                    onclick="disablePicking()" style="width: 30%;"
+                                                                    data-numeric
+                                                                    data-disable-picking style="width: 30%;"
                                                                     value="1">
                                                             </p>
                                                             <p>Width: &nbsp;<input id="customDeskL" type="text"
-                                                                    onkeypress="validate(event)"
-                                                                    onclick="disablePicking()" style="width: 30%;"
+                                                                    data-numeric
+                                                                    data-disable-picking style="width: 30%;"
                                                                     value="1">
                                                             </p>
                                                             <p>
@@ -176,7 +128,6 @@
                                                                         data-image="Model thumbnails/customDeskZebranoWood.jpg">
                                                                         Zebrano Wood</option>
 
-
                                                                 </select>
                                                             </form>
                                                             </p>
@@ -186,7 +137,7 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addPrimitiveDesk('FurniturePrimitiveBoxDeskNoSelect','customDesk')">
+                                                                data-action="add" data-product="customDesk">
                                                                 Add</button>
                                                         </div>
                                                     </div>
@@ -219,7 +170,7 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDesk('FurnitureDeskNoSelect','modernDesk')">
+                                                                data-action="add" data-product="modernDesk">
                                                                 Add</button>
                                                         </div>
                                                     </div>
@@ -252,7 +203,7 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDesk('FurnitureDeskNoSelect','standingDesk')">
+                                                                data-action="add" data-product="standingDesk">
                                                                 Add</button>
                                                         </div>
                                                     </div>
@@ -296,7 +247,7 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDeskCustom('FurnitureDeskNoSelect','linnmonDesk')">
+                                                                data-action="add" data-family="linnmonDesk">
 
                                                                 Add</button>
                                                         </div>
@@ -341,7 +292,7 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDeskCustom('FurnitureDeskNoSelect','alexDesk')">
+                                                                data-action="add" data-family="alexDesk">
 
                                                                 Add</button>
                                                         </div>
@@ -387,7 +338,7 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDeskCustom('FurnitureDeskNoSelect','bekantLShaped')">
+                                                                data-action="add" data-family="bekantLShaped">
 
                                                                 Add</button>
                                                         </div>
@@ -395,7 +346,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
 
                                     </div>
                                 </div>
@@ -413,7 +363,6 @@
                                     data-bs-parent="#accordionExample">
 
                                     <div class="card-body text-white">
-
 
                                         <div class="container">
                                             <div class="row">
@@ -458,10 +407,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addMonitor('monitor','small16x9Monitor',false)">
+                                                                data-action="add" data-family="small16x9Monitor">
                                                                 Add</button>
                                                             <button type="button" class="btn btn-secondary"
-                                                                onclick="addMonitor('monitor','small16x9Monitor',true)">Replace
+                                                                data-action="add" data-family="small16x9Monitor" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -508,10 +457,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addMonitor('monitor','largeCurved16x9Monitor',false)">
+                                                                data-action="add" data-family="largeCurved16x9Monitor">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addMonitor('monitor','largeCurved16x9Monitor',true)">Replace
+                                                                data-action="add" data-family="largeCurved16x9Monitor" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -555,10 +504,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addMonitor('Monitor','flat21x9Monitor',false)">
+                                                                data-action="add" data-family="flat21x9Monitor">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addMonitor('Monitor','flat21x9Monitor',true)">Replace
+                                                                data-action="add" data-family="flat21x9Monitor" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -603,10 +552,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addMonitor('Monitor','curved21x9Monitor',false)">
+                                                                data-action="add" data-family="curved21x9Monitor">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addMonitor('Monitor','curved21x9Monitor',true)">Replace
+                                                                data-action="add" data-family="curved21x9Monitor" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -650,10 +599,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addMonitor('Monitor','curved32x9Monitor',false)">
+                                                                data-action="add" data-family="curved32x9Monitor">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addMonitor('Monitor','curved32x9Monitor',true)">Replace
+                                                                data-action="add" data-family="curved32x9Monitor" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -661,11 +610,7 @@
                                             </div>
                                         </div>
 
-
                                     </div>
-
-
-
 
                                 </div>
                             </div>
@@ -723,10 +668,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addCustom('Keyboard','default60PercentKeyboard', false)">
+                                                                data-action="add" data-family="default60PercentKeyboard">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addCustom('Keyboard','default60PercentKeyboard', true)">Replace
+                                                                data-action="add" data-family="default60PercentKeyboard" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -734,7 +679,6 @@
                                             </div>
                                         </div>
 
-                                        <!-- travers code -->
                                         <div class="productBarrier"></div>
                                         <div class="container">
                                             <div class="row">
@@ -776,17 +720,16 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addCustom('Keyboard','75PercentKeyboard', false)">
+                                                                data-action="add" data-family="75PercentKeyboard">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addCustom('Keyboard','75PercentKeyboard', true)">Replace
+                                                                data-action="add" data-family="75PercentKeyboard" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- /travers code-->
 
                                         <div class="productBarrier"></div>
                                         <div class="container">
@@ -827,10 +770,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addCustom('Keyboard','defaultFullKeyboard', false)">
+                                                                data-action="add" data-family="defaultFullKeyboard">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addCustom('Keyboard','defaultFullKeyboard', true)">Replace
+                                                                data-action="add" data-family="defaultFullKeyboard" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -875,10 +818,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addCustom('Keyboard','TKLKeyboard',false)">
+                                                                data-action="add" data-family="TKLKeyboard">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addCustom('Keyboard','TKLKeyboard',true)">Replace
+                                                                data-action="add" data-family="TKLKeyboard" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -923,10 +866,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('Mouse','MXMaster3',false)">
+                                                                data-action="add" data-product="MXMaster3">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('Mouse','MXMaster3',true)">Replace
+                                                                data-action="add" data-product="MXMaster3" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -957,10 +900,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('Mouse','defaultMouse',false)">
+                                                                data-action="add" data-product="defaultMouse">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('Mouse','defaultMouse',true)">Replace
+                                                                data-action="add" data-product="defaultMouse" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1005,10 +948,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('Mousepad','QCKSmall', false)">
+                                                                data-action="add" data-product="QCKSmall">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('Mousepad','QCKSmall',true)">Replace
+                                                                data-action="add" data-product="QCKSmall" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1039,10 +982,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('Mousepad','QCKMedium',false)">
+                                                                data-action="add" data-product="QCKMedium">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('Mousepad','QCKMedium',true)">Replace
+                                                                data-action="add" data-product="QCKMedium" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1072,10 +1015,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('Mousepad','QCKLarge',false)">
+                                                                data-action="add" data-product="QCKLarge">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('Mousepad','QCKLarge',true)">Replace
+                                                                data-action="add" data-product="QCKLarge" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1106,10 +1049,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('Mousepad','QCKXXL',false)">
+                                                                data-action="add" data-product="QCKXXL">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('Mousepad','QCKXXL',true)">Replace
+                                                                data-action="add" data-product="QCKXXL" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1166,10 +1109,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addCustom('Speaker','deskSpacingSpeaker',false)">
+                                                                data-action="add" data-family="deskSpacingSpeaker">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addCustom('Speaker','deskSpacingSpeaker',true)">Replace
+                                                                data-action="add" data-family="deskSpacingSpeaker" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1200,10 +1143,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('Speaker','deskSpacingSoundBar',false)">
+                                                                data-action="add" data-product="deskSpacingSoundBar">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('Speaker','deskSpacingSoundBar',true)">Replace
+                                                                data-action="add" data-product="deskSpacingSoundBar" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1246,10 +1189,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addCustom('Speaker','studioMonitorSpeaker',false)">
+                                                                data-action="add" data-family="studioMonitorSpeaker">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addCustom('Speaker','studioMonitorSpeaker',true)">Replace
+                                                                data-action="add" data-family="studioMonitorSpeaker" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1279,10 +1222,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('Speaker','yetiUSBMic',false)">
+                                                                data-action="add" data-product="yetiUSBMic">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('Speaker','yetiUSBMic',true)">Replace
+                                                                data-action="add" data-product="yetiUSBMic" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1313,10 +1256,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('Speaker','audioInterface',false)">
+                                                                data-action="add" data-product="audioInterface">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('Speaker','audioInterface',true)">Replace
+                                                                data-action="add" data-product="audioInterface" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1346,10 +1289,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('Misc','MIDIKeyboard',false)">
+                                                                data-action="add" data-product="MIDIKeyboard">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('Misc','MIDIKeyboard',true)">Replace
+                                                                data-action="add" data-product="MIDIKeyboard" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1359,7 +1302,6 @@
                                     </div>
                                 </div>
                             </div>
-
 
                             <div class="card z-depth-0 bordered">
                                 <div class="card-header" id="headingEight" type="button" data-bs-toggle="collapse"
@@ -1394,10 +1336,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('Laptop','modernLaptop13',false)">
+                                                                data-action="add" data-product="modernLaptop13">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('Laptop','modernLaptop13',true)">Replace
+                                                                data-action="add" data-product="modernLaptop13" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1425,10 +1367,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('Laptop','modernLaptop15',false)">
+                                                                data-action="add" data-product="modernLaptop15">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('Laptop','modernLaptop15',true)">Replace
+                                                                data-action="add" data-product="modernLaptop15" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1457,10 +1399,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('Laptop','modernLaptop17',false)">
+                                                                data-action="add" data-product="modernLaptop17">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('Laptop','modernLaptop17',true)">Replace
+                                                                data-action="add" data-product="modernLaptop17" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1507,10 +1449,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('Computer','modernComputerTower',false)">
+                                                                data-action="add" data-product="modernComputerTower">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('Computer','modernComputerTower',true)">Replace
+                                                                data-action="add" data-product="modernComputerTower" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1541,10 +1483,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('Computer','miniITXTower',false)">
+                                                                data-action="add" data-product="miniITXTower">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('Computer','miniITXTower',true)">Replace
+                                                                data-action="add" data-product="miniITXTower" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1586,18 +1528,18 @@
                                                         </h3>
                                                         <div class="text-center">
                                                             <p>Length: &nbsp;<input id="referenceBoxH" type="text"
-                                                                    onkeypress="validate(event)"
-                                                                    onclick="disablePicking()" style="width: 30%;"
+                                                                    data-numeric
+                                                                    data-disable-picking style="width: 30%;"
                                                                     value="1">
                                                             </p>
                                                             <p>Width: &nbsp;<input id="referenceBoxL" type="text"
-                                                                    onkeypress="validate(event)"
-                                                                    onclick="disablePicking()" style="width: 30%;"
+                                                                    data-numeric
+                                                                    data-disable-picking style="width: 30%;"
                                                                     value="1">
                                                             </p>
                                                             <p>Height: &nbsp;<input id="referenceBoxW" type="text"
-                                                                    onkeypress="validate(event)"
-                                                                    onclick="disablePicking()" style="width: 30%;"
+                                                                    data-numeric
+                                                                    data-disable-picking style="width: 30%;"
                                                                     value="1">
                                                             </p>
                                                         </div>
@@ -1606,10 +1548,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addPrimitiveReference('PrimitiveBox','referenceBox', false)">
+                                                                data-action="add" data-product="referenceBox">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addPrimitiveReference('PrimitiveBox','referenceBox', true)">Replace
+                                                                data-action="add" data-product="referenceBox" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1635,8 +1577,8 @@
                                                         </h3>
                                                         <div class="text-center">
                                                             <p>Radius: &nbsp;<input id="referenceSphereRadius"
-                                                                    type="text" onkeypress="validate(event)"
-                                                                    onclick="disablePicking()" style="width: 30%;"
+                                                                    type="text" data-numeric
+                                                                    data-disable-picking style="width: 30%;"
                                                                     value="1">
                                                             </p>
 
@@ -1646,10 +1588,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addPrimitiveReference('PrimitiveSphere','referenceSphere',false)">
+                                                                data-action="add" data-product="referenceSphere">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addPrimitiveReference('PrimitiveSphere','referenceSphere',true)">Replace
+                                                                data-action="add" data-product="referenceSphere" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1657,11 +1599,9 @@
                                             </div>
                                         </div>
 
-
                                     </div>
                                 </div>
                             </div>
-
 
                             <div class="card z-depth-0 bordered">
                                 <div class="card-header" id="headingTwelve" type="button" data-bs-toggle="collapse"
@@ -1696,10 +1636,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('FurnitureChair','modernOfficeChair',false)">
+                                                                data-action="add" data-product="modernOfficeChair">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('FurnitureChair','modernOfficeChair',true)">Replace
+                                                                data-action="add" data-product="modernOfficeChair" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1727,10 +1667,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('FurnitureChair','simpleChair',false)">
+                                                                data-action="add" data-product="simpleChair">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('FurnitureChair','simpleChair',true)">Replace
+                                                                data-action="add" data-product="simpleChair" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1758,10 +1698,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('FurnitureChair','gamingChair',false)">
+                                                                data-action="add" data-product="gamingChair">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('FurnitureChair','gamingChair',true)">Replace
+                                                                data-action="add" data-product="gamingChair" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1772,7 +1712,6 @@
                                     </div>
                                 </div>
                             </div>
-
 
                             <div class="card z-depth-0 bordered">
                                 <div class="card-header" id="headingTen" type="button" data-bs-toggle="collapse"
@@ -1807,10 +1746,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('Misc','regularBook',false)">
+                                                                data-action="add" data-product="regularBook">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('Misc','regularBook',true)">Replace
+                                                                data-action="add" data-product="regularBook" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1838,18 +1777,16 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('Misc','coffeeCup',false)">
+                                                                data-action="add" data-product="coffeeCup">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('Misc','coffeeCup',true)">Replace
+                                                                data-action="add" data-product="coffeeCup" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
-
 
                                         <div class="productBarrier"></div>
                                         <div class="container">
@@ -1874,10 +1811,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('Misc','basicLamp',false)">
+                                                                data-action="add" data-product="basicLamp">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('Misc','basicLamp',true)">Replace
+                                                                data-action="add" data-product="basicLamp" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1908,10 +1845,10 @@
                                                         <div class="text-center">
                                                             <button type="button" class="btn btn-primary text-center"
                                                                 style="display: inline-block;"
-                                                                onclick="addDefault('Misc','modernLamp',false)">
+                                                                data-action="add" data-product="modernLamp">
                                                                 Add</button>
                                                             <button type=" button" class="btn btn-secondary"
-                                                                onclick="addDefault('Misc','modernLamp',true)">Replace
+                                                                data-action="add" data-product="modernLamp" data-replace="true">Replace
                                                                 selected</button>
                                                         </div>
                                                     </div>
@@ -1948,7 +1885,6 @@
                                             friend!</p>
                                         <form>
                                             <div class="form-group">
-                                                <!--<label for="exampleInputEmail1">Email address</label>-->
 
                                                 <input type="email" class="form-control" id="customLinkForm"
                                                     aria-describedby="emailHelp" value="Deskspacing.com/gottem">
@@ -1969,7 +1905,6 @@
                                 </div>
                             </div>
                         </div>
-
 
                         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -2045,12 +1980,12 @@
                     <canvas id="threeCanvas" style="z-index: 0;">
                         <button id="settingsButton" class="btn btn-secondary" type="submit" data-bs-toggle="modal"
                             data-bs-target="#settingsModal" style="display: none;"><span class="icon-cog"></span></button>
-                        <button id="resetCameraButton" class="btn btn-secondary" onclick="resetCamera()">Reset
+                        <button id="resetCameraButton" class="btn btn-secondary" data-action="reset-camera">Reset
                             Camera</button>
                     </canvas>
                     <button id="settingsButton" class="btn btn-secondary" type="submit" data-bs-toggle="modal"
                         data-bs-target="#settingsModal" style="display: none;"><span class="icon-cog"></span></button>
-                    <button id="resetCameraButton" class="btn btn-secondary" onclick="resetCamera()">Reset
+                    <button id="resetCameraButton" class="btn btn-secondary" data-action="reset-camera">Reset
                         Camera</button>
                     <form>
                         <input type="checkbox" id="curved32x9MonitorStand" value="off"></input>
@@ -2059,7 +1994,6 @@
 
             </div>
 
-            <!--STARTING MODAL-->
             <div class="starterModal modal fade" id="starterModal">
                 <div class="modal-dialog" role="document" style="max-height: 500px;">
                     <div class="modal-content">
@@ -2081,7 +2015,7 @@
                                 <button class="btn btn-success introTutorialButton" type="submit" data-bs-toggle="modal"
                                     data-bs-target="#tutorialModal">Beginner Tutorial</button>
                             </div>
-                            <!--<h3 class="text-white">What have we added in the last update?</h3>-->
+
                             <h5 class="text-white">Update 1.03</h5>
                             <p>Added Features:</p>
                             <ul style="list-style-type: '- ';">
@@ -2099,14 +2033,7 @@
                                     be implemented in a future update!)
                                 </li>
                             </ul>
-                            <!--<p>Fixes:</p>
-                            <ul style="list-style-type: '- ';">
-                                <li>Fixed file pathing issues for some objects</li>
-                            </ul>
-                            <p>Changes:</p>
-                            <ul style="list-style-type: '- ';">
-                                <li>Changed texture on USB microphone model </li>
-                            </ul>-->
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -2116,7 +2043,6 @@
                 </div>
             </div>
 
-            <!--SETTINGS MODAL-->
             <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -2142,14 +2068,10 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                     <input type="radio" class="form-check-input" name="optionsRadios"
-                                        id="optionsRadios1" value="1" onchange="imperialToMetric()">
+                                        id="optionsRadios1" value="1">
                                     Metric (Centimeters)
                                 </label>
                             </div>
-
-
-
-
 
                         </div>
                         <div class="modal-footer">
@@ -2160,11 +2082,10 @@
                 </div>
             </div>
 
-            <!--TUTORIAL MODAL-->
             <div class="modal fade" id="tutorialModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-xl" role="document">
-                    <!--mw-100 w-75-->
+
                     <div class="modal-content customModalCSS">
                         <div class="modal-header">
                             <h5 class="modal-title text-white" id=" exampleModalLabel">Beginner Tutorial
@@ -2272,20 +2193,13 @@
     </main>
     </div>
     </div>
-    <script src="js/share-url.js"></script>
-    <script src="dropDownLogic.js"></script>
     <script src="three.min.js"></script>
     <script src="OrbitControls.js"></script>
-    <!--<script src="./three/examples/jsm/controls/DragControls.js"></script>-->
+
     <script src="GLTFLoader.js"></script>
-    <script src="three/examples/js/controls/DragControls.js"></script>
     <script src="three/examples/js/controls/TransformControls.js"></script>
-    <script src="three/examples/js/loaders/DRACOLoader.js"></script>
-    <script src="three/examples/js/loaders/DRACOLoader.js"></script>
 
     <script type="module" src="src/main.js"></script>
-
-
 
     <script src="vendor/popper.min.js"></script>
     <script src="vendor/bootstrap.min.js"></script>
