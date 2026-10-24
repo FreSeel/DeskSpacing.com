@@ -1,11 +1,21 @@
 export function isEditable(target) {
-  return Boolean(target?.closest?.('input, textarea, select, [contenteditable]:not([contenteditable="false"])'));
+  return Boolean(
+    target?.closest?.(
+      'input, textarea, select, [contenteditable]:not([contenteditable="false"])',
+    ),
+  );
 }
 
 export function bindKeyboard({ host, selection, transformControls }) {
   let rotateActive = true;
   function onKeyDown(event) {
-    if (isEditable(event.target) || event.ctrlKey || event.metaKey || event.altKey) return;
+    if (
+      isEditable(event.target) ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.altKey
+    )
+      return;
     switch (event.key.toLowerCase()) {
       case 'backspace':
       case 'delete':

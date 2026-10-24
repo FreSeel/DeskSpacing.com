@@ -1,12 +1,23 @@
-export function bindPointer({ host, document, canvas, selection, controls, transformControls }) {
+export function bindPointer({
+  host,
+  document,
+  canvas,
+  selection,
+  controls,
+  transformControls,
+}) {
   let pickedTransform = false;
   let rightMouseMove = false;
-  const enablePicking = () => { selection.pickEnabled = true; };
+  const enablePicking = () => {
+    selection.pickEnabled = true;
+  };
   const onTransformDown = () => {
     pickedTransform = true;
     controls.enabled = false;
   };
-  const onTransformUp = () => { controls.enabled = true; };
+  const onTransformUp = () => {
+    controls.enabled = true;
+  };
   function onMouseDown(event) {
     rightMouseMove = event.button === 2;
     if (!pickedTransform) {

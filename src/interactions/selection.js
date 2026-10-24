@@ -5,7 +5,13 @@ export function findObjectRoot(hit, objects) {
   return null;
 }
 
-export function createSelection({ THREE, camera, transformControls, getObjects, removeObject }) {
+export function createSelection({
+  THREE,
+  camera,
+  transformControls,
+  getObjects,
+  removeObject,
+}) {
   const raycaster = new THREE.Raycaster();
   const selection = {
     pickedObject: null,
@@ -17,7 +23,8 @@ export function createSelection({ THREE, camera, transformControls, getObjects, 
     pick(object) {
       if (!selection.pickEnabled || !object) return;
       transformControls.detach();
-      if (!object.userData.type.includes('NoSelect')) transformControls.attach(object);
+      if (!object.userData.type.includes('NoSelect'))
+        transformControls.attach(object);
       selection.pickedObject = object;
     },
     deletePicked() {

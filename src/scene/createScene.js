@@ -3,8 +3,17 @@ export function createScene({ THREE, canvas, container, host }) {
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x2a363b);
   scene.fog = new THREE.Fog(0xa0a0a0, 300, 350);
-  const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 5000);
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+  const camera = new THREE.PerspectiveCamera(
+    45,
+    canvas.clientWidth / canvas.clientHeight,
+    0.1,
+    5000,
+  );
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    antialias: true,
+    powerPreference: 'high-performance',
+  });
   renderer.setSize(canvas.clientWidth, canvas.clientHeight);
   renderer.setPixelRatio(host.devicePixelRatio);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -26,7 +35,10 @@ export function createScene({ THREE, canvas, container, host }) {
   light.castShadow = true;
   scene.add(light);
 
-  const transformControls = new THREE.TransformControls(camera, renderer.domElement);
+  const transformControls = new THREE.TransformControls(
+    camera,
+    renderer.domElement,
+  );
   transformControls.enabled = true;
   transformControls.size = 0.7;
   transformControls.showY = false;
@@ -62,7 +74,12 @@ export function createScene({ THREE, canvas, container, host }) {
   animate();
 
   return {
-    scene, camera, renderer, controls, transformControls, resetCamera,
+    scene,
+    camera,
+    renderer,
+    controls,
+    transformControls,
+    resetCamera,
     dispose() {
       host.cancelAnimationFrame(frame);
       host.removeEventListener('resize', resize);

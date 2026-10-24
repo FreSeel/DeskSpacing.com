@@ -6,13 +6,7 @@
     1.5707963267948966,
     "GLTFs/desks/standing desks/standing desk 1 - 23.8Dx51.7Wx30.3H.glb"
   ],
-  "drawerDesk": [
-    0,
-    1,
-    -38,
-    3.141592653589793,
-    "desks/regular_desk_1.glb"
-  ],
+  "drawerDesk": [0, 1, -38, 3.141592653589793, "desks/regular_desk_1.glb"],
   "standingDesk": [
     0,
     30,
@@ -76,11 +70,7 @@
     4.71238898038469,
     "GLTFs/desks/L shaped desks/L shaped desk right.glb"
   ],
-  "customDesk": [
-    0,
-    30.2,
-    -53
-  ],
+  "customDesk": [0, 30.2, -53],
   "small16x9Monitor22": [
     0,
     31.300000000000004,
