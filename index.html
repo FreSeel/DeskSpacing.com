@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap-compat.css">
 </head>
 
 <body>
@@ -27,7 +28,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark probootstrap-navabr-dark">
         <div class="container">
             <a class="navbar-brand" href="index.html">DeskSpacing</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#probootstrap-nav"
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#probootstrap-nav"
                 aria-controls="probootstrap-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -51,11 +52,11 @@
                     <img src="images/example desk 1.png" class="img-fluid probootstrap-device-vertical-1"
                         id="jumbotronImage">
                     <ol class="carousel-indicators">
-                        <li id="imageCarousel1" data-target="#mycarousel" value="0" class="active"></li>
-                        <li id="imageCarousel2" data-target="#mycarousel" value="1"></li>
-                        <li id="imageCarousel3" data-target="#mycarousel" value="2"></li>
-                        <li id="imageCarousel4" data-target="#mycarousel" value="3"></li>
-                        <li id="imageCarousel5" data-target="#mycarousel" value="4"></li>
+                        <li id="imageCarousel1" data-bs-target="#mycarousel" value="0" class="active"></li>
+                        <li id="imageCarousel2" data-bs-target="#mycarousel" value="1"></li>
+                        <li id="imageCarousel3" data-bs-target="#mycarousel" value="2"></li>
+                        <li id="imageCarousel4" data-bs-target="#mycarousel" value="3"></li>
+                        <li id="imageCarousel5" data-bs-target="#mycarousel" value="4"></li>
                     </ol>
                 </div>
                 <div class="col-md-6 order-md-1 order-2">
@@ -281,14 +282,14 @@
                 stroke="#ff555f" /></svg></div>
 
 
-    <script src="js/jquery-3.2.1.slim.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
 
-    <script src="js/TweenMax.min.js"></script>
-    <script src="js/ScrollMagic.min.js"></script>
-    <script src="js/debug.addIndicators.min.js"></script>
-    <script src="js/animation.gsap.min.js"></script>
+    <script src="vendor/popper.min.js"></script>
+    <script src="vendor/bootstrap.min.js"></script>
+
+    <script src="vendor/gsap.min.js"></script>
+    <script src="vendor/ScrollTrigger.min.js"></script>
+
+
 
     <script src="js/main.js"></script>
     <script src="js/imageLooper.js"></script>

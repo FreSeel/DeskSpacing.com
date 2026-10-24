@@ -1,0 +1,25 @@
+# Incremental adoption: format only new tooling, tests and extracted application code.
+/*
+!/package.json
+!/.prettierrc.json
+!/*.config.js
+!/scripts/
+!/tests/
+!/.github/
+!/README.md
+!/docs/
+!/js/
+/js/*
+!/js/share-url.js
+/docs/*
+!/docs/DEVELOPMENT.md
+!/docs/DEPENDENCIES.md
+node_modules/
+dist/
+package-lock.json
+
+!/js/main.js
+!/js/ui.js
+!/css/
+/css/*
+!/css/bootstrap-compat.css

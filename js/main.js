@@ -1,52 +1,62 @@
-$(function(){
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('#probootstrap-loader')?.classList.remove('show');
+  const { gsap, ScrollTrigger } = window;
+  gsap.registerPlugin(ScrollTrigger);
 
-	'use strict';
+  if (document.querySelector('.probootstrap-scene-0')) {
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: '.probootstrap-scene-0',
+          start: 'top center',
+          once: true,
+        },
+      })
+      .from('.probootstrap-device-vertical-1', {
+        duration: 1,
+        x: -100,
+        autoAlpha: 0,
+        ease: 'power4.out',
+      })
+      .from(
+        '.probootstrap-cover .probootstrap-stagger',
+        {
+          duration: 1,
+          autoAlpha: 0,
+          x: -100,
+          scale: 0.95,
+          delay: 0.2,
+          ease: 'power4.out',
+          stagger: 0.2,
+        },
+        '-=0.8',
+      );
+  }
 
-	// loader
-	var loader = function() {
-		setTimeout(function() { 
-			if($('#probootstrap-loader').length > 0) {
-				$('#probootstrap-loader').removeClass('show');
-			}
-		}, 1);
-	};
-	loader();
-
-
-	var controller = new ScrollMagic.Controller(),
-		tl = new TimelineLite(),
-		tl2 = new TimelineLite();
-
-	tl2 
-		.from('.probootstrap-device-vertical-1', 1, {  x: -100, autoAlpha: 0, ease: Power4.easeOut } )
-		.staggerFrom('.probootstrap-cover .probootstrap-stagger', 1, { autoAlpha: 0, x: -100, scale: 0.95, delay: 0.2, ease: Power4.easeOut}, 0.2 , '-=.8')
-		
-
-	var scene = new ScrollMagic.Scene({
-		triggerElement: '.probootstrap-scene-0',
-		reverse: false
-		// offset: 500
-	})
-	.setTween(tl2)
-	// .addIndicators({name: "scene 1", colorEnd: "#F6A623"})
-	.addTo(controller);
-
-
-	tl
-		.from('.probootstrap-device-center', .5, { autoAlpha: 0, y: 100, ease: Power4.easeIn }, )
-		.from('.probootstrap-device-left', .5, { autoAlpha: 0, x: 200, delay: .2, ease: Power4.easeIn }, '-=.5' )
-		.from('.probootstrap-device-right', .5, { autoAlpha: 0, x: -200,  delay: .2, ease: Power4.easeIn }, '-=.7')
-
-	var scene = new ScrollMagic.Scene({
-		triggerElement: '.probootstrap-scene-1',
-		reverse: false
-		// offset: 500
-	})
-	.setTween(tl)
-	// .addIndicators({name: "scene 1", colorEnd: "#F6A623"})
-	.addTo(controller);
-
-
-
-
+  if (document.querySelector('.probootstrap-scene-1')) {
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: '.probootstrap-scene-1',
+          start: 'top center',
+          once: true,
+        },
+      })
+      .from('.probootstrap-device-center', {
+        duration: 0.5,
+        autoAlpha: 0,
+        y: 100,
+        ease: 'power4.in',
+      })
+      .from(
+        '.probootstrap-device-left',
+        { duration: 0.5, autoAlpha: 0, x: 200, delay: 0.2, ease: 'power4.in' },
+        '-=0.5',
+      )
+      .from(
+        '.probootstrap-device-right',
+        { duration: 0.5, autoAlpha: 0, x: -200, delay: 0.2, ease: 'power4.in' },
+        '-=0.7',
+      );
+  }
 });

@@ -1,0 +1,11 @@
+/* Bootstrap 5 carousel direction classes with the retained Bootstrap 4 theme. */
+.carousel-item-next.carousel-item-start,
+.carousel-item-prev.carousel-item-end {
+  transform: translateX(0);
+}
+.active.carousel-item-start {
+  transform: translateX(-100%);
+}
+.active.carousel-item-end {
+  transform: translateX(100%);
+}

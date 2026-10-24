@@ -8,6 +8,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" href="css/bootstrap-compat.css">
 </head>
 
 <body>
@@ -21,8 +22,8 @@
                             <p class="underTitleText">Created by Cooper Lappenbusch and Travers Sorenson &copy;</p>
                             <div class="accordion" id="accordionExample">
                                 <div class="card z-depth-0 bordered">
-                                    <div class="card-header" id="headingOne" data-toggle="collapse"
-                                        data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    <div class="card-header" id="headingOne" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                                         <h5 class="mb-0">
                                             <button class="btn btn-link" type="button">
                                                 Desks
@@ -30,7 +31,7 @@
                                         </h5>
                                     </div>
                                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                        data-parent="#accordionExample">
+                                        data-bs-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="jarvisStandingDesk"
                                                 onclick="selectNew3DObject('desk','jarvisStandingDesk',this)">
@@ -64,8 +65,8 @@
                                     </div>
                                 </div>
                                 <div class="card z-depth-0 bordered">
-                                    <div class="card-header" id="headingTwo" type="button" data-toggle="collapse"
-                                        data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <div class="card-header" id="headingTwo" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                         <h5 class="mb-0">
                                             <button class="btn btn-link collapsed">
                                                 Monitors
@@ -73,7 +74,7 @@
                                         </h5>
                                     </div>
                                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                        data-parent="#accordionExample">
+                                        data-bs-parent="#accordionExample">
                                         <div class="card-body">
                                             <div id="default16x9Monitor"
                                                 onclick="selectNew3DObject('monitor','default16x9Monitor',this)">
@@ -110,8 +111,8 @@
                                 </div>
 
                                 <div class="card z-depth-0 bordered">
-                                    <div class="card-header" id="headingFour" type="button" data-toggle="collapse"
-                                        data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    <div class="card-header" id="headingFour" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                                         <h5 class="mb-0">
                                             <button class="btn btn-link collapsed">
                                                 Keyboards
@@ -119,7 +120,7 @@
                                         </h5>
                                     </div>
                                     <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
-                                        data-parent="#accordionExample">
+                                        data-bs-parent="#accordionExample">
                                         <div class="card-body">
                                             <div id="default60PercentKeyboard"
                                                 onclick="selectNew3DObject('keyboard','default60PercentKeyboard',this)">
@@ -139,8 +140,8 @@
                                     </div>
                                 </div>
                                 <div class="card z-depth-0 bordered">
-                                    <div class="card-header" id="headingSix" type="button" data-toggle="collapse"
-                                        data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                    <div class="card-header" id="headingSix" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
                                         <h5 class="mb-0">
                                             <button class="btn btn-link collapsed">
                                                 Mouse
@@ -148,7 +149,7 @@
                                         </h5>
                                     </div>
                                     <div id="collapseSix" class="collapse" aria-labelledby="headingSix"
-                                        data-parent="#accordionExample">
+                                        data-bs-parent="#accordionExample">
                                         <div class="card-body">
                                             <div id="mediumRGBMousepad"
                                                 onclick="selectNew3DObject('mousepad','mediumRGBMousepad',this)">
@@ -168,8 +169,8 @@
                                     </div>
                                 </div>
                                 <div class="card z-depth-0 bordered">
-                                    <div class="card-header" id="headingFive" type="button" data-toggle="collapse"
-                                        data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                    <div class="card-header" id="headingFive" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
                                         <h5 class="mb-0">
                                             <button class="btn btn-link collapsed">
                                                 Mousepads
@@ -177,7 +178,7 @@
                                         </h5>
                                     </div>
                                     <div id="collapseFive" class="collapse" aria-labelledby="headingFive"
-                                        data-parent="#accordionExample">
+                                        data-bs-parent="#accordionExample">
                                         <div class="card-body">
                                             <div id="mediumRGBMousepad"
                                                 onclick="selectNew3DObject('mousepad','mediumRGBMousepad',this)">
@@ -505,15 +506,9 @@
 
 
     </script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+
+    <script src="vendor/popper.min.js"></script>
+    <script src="vendor/bootstrap.min.js"></script>
 </body>
 
 </html>
