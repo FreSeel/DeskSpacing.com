@@ -26,6 +26,7 @@ combines lint, formatting, unit tests, production build and browser tests; insta
 Chromium first. On Linux, use `npx playwright install --with-deps chromium`.
 
 The static production site is in `dist/`. No deployment runs automatically.
-See [development and hosting](docs/DEVELOPMENT.md),
+See [application architecture](docs/ARCHITECTURE.md),
+[development and hosting](docs/DEVELOPMENT.md),
 [dependency compatibility](docs/DEPENDENCIES.md), and the original
 [modernization plan](docs/MODERNIZATION_PLAN.md).
