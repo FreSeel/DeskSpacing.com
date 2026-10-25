@@ -7,7 +7,9 @@ export function readProductChoice(element, document) {
   const options = { replace: replace === 'true' };
   let id = product;
   if (family) {
-    const noStand = families[family].stand && value(`${family}Stand`) === 'on';
+    const noStand =
+      families[family].stand &&
+      document.getElementById(`${family}Stand`).checked;
     id = resolveProduct(family, value(`${family}Form`), noStand);
   }
   if (id === 'customDesk') {
@@ -30,12 +32,6 @@ export function readProductChoice(element, document) {
 
 export function bindCatalogPreviews(document, listen) {
   for (const [id, config] of Object.entries(families)) {
-    if (config.stand) {
-      const checkbox = document.getElementById(`${id}Stand`);
-      listen(checkbox, 'click', () => {
-        checkbox.value = checkbox.value === 'off' ? 'on' : 'off';
-      });
-    }
     if (config.preview) {
       const form = document.getElementById(`${id}Form`);
       listen(form, 'change', () => {
@@ -49,4 +45,66 @@ export function bindCatalogPreviews(document, listen) {
     document.getElementById('customDeskImage').src =
       form.selectedOptions[0].dataset.image;
   });
+}
+
+export function bindCatalogDiscovery({ document, cards, categories, listen }) {
+  const search = document.getElementById('catalogSearch');
+  const category = document.getElementById('catalogCategory');
+  const items = [...document.querySelectorAll('[data-card]')];
+  let expanded = null;
+  function setExpanded(id) {
+    expanded = id;
+    for (const item of items) {
+      const active = item.dataset.card === expanded;
+      item.classList.toggle('is-expanded', active);
+      item.querySelector('.product-options').hidden = !active;
+      item
+        .querySelector('[data-options]')
+        ?.setAttribute('aria-expanded', String(active));
+    }
+  }
+  function filter() {
+    const query = search.value.trim().toLowerCase();
+    let count = 0;
+    for (const [index, item] of items.entries()) {
+      const card = cards[index];
+      const variants = (card.select?.options || []).filter((option) =>
+        `${option.label} ${card.id}${option.value}${card.stand ? 'NoStand no stand' : ''}`
+          .toLowerCase()
+          .includes(query),
+      );
+      const base =
+        `${card.name} ${card.id} ${categories.find((c) => c.id === card.category).label}`
+          .toLowerCase()
+          .includes(query);
+      const visible =
+        (!category.value || category.value === card.category) &&
+        (base || variants.length > 0);
+      item.hidden = !visible;
+      if (visible) count++;
+      if (!visible && expanded === card.id) setExpanded(null);
+      const match = item.querySelector('.search-match');
+      match.hidden = !visible || !query || base || !variants.length;
+      match.textContent = `Matches: ${variants.map((option) => option.label).join(', ')}`;
+    }
+    document.getElementById('catalogCount').textContent =
+      `${count} ${count === 1 ? 'object' : 'objects'}`;
+    document.getElementById('catalogEmpty').hidden = count > 0;
+  }
+  listen(search, 'input', filter);
+  listen(category, 'change', filter);
+  listen(document.getElementById('clearFilters'), 'click', () => {
+    search.value = '';
+    category.value = '';
+    filter();
+    search.focus();
+  });
+  listen(document.getElementById('catalogGrid'), 'click', (event) => {
+    const toggle = event.target.closest('[data-options]');
+    if (toggle)
+      setExpanded(
+        expanded === toggle.dataset.options ? null : toggle.dataset.options,
+      );
+  });
+  filter();
 }

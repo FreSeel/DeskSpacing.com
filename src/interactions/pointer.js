@@ -20,6 +20,7 @@ export function bindPointer({
   };
   function onPointerDown(event) {
     if (event.button !== 0) return;
+    canvas.focus({ preventScroll: true });
     selection.pickEnabled = true;
     if (!pickedTransform) {
       const rect = canvas.getBoundingClientRect();

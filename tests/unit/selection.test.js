@@ -45,18 +45,58 @@ describe('selection and keyboard ownership', () => {
       removeEventListener: vi.fn(),
     };
     const selection = { deletePicked: vi.fn(), unselectPickedObject: vi.fn() };
-    const transformControls = { setMode: vi.fn() };
+    let mode = 'translate';
+    const transformControls = {
+      getMode: () => mode,
+      setMode: vi.fn((value) => {
+        mode = value;
+      }),
+    };
+    const target = {
+      closest: (selector) =>
+        selector === '[data-workspace-shortcuts]' ? {} : null,
+    };
+    const press = (key) => listener({ key, target, preventDefault: vi.fn() });
     const dispose = bindKeyboard({ host, selection, transformControls });
     listener({ key: 'd', target: { closest: () => ({}) } });
     listener({ key: 'd', ctrlKey: true });
     expect(selection.deletePicked).not.toHaveBeenCalled();
-    listener({ key: 'Delete' });
+    listener({ key: 'd' }); // Outside workspace scope.
+    expect(selection.deletePicked).not.toHaveBeenCalled();
+    press('Delete');
     expect(selection.deletePicked).toHaveBeenCalledOnce();
-    listener({ key: 'r' });
+    press('r');
     expect(transformControls.setMode).toHaveBeenLastCalledWith('rotate');
-    listener({ key: 'r' });
+    press('r');
     expect(transformControls.setMode).toHaveBeenLastCalledWith('translate');
+    host.document = { querySelector: () => ({}) };
+    press('d'); // Open modal suspends scene shortcuts.
+    expect(selection.deletePicked).toHaveBeenCalledOnce();
     dispose();
     expect(host.removeEventListener).toHaveBeenCalledWith('keydown', listener);
   });
+});
+
+it('notifies only changed selection, including NoSelect, and unsubscribes', () => {
+  const object = { userData: { type: 'DeskNoSelect' } };
+  const controls = { attach: vi.fn(), detach: vi.fn() };
+  const selection = createSelection({
+    THREE,
+    transformControls: controls,
+    getObjects: () => [object],
+    removeObject: vi.fn(),
+  });
+  const listener = vi.fn();
+  const unsubscribe = selection.subscribe(listener);
+  expect(listener).toHaveBeenLastCalledWith(null);
+  selection.pick(object);
+  expect(listener).toHaveBeenLastCalledWith(object);
+  expect(controls.attach).not.toHaveBeenCalled();
+  selection.pick(object);
+  expect(listener).toHaveBeenCalledTimes(2);
+  selection.deletePicked();
+  expect(listener).toHaveBeenLastCalledWith(null);
+  unsubscribe();
+  selection.pick(object);
+  expect(listener).toHaveBeenCalledTimes(3);
 });

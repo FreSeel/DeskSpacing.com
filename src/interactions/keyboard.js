@@ -1,3 +1,5 @@
+import { createTransformCommands } from './commands.js';
+
 export function isEditable(target) {
   return Boolean(
     target?.closest?.(
@@ -7,47 +9,26 @@ export function isEditable(target) {
 }
 
 export function bindKeyboard({ host, selection, transformControls }) {
-  let rotateActive = true;
+  const command = createTransformCommands(transformControls);
   function onKeyDown(event) {
     if (
       isEditable(event.target) ||
       event.ctrlKey ||
       event.metaKey ||
-      event.altKey
+      event.altKey ||
+      host.document?.querySelector('.modal.show') ||
+      !event.target?.closest?.('[data-workspace-shortcuts]')
     )
       return;
-    switch (event.key.toLowerCase()) {
-      case 'backspace':
-      case 'delete':
-      case 'd':
-        selection.deletePicked();
-        break;
-      case 'c':
-        selection.unselectPickedObject();
-        break;
-      case 'r':
-        transformControls.showX = !rotateActive;
-        transformControls.showZ = !rotateActive;
-        transformControls.showY = rotateActive;
-        transformControls.setMode(rotateActive ? 'rotate' : 'translate');
-        rotateActive = !rotateActive;
-        break;
-      case '+':
-      case '=':
-        transformControls.setSize(transformControls.size + 0.1);
-        break;
-      case '-':
-      case '_':
-        transformControls.setSize(Math.max(transformControls.size - 0.1, 0.1));
-        break;
-      case 'x':
-      case 'y':
-      case 'z': {
-        const axis = `show${event.key.toUpperCase()}`;
-        transformControls[axis] = !transformControls[axis];
-        break;
-      }
-    }
+    const key = event.key.toLowerCase();
+    if (['backspace', 'delete', 'd'].includes(key)) selection.deletePicked();
+    else if (key === 'c') selection.unselectPickedObject();
+    else if (key === 'r') command('toggle-mode');
+    else if (key === '+' || key === '=') command('larger');
+    else if (key === '-' || key === '_') command('smaller');
+    else if (['x', 'y', 'z'].includes(key)) command(key);
+    else return;
+    event.preventDefault();
   }
   host.addEventListener('keydown', onKeyDown);
   return () => host.removeEventListener('keydown', onKeyDown);

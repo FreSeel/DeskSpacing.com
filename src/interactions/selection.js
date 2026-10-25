@@ -14,19 +14,31 @@ export function createSelection({
 }) {
   const raycaster = new THREE.Raycaster();
   const hits = [];
+  const listeners = new Set();
+  const notify = () =>
+    listeners.forEach((listener) => listener(selection.pickedObject));
   const selection = {
     pickedObject: null,
     pickEnabled: true,
+    subscribe(listener) {
+      listeners.add(listener);
+      listener(selection.pickedObject);
+      return () => listeners.delete(listener);
+    },
     unselectPickedObject() {
+      const changed = selection.pickedObject !== null;
       selection.pickedObject = null;
       transformControls.detach();
+      if (changed) notify();
     },
     pick(object) {
       if (!selection.pickEnabled || !object) return;
       transformControls.detach();
       if (!object.userData.type.includes('NoSelect'))
         transformControls.attach(object);
+      const changed = selection.pickedObject !== object;
       selection.pickedObject = object;
+      if (changed) notify();
     },
     deletePicked() {
       if (selection.pickedObject && selection.pickEnabled) {

@@ -30,10 +30,12 @@ async function ready(page, count = 6) {
           },
         };
   });
-  await expect(page.locator('#starterModal')).toBeVisible();
-  await page
-    .locator('#starterModal .modal-footer [data-bs-dismiss=modal]')
-    .click();
+  if (!new URL(page.url()).pathname.endsWith('/mainApp.html')) {
+    await expect(page.locator('#starterModal')).toBeVisible();
+    await page
+      .locator('#starterModal .modal-footer [data-bs-dismiss=modal]')
+      .click();
+  }
   await expect(page.locator('#starterModal')).toBeHidden();
   // Bootstrap removes the backdrop after the modal itself becomes hidden.
   await expect(page.locator('.modal-backdrop')).toHaveCount(0);
@@ -128,14 +130,12 @@ test('catalog loads an additional model; selection, rotate shortcut and delete u
 }) => {
   await page.goto('mainApp.html');
   await ready(page);
-  // Open the catalog accordion through Bootstrap 5 before adding a real model.
-  await page.locator('#headingSeven').click();
-  await expect(page.locator('#collapseSeven')).toBeVisible();
+  await page.locator('#catalogCategory').selectOption('mice');
   const add = page.locator(
     '[data-action="add"][data-product="defaultMouse"]:not([data-replace])',
   );
   await add.click();
-  await add.evaluate((button) => button.blur());
+  await page.locator('#threeCanvas').focus();
   await expect
     .poll(() =>
       page.evaluate(
@@ -202,6 +202,7 @@ test('Bootstrap 5 tutorial carousel advances and closes without losing the scene
 }) => {
   await page.goto('mainApp.html');
   await ready(page);
+  await page.locator('#helpMenu summary').click();
   await page.locator('[data-bs-target="#tutorialModal"]').first().click();
   await expect(page.locator('#tutorialModal')).toBeVisible();
   // Disable timed cycling so this specifically verifies the next-button interaction.
@@ -301,14 +302,15 @@ async function openProduct(page, attribute, id, replace = false) {
   const button = page.locator(
     `[data-action="add"][data-${attribute}="${id}"]${replace ? '[data-replace]' : ':not([data-replace])'}`,
   );
-  const panel = await button.evaluate(
-    (element) => element.closest('.collapse, .collapsing').id,
-  );
-  if (!(await page.locator(`#${panel}`).isVisible())) {
-    await page.locator(`[data-bs-target="#${panel}"]`).first().click();
-    await expect(page.locator(`#${panel}`)).toBeVisible();
-  }
-  await expect(page.locator(`#${panel}`)).not.toHaveClass(/collapsing/);
+  await page.locator('#catalogSearch').fill('');
+  await page.locator('#catalogCategory').selectOption('');
+  const item = page.locator(`[data-card="${id}"]`);
+  const toggle = item.locator('[data-options]');
+  if (
+    (await toggle.count()) &&
+    (await toggle.getAttribute('aria-expanded')) === 'false'
+  )
+    await toggle.click();
   return button;
 }
 
@@ -442,9 +444,9 @@ test('failed model replacement reports an error and preserves the selected objec
   );
   const replace = await openProduct(page, 'product', 'MXMaster3', true);
   await replace.click();
-  await expect(page.locator('.planner-feedback')).toContainText(
-    'Could not load',
-  );
+  await expect(
+    page.locator('[data-card="MXMaster3"] .card-error'),
+  ).toContainText('Could not load');
   expect(await records(page)).toEqual(before);
 });
 
@@ -486,7 +488,28 @@ test('the camera orbits and resets; object translation and rotation use the live
   const box = await openProduct(page, 'product', 'referenceBox');
   await box.click();
   await expectProduct(page, 'referenceBox');
-  await box.evaluate((element) => element.blur());
+  await page.locator('#threeCanvas').focus();
+  // Selection opens a docked inspector. Wait for its ResizeObserver update and
+  // the rendered gizmo before projecting a real handle into screen coordinates.
+  await expect
+    .poll(() =>
+      page.evaluate(() => {
+        const host = document.getElementById('rightSideContainer');
+        return Math.abs(
+          window.planner.view.camera.aspect -
+            host.clientWidth / host.clientHeight,
+        );
+      }),
+    )
+    .toBeLessThan(0.001);
+  await page.evaluate(
+    () =>
+      new Promise((resolve) =>
+        window.requestAnimationFrame(() =>
+          window.requestAnimationFrame(resolve),
+        ),
+      ),
+  );
   // Locate an actual visible X-axis handle from the pinned engine, then drag it.
   const handle = await page.evaluate(() => {
     const { camera, transformControls } = window.planner.view;
@@ -510,6 +533,9 @@ test('the camera orbits and resets; object translation and rotation use the live
     (item) => item.product === 'referenceBox',
   );
   await page.mouse.move(handle.x, handle.y);
+  await expect
+    .poll(() => page.evaluate(() => window.planner.view.transformControls.axis))
+    .toBe('X');
   await page.mouse.down();
   await page.mouse.move(handle.x + 45, handle.y, { steps: 12 });
   await page.mouse.up();
@@ -566,7 +592,7 @@ test('remaining product categories add and delete through their catalog buttons'
     const button = await openProduct(page, 'product', product);
     await button.click();
     await expectProduct(page, product);
-    await button.evaluate((element) => element.blur());
+    await page.locator('#threeCanvas').focus();
     await page.keyboard.press('Delete');
     await expect.poll(async () => (await records(page)).length).toBe(6);
   }

@@ -1,0 +1,33 @@
+.planner-app {
+  --font-ui:
+    ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Consolas, monospace;
+  --color-bg: #f6f6f2;
+  --color-surface: #fafaf7;
+  --color-card: #fff;
+  --color-surface-muted: #ecede7;
+  --color-workspace: #e7e7e1;
+  --color-text: #242723;
+  --color-text-muted: #62675e;
+  --color-border: #daddd4;
+  --color-border-control: #7b8175;
+  --color-accent: #4f6240;
+  --color-focus: #4f57c8;
+  --color-danger: #a33a30;
+  --color-danger-bg: #fff3f0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --radius-sm: 4px;
+  --radius-control: 8px;
+  --radius-card: 12px;
+  --shadow-tool: 0 4px 16px rgb(36 39 35 / 8%);
+  --shadow-dialog: 0 16px 48px rgb(36 39 35 / 16%);
+  --transition: 140ms ease;
+  --library-width: 360px;
+  --inspector-width: 288px;
+}

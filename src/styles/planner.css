@@ -1,246 +1,781 @@
-* {
-  outline: none !important;
-}
-body,
-html {
-  height: 100% !important;
-  padding: 0;
+/* Modern editor only. Retained planners keep their historical styles. */
+.planner-app {
   margin: 0;
-  overflow: hidden !important; /* Hide scrollbars */
-  height: 100%;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font: 14px/1.45 var(--font-ui);
+  text-shadow: none;
 }
-
-.scene,
-canvas {
+.planner-app *,
+.planner-app *::before,
+.planner-app *::after {
+  box-sizing: border-box;
+}
+.planner-app [hidden] {
+  display: none !important;
+}
+.planner-app :focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+.planner-app h1,
+.planner-app h2,
+.planner-app h3,
+.planner-app p {
+  margin: 0;
+  color: inherit;
+  font-family: inherit;
+  text-shadow: none;
+}
+.planner-app h1 {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.planner-app h2 {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.planner-app h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+.planner-app button,
+.planner-app input,
+.planner-app select,
+.planner-app summary {
+  font: inherit;
+}
+.planner-app button,
+.planner-app summary {
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  background: var(--color-card);
+  min-height: 36px;
+  padding: 7px 12px;
+  cursor: pointer;
+  box-shadow: none;
+  text-shadow: none;
+  transition:
+    background var(--transition),
+    border-color var(--transition);
+}
+.planner-app button:hover,
+.planner-app summary:hover {
+  background: var(--color-surface-muted);
+  border-color: var(--color-border-control);
+}
+.planner-app button:disabled {
+  cursor: default;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  border-color: var(--color-border);
+}
+.planner-app button[aria-pressed='true'] {
+  background: var(--color-surface-muted);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+.planner-app button:active:not(:disabled) {
+  background: var(--color-border);
+}
+.planner-app .button-primary {
+  background: var(--color-text);
+  border-color: var(--color-text);
+  color: white;
+  font-weight: 600;
+}
+.planner-app .button-primary:hover {
+  background: #40473b;
+}
+.planner-app .button-danger {
+  color: var(--color-danger);
+  border-color: #d4b3ad;
+  background: #fffaf8;
+}
+.planner-app .button-danger:hover {
+  background: var(--color-danger-bg);
+  border-color: var(--color-danger);
+}
+.planner-app .icon-button {
+  background: transparent;
+  border-color: transparent;
+  padding: 0;
+  font-size: 27px;
+  font-weight: 300;
+  line-height: 1;
+  width: 36px;
+  flex: 0 0 36px;
+}
+.planner-app input:not([type='checkbox']),
+.planner-app select {
+  display: block;
   width: 100%;
-  height: 100%;
-  min-height: 600px;
-  z-index: 2;
+  min-height: 38px;
+  border: 1px solid var(--color-border-control);
+  border-radius: var(--radius-control);
+  background: var(--color-card);
+  color: var(--color-text);
+  padding: 8px 10px;
 }
-
-.menuCol {
-  height: 100%;
-  overflow: auto;
+.planner-app input::placeholder {
+  color: var(--color-text-muted);
 }
-
-#componentsList li {
-  height: 50px;
-  width: 100%;
+.planner-app input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-accent);
 }
-
-.ui {
-  z-index: 1;
-  position: absolute;
+.planner-app input[aria-invalid='true'] {
+  border-color: var(--color-danger);
 }
-#threeCanvas {
-  z-index: 10;
-  position: absolute;
+.planner-app label,
+.planner-app .field-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 6px;
 }
-
-.navbarTitle {
-  text-align: center;
+.planner-app a {
+  color: var(--color-accent);
 }
-
-.underTitleText {
-  text-align: center;
+.planner-app svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex: 0 0 auto;
 }
-
-#itemText {
-  text-align: center;
+.planner-app .eyebrow {
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
 }
-
-.h3,
-h3 {
-  text-align: center;
+.planner-app .muted {
+  color: var(--color-text-muted);
+  font-size: 12px;
 }
-
-#UIRow {
-  max-height: 100%;
+.planner-app kbd {
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  box-shadow: none;
+  font: 12px var(--font-mono);
+  padding: 2px 5px;
 }
-
-.productPicture {
-  margin: auto;
+.planner-app .skip-link {
+  position: fixed;
+  left: 16px;
+  top: -60px;
+  z-index: 1100;
+  padding: 12px;
+  background: white;
+}
+.planner-app .skip-link:focus {
+  top: 8px;
+}
+.planner-app .editor-shell {
+  height: 100vh;
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: 64px minmax(0, 1fr);
+}
+.planner-app .editor-header {
   display: flex;
-  height: 80%;
-  width: 80%;
+  align-items: center;
+  gap: 24px;
+  padding: 0 24px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  z-index: 30;
 }
-
-.productPictureImg {
-  margin: auto; /* Magic! */
-  max-width: 100%;
-  max-height: 100%;
+.planner-app .editor-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.6px;
 }
-
-.productBarrier {
-  width: 80%;
-  height: 1px;
-  background-color: lightgrey;
-  margin: 0 auto;
-  margin: 20px auto;
+.planner-app .brand-mark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--color-text);
+  color: white;
 }
-
-.productDescription {
-  text-align: center;
-  width: 65%;
-  margin: 0 auto;
+.planner-app .brand-mark svg {
+  width: 22px;
+  height: 22px;
 }
-
-/* width */
-::-webkit-scrollbar {
-  width: 10px;
+.planner-app .workspace-name {
+  color: var(--color-text-muted);
+  border-left: 1px solid var(--color-border);
+  padding-left: 24px;
 }
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
+.planner-app .header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-left: auto;
 }
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888;
+.planner-app #saveModalButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 8px;
 }
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+.planner-app .toolbar-menu {
+  position: relative;
 }
-
-.dropdownWrapper {
-  margin: 10px !important;
+.planner-app .toolbar-menu summary {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: transparent;
+  border-color: transparent;
+  list-style: none;
 }
-
-.doubleDropdownWrapper {
-  display: inline-block;
-  width: calc(50% - 4px);
-  margin: 0 auto;
-}
-
-#rightSideContainer {
-  padding: 0 !important;
-}
-
-.productDescriptionText {
-  font-size: 19px;
-}
-
-.centerTopBottom {
-  margin: auto auto;
-  padding: 0 !important;
-}
-
-.innerDescriptionDiv {
-  padding-top: 15px;
-}
-
-.dimensionsText {
-  font-size: 17px;
-  font-style: normal;
-  padding-bottom: 5px;
-}
-
-.itemTitleText {
-  margin: 0 !important;
-  padding: 0 !important;
-  line-height: 30px;
-  padding-bottom: 5px;
-}
-
-.smallParagraphBreak {
-  font-size: 5px !important;
-}
-
-label {
-  padding: 0;
-  margin: 0;
-}
-
-.keybindLetter {
-  font-weight: bold !important;
-}
-.keybindButton {
-  margin: 5px;
-}
-
-.navbarWrapper {
-  position: fixed;
-}
-
-.btn.btn-primary {
-  background: #62c462 !important;
-  border-color: #62c462 !important;
-  color: #fff !important;
-}
-
-.navbar-brand {
-  padding-left: 0px !important;
-  font-size: 26px;
-}
-
-.navbar {
-  border: 0px !important;
-}
-
-.jumbotronMainText {
-  font-weight: bold !important;
-}
-
-.modalTextBackground {
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-#settingsButton {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  margin: 15px;
-}
-
-#resetCameraButton {
-  position: absolute;
-  bottom: 0;
-  margin: 15px;
-  z-index: 1;
-}
-
-#toggleAxesButton {
-  position: absolute;
-  bottom: 0;
-  left: 10;
-  margin: 15px;
-  z-index: 1;
-}
-
-.modalRadioButton {
-  position: fixed;
-  bottom: -4px;
-  right: 10px;
-}
-
-.introTutorialButton {
-  margin: 10px;
-  margin-bottom: 16px;
-  margin-top: 0px;
-  margin-left: 0px;
-}
-
-.modal-content::-webkit-scrollbar {
+.planner-app summary::-webkit-details-marker {
   display: none;
 }
-
-/* Load/restore failures are visible without interrupting canvas interaction. */
-.planner-feedback,
-.planner-loading {
+.planner-app .menu-popover {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: 248px;
+  padding: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-card);
+  box-shadow: var(--shadow-tool);
+}
+.planner-app .menu-popover button,
+.planner-app .menu-popover a {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border: 0;
+  text-decoration: none;
+  color: var(--color-text);
+  border-radius: var(--radius-control);
+}
+.planner-app .menu-popover a:hover {
+  background: var(--color-surface-muted);
+}
+.planner-app .menu-popover p {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  padding: 12px;
+  border-top: 1px solid var(--color-border);
+  margin-top: 6px;
+}
+.planner-app .editor-body {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+}
+.planner-app .library-panel {
+  width: var(--library-width);
+  flex: 0 0 var(--library-width);
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--color-border);
+  background: var(--color-surface);
+  min-height: 0;
+}
+.planner-app .library-heading,
+.planner-app .selection-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.planner-app .library-heading {
+  padding: 24px 20px 20px;
+}
+.planner-app .library-filters {
+  padding: 0 20px;
+}
+.planner-app #catalogSearch {
+  min-height: 40px;
+  margin-bottom: 14px;
+}
+.planner-app #catalogCategory {
+  margin-bottom: 20px;
+}
+.planner-app #catalogCount {
+  margin-bottom: 12px;
+}
+.planner-app .catalog-scroll {
+  padding: 2px 16px 20px;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #b8bcb2 transparent;
+}
+.planner-app .catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.planner-app .catalog-item {
+  min-width: 0;
+}
+.planner-app .product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 10px;
+  border: 1px solid var(--color-border);
+  background: var(--color-card);
+  border-radius: var(--radius-card);
+  gap: 10px;
+}
+.planner-app .product-card:hover {
+  border-color: var(--color-border-control);
+}
+.planner-app .product-card h2 {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.planner-app .thumbnail-well {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-control);
+  background: var(--color-surface-muted);
+  overflow: hidden;
+}
+.planner-app .thumbnail-well img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+.planner-app .thumbnail-fallback {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  padding: 12px;
+  text-align: center;
+}
+.planner-app .product-description,
+.planner-app .product-hint,
+.planner-app .search-match {
+  color: var(--color-text-muted);
+  font-size: 12px;
+  line-height: 16px;
+}
+.planner-app .product-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+}
+.planner-app .product-actions button {
+  padding: 6px 8px;
+  min-height: 32px;
+  font-size: 12px;
+}
+.planner-app .product-actions .add-action {
+  width: 100%;
+}
+.planner-app .product-actions .replace-action {
+  width: 100%;
+  border-color: transparent;
+  font-size: 12px;
+  min-height: 28px;
+  padding: 3px 0;
+}
+.planner-app .options-toggle {
+  margin-top: auto;
+  min-height: 32px;
+  font-size: 12px;
+}
+.planner-app .catalog-item.is-expanded {
+  grid-column: 1 / -1;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-card);
+  background: var(--color-card);
+}
+.planner-app .is-expanded .product-card {
+  border: 0;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  height: auto;
+}
+.planner-app .is-expanded .thumbnail-well {
+  grid-row: span 2;
+}
+.planner-app .is-expanded .options-toggle {
+  justify-self: start;
+  margin: 0;
+}
+.planner-app .product-options {
+  padding: 14px;
+  border-top: 1px solid var(--color-border);
+}
+.planner-app .product-options h3 {
+  margin-bottom: 12px;
+}
+.planner-app .product-options .product-description {
+  margin-bottom: 12px;
+}
+.planner-app .product-options input:not([type='checkbox']),
+.planner-app .product-options select {
+  margin-bottom: 12px;
+}
+.planner-app .product-options .product-actions {
+  margin-top: 16px;
+  flex-wrap: nowrap;
+}
+.planner-app .product-options .product-actions button {
+  width: auto;
+  flex: 1;
+}
+.planner-app .product-options .product-hint {
+  margin-top: 8px;
+}
+.planner-app .checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  margin-top: 12px;
+}
+.planner-app .card-error {
+  padding: 8px;
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  font-size: 12px;
+  margin-top: 8px;
+  overflow-wrap: anywhere;
+}
+.planner-app #catalogEmpty {
+  padding: 24px 8px;
+}
+.planner-app #catalogEmpty p {
+  margin-bottom: 16px;
+}
+.planner-app #replacementHint {
+  margin: 16px 0 0;
+}
+.planner-app .library-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--color-border);
+  padding: 12px 20px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+.planner-app #rightSideContainer {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--color-workspace);
+}
+.planner-app #threeCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+}
+.planner-app #threeCanvas:focus-visible {
+  outline-offset: -4px;
+}
+.planner-app .workspace-heading {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  pointer-events: none;
+}
+.planner-app .workspace-heading > p:last-child {
+  font-weight: 600;
+  font-size: 16px;
+}
+.planner-app .workspace-tools {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  pointer-events: none;
+}
+.planner-app .workspace-tools button {
+  pointer-events: auto;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-tool);
+  flex: 0 0 auto;
+}
+.planner-app #workspaceHints {
+  font-size: 12px;
+  color: #444b40;
+  text-align: center;
+}
+.planner-app #workspaceHints span {
+  padding: 0 3px;
+}
+.planner-app #resetCameraButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+.planner-app .selection-panel {
+  flex: 0 0 var(--inspector-width);
+  width: var(--inspector-width);
+  min-height: 0;
+  overflow-y: auto;
+  padding: 24px 20px;
+  background: var(--color-surface);
+  border-left: 1px solid var(--color-border);
+  scrollbar-width: thin;
+}
+.planner-app #selectionVariation {
+  margin-top: 8px;
+}
+.planner-app #selectionPreview {
+  margin-top: 24px;
+}
+.planner-app #selectionPreview > .thumbnail-well {
+  width: 100%;
+  height: 100%;
+}
+.planner-app .instance-label {
+  font: 12px/1.5 var(--font-mono);
+  color: var(--color-text-muted);
+  overflow-wrap: anywhere;
+  margin-top: 10px;
+}
+.planner-app .inspector-section {
+  border-top: 1px solid var(--color-border);
+  margin-top: 24px;
+  padding-top: 20px;
+}
+.planner-app .segmented-control {
+  display: flex;
+  gap: 6px;
+  margin: 16px 0 12px;
+}
+.planner-app .segmented-control button {
+  flex: 1;
+}
+.planner-app .control-details {
+  margin-top: 20px;
+}
+.planner-app .control-details summary {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  border-radius: 0;
+  padding: 12px 0;
+  list-style: none;
+}
+.planner-app .control-details summary::after {
+  content: '+';
+  float: right;
+}
+.planner-app .control-details[open] summary::after {
+  content: '−';
+}
+.planner-app .axis-controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.planner-app .axis-controls button {
+  flex: 1;
+}
+.planner-app #selectionLocked {
+  margin-top: 24px;
+}
+.planner-app #selectionDescription {
+  font-size: 12px;
+  margin-top: 14px;
+}
+.planner-app #removeObject {
+  width: 100%;
+  margin-top: 32px;
+}
+.planner-app .modal-content {
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-dialog);
+}
+.planner-app .modal-dialog {
+  margin: 40px auto;
+  max-width: 560px;
+}
+.planner-app .modal-dialog.modal-xl {
+  max-width: 800px;
+}
+.planner-app .modal-header,
+.planner-app .modal-footer {
+  border-color: var(--color-border);
+  padding: 16px 24px;
+  align-items: center;
+}
+.planner-app .modal-title {
+  font-size: 20px;
+}
+.planner-app .modal-body {
+  padding: 24px;
+  max-height: calc(100dvh - 220px);
+  overflow-y: auto;
+}
+.planner-app .modal-body p {
+  margin-bottom: 16px;
+}
+.planner-app .modal-body h3 {
+  margin: 8px 0 16px;
+}
+.planner-app #customLinkForm {
+  margin-bottom: 16px;
+}
+.planner-app .shortcut-list {
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) 1.4fr;
+  gap: 12px;
+  margin: 0 0 24px;
+}
+.planner-app .shortcut-list dt {
+  font-weight: 500;
+}
+.planner-app .shortcut-list dd {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+.planner-app .tutorial-image {
+  width: 100%;
+  max-height: 340px;
+  object-fit: contain;
+  border-radius: var(--radius-control);
+  background: var(--color-workspace);
+}
+.planner-app .tutorial-copy {
+  padding: 20px 4px 0;
+}
+.planner-app .tutorial-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 16px;
+}
+.planner-app .tutorial-navigation button {
+  position: static;
+  width: auto;
+  opacity: 1;
+  background-image: none;
+}
+.planner-app .planner-feedback,
+.planner-app .planner-loading {
   position: absolute;
   z-index: 20;
-  top: 1rem;
-  left: 1rem;
-  right: 1rem;
-  padding: 0.75rem;
-  background: #2a363b;
-  color: white;
-  border: 1px solid #cc5353;
+  top: 90px;
+  left: 20px;
+  right: 20px;
+  padding: 12px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-tool);
+  pointer-events: none;
 }
-
-.planner-loading {
-  border-color: #6b9eaf;
+.planner-app .planner-feedback {
+  color: var(--color-danger);
+  background: var(--color-danger-bg);
+  border-color: #d4b3ad;
+}
+@media (max-width: 1439px) {
+  .planner-app {
+    --library-width: 320px;
+    --inspector-width: 256px;
+  }
+  .planner-app #workspaceHints {
+    max-width: 200px;
+  }
+}
+@media (max-width: 1279px) {
+  .planner-app {
+    --library-width: 304px;
+    --inspector-width: 240px;
+  }
+  .planner-app #workspaceHints {
+    display: none;
+  }
+  .planner-app .editor-header {
+    padding-inline: 16px;
+  }
+}
+@media (max-width: 800px) {
+  .planner-app .workspace-name {
+    display: none;
+  }
+  .planner-app .editor-header {
+    gap: 8px;
+  }
+  .planner-app .selection-panel {
+    position: absolute;
+    right: 0;
+    top: 64px;
+    bottom: 0;
+    z-index: 25;
+  }
+  .planner-app .library-panel {
+    max-width: 55vw;
+  }
+}
+@media (max-height: 650px) {
+  .planner-app .library-heading {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  .planner-app .library-footer {
+    display: none;
+  }
+  .planner-app .modal-dialog {
+    margin-block: 16px;
+  }
+  .planner-app .modal-body {
+    max-height: calc(100dvh - 170px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .planner-app *,
+  .planner-app *::before,
+  .planner-app *::after {
+    transition: none !important;
+    animation: none !important;
+  }
 }

@@ -16,32 +16,47 @@ been removed.
 
 ## Structure and responsibilities
 
-| Location                        | Responsibility                                                                                                                                                                 |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `mainApp.html`                  | Existing catalog cards, forms, menus, tutorials and dialogs. Buttons use `data-action`, `data-product` or `data-family`; no embedded application JavaScript or event handlers. |
-| `src/main.js`                   | Entrypoint; injects explicit npm engine exports once and exports the composed `app` lifecycle.                                                                                 |
-| `src/app/createApp.js`          | Composes services, starts default/URL loading, handles startup failure, and tears down the app.                                                                                |
-| `src/app/pageSetup.js`          | Existing analytics initialization and desktop-only mobile notice.                                                                                                              |
-| `src/scene/createScene.js`      | Renderer, camera, lights, fog, OrbitControls, TransformControls, resize handling and demand rendering.                                                                         |
-| `src/catalog/products.js`       | Stable product IDs, legacy types, asset paths, authored positions/rotations, display dimensions, textures and desk offsets.                                                    |
-| `src/catalog/configuration.js`  | Default setup, product families, primitive defaults, variant resolution and placement calculations. No DOM or Three.js dependency.                                             |
-| `src/models/modelLoader.js`     | GLTFLoader boundary with shared, reference-counted templates, a bounded idle cache, Meshopt decoding and the legacy first-root convention.                                     |
-| `src/models/objectFactory.js`   | Builds model or primitive instances, loads primitive textures, and owns their resources.                                                                                       |
-| `src/models/resources.js`       | Disposes owned geometries, materials, textures, skeletons and ImageBitmaps; estimates cache retention.                                                                         |
-| `src/state/objectStore.js`      | Scene membership, instance names, desk offset and generation tokens.                                                                                                           |
-| `src/state/actions.js`          | Add, replace, remove, desk changes, reset, default initialization and transactional restoration. No DOM dependency.                                                            |
-| `src/interactions/selection.js` | Maps raycast hits to registered roots, selects, deselects and deletes.                                                                                                         |
-| `src/interactions/pointer.js`   | Coordinates pointer picking, gizmo dragging and camera controls.                                                                                                               |
-| `src/interactions/keyboard.js`  | Delete, deselect, rotate/translate, gizmo size and axis shortcuts, with editable-field guards.                                                                                 |
-| `src/sharing/legacyCodec.js`    | Bounded, validated plain-data reader/writer for the historical setup format.                                                                                                   |
-| `src/sharing/sceneRecords.js`   | Converts live Three.js transforms and primitive parameters to plain records.                                                                                                   |
-| `src/sharing/shareUrl.js`       | Deployment-aware URL creation and safe query reading.                                                                                                                          |
-| `src/sharing/createSharing.js`  | Connects codec, snapshot, URL loading and state actions.                                                                                                                       |
-| `src/ui/catalogPanel.js`        | Reads form values, resolves variants and updates preview images.                                                                                                               |
-| `src/ui/bindPlannerUI.js`       | Binds declarative buttons, numeric inputs and the share dialog; returns listener cleanup.                                                                                      |
-| `src/ui/feedback.js`            | Visible load/validation errors. Uses text content, never HTML from a setup.                                                                                                    |
-| `src/styles/planner.css`        | Desktop planner styling, copied without changing its selectors or appearance.                                                                                                  |
-| `src/legacy/ui.js`              | Existing Bootstrap tutorial/modal/tooltip initialization shared with retained pages.                                                                                           |
+| Location                        | Responsibility                                                                                                                                                      |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mainApp.html`                  | Semantic desktop shell, toolbar, workspace, inspector slots, tutorials and dialogs. The library is generated before binding actions; no embedded application logic. |
+| `src/main.js`                   | Entrypoint; injects explicit npm engine exports once and exports the composed `app` lifecycle.                                                                      |
+| `src/app/createApp.js`          | Generates the library, composes services and UI lifecycles, starts default/URL loading, handles startup failure, and tears down the app.                            |
+| `src/app/pageSetup.js`          | Existing analytics initialization and desktop-only mobile notice.                                                                                                   |
+| `src/scene/createScene.js`      | Renderer, camera, lights, fog, OrbitControls, TransformControls, resize handling and demand rendering.                                                              |
+| `src/catalog/products.js`       | Stable product IDs, legacy types, asset paths, authored positions/rotations, display dimensions, textures and desk offsets.                                         |
+| `src/catalog/configuration.js`  | Default setup, product families, primitive defaults, variant resolution and placement calculations. No DOM or Three.js dependency.                                  |
+| `src/models/modelLoader.js`     | GLTFLoader boundary with shared, reference-counted templates, a bounded idle cache, Meshopt decoding and the legacy first-root convention.                          |
+| `src/models/objectFactory.js`   | Builds model or primitive instances, loads primitive textures, and owns their resources.                                                                            |
+| `src/models/resources.js`       | Disposes owned geometries, materials, textures, skeletons and ImageBitmaps; estimates cache retention.                                                              |
+| `src/state/objectStore.js`      | Scene membership, instance names, desk offset and generation tokens.                                                                                                |
+| `src/state/actions.js`          | Add, replace, remove, desk changes, reset, default initialization and transactional restoration. No DOM dependency.                                                 |
+| `src/interactions/selection.js` | Maps raycast hits to registered roots, selects, deselects and deletes; publishes changed selection through a small subscription API.                                |
+| `src/interactions/pointer.js`   | Coordinates pointer picking, gizmo dragging and camera controls.                                                                                                    |
+| `src/interactions/keyboard.js`  | Workspace-scoped shortcuts, with editable-field, modifier and modal guards; shares transform commands with the inspector.                                           |
+| `src/sharing/legacyCodec.js`    | Bounded, validated plain-data reader/writer for the historical setup format.                                                                                        |
+| `src/sharing/sceneRecords.js`   | Converts live Three.js transforms and primitive parameters to plain records.                                                                                        |
+| `src/sharing/shareUrl.js`       | Deployment-aware URL creation and safe query reading.                                                                                                               |
+| `src/sharing/createSharing.js`  | Connects codec, snapshot, URL loading and state actions.                                                                                                            |
+| `src/ui/catalogPanel.js`        | Reads form values, resolves variants, updates previews and filters stable catalog DOM without losing input values.                                                  |
+| `src/ui/bindPlannerUI.js`       | Binds declarative actions, numeric validation, per-card busy/error state and sharing; guards disposed async completions.                                            |
+| `src/ui/feedback.js`            | Visible load/validation errors. Uses text content, never HTML from a setup.                                                                                         |
+| `src/styles/planner.css`        | Scoped desktop shell, cards, forms, inspector and dialog styles; tokens live in `src/styles/tokens.css`.                                                            |
+| `src/legacy/ui.js`              | Existing Bootstrap tutorial/modal/tooltip initialization shared with retained pages.                                                                                |
+
+New desktop presentation modules:
+
+- `src/catalog/presentation.js`: eleven ordered categories and 41 cards with labels,
+  explicit thumbnail URLs, all original option values and identity lookup. No DOM,
+  Three.js or duplicated technical model data.
+- `src/ui/catalogRenderer.js`: creates the library's 41 stable card/form subtrees;
+  retains the action datasets and form IDs consumed by `catalogPanel`.
+- `src/ui/dom.js`: safe text/element construction and thumbnail fallbacks.
+- `src/ui/editorShell.js`: panel visibility, deferred layout during gizmo drags,
+  menu/dialog focus return and text-first reduced-motion tutorial handling.
+- `src/ui/selectionPanel.js`: derives identity, preview and capabilities from the
+  actual selected root, and binds existing remove/deselect/transform commands.
+- `src/interactions/commands.js`: shared mode, axis and size operations, reading
+  the actual TransformControls state instead of maintaining a second mode flag.
 
 Retained marketing/mobile/old/prototype sources live in `legacy/pages/` and retain their
 existing implementations and URLs. They do not import the desktop app. Their
@@ -56,7 +71,7 @@ avoids silently changing their distinct UI/control behavior.
 2. `src/main.js` starts the page services and calls `createApp` with explicit
    `THREE`, `window` and `document` dependencies. No planner service reads an
    implicit engine or DOM global.
-3. `createApp` constructs the scene, object factory, object store, selection,
+3. `createApp` renders catalog controls, then constructs the scene, object factory, object store, selection,
    actions, sharing and UI, in dependency order. These are small functions and
    objects, not a service container or event bus.
 4. A URL with `customSetup` is decoded and restored. Without that parameter, the
@@ -131,9 +146,9 @@ For a fixed model:
    `rotationY`, `modelPath` and display `dimensions`. Coordinates are the existing
    inch-based scene coordinates; rotations are radians. Authored mesh origins
    mean placement is not necessarily the visible object's geometric center.
-3. Add a catalog card in `mainApp.html`. Use
-   `<button data-action="add" data-product="myProduct">Add</button>` and add
-   `data-replace="true"` to its replacement button. No JavaScript handler is needed.
+3. Add a card in `src/catalog/presentation.js` with its product ID, category,
+   name and explicit thumbnail URL. The renderer creates Add/Replace buttons;
+   no product-specific JavaScript handler or handwritten HTML is needed.
 4. For a desk, also add its height difference from the modern desk to `deskOffsets`
    and use the existing desk type convention. Model creation and desk replacement
    need no new handlers.
@@ -141,12 +156,14 @@ For a fixed model:
    format. The path check fails for missing assets except the documented baseline
    `drawerDesk` entry.
 
-For a variation family, add its definition to `families`, a `<family>Form` select,
-and product IDs matching `family + optionValue`. Monitors use a `<family>Stand`
-checkbox and the `NoStand` suffix. Keyboard previews use `<family>Image` and
-`Model thumbnails/<productId>.jpg`. Add cards with `data-family` instead of
-`data-product`. A new variation of an existing family normally needs only a
-product entry, its asset/thumbnail and one select option.
+For a variation family, add its definition to `families`, ordered select metadata
+in `presentation.js`, and product IDs matching `family + optionValue`. The renderer
+creates `<family>Form` selects and `<family>Stand` checkboxes. The adapter reads
+checkbox `.checked`; `resolveProduct` retains the `NoStand` suffix. Keyboard previews
+use `<family>Image` and `Model thumbnails/<productId>.jpg`. A new variation normally
+needs only a product entry, its asset/thumbnail and one metadata option. Validate
+all choices with the presentation parity tests; do not expose compatibility-only
+records by iterating the full technical catalog.
 
 Custom desks and reference shapes use `primitives`. The DOM adapter preserves the
 legacy mapping of L/W/H inputs to Three.js width/height/depth; custom desks have
@@ -155,6 +172,50 @@ one-inch thickness. Reference spheres retain the r116 tessellation of `Octahedro
 Display dimensions are descriptive legacy strings, not a source for geometry.
 Some strings are known to be inconsistent; this extraction does not reinterpret
 or correct model measurements.
+
+## Desktop UI state and canvas integration
+
+`selection.subscribe(listener)` immediately supplies the current root and returns
+cleanup. Changed pick/deselect/delete paths notify it; there is no polling or
+second selection model. The inspector resolves display identity from metadata,
+reads live primitive material identity where applicable, and omits transform tools
+for `NoSelect`. Closing it deselects; Remove calls `actions.remove`. Existing
+empty-space clicks keep selection. Both keyboard and buttons read the real
+TransformControls mode, axes and size. Canvas clicks establish workspace focus;
+shortcuts also work within the inspector, but pause in editable fields or modals.
+
+The shell has a 64px header and independently scrolling library/inspector. At
+1440px and above their widths are 360/288px; at 1280–1439px they are 320/256px.
+A hidden panel consumes no width. Visibility commits are coalesced in a microtask,
+so transactional replacement does not flash an empty inspector; commits wait
+while TransformControls is dragging and flush after completion/cancellation.
+When focused inspector content disappears, focus returns to the workspace.
+
+The single canvas remains inside `#rightSideContainer`, outside both panels.
+The existing ResizeObserver updates renderer size and camera aspect from that
+host, with the existing DPR cap. Pointer coordinates still use the current canvas
+rectangle. Background is now warm `#E7E7E1` with explicit scene invalidation;
+lights, fog, materials, camera pose, model geometry and resource ownership are
+unchanged. No new animation loop or WebGL renderer was introduced.
+
+Search/category filters hide stable DOM nodes; options and pending requests survive
+filtering. One expanded card at a time spans the library width to keep its creation
+controls readable. Number fields preserve legacy inch-to-axis mapping and are
+validated before the existing action/codec validation. Errors remain in the card;
+other cards stay usable. Null stale completions never announce success. The UI
+subscription/listener cleanup belongs to `createApp.dispose`.
+
+Help and More are native disclosures. Bootstrap continues to own dialogs and the
+seven-slide tutorial. Opening a dialog closes the disclosure; closing Help returns
+focus to its visible summary. Welcome is available on demand. Tutorial GIFs load
+only while the dialog is open and reduced motion is off; all seven text topics
+remain available without GIFs. Share / Save always generates a fresh URL snapshot.
+
+Future UI work should extend these adapters and scoped tokens. Keep creation
+choices in presentation metadata, mutations in actions and membership in the store.
+Do not add editable object properties before their application behavior exists.
+Stage 3 still owns compact panel switching, mobile sheets, physical touch and
+assistive-technology verification; desktop tests are not mobile certification.
 
 ## Saving and sharing
 

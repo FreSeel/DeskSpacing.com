@@ -6,7 +6,7 @@ import { configureAppearance, legacyColor } from './appearance.js';
 export function createScene({ THREE, canvas, container, host }) {
   configureAppearance(THREE);
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x2a363b);
+  scene.background = new THREE.Color(0xe7e7e1);
   scene.fog = new THREE.Fog(legacyColor(THREE, 0xa0a0a0), 300, 350);
   const camera = new THREE.PerspectiveCamera(
     45,
@@ -97,6 +97,7 @@ export function createScene({ THREE, canvas, container, host }) {
     invalidate();
   }
   resetCamera();
+  invalidateScene();
 
   function resize() {
     if (!container.clientWidth || !container.clientHeight) return;

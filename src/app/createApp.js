@@ -9,9 +9,13 @@ import { createSharing } from '../sharing/createSharing.js';
 import { readSetupParameter } from '../sharing/shareUrl.js';
 import { createFeedback } from '../ui/feedback.js';
 import { bindPlannerUI } from '../ui/bindPlannerUI.js';
+import { renderCatalog } from '../ui/catalogRenderer.js';
+import { bindEditorShell } from '../ui/editorShell.js';
+import { bindSelectionPanel } from '../ui/selectionPanel.js';
 
 export function createApp({ THREE, host, document }) {
   host.performance.mark('planner:init-start');
+  renderCatalog(document);
   const canvas = document.getElementById('threeCanvas');
   const view = createScene({
     THREE,
@@ -47,7 +51,20 @@ export function createApp({ THREE, host, document }) {
   const feedback = createFeedback(document);
   feedback.loading(true);
   canvas.setAttribute('aria-busy', 'true');
+  const shell = bindEditorShell({
+    document,
+    host,
+    transformControls: view.transformControls,
+  });
   const cleanup = [
+    () => shell.dispose(),
+    bindSelectionPanel({
+      document,
+      selection,
+      actions,
+      transformControls: view.transformControls,
+      shell,
+    }),
     bindPointer({
       canvas,
       selection,
@@ -81,6 +98,11 @@ export function createApp({ THREE, host, document }) {
         readSetupParameter(host.location.href) !== null &&
         state.objects.length === 0
       ) {
+        feedback.error(
+          new Error(
+            `${error.message} The shared setup could not be restored; showing the default setup.`,
+          ),
+        );
         await actions.initialize().catch((failure) => {
           if (!disposed) feedback.error(failure);
         });

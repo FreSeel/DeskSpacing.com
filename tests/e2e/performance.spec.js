@@ -12,9 +12,6 @@ async function start(page) {
     await window.planner.ready;
     window.planner.selection.unselectPickedObject();
   });
-  await page
-    .locator('#starterModal .modal-footer [data-bs-dismiss=modal]')
-    .click();
   await expect(page.locator('#starterModal')).toBeHidden();
   // Bootstrap removes the backdrop after the modal itself becomes hidden.
   await expect(page.locator('.modal-backdrop')).toHaveCount(0);
