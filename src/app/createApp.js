@@ -49,8 +49,6 @@ export function createApp({ THREE, host, document }) {
   canvas.setAttribute('aria-busy', 'true');
   const cleanup = [
     bindPointer({
-      host,
-      document,
       canvas,
       selection,
       controls: view.controls,

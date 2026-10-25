@@ -592,3 +592,53 @@ test('desktop restores historical mobile primitive delimiters', async ({
     current.find((item) => item.product === 'referenceSphere'),
   ).toMatchObject({ dimensions: [2, -1, -1], texture: 'null' });
 });
+
+test('desktop layouts retain a usable canvas and share dialog at common screen sizes', async ({
+  page,
+}) => {
+  const errors = [];
+  const failedAssets = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  page.on('response', (response) => {
+    if (
+      response.url().startsWith('http://127.0.0.1:4173/') &&
+      response.status() >= 400
+    )
+      failedAssets.push(response.url());
+  });
+  await page.goto('mainApp.html');
+  await ready(page);
+  const original = await snapshot(page);
+  for (const viewport of [
+    { width: 1024, height: 768 },
+    { width: 1440, height: 900 },
+    { width: 1920, height: 1080 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await expect
+      .poll(() =>
+        page.evaluate(() => {
+          const canvas = document.getElementById('threeCanvas');
+          const container = document.getElementById('rightSideContainer');
+          return Math.abs(canvas.clientWidth - container.clientWidth);
+        }),
+      )
+      .toBeLessThan(2);
+    const canvas = await page.locator('#threeCanvas').boundingBox();
+    expect(canvas.width).toBeGreaterThan(300);
+    expect(canvas.height).toBeGreaterThan(300);
+    expect(canvas.x + canvas.width).toBeLessThanOrEqual(viewport.width + 1);
+    await page.locator('#saveModalButton').click();
+    await expect(page.locator('#customLinkForm')).toBeVisible();
+    expect(await page.locator('#customLinkForm').inputValue()).toContain(
+      '/DeskSpacing.com/mainApp.html?customSetup=',
+    );
+    // Bootstrap focuses the dialog after its opening transition completes.
+    await expect(page.locator('#saveModal')).toBeFocused();
+    await page.keyboard.press('Escape');
+    await expect(page.locator('.modal-backdrop')).toHaveCount(0);
+    expect(await snapshot(page)).toEqual(original);
+  }
+  expect(errors).toEqual([]);
+  expect(failedAssets).toEqual([]);
+});

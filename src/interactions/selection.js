@@ -1,6 +1,6 @@
 export function findObjectRoot(hit, objects) {
   for (let current = hit; current; current = current.parent) {
-    if (objects.includes(current)) return current;
+    if (objects.has(current)) return current;
   }
   return null;
 }
@@ -49,8 +49,7 @@ export function createSelection({
       hits.length = 0;
       raycaster.intersectObjects(objects, true, hits);
       for (const hit of hits) {
-        let root = hit.object;
-        while (root && !roots.has(root)) root = root.parent;
+        const root = findObjectRoot(hit.object, roots);
         if (root && !root.userData.type.includes('NoSelect')) {
           selection.pick(root);
           break;

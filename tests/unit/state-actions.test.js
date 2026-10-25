@@ -1,3 +1,4 @@
+import { setTimeout } from 'node:timers/promises';
 import * as THREE from 'three';
 import { describe, expect, it, vi } from 'vitest';
 import { createObjectStore } from '../../src/state/objectStore.js';
@@ -34,6 +35,25 @@ function setup() {
 }
 
 describe('object state and asynchronous actions', () => {
+  it('waits for all default loads after an early failure and keeps successful objects', async () => {
+    const { actions, state, factory } = setup();
+    const load = deferred();
+    factory.create
+      .mockRejectedValueOnce(new Error('offline'))
+      .mockReturnValueOnce(load.promise);
+    const settled = vi.fn();
+    const pending = actions.initialize().catch((error) => {
+      settled(error);
+    });
+    await setTimeout(0);
+    expect(settled).not.toHaveBeenCalled();
+    load.resolve(new THREE.Group());
+    await pending;
+    expect(settled).toHaveBeenCalledWith(
+      expect.objectContaining({ message: 'offline' }),
+    );
+    expect(state.objects).toHaveLength(5);
+  });
   it('tracks unique names and disposes only registered objects', () => {
     const { state, scene, factory } = setup();
     const first = state.add(new THREE.Group(), createRecord('defaultMouse'));

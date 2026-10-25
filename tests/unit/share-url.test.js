@@ -3,7 +3,7 @@ import vm from 'node:vm';
 import { describe, expect, it } from 'vitest';
 
 const source = readFileSync(
-  new URL('../../js/share-url.js', import.meta.url),
+  new URL('../../src/legacy/share-url.js', import.meta.url),
   'utf8',
 );
 const window = { location: { href: 'http://localhost:5173/mainApp.html' } };

@@ -13,8 +13,8 @@ describe('selection and keyboard ownership', () => {
     const mesh = new THREE.Mesh();
     root.add(nested);
     nested.add(mesh);
-    expect(findObjectRoot(mesh, [root])).toBe(root);
-    expect(findObjectRoot(mesh, [])).toBeNull();
+    expect(findObjectRoot(mesh, new Set([root]))).toBe(root);
+    expect(findObjectRoot(mesh, new Set())).toBeNull();
   });
   it('detaches and removes only the selected object and respects disabled picking', () => {
     const object = { userData: { type: 'Mouse' } };

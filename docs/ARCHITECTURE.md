@@ -1,7 +1,9 @@
 # DeskSpacing architecture
 
 The desktop planner at `/mainApp.html` uses vanilla JavaScript ES modules. There
-is no application framework or global application state. The desktop uses npm
+is no application framework or global planner state. Page analytics uses the
+legacy global dataLayer, and appearance setup patches the shared Three.js shader
+chunk once for the compatibility tone curve. The desktop uses npm
 Three.js 0.186.1 with matching ES-module addons. Older pages retain a separate
 `three-legacy` r116 package. Model IDs, original URLs, authored
 coordinates, visual settings, product IDs and the legacy sharing format are
@@ -39,19 +41,18 @@ been removed.
 | `src/ui/bindPlannerUI.js`       | Binds declarative buttons, numeric inputs and the share dialog; returns listener cleanup.                                                                                      |
 | `src/ui/feedback.js`            | Visible load/validation errors. Uses text content, never HTML from a setup.                                                                                                    |
 | `src/styles/planner.css`        | Desktop planner styling, copied without changing its selectors or appearance.                                                                                                  |
-| `js/ui.js`                      | Existing Bootstrap tutorial/modal/tooltip initialization shared with retained pages.                                                                                           |
+| `src/legacy/ui.js`              | Existing Bootstrap tutorial/modal/tooltip initialization shared with retained pages.                                                                                           |
 
-Marketing pages, `mainAppMobile.html`, `mainAppOld.html` and prototypes retain their
+Retained marketing/mobile/old/prototype sources live in `legacy/pages/` and retain their
 existing implementations and URLs. They do not import the desktop app. Their
-legacy styles and `js/share-url.js` bridge remain available. This separation
+legacy styles and `src/legacy/share-url.js` bridge remain available. This separation
 avoids silently changing their distinct UI/control behavior.
 
 ## Initialization and teardown
 
-1. The page loads the pinned Three.js engine, customized OrbitControls/GLTFLoader,
-   TransformControls, and existing Bootstrap scripts in their original order.
-   Unused DragControls, duplicate DRACOLoader and the commented-out dropdown script
-   are no longer loaded by the desktop planner.
+1. The desktop module bundles the modern npm engine and matching addons. The
+   page separately loads Bootstrap/Popper for retained UI. Older routes use r116
+   classic scripts; the desktop does not load those global engines or addons.
 2. `src/main.js` starts the page services and calls `createApp` with explicit
    `THREE`, `window` and `document` dependencies. No planner service reads an
    implicit engine or DOM global.
@@ -60,8 +61,8 @@ avoids silently changing their distinct UI/control behavior.
    objects, not a service container or event bus.
 4. A URL with `customSetup` is decoded and restored. Without that parameter, the
    six default objects load independently. Invalid initial links show an error and
-   load a usable default scene. `app.ready` settles after initial loading/error
-   handling. A later failed restore leaves the existing scene intact.
+   load a usable default scene. `app.ready` settles after all initial requests and error
+   handling, including when one default model fails before the others. A later failed restore leaves the existing scene intact.
 5. `app.dispose()` removes application listeners, invalidates outstanding loads,
    clears owned objects/resources, disposes controls/renderer and cancels the
    animation frame. The Vite hot-disposal hook also removes the page-load listener.
@@ -123,7 +124,8 @@ remain independently owned. Original paths stay in the catalog; a generated
 
 For a fixed model:
 
-1. Add its asset at a stable relative path. Keep filename case, spaces and sidecar
+1. Add its asset under `public/models/` at a stable relative path. Use its
+   published URL in the catalog; `scripts/site-layout.js` maps URLs to sources. Keep filename case, spaces and sidecar
    resources intact; do not rename existing assets as part of adding a product.
 2. Add a unique, permanent key in `products.js`, with `type`, `position`,
    `rotationY`, `modelPath` and display `dimensions`. Coordinates are the existing

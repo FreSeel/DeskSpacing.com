@@ -25,8 +25,8 @@ The previously unused `uniq` dependency remains absent. Each remaining direct
 runtime dependency has an active consumer; development tools all have npm scripts.
 
 Bootstrap 5's JavaScript is used with the existing visual CSS theme to avoid a
-redesign. `css/bootstrap-compat.css` adapts carousel direction classes;
-`js/ui.js` uses both tooltip arrow classes and maps Popper 2 placement metadata for
+redesign. `public/styles/css/bootstrap-compat.css` adapts carousel direction classes;
+`src/legacy/ui.js` uses both tooltip arrow classes and maps Popper 2 placement metadata for
 the old theme. Native modals, accordion, carousel, responsive navigation and
 mobile-page tooltips have browser coverage. A full theme migration is still pending.
 
@@ -45,7 +45,7 @@ dependencies only from an existing macOS node_modules tree. `npm ci` verifies it
 The desktop planner now imports **Three.js 0.186.1** and its matching GLTFLoader,
 OrbitControls, TransformControls, SkeletonUtils and Meshopt decoder through npm.
 Explicit exports permit tree shaking. It no longer loads the root global engine
-or addons. The root GLTFLoader and OrbitControls were compared against npm r116;
+or addons. The retained GLTFLoader and OrbitControls (now in `vendor/legacy/`) were compared against npm r116;
 their differences were whitespace only.
 
 The alias **three-legacy@npm:three@0.116.1** serves the existing classic URLs used

@@ -82,9 +82,12 @@ export function createActions({ state, selection, factory }) {
   }
   async function initialize() {
     // Independent requests preserve the responsive default-loading behavior.
-    return Promise.all(
+    const results = await Promise.allSettled(
       defaults.map(({ product, ...options }) => add(product, options)),
     );
+    // Keep readiness/loading accurate even when one request fails early.
+    const failed = results.find((result) => result.status === 'rejected');
+    if (failed) throw failed.reason;
   }
   return { add, remove, reset, restore, initialize };
 }

@@ -109,7 +109,7 @@ frame rates. Three samples do not establish statistical significance.
 - Catalog thumbnails and tutorial GIFs use native lazy loading and asynchronous
   decoding. They still load when their panels become visible. No image dimensions
   or tutorial content were changed.
-- Five startup GLBs have separate verified copies under `optimized-models/`.
+- Five startup GLBs have separate verified copies under `public/models/optimized-models/` (served at `optimized-models/`).
   Original catalog paths, models, textures and dimensions are preserved. A generated
   manifest redirects only these five desktop requests.
 - The generation script uses glTF Transform bitwise vertex welding, unfiltered
@@ -199,7 +199,8 @@ least one channel; 119 pixels differ by more than 20. Modern shader/filter behav
 and rasterization account for a remaining visual compatibility limit. This single
 scene does not certify every material, angle, monitor or browser.
 
-Validation completed:
+Validation completed for the performance modernization (historical counts; see
+[final engineering audit](ENGINEERING_AUDIT.md) for the current suite):
 
 - **49 unit tests**: catalog/coordinates, legacy share formats and validation,
   failed/stale replacements/restores, nested ownership, cache sharing/eviction/

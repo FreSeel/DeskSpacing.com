@@ -1,3 +1,4 @@
+import { siteSourcePath } from './site-layout.js';
 // Deliberately limited to verified copies of the five startup models.
 // No quantization, simplification, resizing, recentering or scene graph flattening.
 import { NodeIO } from '@gltf-transform/core';
@@ -22,7 +23,7 @@ const io = new NodeIO()
     'meshopt.decoder': MeshoptDecoder,
   });
 await Promise.all([MeshoptEncoder.ready, MeshoptDecoder.ready]);
-await mkdir('optimized-models', { recursive: true });
+await mkdir(siteSourcePath('optimized-models'), { recursive: true });
 await mkdir('docs/performance', { recursive: true });
 const manifest = {};
 const report = [];
@@ -147,7 +148,7 @@ for (const { product } of defaults.filter(
   (item) => products[item.product]?.modelPath,
 )) {
   const original = products[product].modelPath;
-  const doc = await io.read(original);
+  const doc = await io.read(siteSourcePath(original));
   const before = await fingerprint(doc);
   await doc.transform(weld()); // Only bitwise-identical vertices merge.
   assert.deepEqual(
@@ -183,8 +184,8 @@ for (const { product } of defaults.filter(
     before,
     `${product}: visual/coordinate data changed`,
   );
-  await writeFile(target, encoded);
-  const source = await readFile(original);
+  await writeFile(siteSourcePath(target), encoded);
+  const source = await readFile(siteSourcePath(original));
   manifest[original] = target;
   report.push({
     product,

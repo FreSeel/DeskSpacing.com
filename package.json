@@ -10,7 +10,7 @@
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "lint": "eslint *.config.js scripts tests src js/share-url.js js/main.js js/ui.js",
+    "lint": "eslint *.config.js scripts tests src",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest run",

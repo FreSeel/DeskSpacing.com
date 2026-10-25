@@ -1,3 +1,4 @@
+import { siteSourcePath } from './site-layout.js';
 import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
@@ -13,7 +14,7 @@ for (const file of [
 ]) {
   let bytes;
   try {
-    bytes = await readFile(file);
+    bytes = await readFile(siteSourcePath(file));
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
     models.push({ path: file, missing: true });
@@ -58,16 +59,16 @@ const images = [];
 for (const file of [
   ...new Set([
     ...Object.values(textures),
-    ...(await readdir('Model thumbnails')).map((name) =>
+    ...(await readdir(siteSourcePath('Model thumbnails'))).map((name) =>
       path.join('Model thumbnails', name),
     ),
-    ...(await readdir('Click Through Tutorial')).map((name) =>
+    ...(await readdir(siteSourcePath('Click Through Tutorial'))).map((name) =>
       path.join('Click Through Tutorial', name),
     ),
   ]),
 ]) {
   if (!/\.(png|jpe?g|gif|webp)$/i.test(file)) continue;
-  const bytes = await readFile(file);
+  const bytes = await readFile(siteSourcePath(file));
   const { width, height, format, pages } = await sharp(bytes).metadata();
   images.push({
     path: file,

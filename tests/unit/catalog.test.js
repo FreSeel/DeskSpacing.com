@@ -1,3 +1,4 @@
+import { siteSourcePath } from '../../scripts/site-layout.js';
 import { expect, it } from 'vitest';
 import { products, deskOffsets, textures } from '../../src/catalog/products.js';
 import baseline from '../fixtures/catalog-baseline.json';
@@ -51,13 +52,16 @@ it('preserves existing asset paths and catches missing paths for any new catalog
     // This unexposed legacy product was already missing at the audit baseline.
     if (!product.modelPath || id === 'drawerDesk') continue;
     expect(
-      existsSync(new URL(`../../${product.modelPath}`, import.meta.url)),
+      existsSync(
+        new URL(`../../${siteSourcePath(product.modelPath)}`, import.meta.url),
+      ),
       id,
     ).toBe(true);
   }
   for (const path of Object.values(textures)) {
-    expect(existsSync(new URL(`../../${path}`, import.meta.url)), path).toBe(
-      true,
-    );
+    expect(
+      existsSync(new URL(`../../${siteSourcePath(path)}`, import.meta.url)),
+      path,
+    ).toBe(true);
   }
 });

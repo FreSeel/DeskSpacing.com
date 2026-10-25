@@ -5,21 +5,13 @@ export default [
     ignores: [
       '**/node_modules/**',
       'dist/**',
-      'three/**',
+      'vendor/**',
       'playwright-report/**',
       'test-results/**',
     ],
   },
   {
-    files: [
-      '*.config.js',
-      'scripts/**/*.js',
-      'src/**/*.js',
-      'tests/**/*.js',
-      'js/share-url.js',
-      'js/main.js',
-      'js/ui.js',
-    ],
+    files: ['*.config.js', 'scripts/**/*.js', 'src/**/*.js', 'tests/**/*.js'],
     rules: {
       ...js.configs.recommended.rules,
       'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],

@@ -1,29 +1,7 @@
-import { cp, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
+import { cp, mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
-// Keep original URLs, including spaces/case and model sidecars. No model pruning.
-export const assetDirectories = [
-  '16x9Monitors',
-  '3d',
-  'Click Through Tutorial',
-  'GLTFs',
-  'Model thumbnails',
-  'css',
-  'desk0',
-  'desks',
-  'fonts',
-  'images',
-  'js',
-  'keyboards',
-  'lamps',
-  'monitors',
-  'optimized-models',
-  'mousepads',
-  'mouses',
-  'rooms',
-  'textures',
-  'ultrawideMonitor',
-];
+import { siteMounts, siteSourcePath } from './site-layout.js';
 
 // Legacy routes retain their npm r116 engine; the desktop bundles modern ES modules.
 export const dependencies = {
@@ -56,13 +34,6 @@ export const retiredScripts = new Set([
   'js/animation.gsap.min.js',
 ]);
 
-export function isRootAsset(name) {
-  return (
-    /\.(html|css|js|png|jpg|jpeg|gif|ico|gltf|glb|bin)$/i.test(name) &&
-    !name.endsWith('.config.js')
-  );
-}
-
 export async function copySite(root, outDir) {
   // Planner CSS is owned separately from the retained legacy page themes.
   try {
@@ -72,21 +43,19 @@ export async function copySite(root, outDir) {
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
   }
-  for (const entry of await readdir(root, { withFileTypes: true })) {
-    if (
-      (entry.isDirectory() && assetDirectories.includes(entry.name)) ||
-      (entry.isFile() && isRootAsset(entry.name))
-    ) {
-      await cp(path.join(root, entry.name), path.join(outDir, entry.name), {
-        recursive: true,
-        // Vite builds this newly extracted script; do not overwrite its bundle.
-        filter: (source) =>
-          source !== path.join(root, 'js/share-url.js') &&
-          !retiredScripts.has(
-            path.relative(root, source).split(path.sep).join('/'),
-          ),
-      });
-    }
+  // Root entry pages remain beside the Vite config; retained pages/assets are
+  // mounted from their organized sources without duplicating the public URLs.
+  const mounts = {
+    'index.html': 'index.html',
+    'mainApp.html': 'mainApp.html',
+    ...siteMounts,
+  };
+  for (const [target, source] of Object.entries(mounts)) {
+    if (target === 'js/share-url.js' || retiredScripts.has(target)) continue;
+    await mkdir(path.dirname(path.join(outDir, target)), { recursive: true });
+    await cp(path.join(root, source), path.join(outDir, target), {
+      recursive: true,
+    });
   }
   for (const [target, source] of Object.entries(dependencies)) {
     await mkdir(path.dirname(path.join(outDir, target)), { recursive: true });
@@ -95,7 +64,11 @@ export async function copySite(root, outDir) {
       path.join(outDir, target),
     );
   }
-  // Preserve the repository's CNAME, but never publish its original domain implicitly.
+  // Never publish a custom domain implicitly; configure one on the fork host.
+  await cp(
+    path.join(root, 'THIRD_PARTY_NOTICES.md'),
+    path.join(outDir, 'THIRD_PARTY_NOTICES.md'),
+  );
   await writeFile(path.join(outDir, '.nojekyll'), '');
 }
 
@@ -118,11 +91,17 @@ export function legacySite() {
             pathname = pathname.slice(base.length - 1);
           if (pathname === '/') pathname = '/index.html';
           const name = pathname.slice(1);
-          const dependency = dependencies[name];
-          if (!dependency && !/^[^/]+\.html$/.test(name)) return next();
+          const dependency = Object.hasOwn(dependencies, name)
+            ? dependencies[name]
+            : null;
+          const source = siteSourcePath(name);
+          if (!dependency && !/^[^/]+\.html$/.test(name)) {
+            if (source !== name) req.url = `${base}${source}${url.search}`;
+            return next();
+          }
           const file = dependency
             ? path.join(config.root, 'node_modules', dependency)
-            : path.join(config.root, name);
+            : path.join(config.root, source);
           let contents = await readFile(file);
           if (!dependency)
             contents = contents
