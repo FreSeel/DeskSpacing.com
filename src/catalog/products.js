@@ -1,5 +1,36 @@
 // Stable IDs, authored origins and asset paths are part of the legacy sharing contract.
 export const products = {
+  appleStudioDisplay: {
+    type: 'Monitor',
+    position: [0, 31.2, -57],
+    rotationY: 0,
+    modelPath: 'GLTFs/monitors/16 9 monitor/apple_studio_display.glb',
+    modelTransform: { scale: 39.37007874015748, position: [0, 0, 0] },
+    dimensions: { imperial: '', metric: '' },
+  },
+  benqScreenBarHalo: {
+    type: 'Misc',
+    position: [0, 49.7, -57],
+    rotationY: 0,
+    modelPath: 'GLTFs/lamps/benq_screenbar_halo.glb',
+    // Preserve the mounting origin; the cord hangs below the monitor light.
+    modelTransform: {
+      scale: 39.37007874015748,
+      position: [0, 0, 0],
+    },
+    dimensions: { imperial: '', metric: '' },
+  },
+  macStudio: {
+    type: 'Computer',
+    position: [17, 31.2, -50],
+    rotationY: 0,
+    modelPath: 'GLTFs/computer towers/mac_studio.glb',
+    modelTransform: {
+      scale: 3.0183719107166445,
+      position: [0, -0.10760460581387032, 0],
+    },
+    dimensions: { imperial: '', metric: '' },
+  },
   modernDesk: {
     type: 'FurnitureDeskNoSelect',
     position: [0, 30.7, -53],

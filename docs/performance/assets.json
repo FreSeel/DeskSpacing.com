@@ -1,6 +1,148 @@
 {
   "models": [
     {
+      "path": "GLTFs/monitors/16 9 monitor/apple_studio_display.glb",
+      "bytes": 3115972,
+      "triangles": 71385,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [],
+      "images": [
+        {
+          "width": 256,
+          "height": 256,
+          "format": "png",
+          "bytes": 13191
+        },
+        {
+          "width": 16,
+          "height": 16,
+          "format": "png",
+          "bytes": 84
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "format": "jpeg",
+          "bytes": 2406
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/lamps/benq_screenbar_halo.glb",
+      "bytes": 49936852,
+      "triangles": 69240,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [
+        "KHR_materials_emissive_strength"
+      ],
+      "images": [
+        {
+          "width": 4096,
+          "height": 4096,
+          "format": "png",
+          "bytes": 368623
+        },
+        {
+          "width": 4096,
+          "height": 4096,
+          "format": "png",
+          "bytes": 5282153
+        },
+        {
+          "width": 4096,
+          "height": 4096,
+          "format": "png",
+          "bytes": 13334018
+        },
+        {
+          "width": 4096,
+          "height": 4096,
+          "format": "png",
+          "bytes": 2131
+        },
+        {
+          "width": 4096,
+          "height": 4096,
+          "format": "png",
+          "bytes": 49623
+        },
+        {
+          "width": 4096,
+          "height": 4096,
+          "format": "png",
+          "bytes": 37338
+        },
+        {
+          "width": 4096,
+          "height": 4096,
+          "format": "png",
+          "bytes": 6473805
+        },
+        {
+          "width": 4096,
+          "height": 4096,
+          "format": "png",
+          "bytes": 17630188
+        }
+      ]
+    },
+    {
+      "path": "GLTFs/computer towers/mac_studio.glb",
+      "bytes": 15720396,
+      "triangles": 134028,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [
+        "KHR_materials_specular"
+      ],
+      "images": [
+        {
+          "width": 4096,
+          "height": 4096,
+          "format": "png",
+          "bytes": 29297
+        },
+        {
+          "width": 4096,
+          "height": 4096,
+          "format": "png",
+          "bytes": 24536
+        },
+        {
+          "width": 4096,
+          "height": 4096,
+          "format": "png",
+          "bytes": 575536
+        },
+        {
+          "width": 4096,
+          "height": 4096,
+          "format": "png",
+          "bytes": 316826
+        },
+        {
+          "width": 4096,
+          "height": 4096,
+          "format": "png",
+          "bytes": 952083
+        },
+        {
+          "width": 4096,
+          "height": 4096,
+          "format": "png",
+          "bytes": 1116694
+        },
+        {
+          "width": 4096,
+          "height": 4096,
+          "format": "png",
+          "bytes": 3130394
+        }
+      ]
+    },
+    {
       "path": "GLTFs/desks/standing desks/standing desk 1 - 23.8Dx51.7Wx30.3H.glb",
       "bytes": 13644040,
       "triangles": 102144,
@@ -1719,6 +1861,22 @@
       "pages": 1
     },
     {
+      "path": "Model thumbnails/apple_pro_display_xdr.jpg",
+      "bytes": 25392,
+      "width": 512,
+      "height": 512,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/apple_studio_display.jpg",
+      "bytes": 11138,
+      "width": 512,
+      "height": 512,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
       "path": "Model thumbnails/audio interface.jpg",
       "bytes": 15549,
       "width": 200,
@@ -1731,6 +1889,14 @@
       "bytes": 10520,
       "width": 200,
       "height": 200,
+      "format": "jpeg",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/benq_screenbar_halo.jpg",
+      "bytes": 5218,
+      "width": 512,
+      "height": 512,
       "format": "jpeg",
       "pages": 1
     },
@@ -2060,6 +2226,14 @@
       "width": 1024,
       "height": 1024,
       "format": "png",
+      "pages": 1
+    },
+    {
+      "path": "Model thumbnails/mac_studio.jpg",
+      "bytes": 13126,
+      "width": 512,
+      "height": 512,
+      "format": "jpeg",
       "pages": 1
     },
     {

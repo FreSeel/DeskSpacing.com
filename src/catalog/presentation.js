@@ -50,12 +50,39 @@ export const categories = [
 
 export const cards = [
   {
+    id: 'appleStudioDisplay',
+    product: 'appleStudioDisplay',
+    category: 'monitors',
+    name: 'Apple Studio Display',
+    thumbnail: 'Model thumbnails/apple_studio_display.jpg',
+    description: '27" display',
+    desk: false,
+  },
+  {
+    id: 'benqScreenBarHalo',
+    product: 'benqScreenBarHalo',
+    category: 'miscellaneous',
+    name: 'BenQ ScreenBar Halo',
+    thumbnail: 'Model thumbnails/benq_screenbar_halo.jpg',
+    description: 'Monitor light bar · Move to align with your display',
+    desk: false,
+  },
+  {
+    id: 'macStudio',
+    product: 'macStudio',
+    category: 'towers',
+    name: 'Mac Studio',
+    thumbnail: 'Model thumbnails/mac_studio.jpg',
+    description: 'Compact desktop computer',
+    desk: false,
+  },
+  {
     id: 'appleStudioPro',
     product: 'appleStudioPro',
     category: 'monitors',
     name: 'Apple Pro Display XDR',
-    thumbnail: 'Model thumbnails/16_9 monitor 3.jpg',
-    description: '32" display · Placeholder thumbnail',
+    thumbnail: 'Model thumbnails/apple_pro_display_xdr.jpg',
+    description: '32" display',
     desk: false,
   },
   {

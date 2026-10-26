@@ -37,16 +37,16 @@ test('all categories filter locally; variation search retains choices and scene'
   const before = await page.evaluate(() => window.planner.sharing.createLink());
   const categoryCounts = {
     desks: 6,
-    monitors: 6,
+    monitors: 7,
     keyboards: 4,
     mice: 2,
     mousepads: 4,
     audio: 6,
     laptops: 3,
-    towers: 2,
+    towers: 3,
     shapes: 2,
     chairs: 3,
-    miscellaneous: 4,
+    miscellaneous: 5,
   };
   for (const [category, total] of Object.entries(categoryCounts)) {
     await page.locator('#catalogCategory').selectOption(category);
@@ -65,7 +65,7 @@ test('all categories filter locally; variation search retains choices and scene'
   await page.locator('#catalogSearch').fill('no such item');
   await expect(page.locator('#catalogEmpty')).toBeVisible();
   await page.locator('#clearFilters').click();
-  await expect(page.locator('[data-card]:visible')).toHaveCount(42);
+  await expect(page.locator('[data-card]:visible')).toHaveCount(45);
   await expect(page.locator('#catalogSearch')).toBeFocused();
   await options(page, 'default60PercentKeyboard', 'keyboards');
   await expect(page.locator('#default60PercentKeyboardForm')).toHaveValue(

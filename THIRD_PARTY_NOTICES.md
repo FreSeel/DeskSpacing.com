@@ -38,5 +38,44 @@ explicit ownership/privacy decision before a public fork launch.
   `asset.extras` metadata; supplied by the user on 2026-10-25.
 - Credit: “Apple Pro Display XDR” by polyman Studio, licensed under CC BY 4.0.
 - Modifications: original GLB unchanged; runtime instance converts meters to
-  inches and offsets the stand to the desk surface. Catalog thumbnail temporarily
-  reuses the inherited 16:9 monitor image and does not depict this asset.
+  inches and offsets the stand to the desk surface. `public/images/Model thumbnails/apple_pro_display_xdr.jpg` is a rendered
+  derivative of this model, with the same attribution and license.
+
+## Apple Studio Display
+
+- File: `public/models/GLTFs/monitors/16 9 monitor/apple_studio_display.glb`.
+- Creator: alboxer2000_ (https://sketchfab.com/alboxer2000_).
+- Source: https://sketchfab.com/3d-models/apple-studio-display-f56b9892c6b941168f64bc8323c98875.
+- License: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/).
+- Evidence: attribution embedded in the user-supplied GLB's `asset.extras`.
+- Credit: “Apple Studio Display” by alboxer2000_, licensed under CC BY 4.0.
+- Modifications: original GLB unchanged; runtime scale and placement adjusted.
+  `public/images/Model thumbnails/apple_studio_display.jpg` is a rendered derivative
+  of this model, with the same attribution and license.
+
+## BenQ ScreenBar Halo
+
+- File: `public/models/GLTFs/lamps/benq_screenbar_halo.glb`.
+- Creator: Anthony.Ackermans (https://sketchfab.com/Anthony.Ackermans).
+- Source: https://sketchfab.com/3d-models/benq-screenbar-halo-af29991f303748b4a49b06e6e1e07baa.
+- License: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/).
+- Evidence: attribution embedded in the user-supplied GLB's `asset.extras`.
+- Credit: “BenQ Screenbar Halo” by Anthony.Ackermans, licensed under CC BY 4.0.
+- Modifications: original GLB unchanged; runtime scale and placement adjusted.
+  `public/images/Model thumbnails/benq_screenbar_halo.jpg` is a rendered derivative
+  of this model, with the same attribution and license.
+
+## Mac Studio
+
+- File: `public/models/GLTFs/computer towers/mac_studio.glb`.
+- Creator: Ibrahim.Bhl (https://sketchfab.com/Ibrahim.Bhl).
+- Source: https://sketchfab.com/3d-models/mac-studio-8ada33e4b51649b9a996e9e630caeb6e.
+- License: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/).
+- Evidence: attribution embedded in the user-supplied GLB's `asset.extras`.
+- Credit: “Mac Studio” by Ibrahim.Bhl, licensed under CC BY 4.0.
+- Modifications: original GLB unchanged; runtime scale and placement adjusted.
+  `public/images/Model thumbnails/mac_studio.jpg` is a rendered derivative
+  of this model, with the same attribution and license.
+
+Mac Studio runtime width is normalized to 19.7 cm, preserving model proportions.
+Dimension reference: https://support.apple.com/en-au/122211.
