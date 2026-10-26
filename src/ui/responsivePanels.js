@@ -25,6 +25,8 @@ export function bindResponsivePanels({ document, host, transformControls }) {
   let dock = 'library';
   let surface = null;
   let selectionVisible = false;
+  let inspectorOpen = false;
+  let selectionFocusPending = false;
   let queued = false;
   let disposed = false;
   let epoch = 0;
@@ -55,20 +57,21 @@ export function bindResponsivePanels({ document, host, transformControls }) {
       layout = next;
       epoch++;
       surface = null;
-      dock = selectionVisible ? 'selection' : 'library';
+      dock = inspectorOpen ? 'selection' : 'library';
       libraryOpen = !touchLayout();
     }
     if (!selectionVisible && surface === 'selection') surface = null;
-    if (!selectionVisible && dock === 'selection') dock = 'library';
+    if (!inspectorOpen && dock === 'selection') dock = 'library';
     const showLibrary = touchLayout()
       ? surface === 'library'
       : libraryOpen && (layout === 'desktop' || dock === 'library');
     const showSelection =
-      selectionVisible && (layout !== 'compact' || dock === 'selection');
+      inspectorOpen && (layout !== 'compact' || dock === 'selection');
     // Release inert before moving focus out of a closing sheet.
     if (!surface) modal.close();
     root.dataset.layout = layout;
     root.dataset.hasSelection = String(selectionVisible);
+    root.dataset.inspectorOpen = String(inspectorOpen);
     library.hidden = !showLibrary;
     inspector.hidden = !showSelection;
     if (
@@ -79,20 +82,23 @@ export function bindResponsivePanels({ document, host, transformControls }) {
         '--selection-row-height',
         `${inspector.getBoundingClientRect().height}px`,
       );
-    else if (surface !== 'selection')
+    else if (surface !== 'selection' && (selectionVisible || !inspectorOpen))
       root.style.removeProperty('--selection-row-height');
     inspector.classList.toggle('panel-expanded', surface === 'selection');
     backdrop.hidden = !surface;
-    selected.hidden = layout !== 'compact' || !selectionVisible;
+    selected.hidden = layout !== 'compact' || !inspectorOpen;
+    selected.textContent = selectionVisible ? 'Selected' : 'Properties';
     selected.setAttribute('aria-expanded', String(showSelection));
-    expand.hidden = !touchLayout();
+    expand.hidden = !touchLayout() || !selectionVisible;
     expand.textContent = surface === 'selection' ? 'Done' : 'Controls';
     expand.setAttribute('aria-expanded', String(surface === 'selection'));
     open.setAttribute('aria-expanded', String(showLibrary));
     if (surface)
       modal.show(surface === 'library' ? library : inspector, returnTo);
     else if (
-      (!showSelection && inspector.contains(document.activeElement)) ||
+      (!selectionVisible && selectionFocusPending) ||
+      ((!showSelection || !selectionVisible) &&
+        inspector.contains(document.activeElement)) ||
       (touchLayout() &&
         !inspector.classList.contains('panel-expanded') &&
         inspector.contains(document.activeElement) &&
@@ -106,6 +112,7 @@ export function bindResponsivePanels({ document, host, transformControls }) {
       !document.activeElement.getClientRects().length
     )
       canvas.focus({ preventScroll: true });
+    selectionFocusPending = false;
   }
   function schedule() {
     if (!queued) {
@@ -184,8 +191,29 @@ export function bindResponsivePanels({ document, host, transformControls }) {
   flush();
   return {
     setSelectionVisible(visible) {
+      // Hiding the focused object control can move focus to body before flush.
+      if (!visible && inspector.contains(document.activeElement))
+        selectionFocusPending = true;
+      // Selection content and panel layout have separate lifetimes. Preserve
+      // the touch bar's height before clearing its content (or closing its sheet).
+      if (
+        selectionVisible &&
+        !visible &&
+        touchLayout() &&
+        !inspector.hidden &&
+        surface !== 'selection'
+      )
+        root.style.setProperty(
+          '--selection-row-height',
+          `${inspector.getBoundingClientRect().height}px`,
+        );
       selectionVisible = visible;
+      if (visible) inspectorOpen = true;
       if (visible && pointers.size && layout === 'compact') dock = 'selection';
+      schedule();
+    },
+    closeSelectionPanel() {
+      inspectorOpen = false;
       schedule();
     },
     beginCatalogAction() {

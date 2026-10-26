@@ -1,298 +1,90 @@
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>DeskSpacing</title>
-    <link rel="icon" href="favicon.png">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="color-scheme" content="light dark">
+    <script src="src/theme/bootstrap.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="Plan your desk setup in 3D. Try desks, monitors and accessories, explore different layouts, and share your setup with DeskSpacing.">
+    <title>DeskSpacing — Plan your space</title>
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="src/styles/tokens.css">
+    <link rel="stylesheet" href="src/styles/shared.css">
+    <link rel="stylesheet" href="src/styles/home.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-172455339-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'UA-172455339-1');
     </script>
-
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="css/icomoon.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/bootstrap-compat.css">
 </head>
-
-<body>
-
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark probootstrap-navabr-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">DeskSpacing</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#probootstrap-nav"
-                aria-controls="probootstrap-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="probootstrap-nav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="mainApp.html" class="nav-link"
-                            style="color: #B32F30 !important;">Setup Creator</a></li>
-                    <li class="nav-item"><a href="about.html" class="nav-link">Contact</a></li>
-                </ul>
+<body class="site-app">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+        <a class="editor-brand" href="index.html" aria-label="DeskSpacing home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 8 9-5 9 5-9 5-9-5Zm0 5 9 5 9-5M3 18l9 5 9-5"/></svg></span>DeskSpacing</a>
+        <nav class="site-navigation" aria-label="Main navigation">
+            <a class="nav-link desktop-link" href="index.html" aria-current="page">Home</a>
+            <a class="nav-link desktop-link" href="about.html">Contact</a>
+            <details class="toolbar-menu" id="siteMenu">
+                <summary><span class="desktop-menu-label">Help &amp; links</span><span class="mobile-menu-label">Menu</span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></svg></summary>
+                <div class="menu-popover">
+                    <div class="theme-setting">
+                        <label for="themePreference">Appearance</label>
+                        <select id="themePreference" data-theme-select aria-describedby="themeStatus"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select>
+                        <output id="themeStatus" data-theme-status aria-live="polite"></output>
+                    </div>
+                    <a class="mobile-menu-link" href="index.html" aria-current="page">Home</a>
+                    <a class="mobile-menu-link" href="mainApp.html">Setup Creator</a>
+                    <a class="mobile-menu-link" href="about.html">Contact</a>
+                    <a href="mainApp.html#tutorial">Beginner Tutorial</a>
+                    <a href="mainApp.html#controls">Controls / Keybinds</a>
+                    <a href="mailto:deskspacing@gmail.com">Email us <span aria-hidden="true">↗</span></a>
+                    <a href="https://github.com/cooperlappenbusch/DeskSpacing.com" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+                    <a href="https://twitter.com/DeskSpacing" target="_blank" rel="noopener noreferrer">Twitter <span aria-hidden="true">↗</span></a>
+                </div>
+            </details>
+            <a class="button-primary link-button header-creator" href="mainApp.html">Setup Creator <span aria-hidden="true">↗</span></a>
+        </nav>
+    </header>
+    <main id="main" tabindex="-1">
+        <section class="home-hero" aria-labelledby="homeTitle">
+            <div class="hero-copy">
+                <p class="eyebrow">Your space, considered</p>
+                <h1 id="homeTitle">A better setup <br>starts with <br><span>a little space.</span></h1>
+                <p class="hero-description">Create your dream desk setup in 3D. Try new layouts, find room for the things you love, and see it all come together before you buy.</p>
+                <div class="hero-actions">
+                    <a class="button-primary link-button" href="mainApp.html">Open Setup Creator <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></a>
+                    <a class="tutorial-link" href="mainApp.html#tutorial">Take a quick tutorial <span aria-hidden="true">↗</span></a>
+                </div>
+                <p class="hero-note">Free to use. Right in your browser.</p>
             </div>
-        </div>
-    </nav>
-    <!-- END nav -->
-
-    <section class="probootstrap-cover probootstrap-scene-0">
-        <div class="container">
-            <div class="row probootstrap-vh-100 align-items-center  text-md-left text-sm-center text-center">
-                <div class="col-md-6 order-md-2 order-1">
-                    <img src="images/example desk 1.png" class="img-fluid probootstrap-device-vertical-1"
-                        id="jumbotronImage">
-                    <ol class="carousel-indicators">
-                        <li id="imageCarousel1" data-bs-target="#mycarousel" value="0" class="active"></li>
-                        <li id="imageCarousel2" data-bs-target="#mycarousel" value="1"></li>
-                        <li id="imageCarousel3" data-bs-target="#mycarousel" value="2"></li>
-                        <li id="imageCarousel4" data-bs-target="#mycarousel" value="3"></li>
-                        <li id="imageCarousel5" data-bs-target="#mycarousel" value="4"></li>
-                    </ol>
-                </div>
-                <div class="col-md-6 order-md-1 order-2">
-                    <div class="probootstrap-text">
-                        <h1 class="probootstrap-heading probootstrap-stagger text-white mb-2 jumbotronMainText">Create
-                            Your Dream
-                            Setup</h1>
-                        <p class="mb-5 probootstrap-stagger lead">DeskSpacing.com allows you to try new designs / styles
-                            for your
-                            future setup using our innovative 3D app.</p>
-                        <p class="probootstrap-stagger"><a href="mainApp.html" class="btn btn-primary mr-2 mb-2"><span
-                                    class="icon-ipad"></span>Try DeskSpacing for
-                                Free</a></p>
+            <figure class="setup-showcase" aria-labelledby="showcaseTitle">
+                <div class="showcase-heading"><span class="eyebrow" id="showcaseTitle">Made with DeskSpacing</span><span class="preview-label">Setup inspiration</span></div>
+                <div class="preview-surface"><img id="setupPreview" src="images/example desk 1.png" width="947" height="711" alt="A white desk with a monitor, compact keyboard, mouse and PC tower." fetchpriority="high"></div>
+                <figcaption class="showcase-footer">
+                    <div><p class="eyebrow">Explore the possibilities</p><p id="setupCaption" aria-live="polite" aria-atomic="true">01 / Everyday essentials</p></div>
+                    <div class="example-controls" role="group" aria-label="Example setups">
+                        <button type="button" aria-label="Show setup 1: Everyday essentials" aria-pressed="true" data-example="images/example desk 1.png" data-caption="01 / Everyday essentials" data-description="A white desk with a monitor, compact keyboard, mouse and PC tower.">1</button>
+                        <button type="button" aria-label="Show setup 2: Room to play" aria-pressed="false" data-example="images/example desk 2.png" data-caption="02 / Room to play" data-description="A wood desk with drawer units, a curved monitor, speakers and an RGB PC tower.">2</button>
+                        <button type="button" aria-label="Show setup 3: A creative corner" aria-pressed="false" data-example="images/example desk 3.png" data-caption="03 / A creative corner" data-description="A light wood desk with a laptop, monitor and music keyboard.">3</button>
+                        <button type="button" aria-label="Show setup 4: Space for sound" aria-pressed="false" data-example="images/example desk 4.png" data-caption="04 / Space for sound" data-description="A wood desk with an ultrawide monitor, speakers, laptop, books and music keyboard.">4</button>
+                        <button type="button" aria-label="Show setup 5: The full setup" aria-pressed="false" data-example="images/example desk 5.png" data-caption="05 / The full setup" data-description="A wood desk with two monitors, a full-size keyboard and a PC tower with blue fans.">5</button>
                     </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-
-    <section class="probootstrap-section probootstrap-scene-1 probootstrap-bg-dark">
-        <div class="container ">
-            <div class="row mb-5 justify-content-center text-center">
-                <div class="col-lg-8">
-                    <h2 class="probootstrap-heading">Plan Before You Purchase</h2>
-                    <p class="mb-5 lead">Designing a desk setup that is both visually appealing and practical can be
-                        time consuming
-                        and expensive. DeskSpacing allows you to plan the details of your setup before you make
-                        a purchase. We offer a wide array of objects to try out, allowing you to make the most of your
-                        desk space.</p>
-                    <p><a href="mainApp.html" class="btn btn-primary mr-2 mb-2"><span class="icon-ipad"></span>Go To
-                            DeskSpacing</a></p>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid mb-5">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="probootstrap-devices text-center">
-
-                        <img src="website_img.png" class="img-fluid" alt="website image"
-                            width="960px" height="529px">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!--<section class="probootstrap-cover probootstrap-bg " style="background-image: url(images/bg_1.jpg)">
-        <div class="container">
-            <div class="row align-items-center justify-content-center probootstrap-vh-75">
-                <div class="col-md-6 text-center">
-                    <div class="probootstrap-text">
-                        <h1 class="probootstrap-heading text-white mb-5">Create Beautiful Websites w/ Our Free Templates
-                        </h1>
-                        <p><a href="https://uicookies.com/" class="btn btn-primary mr-2 mb-2"><span
-                                    class="icon-ipad"></span>Download For Free</a><a href="https://uicookies.com/"
-                                class="btn btn-primary btn-outline-white mb-2">Visit uiCookies
-                                uiCookies</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>-->
-
-    <!--<section class="probootstrap-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <div class="media mb-4">
-                        <div class="probootstrap-icon"><span class="icon-fingerprint display-4"></span></div>
-                        <div class="media-body">
-                            <h5 class="mt-0">Free Bootstrap 4</h5>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-                                there live the
-                                blind texts.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <div class="media mb-4">
-                        <div class="probootstrap-icon"><span class="icon-users display-4"></span></div>
-                        <div class="media-body">
-                            <h5 class="mt-0">For The Community</h5>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-                                there live the
-                                blind texts.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <div class="media mb-4">
-                        <div class="probootstrap-icon"><span class="icon-chat display-4"></span></div>
-                        <div class="media-body">
-                            <h5 class="mt-0">Support For Templates</h5>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-                                there live the
-                                blind texts.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <div class="media mb-4">
-                        <div class="probootstrap-icon"><span class="icon-creative-commons display-4"></span></div>
-                        <div class="media-body">
-                            <h5 class="mt-0">Under CC 3.0 License</h5>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-                                there live the
-                                blind texts.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <div class="media mb-4">
-                        <div class="probootstrap-icon"><span class="icon-tablet-mobile-combo display-4"></span></div>
-                        <div class="media-body">
-                            <h5 class="mt-0">100% Fully Responsive</h5>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-                                there live the
-                                blind texts.</p>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <div class="media mb-4">
-                        <div class="probootstrap-icon"><span class="icon-credit display-4"></span></div>
-                        <div class="media-body">
-                            <h5 class="mt-0">Donate To Us</h5>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-                                there live the
-                                blind texts.</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </section>-->
-
-    <!--<section class="probootstrap-section probootstrap-scene-0">
-        <div class="container">
-            <div class="row mb-5 justify-content-center text-center">
-                <div class="col-lg-8">
-                    <h2 class="probootstrap-heading">People Says...</h2>
-                    <p class="mb-5 lead">Far far away, behind the word mountains, far from the countries Vokalia and
-                        Consonantia,
-                        there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the
-                        Semantics, a
-                        large language ocean.</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md">
-                    <div class="media d-block mb-4 text-center">
-                        <img src="images/square-person_1.jpg" alt="" class="img-fluid mb-3 rounded-circle w-25">
-                        <div class="media-body p-3">
-                            <p class="mb-5">&ldquo;Far far away, behind the word mountains, far from the countries
-                                Vokalia and
-                                Consonantia, there live the blind texts.&rdquo;</p>
-                            <h5 class="mt-0">James Rogeer</h5>
-                            <p>Invision</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="media d-block mb-4 text-center">
-                        <img src="images/square-person_2.jpg" alt="" class="img-fluid mb-3 rounded-circle w-25">
-                        <div class="media-body p-3">
-                            <p class="mb-5">&ldquo;Far far away, behind the word mountains, far from the countries
-                                Vokalia and
-                                Consonantia, there live the blind texts.&ldquo;</p>
-                            <h5 class="mt-0">Craig Rose</h5>
-                            <p>Google</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="media d-block mb-4 text-center">
-                        <img src="images/square-person_3.jpg" alt="" class="img-fluid mb-3 rounded-circle w-25">
-                        <div class="media-body p-3">
-                            <p class="mb-5">&ldquo;Far far away, behind the word mountains, far from the countries
-                                Vokalia and
-                                Consonantia, there live the blind texts.&ldquo;</p>
-                            <h5 class="mt-0">Christian Rich</h5>
-                            <p>Twitter</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>-->
-
-    <footer class="probootstrap-footer probootstrap-bg-dark ">
-        <div class="container">
-            <div class="row mb-5">
-                <div class="col-md-5 order-md-2 order-1">
-                    <div class="probootstrap-footer-widget mb-4">
-                        <ul class="probootstrap-footer-social list-unstyled float-md-right float-left">
-                            <li><a href="mailto:deskspacing@gmail.com" target="_blank"><span
-                                        class="icon-mail"></span></a></li>
-                            <li><a href="https://github.com/cooperlappenbusch/DeskSpacing.com" target="_blank"><span
-                                        class="icon-github"></span></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-7 order-md-1 order-2">
-                    <p>&copy; DeskSpacing 2020. All Rights Reserved. <br> Made with <span class="icon-heart"></span> by
-                        <a href="https://uicookies.com/">uiCookies</a> Demo Images: <a href="https://unsplash.com/"
-                            target="_blank">Unsplash</a></p>
-                </div>
-            </div>
-        </div>
+                </figcaption>
+            </figure>
+        </section>
+        <section class="planning-note" aria-labelledby="planningTitle">
+            <div><p class="eyebrow">Make room for your ideas</p><h2 id="planningTitle">Plan before you purchase.</h2></div>
+            <p>A setup should feel good to use, not just good to look at. Explore desks, monitors, chairs and accessories to make the most of your desk space.</p>
+            <a class="text-link" href="mainApp.html">Start planning <span aria-hidden="true">→</span></a>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <p>© DeskSpacing 2020. All Rights Reserved.</p>
+        <nav aria-label="Footer"><a href="mailto:deskspacing@gmail.com">Email</a><a href="https://github.com/cooperlappenbusch/DeskSpacing.com" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a><a href="about.html">Contact</a></nav>
+        <p class="site-credits">Original template by <a href="https://uicookies.com/">uiCookies</a> · Demo images: <a href="https://unsplash.com/" target="_blank" rel="noopener noreferrer">Unsplash</a></p>
     </footer>
-
-    <!-- loader -->
-    <div id="probootstrap-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-                stroke="#ff555f" /></svg></div>
-
-
-
-    <script src="vendor/popper.min.js"></script>
-    <script src="vendor/bootstrap.min.js"></script>
-
-    <script src="vendor/gsap.min.js"></script>
-    <script src="vendor/ScrollTrigger.min.js"></script>
-
-
-
-    <script src="js/main.js"></script>
-    <script src="js/imageLooper.js"></script>
+    <script type="module" src="src/home.js"></script>
 </body>
-
 </html>

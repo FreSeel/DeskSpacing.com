@@ -126,7 +126,8 @@ test('inspector commands, focus and shortcuts follow actual selection', async ({
   await expect(page.locator('#helpMenu summary')).toBeFocused();
   await page.locator('#removeObject').click();
   await expect.poll(() => count(page)).toBe(6);
-  await expect(page.locator('#selectionPanel')).toBeHidden();
+  await expect(page.locator('#selectionPanel')).toBeVisible();
+  await expect(page.locator('#selectionEmpty')).toBeVisible();
   await expect(page.locator('#threeCanvas')).toBeFocused();
   await page.locator('#catalogSearch').fill('');
   await expect(page.locator('[data-replace]:visible').first()).toBeDisabled();
@@ -247,18 +248,21 @@ test('NoSelect identity remains visible and layout waits for a gizmo drag to end
   await page.evaluate(() => {
     window.planner.view.transformControls.dragging = false;
   });
-  await expect(page.locator('#selectionPanel')).toBeHidden();
+  await expect(page.locator('#selectionPanel')).toBeVisible();
+  await expect(page.locator('#selectionEmpty')).toBeVisible();
   await expect(page.locator('#libraryPanel')).toBeHidden();
   await pickMouse(page);
   await expect(page.locator('#selectionPanel')).toBeVisible();
   await page.locator('[data-command="translate"]').focus();
   await page.keyboard.press('c');
-  await expect(page.locator('#selectionPanel')).toBeHidden();
+  await expect(page.locator('#selectionPanel')).toBeVisible();
+  await expect(page.locator('#selectionEmpty')).toBeVisible();
   await expect(page.locator('#threeCanvas')).toBeFocused();
   expect(await count(page)).toBe(6);
   await pickMouse(page);
   await page.locator('#removeObject').click();
-  await expect(page.locator('#selectionPanel')).toBeHidden();
+  await expect(page.locator('#selectionPanel')).toBeVisible();
+  await expect(page.locator('#selectionEmpty')).toBeVisible();
   await expect(page.locator('#threeCanvas')).toBeFocused();
   expect(await count(page)).toBe(5);
 });
@@ -359,11 +363,13 @@ test('pending card actions stay isolated and discarded replacements leave no sta
     page.locator('[data-product="defaultMouse"]:not([data-replace])'),
   ).toBeEnabled();
   await page.locator('#removeObject').click();
-  await expect(page.locator('#selectionPanel')).toBeHidden();
+  await expect(page.locator('#selectionPanel')).toBeVisible();
+  await expect(page.locator('#selectionEmpty')).toBeVisible();
   release();
   await expect(card).not.toHaveAttribute('aria-busy', 'true');
   expect(await count(page)).toBe(5);
-  await expect(page.locator('#selectionPanel')).toBeHidden();
+  await expect(page.locator('#selectionPanel')).toBeVisible();
+  await expect(page.locator('#selectionEmpty')).toBeVisible();
   await expect(card.locator('.card-error')).toBeHidden();
   await expect(card.locator('[data-replace]')).toBeDisabled();
 });

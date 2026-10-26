@@ -331,3 +331,78 @@ Deliberately retained or deferred:
   limits are documented in PERFORMANCE.md.
 - Browser verification uses Chromium software WebGL. Real GPU devices,
   Firefox/WebKit and production hosting need their own checks.
+
+## Light and dark themes
+
+The two active entrypoints (`index.html` and `mainApp.html`) share one theme:
+`src/styles/tokens.css` defines semantic custom properties on `:root`, with
+`[data-theme='dark']` overriding only their values. Shared primitives, home,
+planner and responsive CSS consume the same tokens; there are no duplicate
+component themes or theme libraries. Historical pages under `legacy/pages`
+retain their original styling and are not migrated by this feature.
+
+Token roles:
+
+- `bg`, `surface`, `surface-muted`, `card`, `elevated`, `dialog`, `canvas-ui`
+  describe page, panel, secondary, card, popover, modal and floating surfaces.
+- `text`, `text-secondary`, `text-muted`, `accent`, `border`, `border-control`
+  cover readable content, separators and identifiable control boundaries.
+- `hover`, `active`, `selected`, `focus`, `primary`, `primary-hover`,
+  `primary-active`, `on-primary`, `secondary`, `input`, `disabled` and
+  `disabled-text` describe control states rather than fixed palette colors.
+- `danger`, `danger-bg`, `danger-surface`, `danger-border`, `tooltip`,
+  `on-tooltip`, `scrollbar`, `backdrop` and `modal-backdrop` cover feedback and
+  overlays. All these names use the `--color-` prefix.
+- `thumbnail` is a neutral product-photo staging surface; `thumbnail-text`
+  keeps missing-image labels legible on it. Existing thumbnails
+  keep their assets and multiply blending so dark products remain legible;
+  homepage previews and tutorial recordings retain their authored colors.
+  Shadows use `--shadow-tool` and `--shadow-dialog`.
+
+New components should use these semantic properties, inherit text/icon color,
+and provide visible hover, selected and `:focus-visible` states. Do not add
+hardcoded light backgrounds or invert images. Text should reach 4.5:1 contrast;
+focus and essential control boundaries should reach 3:1. Subtle separators and
+disabled controls serve different roles and need not use the input border token.
+Use native controls and keep forced-color overrides available.
+
+### Startup and preferences
+
+Both HTML heads load `src/theme/bootstrap.js` as a small, parser-blocking classic
+script before their stylesheets. It applies `data-theme` and `color-scheme` before
+the body is parsed, independently of the editor's module graph or model loading.
+It has no dependencies or production globals. `scripts/site-layout.js` mounts
+that exact script for production copying and development; relative URLs work at
+both root and project-subpath deployments. Do not change it to a deferred module.
+
+The Appearance selector lives in the homepage Help & links/Menu disclosure and
+the editor More disclosure. Its native select offers System, Light and Dark,
+with a label and live resolved-theme status. Explicit choices use the
+origin-scoped `localStorage` key `deskspacing.theme` (`light` or `dark`). System
+removes the key. Missing or invalid values follow
+`matchMedia('(prefers-color-scheme: dark)')`, including subsequent OS changes.
+Manual choices take precedence. Storage events synchronize other open pages;
+blocked storage/quota errors retain the choice in memory for the current document.
+Persistence across reloads cannot be guaranteed when storage is unavailable.
+
+### Workspace integration and verification
+
+`src/theme/workspaceTheme.js` reads `--color-workspace` and updates the existing
+`scene.background` color. It calls `view.invalidateScene()` once per resolved
+theme change and removes its listener when the application is disposed. No
+renderer/scene recreation, asset reload, continuous rendering, geometry,
+materials, lighting, fog, camera or transform changes are involved.
+
+`tests/e2e/theme.spec.js` exercises system/manual preferences, navigation, reload,
+cross-tab synchronization, denied/quota-limited storage, early initialization
+with application modules blocked, semantic contrast, keyboard focus, scene
+identity and idle rendering. It captures both themes at desktop and phone sizes
+for the homepage, menu, library, selected-object inspector and all four dialogs.
+Native-font screenshot baselines are macOS Chromium-specific, consistent with
+the existing responsive suite. Other platforms still run behavioral checks and
+save captures. Browser automation checks early initialization, not a physical
+screen measurement of flashing under every browser/network condition.
+
+The pre-existing missing `drawerDesk` asset and legacy npm advisory remain open.
+Chromium software-WebGL and emulated mobile sizes do not certify real mobile
+hardware, Safari, Firefox or every GPU.

@@ -296,7 +296,10 @@ test('phone errors stay local and preserve forms; empty setup provides guidance'
   await page.locator('#closeLibrary').click();
   await page.evaluate(() => window.planner.actions.reset());
   await expect(page.locator('.planner-empty')).toBeVisible();
-  await expect(page.locator('#selectionPanel')).toBeHidden();
+  await expect(page.locator('#selectionPanel')).toBeVisible();
+  await expect(page.locator('#selectionTitle')).toHaveText(
+    'No object selected',
+  );
 });
 
 test('responsive target sizes, enlarged text and forced colors', async ({

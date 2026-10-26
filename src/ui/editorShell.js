@@ -1,3 +1,4 @@
+import { bindToolbarMenus } from './toolbarMenus.js';
 import { bindResponsivePanels } from './responsivePanels.js';
 
 export function bindEditorShell({ document, host, transformControls }) {
@@ -8,31 +9,8 @@ export function bindEditorShell({ document, host, transformControls }) {
     node.addEventListener(event, handler);
     cleanup.push(() => node.removeEventListener(event, handler));
   };
-  const menus = [...document.querySelectorAll('.toolbar-menu')];
-  for (const menu of menus) {
-    listen(menu, 'toggle', () => {
-      if (menu.open)
-        menus
-          .filter((other) => other !== menu)
-          .forEach((other) => {
-            other.open = false;
-          });
-    });
-  }
-  listen(document, 'pointerdown', (event) => {
-    menus.forEach((menu) => {
-      if (!menu.contains(event.target)) menu.open = false;
-    });
-  });
-  listen(document, 'keydown', (event) => {
-    if (event.key === 'Escape' && !document.querySelector('.modal.show'))
-      menus.forEach((menu) => {
-        if (menu.open) {
-          menu.open = false;
-          menu.querySelector('summary').focus();
-        }
-      });
-  });
+  const { menus, dispose: disposeMenus } = bindToolbarMenus(document);
+  cleanup.push(disposeMenus);
   const returnFocus = new WeakMap();
   listen(document, 'show.bs.modal', (event) => {
     document.querySelector('.editor-shell').inert = true;
@@ -72,6 +50,13 @@ export function bindEditorShell({ document, host, transformControls }) {
   listen(tutorial, 'shown.bs.modal', updateImages);
   listen(tutorial, 'hidden.bs.modal', updateImages);
   listen(motion, 'change', updateImages);
+  const helpTargets = {
+    '#tutorial': '#tutorialModal',
+    '#controls': '#exampleModal',
+  };
+  const helpTarget = helpTargets[host.location.hash];
+  if (helpTarget)
+    document.querySelector(`[data-bs-target="${helpTarget}"]`).click();
   return {
     ...panels,
     dispose() {

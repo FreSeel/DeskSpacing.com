@@ -4,11 +4,14 @@
     <title>DeskSpacing — Desk setup</title>
     <link rel="icon" href="favicon.png">
     <meta charset="utf-8">
+    <meta name="color-scheme" content="light dark">
+    <script src="src/theme/bootstrap.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-172455339-1"></script>
     <link rel="stylesheet" href="bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-compat.css">
     <link rel="stylesheet" href="src/styles/tokens.css">
+    <link rel="stylesheet" href="src/styles/shared.css">
     <link rel="stylesheet" href="src/styles/planner.css">
     <link rel="stylesheet" href="src/styles/responsive.css">
 </head>
@@ -30,6 +33,11 @@
                 <details class="toolbar-menu" id="moreMenu">
                     <summary>More <span aria-hidden="true">⌄</span></summary>
                     <div class="menu-popover">
+                    <div class="theme-setting">
+                        <label for="themePreference">Appearance</label>
+                        <select id="themePreference" data-theme-select aria-describedby="themeStatus"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select>
+                        <output id="themeStatus" data-theme-status aria-live="polite"></output>
+                    </div>
                         <a href="index.html">Home</a>
                         <a href="mainApp.html" aria-current="page">Setup Creator</a>
                         <a href="about.html">Contact</a>
@@ -72,6 +80,7 @@
             </section>
             <aside id="selectionPanel" class="selection-panel" aria-labelledby="selectionTitle" data-workspace-shortcuts hidden>
                 <div class="selection-heading"><div><p class="eyebrow">Selected</p><h2 id="selectionTitle"></h2></div><button id="toggleSelectionPanel" aria-expanded="false" hidden>Controls</button><button id="deselectObject" class="icon-button" aria-label="Deselect object">×</button></div>
+                <p id="selectionEmpty" class="muted" hidden>Select an object in the workspace to view its properties.</p>
                 <p id="selectionVariation" class="muted"></p>
                 <div id="selectionPreview" class="thumbnail-well"></div>
                 <p id="selectionInstance" class="instance-label"></p>

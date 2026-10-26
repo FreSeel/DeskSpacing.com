@@ -6,7 +6,7 @@
   position: fixed;
   inset: 0;
   z-index: 40;
-  background: rgb(36 39 35 / 28%);
+  background: var(--color-backdrop);
 }
 .planner-app .planner-empty {
   position: absolute;
@@ -72,10 +72,10 @@
   padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
 }
 .planner-app
-  :is([data-layout='tablet'], [data-layout='phone'])[data-has-selection='true']
+  :is([data-layout='tablet'], [data-layout='phone'])[data-inspector-open='true']
   .editor-body {
   grid-template-rows: minmax(0, 1fr) minmax(
-      calc(56px + env(safe-area-inset-bottom)),
+      var(--selection-row-height, calc(56px + env(safe-area-inset-bottom))),
       max-content
     );
 }

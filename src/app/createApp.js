@@ -12,6 +12,7 @@ import { bindPlannerUI } from '../ui/bindPlannerUI.js';
 import { renderCatalog } from '../ui/catalogRenderer.js';
 import { bindEditorShell } from '../ui/editorShell.js';
 import { bindSelectionPanel } from '../ui/selectionPanel.js';
+import { bindWorkspaceTheme } from '../theme/workspaceTheme.js';
 
 export function createApp({ THREE, host, document }) {
   host.performance.mark('planner:init-start');
@@ -60,6 +61,7 @@ export function createApp({ THREE, host, document }) {
     transformControls: view.transformControls,
   });
   const cleanup = [
+    bindWorkspaceTheme({ host, document, view }),
     () => shell.dispose(),
     bindSelectionPanel({
       document,

@@ -15,10 +15,16 @@ export default defineConfig({
     reportCompressedSize: true,
     minify: true,
     lib: {
-      entry: { planner: 'src/main.js', 'share-url': 'src/legacy/share-url.js' },
+      entry: {
+        planner: 'src/main.js',
+        home: 'src/home.js',
+        'share-url': 'src/legacy/share-url.js',
+      },
       formats: ['es'],
       fileName: (_format, name) =>
-        name === 'planner' ? 'src/main.js' : 'js/share-url.js',
+        name === 'share-url'
+          ? 'js/share-url.js'
+          : `src/${name === 'planner' ? 'main' : name}.js`,
     },
   },
 });

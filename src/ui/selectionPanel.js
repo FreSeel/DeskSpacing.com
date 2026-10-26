@@ -32,7 +32,36 @@ export function bindSelectionPanel({
   }
   function update(object) {
     shell.setSelectionVisible(Boolean(object));
+    document.getElementById('selectionEmpty').hidden = Boolean(object);
+    for (const id of [
+      'selectionVariation',
+      'selectionPreview',
+      'selectionInstance',
+      'removeObject',
+    ])
+      document.getElementById(id).hidden = !object;
+    document
+      .getElementById('deselectObject')
+      .setAttribute(
+        'aria-label',
+        object ? 'Deselect object' : 'Close properties',
+      );
     if (!object) {
+      title.textContent = 'No object selected';
+      preview.replaceChildren();
+      for (const id of [
+        'selectionVariation',
+        'selectionInstance',
+        'selectionDescription',
+      ])
+        document.getElementById(id).textContent = '';
+      for (const id of [
+        'selectionTransforms',
+        'selectionLocked',
+        'selectionDetails',
+      ])
+        document.getElementById(id).hidden = true;
+      remove.setAttribute('aria-label', 'Remove object');
       document.getElementById('selectionStatus').textContent =
         'Selection cleared.';
       return;
@@ -75,7 +104,10 @@ export function bindSelectionPanel({
     )
       command(button.dataset.command);
   }
-  const deselect = () => selection.unselectPickedObject();
+  const deselect = () => {
+    selection.unselectPickedObject();
+    shell.closeSelectionPanel();
+  };
   const removeSelected = () => {
     if (selection.pickedObject) actions.remove(selection.pickedObject);
   };

@@ -1,4 +1,7 @@
-.planner-app {
+:root {
+  color-scheme: light;
+  background: var(--color-bg);
+  color: var(--color-text);
   --font-ui:
     ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Consolas, monospace;
@@ -12,9 +15,33 @@
   --color-border: #daddd4;
   --color-border-control: #7b8175;
   --color-accent: #4f6240;
+  --color-on-primary: #fff;
+  --color-primary-hover: #40473b;
   --color-focus: #4f57c8;
   --color-danger: #a33a30;
   --color-danger-bg: #fff3f0;
+  --color-danger-surface: #fffaf8;
+  --color-danger-border: #d4b3ad;
+  --color-elevated: var(--color-card);
+  --color-dialog: var(--color-surface);
+  --color-canvas-ui: var(--color-surface);
+  --color-text-secondary: #444b40;
+  --color-hover: var(--color-surface-muted);
+  --color-active: var(--color-border);
+  --color-selected: var(--color-surface-muted);
+  --color-primary: var(--color-text);
+  --color-primary-active: var(--color-accent);
+  --color-secondary: var(--color-card);
+  --color-input: var(--color-card);
+  --color-disabled: var(--color-bg);
+  --color-disabled-text: var(--color-text-muted);
+  --color-tooltip: var(--color-text);
+  --color-on-tooltip: var(--color-on-primary);
+  --color-scrollbar: #b8bcb2;
+  --color-backdrop: rgb(36 39 35 / 28%);
+  --color-modal-backdrop: #242723;
+  --color-thumbnail: var(--color-surface-muted);
+  --color-thumbnail-text: var(--color-text-muted);
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -30,4 +57,40 @@
   --transition: 140ms ease;
   --library-width: 360px;
   --inspector-width: 288px;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-bg: #1c201f;
+  --color-surface: #232826;
+  --color-card: #292f2c;
+  --color-surface-muted: #343c36;
+  --color-elevated: #2c332f;
+  --color-dialog: var(--color-elevated);
+  --color-workspace: #303733;
+  --color-text: #e6e9e2;
+  --color-text-secondary: #c5cdc2;
+  --color-text-muted: #adb8a9;
+  --color-border: #454e46;
+  --color-border-control: #7f8d7c;
+  --color-accent: #b7caa5;
+  --color-on-primary: #20261e;
+  --color-primary: #c6d3b9;
+  --color-primary-hover: #d7e2cc;
+  --color-primary-active: #adbf9b;
+  --color-focus: #c2baff;
+  --color-danger: #ffb4a7;
+  --color-danger-bg: #472d29;
+  --color-danger-surface: #352825;
+  --color-danger-border: #a07166;
+  --color-tooltip: #dce3d5;
+  --color-on-tooltip: #20261e;
+  --color-scrollbar: #7f8d7c;
+  --color-backdrop: rgb(12 16 14 / 55%);
+  --color-modal-backdrop: #0c100e;
+  /* Neutral product-photo staging keeps dark objects legible without filters. */
+  --color-thumbnail: #aeb6ae;
+  --color-thumbnail-text: #242723;
+  --shadow-tool: 0 4px 16px rgb(0 0 0 / 12%);
+  --shadow-dialog: 0 16px 48px rgb(0 0 0 / 20%);
 }

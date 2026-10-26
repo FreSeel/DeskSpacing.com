@@ -84,7 +84,7 @@ test('homepage opens the creator, loads real GLBs and restores a shared setup', 
       failedAssets.push(response.url());
   });
   await page.goto('./');
-  await page.locator('a[href="mainApp.html"]').first().click();
+  await page.getByRole('link', { name: 'Open Setup Creator' }).click();
   await expect(page).toHaveURL(/\/DeskSpacing\.com\/mainApp\.html$/);
   await ready(page);
   expect((await snapshot(page)).map((object) => object.product)).toEqual(
@@ -236,29 +236,6 @@ test('Bootstrap 5 tutorial carousel advances and closes without losing the scene
   expect(await page.evaluate(() => window.planner.state.objects.length)).toBe(
     6,
   );
-});
-
-test('maintained animations reveal content and responsive navigation opens', async ({
-  page,
-}) => {
-  const errors = [];
-  page.on('pageerror', (error) => errors.push(error.message));
-  await page.setViewportSize({ width: 600, height: 800 });
-  await page.goto('./');
-  const heading = page
-    .locator('.probootstrap-cover .probootstrap-stagger')
-    .first();
-  await expect(heading).toHaveCSS('opacity', '1');
-  await expect(page.locator('#probootstrap-loader')).not.toHaveClass(/show/);
-  expect(await page.evaluate(() => window.jQuery)).toBeUndefined();
-  await page.locator('.navbar-toggler').click();
-  await expect(page.locator('#probootstrap-nav')).toHaveClass(/show/);
-  await expect(
-    page.locator('#probootstrap-nav a[href="mainApp.html"]'),
-  ).toBeVisible();
-  await page.locator('.navbar-toggler').click();
-  await expect(page.locator('#probootstrap-nav')).not.toHaveClass(/show/);
-  expect(errors).toEqual([]);
 });
 
 test('Popper 2 positions mobile planner tooltips using the retained theme', async ({

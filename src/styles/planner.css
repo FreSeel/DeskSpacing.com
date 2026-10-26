@@ -1,23 +1,4 @@
 /* Modern editor only. Retained planners keep their historical styles. */
-.planner-app {
-  margin: 0;
-  background: var(--color-bg);
-  color: var(--color-text);
-  font: 14px/1.45 var(--font-ui);
-  text-shadow: none;
-}
-.planner-app *,
-.planner-app *::before,
-.planner-app *::after {
-  box-sizing: border-box;
-}
-.planner-app [hidden] {
-  display: none !important;
-}
-.planner-app :focus-visible {
-  outline: 2px solid var(--color-focus);
-  outline-offset: 2px;
-}
 .planner-app h1,
 .planner-app h2,
 .planner-app h3,
@@ -41,59 +22,21 @@
   font-size: 16px;
   font-weight: 600;
 }
-.planner-app button,
-.planner-app input,
-.planner-app select,
-.planner-app summary {
-  font: inherit;
-}
-.planner-app button,
-.planner-app summary {
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-control);
-  background: var(--color-card);
-  min-height: 36px;
-  padding: 7px 12px;
-  cursor: pointer;
-  box-shadow: none;
-  text-shadow: none;
-  transition:
-    background var(--transition),
-    border-color var(--transition);
-}
-.planner-app button:hover,
-.planner-app summary:hover {
-  background: var(--color-surface-muted);
-  border-color: var(--color-border-control);
-}
 .planner-app button:disabled {
   cursor: default;
-  color: var(--color-text-muted);
-  background: var(--color-bg);
+  color: var(--color-disabled-text);
+  background: var(--color-disabled);
   border-color: var(--color-border);
 }
 .planner-app button[aria-pressed='true'] {
-  background: var(--color-surface-muted);
+  background: var(--color-selected);
   border-color: var(--color-accent);
   color: var(--color-accent);
 }
-.planner-app button:active:not(:disabled) {
-  background: var(--color-border);
-}
-.planner-app .button-primary {
-  background: var(--color-text);
-  border-color: var(--color-text);
-  color: white;
-  font-weight: 600;
-}
-.planner-app .button-primary:hover {
-  background: #40473b;
-}
 .planner-app .button-danger {
   color: var(--color-danger);
-  border-color: #d4b3ad;
-  background: #fffaf8;
+  border-color: var(--color-danger-border);
+  background: var(--color-danger-surface);
 }
 .planner-app .button-danger:hover {
   background: var(--color-danger-bg);
@@ -116,7 +59,7 @@
   min-height: 38px;
   border: 1px solid var(--color-border-control);
   border-radius: var(--radius-control);
-  background: var(--color-card);
+  background: var(--color-input);
   color: var(--color-text);
   padding: 8px 10px;
 }
@@ -138,27 +81,6 @@
   font-weight: 500;
   margin-bottom: 6px;
 }
-.planner-app a {
-  color: var(--color-accent);
-}
-.planner-app svg {
-  width: 20px;
-  height: 20px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.75;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  flex: 0 0 auto;
-}
-.planner-app .eyebrow {
-  color: var(--color-text-muted);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
 .planner-app .muted {
   color: var(--color-text-muted);
   font-size: 12px;
@@ -171,17 +93,6 @@
   box-shadow: none;
   font: 12px var(--font-mono);
   padding: 2px 5px;
-}
-.planner-app .skip-link {
-  position: fixed;
-  left: 16px;
-  top: -60px;
-  z-index: 1100;
-  padding: 12px;
-  background: white;
-}
-.planner-app .skip-link:focus {
-  top: 8px;
 }
 .planner-app .editor-shell {
   height: 100vh;
@@ -197,29 +108,6 @@
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
   z-index: 30;
-}
-.planner-app .editor-brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  color: var(--color-text);
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: -0.6px;
-}
-.planner-app .brand-mark {
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: var(--color-text);
-  color: white;
-}
-.planner-app .brand-mark svg {
-  width: 22px;
-  height: 22px;
 }
 .planner-app .workspace-name {
   color: var(--color-text-muted);
@@ -237,52 +125,6 @@
   align-items: center;
   gap: 10px;
   margin-left: 8px;
-}
-.planner-app .toolbar-menu {
-  position: relative;
-}
-.planner-app .toolbar-menu summary {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  background: transparent;
-  border-color: transparent;
-  list-style: none;
-}
-.planner-app summary::-webkit-details-marker {
-  display: none;
-}
-.planner-app .menu-popover {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 8px);
-  width: 248px;
-  padding: 8px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-card);
-  background: var(--color-card);
-  box-shadow: var(--shadow-tool);
-}
-.planner-app .menu-popover button,
-.planner-app .menu-popover a {
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: 10px 12px;
-  border: 0;
-  text-decoration: none;
-  color: var(--color-text);
-  border-radius: var(--radius-control);
-}
-.planner-app .menu-popover a:hover {
-  background: var(--color-surface-muted);
-}
-.planner-app .menu-popover p {
-  font-size: 12px;
-  color: var(--color-text-muted);
-  padding: 12px;
-  border-top: 1px solid var(--color-border);
-  margin-top: 6px;
 }
 .planner-app .editor-body {
   display: flex;
@@ -326,7 +168,7 @@
   min-height: 0;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #b8bcb2 transparent;
+  scrollbar-color: var(--color-scrollbar) transparent;
 }
 .planner-app .catalog-grid {
   display: grid;
@@ -365,7 +207,7 @@
   place-items: center;
   aspect-ratio: 4 / 3;
   border-radius: var(--radius-control);
-  background: var(--color-surface-muted);
+  background: var(--color-thumbnail);
   overflow: hidden;
 }
 .planner-app .thumbnail-well img {
@@ -378,7 +220,7 @@
 }
 .planner-app .thumbnail-fallback {
   font-size: 12px;
-  color: var(--color-text-muted);
+  color: var(--color-thumbnail-text);
   padding: 12px;
   text-align: center;
 }
@@ -514,6 +356,13 @@
   left: 24px;
   pointer-events: none;
 }
+/* Backing surfaces keep overlay text readable over any camera/model position. */
+.planner-app .workspace-heading,
+.planner-app #workspaceHints {
+  background: var(--color-canvas-ui);
+  border-radius: var(--radius-control);
+  padding: 6px 10px;
+}
 .planner-app .workspace-heading > p:last-child {
   font-weight: 600;
   font-size: 16px;
@@ -531,13 +380,13 @@
 }
 .planner-app .workspace-tools button {
   pointer-events: auto;
-  background: var(--color-surface);
+  background: var(--color-canvas-ui);
   box-shadow: var(--shadow-tool);
   flex: 0 0 auto;
 }
 .planner-app #workspaceHints {
   font-size: 12px;
-  color: #444b40;
+  color: var(--color-text-secondary);
   text-align: center;
 }
 .planner-app #workspaceHints span {
@@ -627,7 +476,7 @@
 }
 .planner-app .modal-content {
   color: var(--color-text);
-  background: var(--color-surface);
+  background: var(--color-dialog);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-dialog);
@@ -715,7 +564,7 @@
 .planner-app .planner-feedback {
   color: var(--color-danger);
   background: var(--color-danger-bg);
-  border-color: #d4b3ad;
+  border-color: var(--color-danger-border);
 }
 @media (max-width: 1439px) {
   .planner-app {
@@ -760,4 +609,27 @@
     transition: none !important;
     animation: none !important;
   }
+}
+
+.planner-app .workspace-tools button:hover {
+  background: var(--color-hover);
+}
+.planner-app .modal-backdrop {
+  background: var(--color-modal-backdrop);
+}
+.planner-app .tooltip-inner {
+  background: var(--color-tooltip);
+  color: var(--color-on-tooltip);
+}
+.planner-app .tooltip[x-placement^='top'] .arrow::before {
+  border-top-color: var(--color-tooltip);
+}
+.planner-app .tooltip[x-placement^='bottom'] .arrow::before {
+  border-bottom-color: var(--color-tooltip);
+}
+.planner-app .tooltip[x-placement^='left'] .arrow::before {
+  border-left-color: var(--color-tooltip);
+}
+.planner-app .tooltip[x-placement^='right'] .arrow::before {
+  border-right-color: var(--color-tooltip);
 }

@@ -2,6 +2,7 @@
 // by development, production copying, asset tools and path tests. Values never
 // contain generated output; vendor/three and legacy SCSS are intentionally absent.
 export const siteMounts = {
+  'src/theme/bootstrap.js': 'src/theme/bootstrap.js',
   '16x9Monitors': 'public/models/16x9Monitors',
   '3d': 'public/models/3d',
   GLTFs: 'public/models/GLTFs',
