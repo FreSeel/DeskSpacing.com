@@ -1,9 +1,11 @@
+import { formatMeasurementText } from '../measurements/units.js';
 import { describeProduct } from '../catalog/presentation.js';
 import { createTransformCommands } from '../interactions/commands.js';
 import { thumbnail } from './dom.js';
 
 export function bindSelectionPanel({
   document,
+  measurements,
   selection,
   actions,
   transformControls,
@@ -78,7 +80,8 @@ export function bindSelectionPanel({
       }
     }
     title.textContent = info.name;
-    document.getElementById('selectionVariation').textContent = info.variation;
+    document.getElementById('selectionVariation').textContent =
+      formatMeasurementText(info.variation, measurements.unit);
     preview.replaceChildren(thumbnail(document, info.thumbnail, info.name));
     document.getElementById('selectionInstance').textContent = object.name;
     const locked = object.userData.type.includes('NoSelect');
@@ -89,10 +92,10 @@ export function bindSelectionPanel({
     const description = info.id === 'MXMaster3' ? '' : info.description;
     document.getElementById('selectionDetails').hidden = !description;
     document.getElementById('selectionDescription').textContent =
-      description || '';
+      formatMeasurementText(description, measurements.unit);
     remove.setAttribute('aria-label', `Remove ${info.name}`);
     document.getElementById('selectionStatus').textContent =
-      `Selected ${info.name}${info.variation ? `, ${info.variation}` : ''}.`;
+      `Selected ${info.name}${info.variation ? `, ${formatMeasurementText(info.variation, measurements.unit)}` : ''}.`;
     updateControls();
   }
   function click(event) {
@@ -116,8 +119,25 @@ export function bindSelectionPanel({
   remove.addEventListener('click', removeSelected);
   transformControls.addEventListener('change', updateControls);
   const unsubscribe = selection.subscribe(update);
+  const unsubscribeUnits = measurements.subscribe(() => {
+    const object = selection.pickedObject;
+    if (!object) return;
+    const info = describeProduct(object.userData.objectName);
+    if (info.id !== 'customDesk')
+      document.getElementById('selectionVariation').textContent =
+        formatMeasurementText(info.variation, measurements.unit);
+    const variation = document.getElementById('selectionVariation').textContent;
+    document.getElementById('selectionStatus').textContent =
+      `Selected ${info.name}${variation ? `, ${variation}` : ''}.`;
+    document.getElementById('selectionDescription').textContent =
+      formatMeasurementText(
+        info.id === 'MXMaster3' ? '' : info.description,
+        measurements.unit,
+      );
+  });
   return () => {
     unsubscribe();
+    unsubscribeUnits();
     panel.removeEventListener('click', click);
     document
       .getElementById('deselectObject')

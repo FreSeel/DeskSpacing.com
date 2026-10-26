@@ -1,9 +1,11 @@
+import { formatMeasurementText } from '../measurements/units.js';
 import { families, resolveProduct } from '../catalog/configuration.js';
 
 // Form naming is confined to this DOM adapter; model/state code only receives data.
-export function readProductChoice(element, document) {
+export function readProductChoice(element, document, readInches) {
   const { product, family, replace } = element.dataset;
   const value = (id) => document.getElementById(id).value;
+  const dimension = (id) => readInches(document.getElementById(id));
   const options = { replace: replace === 'true' };
   let id = product;
   if (family) {
@@ -14,18 +16,18 @@ export function readProductChoice(element, document) {
   }
   if (id === 'customDesk') {
     options.dimensions = [
-      Number(value('customDeskL')),
+      dimension('customDeskL'),
       1,
-      Number(value('customDeskW')),
+      dimension('customDeskW'),
     ];
     options.texture = value('customDeskForm');
   } else if (id === 'referenceBox') {
     // Legacy inputs map L/W/H to Three.js width/height/depth (in inches).
     options.dimensions = ['L', 'W', 'H'].map((axis) =>
-      Number(value(`${id}${axis}`)),
+      dimension(`${id}${axis}`),
     );
   } else if (id === 'referenceSphere') {
-    options.dimensions = [Number(value(`${id}Radius`)), -1, -1];
+    options.dimensions = [dimension(`${id}Radius`), -1, -1];
   }
   return { product: id, options };
 }
@@ -47,7 +49,13 @@ export function bindCatalogPreviews(document, listen) {
   });
 }
 
-export function bindCatalogDiscovery({ document, cards, categories, listen }) {
+export function bindCatalogDiscovery({
+  document,
+  cards,
+  categories,
+  listen,
+  measurements,
+}) {
   const search = document.getElementById('catalogSearch');
   const category = document.getElementById('catalogCategory');
   const items = [...document.querySelectorAll('[data-card]')];
@@ -85,7 +93,7 @@ export function bindCatalogDiscovery({ document, cards, categories, listen }) {
       if (!visible && expanded === card.id) setExpanded(null);
       const match = item.querySelector('.search-match');
       match.hidden = !visible || !query || base || !variants.length;
-      match.textContent = `Matches: ${variants.map((option) => option.label).join(', ')}`;
+      match.textContent = `Matches: ${variants.map((option) => formatMeasurementText(option.label, measurements.unit)).join(', ')}`;
     }
     document.getElementById('catalogCount').textContent =
       `${count} ${count === 1 ? 'object' : 'objects'}`;
@@ -106,5 +114,5 @@ export function bindCatalogDiscovery({ document, cards, categories, listen }) {
         expanded === toggle.dataset.options ? null : toggle.dataset.options,
       );
   });
-  filter();
+  return measurements.subscribe(filter);
 }

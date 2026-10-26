@@ -41,18 +41,25 @@ export function renderCatalog(document) {
     }
     const controls = configurable ? form : article;
     if (card.description) {
-      controls.append(
-        element(document, 'p', 'product-description', card.description),
+      const description = element(
+        document,
+        'p',
+        'product-description',
+        card.description,
       );
+      description.dataset.measurementText = '';
+      controls.append(description);
     }
     if (card.select) {
       const label = element(document, 'label', '', card.select.label);
       label.htmlFor = card.select.id;
+      label.dataset.measurementText = '';
       const select = element(document, 'select');
       select.id = card.select.id;
       for (const choice of card.select.options) {
         const option = element(document, 'option', '', choice.label);
         option.value = choice.value;
+        option.dataset.measurementText = '';
         if (choice.image) option.dataset.image = choice.image;
         select.append(option);
       }
@@ -64,6 +71,7 @@ export function renderCatalog(document) {
       const input = element(document, 'input');
       input.id = field.id;
       input.type = 'number';
+      input.dataset.measurementInput = field.label;
       input.min = '0';
       input.max = String(limits.dimension);
       input.step = 'any';

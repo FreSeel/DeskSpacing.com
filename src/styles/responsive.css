@@ -195,6 +195,9 @@
   max-width: 240px;
 }
 @media (max-width: 1279px), (pointer: coarse) {
+  .planner-app #measurementUnit span {
+    min-height: 36px;
+  }
   .planner-app button,
   .planner-app .product-actions button,
   .planner-app .product-actions .replace-action,
@@ -371,4 +374,20 @@
   :is([data-layout='tablet'], [data-layout='phone'])[data-short-viewport='true']
   .library-footer {
   display: none;
+}
+
+/* Keep the unit selector in the existing single-row toolbar on narrow phones. */
+@media (max-width: 374px) {
+  .planner-app .editor-brand {
+    font-size: 15px;
+  }
+  .planner-app #measurementUnit span {
+    min-width: 30px;
+  }
+  .planner-app .header-actions {
+    gap: 0;
+  }
+  .planner-app .toolbar-menu summary {
+    padding-inline: 4px;
+  }
 }

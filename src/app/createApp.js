@@ -1,3 +1,5 @@
+import { createMeasurementPreference } from '../measurements/preference.js';
+import { bindMeasurementUI } from '../ui/measurementUI.js';
 import { createScene } from '../scene/createScene.js';
 import { createObjectFactory } from '../models/objectFactory.js';
 import { createObjectStore } from '../state/objectStore.js';
@@ -17,6 +19,8 @@ import { bindWorkspaceTheme } from '../theme/workspaceTheme.js';
 export function createApp({ THREE, host, document }) {
   host.performance.mark('planner:init-start');
   renderCatalog(document);
+  const measurements = createMeasurementPreference(host);
+  const measurementUI = bindMeasurementUI({ document, measurements });
   const canvas = document.getElementById('threeCanvas');
   const view = createScene({
     THREE,
@@ -61,10 +65,13 @@ export function createApp({ THREE, host, document }) {
     transformControls: view.transformControls,
   });
   const cleanup = [
+    () => measurementUI.dispose(),
+    () => measurements.dispose(),
     bindWorkspaceTheme({ host, document, view }),
     () => shell.dispose(),
     bindSelectionPanel({
       document,
+      measurements,
       selection,
       actions,
       transformControls: view.transformControls,
@@ -83,6 +90,8 @@ export function createApp({ THREE, host, document }) {
     }),
     bindPlannerUI({
       document,
+      measurements,
+      measurementUI,
       actions,
       selection,
       resetCamera: view.resetCamera,

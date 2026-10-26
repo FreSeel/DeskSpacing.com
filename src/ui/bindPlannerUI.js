@@ -3,10 +3,13 @@ import {
   bindCatalogDiscovery,
   readProductChoice,
 } from './catalogPanel.js';
+import { limits } from '../sharing/legacyCodec.js';
 import { cards, categories } from '../catalog/presentation.js';
 
 export function bindPlannerUI({
   document,
+  measurements,
+  measurementUI,
   actions,
   selection,
   resetCamera,
@@ -42,11 +45,12 @@ export function bindPlannerUI({
         input.removeAttribute('aria-invalid');
         if (
           !input.validity.valid ||
-          !Number.isFinite(Number(input.value)) ||
-          Number(input.value) <= 0
+          !Number.isFinite(measurementUI.readInches(input)) ||
+          measurementUI.readInches(input) <= 0 ||
+          measurementUI.readInches(input) > limits.dimension
         ) {
           input.setAttribute('aria-invalid', 'true');
-          errorText.textContent = `Enter a dimension greater than zero and no more than ${input.max} inches.`;
+          errorText.textContent = measurementUI.errorMessage();
           errorText.hidden = false;
           input.focus();
           return;
@@ -60,7 +64,11 @@ export function bindPlannerUI({
       button.textContent = 'Loading…';
       feedback.clear();
       try {
-        const { product, options } = readProductChoice(button, document);
+        const { product, options } = readProductChoice(
+          button,
+          document,
+          measurementUI.readInches,
+        );
         const object = await actions.add(product, options);
         if (object && !disposed) shell.finishCatalogAction(token);
         // A null result is a discarded stale operation, never a success toast.
@@ -93,7 +101,9 @@ export function bindPlannerUI({
     event.target.select(),
   );
   bindCatalogPreviews(document, listen);
-  bindCatalogDiscovery({ document, cards, categories, listen });
+  cleanup.push(
+    bindCatalogDiscovery({ document, cards, categories, listen, measurements }),
+  );
   return () => {
     disposed = true;
     cleanup.forEach((remove) => remove());

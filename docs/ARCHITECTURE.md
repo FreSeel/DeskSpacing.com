@@ -406,3 +406,43 @@ screen measurement of flashing under every browser/network condition.
 The pre-existing missing `drawerDesk` asset and legacy npm advisory remain open.
 Chromium software-WebGL and emulated mobile sizes do not certify real mobile
 hardware, Safari, Firefox or every GPU.
+
+## Measurement units
+
+The modern planner keeps geometry, transforms and legacy share records in inches
+(one scene unit = one inch). `src/measurements/units.js` is the DOM/Three.js-free
+conversion and formatting boundary, using exactly 2.54 centimeters per inch.
+`src/measurements/preference.js` owns the active `in`/`cm` preference and publishes
+changes. Like appearance settings, it uses origin-scoped localStorage
+(`deskspacing.unit`), synchronizes storage events, and tolerates unavailable
+storage. Missing or invalid preferences retain the historical inches default.
+
+`src/ui/measurementUI.js` binds the toolbar CM/IN segmented toggle (native radios
+with arrow-key navigation and visible focus), custom desk width/length,
+box L/W/H and sphere radius, limits, error messages, and catalog measurement
+copy. Only user input changes the full-precision canonical form drafts; toggling
+units formats those drafts without feeding rounded values back into them. Empty
+and out-of-range drafts remain invalid. Inputs retain arbitrary decimal steps
+and the existing positive, maximum-10,000-inch constraint (25,400 cm). Custom
+desk thickness stays one inch. Box L/W/H retains the existing mapping to
+Three.js width/height/depth; sphere values remain radii, not diameters.
+Fixed-size product options retain their IDs while labels change units. Inspector
+copy and search-match measurements use the same formatter.
+
+The existing add/replace actions perform edits; live transforms remain authoritative.
+Unit changes do not touch geometry, materials, camera, selection, scene membership,
+or serialization. There is currently no application undo/redo history, direct
+inspector dimension editor, or in-scene dimension overlay to adapt. Future scene
+annotations should derive measurements from live geometry/transforms and use the
+shared formatter and preference. Authored catalog descriptions remain approximate
+product copy (including known historical inaccuracies), not measured mesh bounds.
+Retained historical planners are unchanged.
+
+Focused verification: `npx vitest run tests/unit/measurements.test.js
+ tests/unit/model-factory.test.js tests/unit/legacy-codec.test.js
+ tests/unit/state-actions.test.js` and
+`npx playwright test --config=playwright.measurements.config.js`.
+The latter uses the development server at port 4173 without a production build.
+Tests compare centimeter inputs against actual primitive geometry bounds, preserve
+full-precision records across switches, exercise creation/replacement and saved
+links, and check persistence, validation and toolbar accessibility/layout.

@@ -120,6 +120,59 @@
   align-items: center;
   margin-left: auto;
 }
+.planner-app #measurementUnit {
+  display: inline-flex;
+  flex-shrink: 0;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--color-surface-muted);
+}
+.planner-app #measurementUnit label {
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+}
+.planner-app #measurementUnit input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.planner-app #measurementUnit span {
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 32px;
+  border-radius: 8px;
+  color: var(--color-text-muted);
+  font: 600 13px/1 var(--font-ui);
+  letter-spacing: 0.04em;
+}
+.planner-app #measurementUnit label:hover span {
+  color: var(--color-text);
+}
+.planner-app #measurementUnit input:checked + span {
+  background: var(--color-elevated);
+  color: var(--color-text);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 12%);
+}
+:root[data-theme='dark'] .planner-app #measurementUnit input:checked + span {
+  background: var(--color-border);
+}
+.planner-app #measurementUnit input:focus-visible + span {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 1px;
+}
+@media (forced-colors: active) {
+  .planner-app #measurementUnit input:checked + span {
+    outline: 2px solid Highlight;
+  }
+}
 .planner-app #saveModalButton {
   display: inline-flex;
   align-items: center;
