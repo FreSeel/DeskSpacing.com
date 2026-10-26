@@ -100,3 +100,31 @@ it('notifies only changed selection, including NoSelect, and unsubscribes', () =
   selection.pick(object);
   expect(listener).toHaveBeenCalledTimes(3);
 });
+
+it('inspects locked desks without handles and preserves accessory picking priority and floor exclusion', () => {
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+  camera.position.z = 10;
+  const desk = new THREE.Mesh(new THREE.BoxGeometry(4, 4, 1));
+  desk.userData.type = 'FurnitureDeskNoSelect';
+  const accessory = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1));
+  accessory.position.z = -2;
+  accessory.userData.type = 'Mouse';
+  const floor = new THREE.Mesh(new THREE.BoxGeometry(5, 5, 1));
+  floor.position.z = 2;
+  floor.userData.type = 'PrimitiveBoxFloorFurnitureNoSelect';
+  const objects = [desk, floor];
+  const controls = { attach: vi.fn(), detach: vi.fn() };
+  const selection = createSelection({
+    THREE,
+    camera,
+    transformControls: controls,
+    getObjects: () => objects,
+  });
+  selection.mouseSelect({ x: 0, y: 0 });
+  expect(selection.pickedObject).toBe(desk);
+  expect(controls.attach).not.toHaveBeenCalled();
+  objects.push(accessory);
+  selection.mouseSelect({ x: 0, y: 0 });
+  expect(selection.pickedObject).toBe(accessory);
+  expect(controls.attach).toHaveBeenCalledWith(accessory);
+});

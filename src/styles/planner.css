@@ -686,3 +686,48 @@
 .planner-app .tooltip[x-placement^='right'] .arrow::before {
   border-right-color: var(--color-tooltip);
 }
+
+/* Camera-projected measurement marks share the viewer's render lifecycle. */
+.planner-app .dimension-annotations {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+.planner-app .dimension-annotations svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  stroke: var(--color-text-secondary);
+  stroke-width: 1;
+  stroke-linecap: square;
+  opacity: 0.8;
+}
+.planner-app .dimension-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  padding: 4px 7px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-canvas-ui);
+  color: var(--color-text);
+  font-size: 12px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.planner-app #dimensionToggle {
+  position: absolute;
+  z-index: 1;
+  right: 20px;
+  bottom: calc(76px + env(safe-area-inset-bottom));
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  box-shadow: var(--shadow-tool);
+}

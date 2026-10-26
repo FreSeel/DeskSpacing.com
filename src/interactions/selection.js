@@ -51,7 +51,9 @@ export function createSelection({
     mouseSelect(position) {
       if (!selection.pickEnabled) return;
       const objects = getObjects().filter(
-        (object) => !object.userData.type.includes('NoSelect'),
+        (object) =>
+          !object.userData.type.includes('NoSelect') ||
+          object.userData.type.includes('Desk'),
       );
       const roots = new Set(objects);
       camera.updateMatrixWorld();
@@ -60,13 +62,20 @@ export function createSelection({
       // Raycaster orders hits by distance. Resolve nested meshes to the owned root.
       hits.length = 0;
       raycaster.intersectObjects(objects, true, hits);
+      let desk = null;
+      let picked = false;
       for (const hit of hits) {
         const root = findObjectRoot(hit.object, roots);
         if (root && !root.userData.type.includes('NoSelect')) {
           selection.pick(root);
+          picked = true;
           break;
         }
+        if (root?.userData.type.includes('Desk') && !desk) desk = root;
       }
+      // Locked desks can be inspected, but never take picking priority from
+      // accessories and never attach manipulation handles. Floors stay excluded.
+      if (!picked && desk) selection.pick(desk);
       hits.length = 0;
     },
   };

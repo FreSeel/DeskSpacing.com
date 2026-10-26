@@ -55,11 +55,15 @@ export function createScene({ THREE, canvas, container, host }) {
   transformControls.showY = false;
   scene.add(transformControls.getHelper());
 
+  const renderListeners = new Set();
   let interacting = false;
   const scheduler = createRenderScheduler({
     host,
     update: () => controls.update(),
-    render: () => renderer.render(scene, camera),
+    render: () => {
+      renderer.render(scene, camera);
+      renderListeners.forEach((update) => update());
+    },
     isAnimating: () => controls.enabled && (interacting || controls.autoRotate),
   });
   const invalidate = () => scheduler.invalidate();
@@ -123,8 +127,13 @@ export function createScene({ THREE, canvas, container, host }) {
     resetCamera,
     invalidate,
     invalidateScene,
+    subscribeRender(update) {
+      renderListeners.add(update);
+      return () => renderListeners.delete(update);
+    },
     dispose() {
       scheduler.dispose();
+      renderListeners.clear();
       observer?.disconnect();
       host.removeEventListener('resize', resize);
       host.document.removeEventListener('visibilitychange', visibility);

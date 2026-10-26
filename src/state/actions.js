@@ -50,8 +50,8 @@ export function createActions({ state, selection, factory }) {
       }
       state.deskOffset = offset;
     }
-    // Primitive desks/floors historically did not attach the gizmo on creation.
-    if (!record.dimensions || !record.type.includes('NoSelect'))
+    // Inspect desks after creation; selection keeps their manipulation lock.
+    if (desk || !record.dimensions || !record.type.includes('NoSelect'))
       selection.pick(object);
     return object;
   }

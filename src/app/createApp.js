@@ -1,5 +1,6 @@
 import { createMeasurementPreference } from '../measurements/preference.js';
 import { bindMeasurementUI } from '../ui/measurementUI.js';
+import { bindDimensionAnnotations } from '../scene/dimensionAnnotations.js';
 import { createScene } from '../scene/createScene.js';
 import { createObjectFactory } from '../models/objectFactory.js';
 import { createObjectStore } from '../state/objectStore.js';
@@ -65,6 +66,13 @@ export function createApp({ THREE, host, document }) {
     transformControls: view.transformControls,
   });
   const cleanup = [
+    bindDimensionAnnotations({
+      document,
+      view,
+      selection,
+      measurements,
+      state,
+    }),
     () => measurementUI.dispose(),
     () => measurements.dispose(),
     bindWorkspaceTheme({ host, document, view }),

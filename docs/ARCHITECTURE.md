@@ -431,10 +431,9 @@ copy and search-match measurements use the same formatter.
 
 The existing add/replace actions perform edits; live transforms remain authoritative.
 Unit changes do not touch geometry, materials, camera, selection, scene membership,
-or serialization. There is currently no application undo/redo history, direct
-inspector dimension editor, or in-scene dimension overlay to adapt. Future scene
-annotations should derive measurements from live geometry/transforms and use the
-shared formatter and preference. Authored catalog descriptions remain approximate
+or serialization. There is currently no application undo/redo history or direct
+inspector dimension editor. Viewer annotations derive measurements from live
+geometry/transforms and use the shared formatter and preference. Authored catalog descriptions remain approximate
 product copy (including known historical inaccuracies), not measured mesh bounds.
 Retained historical planners are unchanged.
 
@@ -446,3 +445,60 @@ The latter uses the development server at port 4173 without a production build.
 Tests compare centimeter inputs against actual primitive geometry bounds, preserve
 full-precision records across switches, exercise creation/replacement and saved
 links, and check persistence, validation and toolbar accessibility/layout.
+
+## Selected-object dimensions
+
+`src/measurements/objectDimensions.js` reads actual mesh vertices in a stable
+object frame, using the catalog's authored Y rotation to establish W (X), D (Z)
+and H (Y). This accounts for legacy models exported sideways without swapping
+width/depth when users rotate them. Descendant matrices, import wrappers and
+root scale are included; root translation and user rotation do not enlarge the
+physical dimensions as a world-axis bounding box would. Unknown objects use
+their root-local axes. Geometry bounds are derived without modifying shared
+geometry, using mesh vertex accessors for morph/skinning and instance matrices
+where present. Only the selected object's derived bounds are cached; geometry
+identity/attribute versions, visibility and descendant transforms invalidate the
+cache. Camera movement does not rescan vertices. Buffer edits must mark their
+attributes `needsUpdate`, as required by Three.js rendering itself.
+
+`src/scene/dimensionAnnotations.js` subscribes to selection, the shared measurement
+preference, and `view.subscribeRender()`. It reuses three SVG paths and three
+camera-facing HTML labels within the canvas container. `dimensionLayout.js`
+projects bounding edges with the active camera, places labels outside the
+projected object silhouette, separates labels and uses leaders for edge-on axes.
+CSS follows existing theme tokens. Pointer events are disabled for the entire
+annotation layer. No scene objects, raycast targets, GPU resources, additional
+animation loop or saved fields are introduced. Selection and unit changes update
+the labels; ordinary invalidated renders track object and camera changes.
+Teardown removes every listener and the annotation subtree. A keyboard-accessible
+Dimensions toggle at the bottom-right of the viewer hides/shows both lines and
+labels. It defaults to on for each page session, retains its state across selection
+and unit changes, and skips measurement work while off; it does not alter saves.
+
+Desk selection is now available for dimension inspection. Locked desks remain
+without transform handles; ray picking still prioritizes movable accessories,
+and the floor remains unselectable. Custom desks select after creation/replacement.
+Their H value is the existing one-inch tabletop thickness, not a fabricated desk
+height. Sphere W/D/H are diameters, while their existing input remains radius.
+Monitor measurements include their rendered stand/body, not a marketed diagonal.
+Existing numeric forms, replacement transactions, persistence, geometry and
+placement conventions otherwise remain unchanged.
+
+Limitations: dimensions describe rendered model extents, which may differ from
+rounded catalog copy or manufacturer specifications. Shader displacement is not
+measured. Labels can be suppressed when the object crosses the camera near/far
+planes or there is no room outside its silhouette within the viewport; zooming
+out or orbiting restores them. Lines remain visible over other objects for
+readability rather than being depth-occluded. Crowded views and physical mobile
+hardware still need broader visual QA. The missing `drawerDesk` and legacy npm
+advisory remain open; Chromium checks do not certify Safari or Firefox.
+
+Focused checks: `npx vitest run tests/unit/object-dimensions.test.js
+ tests/unit/selection.test.js tests/unit/state-actions.test.js
+ tests/unit/render-scheduler.test.js tests/unit/measurements.test.js` and
+`npx playwright test --config=playwright.measurements.config.js` (the measurement
+and dimension feature tests only, using the development server without a full
+build). Coverage includes actual primitive and imported geometry scale,
+rotation/movement/resizing, unit changes, pointer picking/orbit, locked desks,
+deletion/reload, disposal and settled idle rendering. Screenshots are captured
+for visual inspection, not treated as cross-platform pixel baselines.
