@@ -18,16 +18,16 @@ export function bindSelectionPanel({
   function updateControls() {
     for (const button of buttons) {
       const action = button.dataset.command;
+      let pressed;
       if (['translate', 'rotate'].includes(action))
-        button.setAttribute(
-          'aria-pressed',
-          String(transformControls.getMode() === action),
-        );
+        pressed = String(transformControls.getMode() === action);
       else if (['x', 'y', 'z'].includes(action))
-        button.setAttribute(
-          'aria-pressed',
-          String(transformControls[`show${action.toUpperCase()}`]),
-        );
+        pressed = String(transformControls[`show${action.toUpperCase()}`]);
+      if (
+        pressed !== undefined &&
+        button.getAttribute('aria-pressed') !== pressed
+      )
+        button.setAttribute('aria-pressed', pressed);
     }
   }
   function update(object) {

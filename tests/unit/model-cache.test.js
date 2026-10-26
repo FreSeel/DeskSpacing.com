@@ -68,3 +68,26 @@ it('does not cache errors and releases a late completion after shutdown', async 
   await expect(late).rejects.toThrow('Could not load');
   expect(f.image.close).toHaveBeenCalledOnce();
 });
+
+it('converts imported model instances without changing cached roots or shared geometry', async () => {
+  const f = fixture();
+  const cache = createModelLoader({
+    loader: { load: f.load },
+    maxIdleBytes: 0,
+  });
+  const a = await cache.load('appleStudioPro');
+  const imported = a.object.children[0];
+  expect(imported.scale.x).toBeCloseTo(39.37007874);
+  expect(imported.children[0].position.toArray()).toEqual([3, 4, 5]);
+  expect(f.scene.children[0].scale.toArray()).toEqual([1, 1, 1]);
+  expect(imported.children[0].children[0].geometry).toBe(f.geometry);
+  a.object.position.set(10, 20, 30);
+  const b = await cache.load('appleStudioPro');
+  expect(b.object.position.toArray()).toEqual([0, 0, 0]);
+  a.release();
+  expect(f.geometry.dispose).not.toHaveBeenCalled();
+  b.release();
+  b.release();
+  expect(f.geometry.dispose).toHaveBeenCalledOnce();
+  expect(f.image.close).toHaveBeenCalledOnce();
+});

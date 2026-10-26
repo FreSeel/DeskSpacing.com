@@ -10,9 +10,23 @@ export function createFeedback(document) {
   loading.textContent = 'Loading your setup…';
   loading.hidden = true;
   document.getElementById('rightSideContainer').append(loading);
+  const empty = document.createElement('p');
+  empty.className = 'planner-empty';
+  empty.textContent =
+    'Your workspace is empty. Open Objects to add your first item.';
+  empty.hidden = true;
+  document.getElementById('rightSideContainer').append(empty);
+  let isEmpty = false;
+  let isLoading = false;
   return {
+    empty(active) {
+      isEmpty = active;
+      empty.hidden = !isEmpty || isLoading;
+    },
     loading(active) {
+      isLoading = active;
       loading.hidden = !active;
+      empty.hidden = !isEmpty || isLoading;
     },
     clear() {
       message.hidden = true;
@@ -26,6 +40,7 @@ export function createFeedback(document) {
     dispose() {
       message.remove();
       loading.remove();
+      empty.remove();
     },
   };
 }

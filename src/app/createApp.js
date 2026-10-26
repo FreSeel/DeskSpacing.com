@@ -29,11 +29,16 @@ export function createApp({ THREE, host, document }) {
     'planner:init-start',
     'planner:scene-ready',
   );
+  const feedback = createFeedback(document);
+  feedback.loading(true);
   const factory = createObjectFactory({ THREE });
   const state = createObjectStore({
     scene: view.scene,
     disposeObject: factory.dispose,
-    onChange: view.invalidateScene,
+    onChange: () => {
+      view.invalidateScene();
+      feedback.empty(state.objects.length === 0);
+    },
   });
   const selection = createSelection({
     THREE,
@@ -48,8 +53,6 @@ export function createApp({ THREE, host, document }) {
     actions,
     getLocation: () => host.location.href,
   });
-  const feedback = createFeedback(document);
-  feedback.loading(true);
   canvas.setAttribute('aria-busy', 'true');
   const shell = bindEditorShell({
     document,
@@ -83,6 +86,7 @@ export function createApp({ THREE, host, document }) {
       resetCamera: view.resetCamera,
       sharing,
       feedback,
+      shell,
     }),
   ];
   let disposed = false;
@@ -110,6 +114,7 @@ export function createApp({ THREE, host, document }) {
     })
     .finally(() => {
       if (disposed) return;
+      feedback.empty(state.objects.length === 0);
       feedback.loading(false);
       canvas.setAttribute('aria-busy', 'false');
       host.performance.mark('planner:assets-ready');

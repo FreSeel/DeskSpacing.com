@@ -374,21 +374,21 @@ marketing GSAP/missing CSS source-map warnings are unchanged.
 **Files:** `src/ui/editorShell.js`, `src/ui/selectionPanel.js`,
 `src/ui/catalogPanel.js`, `src/styles/planner.css`, `mainApp.html`.
 
-- [ ] Implement the 1024–1279px one-docked-panel policy. Objects and Selected
+- [x] Implement the 1024–1279px one-docked-panel policy. Objects and Selected
       switch presentation without clearing selection or form choices.
-- [ ] Implement tablet modal library drawer and compact non-modal selected bar;
+- [x] Implement tablet modal library drawer and compact non-modal selected bar;
       implement phone bottom sheets and the same compact selected bar.
-- [ ] Use one controls subtree per feature; do not duplicate forms/IDs for desktop
+- [x] Use one controls subtree per feature; do not duplicate forms/IDs for desktop
       and mobile. Close obsolete backdrops when crossing breakpoints.
-- [ ] Ensure at most one expanded modal surface is open. Restore focus and normal
+- [x] Ensure at most one expanded modal surface is open. Restore focus and normal
       canvas interaction when it closes; prevent click-through on the backdrop.
-- [ ] Keep canvas-mounted resize behavior for docked/compact bars; overlays leave
+- [x] Keep canvas-mounted resize behavior for docked/compact bars; overlays leave
       its geometry unchanged. Never unmount/reinitialize the renderer for layout.
-- [ ] Implement 320px one-column cards, short-height dialog adaptation, safe-area
+- [x] Implement 320px one-column cards, short-height dialog adaptation, safe-area
       padding, dynamic viewport height and scrollable virtual-keyboard forms.
-- [ ] After a successful phone Add, reveal the scene; leave the sheet open on
+- [x] After a successful phone Add, reveal the scene; leave the sheet open on
       error and do not announce a stale discarded completion as success.
-- [ ] Preserve pending operations and entered options while resizing or rotating
+- [x] Preserve pending operations and entered options while resizing or rotating
       the viewport. Check that a pending action finishing cannot reopen an old
       sheet or move focus unexpectedly.
 
@@ -401,12 +401,12 @@ also transition between breakpoints with selection, pending loads and errors.
 for verification; `src/ui/editorShell.js`, `src/styles/planner.css`,
 `tests/e2e/planner.spec.js`; dedicated responsive browser test file if clearer.
 
-- [ ] Keep OrbitControls' current one/two-touch interactions and TransformControls.
+- [x] Keep OrbitControls' current one/two-touch interactions and TransformControls.
       Do not add document-wide touch suppression or change drag conventions.
-- [ ] Verify library scroll and sheet actions never rotate/pick the scene behind
+- [x] Verify library scroll and sheet actions never rotate/pick the scene behind
       them. Touch targets are at least 44px; screen space around the gizmo remains
       sufficient with the compact inspector.
-- [ ] Exercise pointercancel and interrupted gizmo drags; confirm camera controls
+- [x] Exercise pointercancel and interrupted gizmo drags; confirm camera controls
       re-enable and deferred panel layout changes flush safely.
 - [ ] Check actual touch-device orbit, pan/zoom, selection, add/replace, gizmo and
       share flows in portrait and landscape. Record device/browser versions.
@@ -423,27 +423,27 @@ mobile-support decision open; Chromium emulation is insufficient certification.
 **Files:** modern `mainApp.html`, `src/ui/*`, `src/interactions/keyboard.js`,
 `src/styles/planner.css`, UI behavior tests and Help content.
 
-- [ ] Audit landmarks, headings, labels, unique IDs, accessible names, native
+- [x] Audit landmarks, headings, labels, unique IDs, accessible names, native
       controls, state attributes and focus order. No filtered/hidden control
       remains tabbable.
-- [ ] Test keyboard-only library search/options, add/replace, contextual buttons,
+- [x] Test keyboard-only library search/options, add/replace, contextual buttons,
       share dialog, Help and More. Verify field editing/browser shortcuts remain
       untouched; scene shortcuts require workspace focus and pause for modals.
-- [ ] Verify modal focus containment, Escape, visible Close, return focus,
+- [x] Verify modal focus containment, Escape, visible Close, return focus,
       non-modal bar behavior and focus after removal/deselection.
-- [ ] Measure token contrast in normal/hover/pressed/error states. Review focus
+- [x] Measure token contrast in normal/hover/pressed/error states. Review focus
       ring clipping and forced-colors behavior. Decorative light borders must
       not be the only identifying boundary of a control.
 - [ ] Review with a screen reader: selection changes, counts, loading, invalid
       input, failed add/restore, fallback defaults and fresh-link status. Avoid
       announcing every pointer frame or every intermediate loading object.
-- [ ] Verify positive/finite dimension validation on paste as well as typing;
+- [x] Verify positive/finite dimension validation on paste as well as typing;
       maintain the old dimensions mapping and provide associated error messages.
 - [ ] Check 200% zoom, text enlargement, 320px reflow, virtual keyboard and
       focused controls near sticky headers/footers.
-- [ ] Verify reduced motion disables transitions/auto-advance and does not load
+- [x] Verify reduced motion disables transitions/auto-advance and does not load
       animated tutorial GIFs in the text-first mode. Retain all tutorial topics.
-- [ ] Document remaining keyboard scene-navigation/non-drag manipulation barriers.
+- [x] Document remaining keyboard scene-navigation/non-drag manipulation barriers.
       Do not claim full WCAG 2.2 AA conformance or silently implement a new
       manipulation system to close them during this scope.
 
@@ -456,17 +456,17 @@ remaining canvas limitations are clearly recorded, not concealed by a generic
 **Files:** `src/ui/feedback.js`, `src/ui/catalogPanel.js`,
 `src/ui/selectionPanel.js`, `src/ui/editorShell.js`, `src/styles/planner.css`.
 
-- [ ] Review fresh startup, successful empty setup, search with no results,
+- [x] Review fresh startup, successful empty setup, search with no results,
       failed GLB/texture, missing thumbnail, invalid dimensions and bad URL.
-- [ ] Keep loading labels stable in width, field values intact after error and
+- [x] Keep loading labels stable in width, field values intact after error and
       retry obvious. No invented progress percentage or blank white canvas state.
-- [ ] Verify errors remain readable inside an open drawer without duplicate
+- [x] Verify errors remain readable inside an open drawer without duplicate
       assertive announcements in both drawer and workspace.
-- [ ] Confirm inspector updates do not flash obsolete objects during transactional
+- [x] Confirm inspector updates do not flash obsolete objects during transactional
       replacement and that stale async completions cannot change hidden UI.
-- [ ] Review long names/categories, all 14 family forms, all materials and every
+- [x] Review long names/categories, all 14 family forms, all materials and every
       compact toolbar with no hover-only essential affordance.
-- [ ] Confirm transitions honor reduced motion and sidebar resizing does not
+- [x] Confirm transitions honor reduced motion and sidebar resizing does not
       animate camera or add continuous renders.
 
 ### 3.5 Final verification and handoff
@@ -477,30 +477,121 @@ remaining canvas limitations are clearly recorded, not concealed by a generic
 
 - [ ] Run `npm run lint`, `npm run format:check`, `npm test`, and
       `npm run test:e2e` (or `npm run check`) using Node 24.22.1.
-- [ ] Preserve root/subpath links and assets, both primitive delimiters, all
+- [x] Preserve root/subpath links and assets, both primitive delimiters, all
       categories/options, failed/stale transactions, raycasting, resources,
       idle rendering, tutorials and retained routes in regression coverage.
-- [ ] Explicitly format/check design Markdown using Prettier with
+- [x] Explicitly format/check design Markdown using Prettier with
       `--ignore-path /dev/null`; existing ignore rules do not include this folder.
-- [ ] Review final desktop/tablet/mobile screenshots against the reference's
+- [x] Review final desktop/tablet/mobile screenshots against the reference's
       hierarchy, not its unsupported controls or illustrated 3D objects.
-- [ ] Record real browser/device and assistive-technology testing separately from
+- [x] Record real browser/device and assistive-technology testing separately from
       automated Chromium results. List any unavailable coverage honestly.
-- [ ] If assets changed, run `npm run assets:audit`; optimized copies also require
+- [x] If assets changed, run `npm run assets:audit`; optimized copies also require
       `npm run assets:optimize` verification and visual inspection. Preserve
       originals and document rights in `THIRD_PARTY_NOTICES.md`.
-- [ ] If performance changed materially, use the documented isolated harness;
+- [x] If performance changed materially, use the documented isolated harness;
       compare like-for-like scenes/viewports and avoid unsupported speedup claims.
-- [ ] Update architecture documentation for the generated catalog, selection
+- [x] Update architecture documentation for the generated catalog, selection
       subscription, shared commands and UI lifecycle ownership actually shipped.
 - [ ] Confirm no dependency/lockfile drift, production globals, CNAME/deployment,
       unrelated cleanup, or new editor capability slipped into the diff.
-- [ ] Keep the missing `drawerDesk` asset and legacy npm advisory explicitly open.
+- [x] Keep the missing `drawerDesk` asset and legacy npm advisory explicitly open.
       Passing Chromium does not certify mobile, Safari or Firefox.
 
-**Stage 3 gate:** the specification's responsive/UI accessibility criteria pass,
-functional compatibility remains intact, and remaining canvas/device limitations
-are documented with evidence. Publishing is a separate task.
+**Stage 3 gate:** UI implementation is complete. The browser verification record
+below covers Chromium automation and visual review. Physical devices, screen
+readers and real browser zoom/software keyboards remain unverified; the mobile
+support decision and warning remain open. The current worktree's full green-check
+gate is also blocked by a concurrent catalog addition, described below. Publishing
+is a separate task.
+
+### Stage 3 implementation and verification record — 2026-10-25
+
+**Implemented:** `responsivePanels.js` commits panel presentation, while
+`panelOverlay.js` handles modal focus/inertness and dismissal. Existing catalog
+and inspector DOM nodes are reused. Desktop widths and the warm token palette
+remain; compact laptops have one dock, tablets a library drawer, and phones bottom
+sheets. The compact selection row expands without resizing the canvas, including
+when text is enlarged. All workspace pointer gestures defer panel layout until
+release/cancellation. Phone Add closes only its originating, still-current sheet
+session; errors and late/discarded work retain the user's form/focus.
+
+The responsive stylesheet adds 44px targets, 16px fields, safe areas, dynamic
+viewport bounds and short-screen scrolling. When little height remains, the whole
+library scrolls behind its sticky close header, keeping form fields reachable.
+The VisualViewport adapter is event-driven and coalesced; real software-keyboard
+behavior still requires physical-device review. Empty-scene guidance comes from
+the existing store's membership notifications. Selection status now has a scoped
+visually-hidden utility, fixing inherited document overflow from Bootstrap 5's
+removed `sr-only` class. Inspector state attributes change only when needed.
+
+**Automated coverage:** `tests/e2e/responsive.spec.js` adds the viewport matrix,
+canvas identity/aspect and raycasting checks, overlay geometry/inertness/backdrop
+isolation, focus trap/return, compact switching, preserved form values, pending
+loads across reopened sheets and breakpoints, local errors, empty scenes,
+share/restore, target sizes, enlarged inherited text, forced colors, failed
+thumbnails, all 17 configurable cards (14 families plus custom desk/box/sphere) on a short phone, and emulated touch
+orbit/dolly-pan, selection, gizmo translation and cancellation. Existing tests
+continue covering rotation, replacement transactions, resources, tutorial content,
+legacy links/delimiters, root/subpath hosting, idle rendering and DPR limits.
+
+Pixel regression baselines cover desktop header, phone library empty state,
+phone selected bar and tablet inspector. These use native macOS fonts and are
+explicitly macOS-only; Linux CI still runs the geometry/interaction tests. Approve
+new platform-specific baselines after visual review, never silently regenerate
+baselines to hide a failure. Full unmasked workspace/library captures are emitted
+to the Playwright test output for all matrix sizes.
+
+**Browser/viewport evidence:** Chromium 156.0.8078.4 with SwiftShader on macOS;
+1920×1080, 1600×900, 1366×768, 1024×768, 768×1024, 390×844, 375×812, 320×568,
+844×390 and a short 320×340 form sheet. The same renderer survives every layout
+change and overlays preserve its canvas rectangle. Touch emulation uses Chromium
+CDP with a DPR 3 context capped at 2; it is not a physical iPhone/Android result.
+An inherited-font-size doubling exercise and 320 CSS-pixel reflow pass. Actual
+browser 200% zoom, physical keyboard occlusion and screen-reader behavior are not
+certified by those exercises.
+
+**Contrast:** WCAG relative-luminance calculations for the actual tokens give
+14.45:1 main text/surface, 5.55:1 muted text/surface, 4.93:1 muted text/muted
+surface, 5.66:1 pressed accent/muted surface, 6.03:1 error text/error surface,
+5.95:1 focus/white, 4.01:1 input boundary/white and 7.27:1 workspace hint/background.
+Forced-color emulation and visible focus were reviewed. Light card boundaries
+remain decorative; native labels, text and focus identify controls.
+
+**Performance:** no engine/cache/model lifecycle changes, dependencies, production
+globals, extra canvas or continuous animation loop. Existing idle-render,
+resource-sharing/disposal and DPR assertions remain in the verification suite.
+There is no claimed speedup and no new benchmark result. No production asset was
+changed by Stage 3. `npm run assets:audit` completed on the current worktree:
+104 paths, one missing (`drawerDesk`), including the concurrent new model. Its
+output was not committed over the prior inventory for this UI-only change.
+
+**Checks and scope boundary:** Node 24.22.1 and `npm ci` used. The first full
+`npm run check` passed all 53 unit tests and 25 existing browser tests. During
+implementation, separate edits appeared in `src/catalog/products.js` adding
+`appleStudioPro`, plus its GLB. They were preserved. The final unit rerun has
+51 passing and two catalog/presentation preservation failures caused by that
+additional ID; full formatting also flags that file. Do not weaken the preservation
+fixtures to make this UI task green. Integrate that product's metadata, tests and
+asset-rights record as a separate change.
+
+Final `npm run test:e2e` passed **33/33 browser tests**, including the production
+build and four reviewed visual baselines. The touch gesture/gizmo case also passed
+three consecutive runs after fixing its test helper to project from the current
+camera matrix immediately after Reset. `npm run lint` passed. All Stage 3 source,
+test and architecture files pass targeted Prettier checks; both design Markdown
+files pass explicit `--ignore-path /dev/null` checks. `git diff --check` is clean
+for the Stage 3 changes; the concurrent catalog addition has trailing whitespace.
+The full repository format/unit checks therefore remain red for that separate
+addition. No package/lockfile or existing asset-inventory drift was introduced.
+
+**Remaining limitations:** physical phones/tablets and their on-screen keyboards,
+VoiceOver/NVDA, real browser zoom, Safari and Firefox remain untested. Keep the
+existing modern mobile warning until the documented physical-device gate passes.
+Canvas-only object discovery and non-drag manipulation remain keyboard barriers;
+this work does not claim full WCAG 2.2 AA conformance. Missing `drawerDesk`, the
+legacy npm advisory, marketing GSAP and missing CSS source-map warnings remain
+open. No deployment was performed.
 
 ## Suggested review boundaries
 

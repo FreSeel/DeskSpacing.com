@@ -1,3 +1,4 @@
+import { Group } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { clone } from 'three/addons/utils/SkeletonUtils.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
@@ -73,7 +74,18 @@ export function createModelLoader({
         const root = await entry.promise;
         if (disposed) throw new Error('Model loader has been disposed.');
         // Preserve the historical first-root transform convention and skeletons.
-        const object = clone(root.children[0]);
+        let object = clone(root.children[0]);
+        const transform = products[product].modelTransform;
+        if (transform) {
+          // Wrap only opted-in imports so legacy first-root behavior is unchanged.
+          // Preserve the authored root orientation and shared geometry.
+          const imported = new Group();
+          imported.add(object);
+          imported.scale.setScalar(transform.scale);
+          imported.position.fromArray(transform.position);
+          object = new Group();
+          object.add(imported);
+        }
         const materials = new Map();
         object.traverse((child) => {
           if (!child.material) return;

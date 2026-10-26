@@ -24,7 +24,7 @@ describe('the preserved desktop library', () => {
       'Chairs',
       'Miscellaneous',
     ]);
-    expect(cards).toHaveLength(41);
+    expect(cards).toHaveLength(42);
     const ids = cards.flatMap((card) =>
       card.family
         ? card.select.options.flatMap((option) =>
@@ -39,8 +39,8 @@ describe('the preserved desktop library', () => {
       'TKLKeyboardYGB',
       'mediumRGBMousepad',
     ];
-    expect(ids).toHaveLength(103);
-    expect(new Set(ids).size).toBe(103);
+    expect(ids).toHaveLength(104);
+    expect(new Set(ids).size).toBe(104);
     expect(ids.sort()).toEqual(
       [
         ...Object.keys(products).filter(

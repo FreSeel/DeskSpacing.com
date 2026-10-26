@@ -668,3 +668,49 @@ test('desktop layouts retain a usable canvas and share dialog at common screen s
   expect(errors).toEqual([]);
   expect(failedAssets).toEqual([]);
 });
+
+test('Apple Pro Display XDR loads from the catalog at desk scale and survives sharing', async ({
+  page,
+}) => {
+  await page.goto('mainApp.html');
+  await ready(page);
+  await page.locator('#catalogCategory').selectOption('monitors');
+  await page
+    .getByRole('button', { name: 'Add: Apple Pro Display XDR', exact: true })
+    .click();
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        window.planner.state.objects.some(
+          (object) => object.userData.objectName === 'appleStudioPro',
+        ),
+      ),
+    )
+    .toBe(true);
+  const bounds = await page.evaluate(async () => {
+    const object = window.planner.state.objects.find(
+      (object) => object.userData.objectName === 'appleStudioPro',
+    );
+    object.updateWorldMatrix(true, true);
+    let box;
+    object.traverse((child) => {
+      if (!child.isMesh) return;
+      const bounds = child.geometry.boundingBox
+        .clone()
+        .applyMatrix4(child.matrixWorld);
+      if (box) box.union(bounds);
+      else box = bounds;
+    });
+    return { size: box.max.clone().sub(box.min).toArray(), bottom: box.min.y };
+  });
+  expect(bounds.size[0]).toBeCloseTo(28.346, 1);
+  expect(bounds.size[1]).toBeCloseTo(23.293, 1);
+  expect(bounds.bottom).toBeCloseTo(31.2, 2);
+  await page.screenshot({ path: test.info().outputPath('apple-xdr.png') });
+  const before = await snapshot(page);
+  await page.locator('#saveModalButton').click();
+  const link = await page.locator('#customLinkForm').inputValue();
+  await page.goto(link);
+  await ready(page, 7);
+  expect(await snapshot(page)).toEqual(before);
+});

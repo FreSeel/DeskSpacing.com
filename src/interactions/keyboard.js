@@ -16,7 +16,7 @@ export function bindKeyboard({ host, selection, transformControls }) {
       event.ctrlKey ||
       event.metaKey ||
       event.altKey ||
-      host.document?.querySelector('.modal.show') ||
+      host.document?.querySelector('.modal.show, [aria-modal="true"]') ||
       !event.target?.closest?.('[data-workspace-shortcuts]')
     )
       return;

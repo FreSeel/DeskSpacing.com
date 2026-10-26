@@ -1,45 +1,13 @@
+import { bindResponsivePanels } from './responsivePanels.js';
+
 export function bindEditorShell({ document, host, transformControls }) {
-  const library = document.getElementById('libraryPanel');
-  const inspector = document.getElementById('selectionPanel');
-  const canvas = document.getElementById('threeCanvas');
-  const open = document.getElementById('openLibrary');
-  let libraryOpen = true;
-  let selectionVisible = false;
-  let queued = false;
+  const panels = bindResponsivePanels({ document, host, transformControls });
   let disposed = false;
   const cleanup = [];
   const listen = (node, event, handler) => {
     node.addEventListener(event, handler);
     cleanup.push(() => node.removeEventListener(event, handler));
   };
-  function flush() {
-    queued = false;
-    if (disposed || transformControls.dragging) return;
-    if (!selectionVisible && inspector.contains(document.activeElement)) {
-      canvas.focus({ preventScroll: true });
-    } else if (!libraryOpen && library.contains(document.activeElement)) {
-      open.focus({ preventScroll: true });
-    }
-    library.hidden = !libraryOpen;
-    inspector.hidden = !selectionVisible;
-    open.setAttribute('aria-expanded', String(libraryOpen));
-  }
-  function schedule() {
-    if (!queued) {
-      queued = true;
-      host.queueMicrotask(flush);
-    }
-  }
-  listen(document.getElementById('closeLibrary'), 'click', () => {
-    libraryOpen = false;
-    schedule();
-  });
-  listen(open, 'click', () => {
-    libraryOpen = !libraryOpen;
-    schedule();
-  });
-  listen(transformControls, 'dragging-changed', schedule);
-  listen(canvas, 'pointercancel', schedule);
   const menus = [...document.querySelectorAll('.toolbar-menu')];
   for (const menu of menus) {
     listen(menu, 'toggle', () => {
@@ -67,6 +35,8 @@ export function bindEditorShell({ document, host, transformControls }) {
   });
   const returnFocus = new WeakMap();
   listen(document, 'show.bs.modal', (event) => {
+    document.querySelector('.editor-shell').inert = true;
+    document.querySelector('.skip-link').inert = true;
     const trigger = event.relatedTarget;
     const menu = trigger?.closest('.toolbar-menu');
     returnFocus.set(
@@ -78,6 +48,8 @@ export function bindEditorShell({ document, host, transformControls }) {
     });
   });
   listen(document, 'hidden.bs.modal', (event) => {
+    document.querySelector('.editor-shell').inert = false;
+    document.querySelector('.skip-link').inert = false;
     const target = returnFocus.get(event.target);
     host.queueMicrotask(() => {
       if (!disposed && target?.isConnected)
@@ -101,12 +73,10 @@ export function bindEditorShell({ document, host, transformControls }) {
   listen(tutorial, 'hidden.bs.modal', updateImages);
   listen(motion, 'change', updateImages);
   return {
-    setSelectionVisible(visible) {
-      selectionVisible = visible;
-      schedule();
-    },
+    ...panels,
     dispose() {
       disposed = true;
+      panels.dispose();
       cleanup.forEach((remove) => remove());
     },
   };

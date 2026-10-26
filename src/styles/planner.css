@@ -738,24 +738,6 @@
     padding-inline: 16px;
   }
 }
-@media (max-width: 800px) {
-  .planner-app .workspace-name {
-    display: none;
-  }
-  .planner-app .editor-header {
-    gap: 8px;
-  }
-  .planner-app .selection-panel {
-    position: absolute;
-    right: 0;
-    top: 64px;
-    bottom: 0;
-    z-index: 25;
-  }
-  .planner-app .library-panel {
-    max-width: 55vw;
-  }
-}
 @media (max-height: 650px) {
   .planner-app .library-heading {
     padding-top: 12px;

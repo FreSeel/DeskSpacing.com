@@ -483,6 +483,102 @@
       "images": []
     },
     {
+      "path": "GLTFs/monitors/16 9 monitor/apple_pro_display_xdr.glb",
+      "bytes": 19211068,
+      "triangles": 253481,
+      "roots": 1,
+      "skins": 0,
+      "extensions": [
+        "KHR_materials_emissive_strength"
+      ],
+      "images": [
+        {
+          "width": 16,
+          "height": 16,
+          "format": "png",
+          "bytes": 84
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "png",
+          "bytes": 247412
+        },
+        {
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "bytes": 433335
+        },
+        {
+          "width": 2048,
+          "height": 2048,
+          "format": "png",
+          "bytes": 900185
+        },
+        {
+          "width": 64,
+          "height": 64,
+          "format": "png",
+          "bytes": 87
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "png",
+          "bytes": 6224
+        },
+        {
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "bytes": 349324
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "png",
+          "bytes": 179576
+        },
+        {
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "bytes": 376934
+        },
+        {
+          "width": 64,
+          "height": 64,
+          "format": "png",
+          "bytes": 87
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "png",
+          "bytes": 188943
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "png",
+          "bytes": 363317
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "png",
+          "bytes": 107105
+        },
+        {
+          "width": 1024,
+          "height": 1024,
+          "format": "png",
+          "bytes": 664441
+        }
+      ]
+    },
+    {
       "path": "GLTFs/monitors/21 9 monitors no stand/21 9 monitor 2 non curved 34in no stand.glb",
       "bytes": 889412,
       "triangles": 9056,

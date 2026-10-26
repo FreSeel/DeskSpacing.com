@@ -50,6 +50,15 @@ export const categories = [
 
 export const cards = [
   {
+    id: 'appleStudioPro',
+    product: 'appleStudioPro',
+    category: 'monitors',
+    name: 'Apple Pro Display XDR',
+    thumbnail: 'Model thumbnails/16_9 monitor 3.jpg',
+    description: '32" display · Placeholder thumbnail',
+    desk: false,
+  },
+  {
     id: 'customDesk',
     product: 'customDesk',
     category: 'desks',

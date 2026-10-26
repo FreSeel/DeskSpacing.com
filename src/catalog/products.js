@@ -518,6 +518,22 @@ export const products = {
       metric: '74cm',
     },
   },
+
+  appleStudioPro: {
+    type: 'Monitor',
+    position: [0, 31.2, -57],
+    rotationY: 0,
+    modelPath: 'GLTFs/monitors/16 9 monitor/apple_pro_display_xdr.glb',
+    // This download uses meters and an origin above the bottom of its stand.
+    modelTransform: {
+      scale: 39.37007874015748,
+      position: [0, 15.17865905476196, 0],
+    },
+    dimensions: {
+      imperial: '32"',
+      metric: '81.28cm',
+    },
+  },
   flat21x9Monitor34NoStand: {
     type: 'Monitor',
     position: [0, 43.6, -59],

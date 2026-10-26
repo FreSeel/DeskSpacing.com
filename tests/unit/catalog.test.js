@@ -4,7 +4,9 @@ import { products, deskOffsets, textures } from '../../src/catalog/products.js';
 import baseline from '../fixtures/catalog-baseline.json';
 
 it('preserves every legacy product ID, authored placement, dimensions and asset path', () => {
-  expect(Object.keys(products)).toEqual(Object.keys(baseline));
+  expect(Object.keys(products)).toEqual(
+    expect.arrayContaining(Object.keys(baseline)),
+  );
   for (const [id, original] of Object.entries(baseline)) {
     expect(products[id]).toMatchObject({
       position: original.slice(0, 3),

@@ -27,3 +27,16 @@ The audit preserved existing author/template credits and did not delete original
 3D assets, textures, legacy pages or the historical vendor tree. The modernized
 fork still contains upstream analytics and contact references; these need an
 explicit ownership/privacy decision before a public fork launch.
+
+## Apple Pro Display XDR
+
+- File: `public/models/GLTFs/monitors/16 9 monitor/apple_pro_display_xdr.glb`.
+- Creator: polyman Studio (https://sketchfab.com/Polyman_3D).
+- Source: https://sketchfab.com/3d-models/apple-pro-display-xdr-7e92cfb7c84d41f886c7748be6c567da.
+- License: CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/).
+- Evidence: creator, source and license are embedded in the downloaded GLB's
+  `asset.extras` metadata; supplied by the user on 2026-10-25.
+- Credit: “Apple Pro Display XDR” by polyman Studio, licensed under CC BY 4.0.
+- Modifications: original GLB unchanged; runtime instance converts meters to
+  inches and offsets the stand to the desk surface. Catalog thumbnail temporarily
+  reuses the inherited 16:9 monitor image and does not depict this asset.

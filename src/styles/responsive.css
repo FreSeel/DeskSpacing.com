@@ -1,0 +1,374 @@
+/* Layout attributes are committed only after active workspace pointers release. */
+.planner-app .share-compact {
+  display: none;
+}
+.planner-app .panel-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgb(36 39 35 / 28%);
+}
+.planner-app .planner-empty {
+  position: absolute;
+  top: 90px;
+  left: 20px;
+  right: 20px;
+  max-width: 360px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  pointer-events: none;
+}
+.planner-app .product-actions button {
+  min-width: 76px;
+}
+.planner-app .selection-heading > div {
+  min-width: 0;
+}
+.planner-app #selectionTitle {
+  overflow-wrap: anywhere;
+}
+.planner-app .catalog-scroll,
+.planner-app .selection-panel,
+.planner-app .modal-body {
+  overscroll-behavior: contain;
+  scroll-padding-block: 12px;
+}
+.planner-app .modal-dialog {
+  width: calc(100% - 32px);
+  margin-block: 24px;
+}
+.planner-app .modal-content {
+  max-height: calc(100dvh - 48px);
+}
+.planner-app .modal-body {
+  min-height: 0;
+  max-height: none;
+  overflow-wrap: anywhere;
+}
+.planner-app .modal-header,
+.planner-app .modal-footer {
+  flex-shrink: 0;
+}
+.planner-app [data-layout='compact'] {
+  --library-width: 304px;
+  --inspector-width: 304px;
+  grid-template-rows: 56px minmax(0, 1fr);
+}
+.planner-app :is([data-layout='tablet'], [data-layout='phone']) {
+  grid-template-rows:
+    minmax(calc(56px + env(safe-area-inset-top)), max-content)
+    minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
+}
+.planner-app :is([data-layout='tablet'], [data-layout='phone']) .editor-header {
+  padding-top: env(safe-area-inset-top);
+}
+.planner-app :is([data-layout='tablet'], [data-layout='phone']) .editor-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
+}
+.planner-app
+  :is([data-layout='tablet'], [data-layout='phone'])[data-has-selection='true']
+  .editor-body {
+  grid-template-rows: minmax(0, 1fr) minmax(
+      calc(56px + env(safe-area-inset-bottom)),
+      max-content
+    );
+}
+.planner-app
+  :is([data-layout='tablet'], [data-layout='phone'])
+  #rightSideContainer {
+  grid-row: 1;
+  min-width: 0;
+  width: 100%;
+}
+.planner-app
+  :is([data-layout='tablet'], [data-layout='phone'])
+  .workspace-name {
+  display: none;
+}
+.planner-app
+  :is([data-layout='tablet'], [data-layout='phone'])
+  .workspace-tools {
+  bottom: max(12px, env(safe-area-inset-bottom));
+  left: 12px;
+  right: 12px;
+  gap: 8px;
+}
+.planner-app
+  :is([data-layout='tablet'], [data-layout='phone'])
+  .selection-panel {
+  grid-row: 2;
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  padding: 5px 12px calc(6px + env(safe-area-inset-bottom));
+  overflow: hidden;
+}
+.planner-app
+  :is([data-layout='tablet'], [data-layout='phone'])
+  .selection-panel:not(.panel-expanded)
+  > :not(.selection-heading) {
+  display: none;
+}
+.planner-app
+  :is([data-layout='tablet'], [data-layout='phone'])
+  .selection-panel:not(.panel-expanded)
+  .eyebrow {
+  display: none;
+}
+.planner-app
+  :is([data-layout='tablet'], [data-layout='phone'])
+  .selection-panel:not(.panel-expanded)
+  #selectionTitle {
+  font-size: 14px;
+  line-height: 1.25;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.planner-app
+  :is([data-layout='tablet'], [data-layout='phone'])
+  .selection-heading {
+  gap: 8px;
+}
+.planner-app
+  :is([data-layout='tablet'], [data-layout='phone'])
+  .selection-heading
+  > div {
+  flex: 1;
+}
+.planner-app :is([data-layout='tablet'], [data-layout='phone']) .library-panel,
+.planner-app
+  :is([data-layout='tablet'], [data-layout='phone'])
+  .panel-expanded {
+  position: fixed;
+  z-index: 50;
+  bottom: var(--visual-bottom, 0px);
+  max-height: calc(var(--visual-height, 100dvh) - env(safe-area-inset-top));
+  overscroll-behavior: contain;
+}
+.planner-app [data-layout='tablet'] .library-panel {
+  left: env(safe-area-inset-left);
+  width: 320px;
+  height: var(--visual-height, 100dvh);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.planner-app [data-layout='phone'] .library-panel,
+.planner-app
+  :is([data-layout='tablet'], [data-layout='phone'])
+  .panel-expanded {
+  left: env(safe-area-inset-left);
+  right: env(safe-area-inset-right);
+  width: auto;
+  height: min(80dvh, var(--visual-height, 100dvh));
+  border: 1px solid var(--color-border);
+  border-bottom: 0;
+  border-radius: 16px 16px 0 0;
+  box-shadow: var(--shadow-dialog);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.planner-app
+  :is([data-layout='tablet'], [data-layout='phone'])
+  .panel-expanded {
+  overflow-y: auto;
+  padding: 0 20px calc(20px + env(safe-area-inset-bottom));
+}
+.planner-app
+  :is([data-layout='tablet'], [data-layout='phone'])
+  .panel-expanded
+  .selection-heading {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--color-surface);
+  padding-block: 12px;
+}
+.planner-app
+  :is([data-layout='tablet'], [data-layout='phone'])
+  #selectionPreview {
+  max-width: 240px;
+}
+@media (max-width: 1279px), (pointer: coarse) {
+  .planner-app button,
+  .planner-app .product-actions button,
+  .planner-app .product-actions .replace-action,
+  .planner-app .options-toggle,
+  .planner-app #catalogSearch,
+  .planner-app summary,
+  .planner-app input:not([type='checkbox']),
+  .planner-app select,
+  .planner-app .menu-popover a,
+  .planner-app .editor-brand {
+    min-height: 44px;
+  }
+  .planner-app .icon-button {
+    width: 44px;
+    flex-basis: 44px;
+  }
+  .planner-app input:not([type='checkbox']),
+  .planner-app select {
+    font-size: 16px;
+  }
+  .planner-app .checkbox-label {
+    min-height: 44px;
+  }
+}
+@media (max-width: 767px) {
+  .planner-app .editor-header {
+    padding-inline: max(8px, env(safe-area-inset-left))
+      max(8px, env(safe-area-inset-right));
+    gap: 4px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .planner-app .toolbar-menu {
+    position: static;
+  }
+  .planner-app .editor-brand {
+    font-size: 17px;
+    letter-spacing: -0.5px;
+    min-width: 0;
+  }
+  .planner-app .brand-mark,
+  .planner-app .share-label,
+  .planner-app #saveModalButton svg,
+  .planner-app .toolbar-menu summary > span {
+    display: none;
+  }
+  .planner-app .share-compact {
+    display: inline;
+  }
+  .planner-app .header-actions {
+    gap: 2px;
+  }
+  .planner-app .toolbar-menu summary,
+  .planner-app #saveModalButton {
+    padding-inline: 8px;
+    margin-left: 0;
+  }
+  .planner-app .menu-popover {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-height: calc(100dvh - 100% - 16px);
+    overflow-y: auto;
+  }
+  .planner-app .workspace-heading {
+    top: 16px;
+    left: 16px;
+  }
+  .planner-app .modal-dialog {
+    width: calc(100% - 16px);
+    margin-block: max(8px, env(safe-area-inset-top));
+  }
+  .planner-app .modal-content {
+    max-height: calc(
+      100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom)
+    );
+  }
+  .planner-app .modal-header,
+  .planner-app .modal-footer,
+  .planner-app .modal-body {
+    padding: 16px;
+  }
+  .planner-app .shortcut-list {
+    grid-template-columns: minmax(90px, 1fr) 1.4fr;
+  }
+}
+@media (max-width: 359px) {
+  .planner-app .catalog-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .planner-app .catalog-grid > li {
+    grid-column: 1;
+  }
+}
+@media (max-height: 500px) {
+  .planner-app
+    :is([data-layout='tablet'], [data-layout='phone'])
+    .library-panel,
+  .planner-app
+    :is([data-layout='tablet'], [data-layout='phone'])
+    .panel-expanded {
+    height: var(--visual-height, 100dvh);
+    border-radius: 0;
+  }
+  .planner-app .library-filters {
+    padding-block: 8px;
+  }
+  .planner-app .library-filters label,
+  .planner-app #catalogCount {
+    margin-block: 2px;
+  }
+  .planner-app .library-heading .eyebrow {
+    display: none;
+  }
+  .planner-app .modal-dialog {
+    margin-block: 8px;
+  }
+  .planner-app .modal-content {
+    max-height: calc(100dvh - 16px);
+  }
+}
+@media (forced-colors: active) {
+  .planner-app button,
+  .planner-app summary,
+  .planner-app .thumbnail-well {
+    border: 1px solid ButtonText;
+  }
+  .planner-app button[aria-pressed='true'] {
+    outline: 2px solid Highlight;
+  }
+  .planner-app .panel-backdrop {
+    background: Canvas;
+    opacity: 0.75;
+  }
+}
+/* Bootstrap 5 no longer provides the retained .sr-only utility. */
+.planner-app .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* When a software keyboard leaves little height, scroll the whole library,
+   retaining its close control, rather than collapsing the form's scrollport. */
+.planner-app
+  :is([data-layout='tablet'], [data-layout='phone'])[data-short-viewport='true']
+  .library-panel {
+  display: block;
+  overflow-y: auto;
+  scroll-padding-top: 80px;
+}
+.planner-app
+  :is([data-layout='tablet'], [data-layout='phone'])[data-short-viewport='true']
+  .library-heading {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--color-surface);
+}
+.planner-app
+  :is([data-layout='tablet'], [data-layout='phone'])[data-short-viewport='true']
+  .catalog-scroll {
+  overflow: visible;
+}
+.planner-app
+  :is([data-layout='tablet'], [data-layout='phone'])[data-short-viewport='true']
+  .library-footer {
+  display: none;
+}

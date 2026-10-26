@@ -12,6 +12,7 @@ export function bindPlannerUI({
   resetCamera,
   sharing,
   feedback,
+  shell,
 }) {
   const cleanup = [];
   const pending = new Set();
@@ -52,6 +53,7 @@ export function bindPlannerUI({
         }
       }
       const label = button.textContent;
+      const token = shell.beginCatalogAction();
       pending.add(button.dataset.cardId);
       updateButtons();
       card.setAttribute('aria-busy', 'true');
@@ -59,7 +61,8 @@ export function bindPlannerUI({
       feedback.clear();
       try {
         const { product, options } = readProductChoice(button, document);
-        await actions.add(product, options);
+        const object = await actions.add(product, options);
+        if (object && !disposed) shell.finishCatalogAction(token);
         // A null result is a discarded stale operation, never a success toast.
       } catch (error) {
         if (disposed) return;

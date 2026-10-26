@@ -51,8 +51,10 @@ New desktop presentation modules:
 - `src/ui/catalogRenderer.js`: creates the library's 41 stable card/form subtrees;
   retains the action datasets and form IDs consumed by `catalogPanel`.
 - `src/ui/dom.js`: safe text/element construction and thumbnail fallbacks.
-- `src/ui/editorShell.js`: panel visibility, deferred layout during gizmo drags,
+- `src/ui/editorShell.js`: responsive-panel composition, disclosures and dialogs;
   menu/dialog focus return and text-first reduced-motion tutorial handling.
+- `src/ui/responsivePanels.js`: adaptive panel layout and safe async completion.
+- `src/ui/panelOverlay.js`: modal sheet focus, inertness and dismissal.
 - `src/ui/selectionPanel.js`: derives identity, preview and capabilities from the
   actual selected root, and binds existing remove/deselect/transform commands.
 - `src/interactions/commands.js`: shared mode, axis and size operations, reading
@@ -173,7 +175,7 @@ Display dimensions are descriptive legacy strings, not a source for geometry.
 Some strings are known to be inconsistent; this extraction does not reinterpret
 or correct model measurements.
 
-## Desktop UI state and canvas integration
+## Responsive UI state and canvas integration
 
 `selection.subscribe(listener)` immediately supplies the current root and returns
 cleanup. Changed pick/deselect/delete paths notify it; there is no polling or
@@ -214,8 +216,48 @@ remain available without GIFs. Share / Save always generates a fresh URL snapsho
 Future UI work should extend these adapters and scoped tokens. Keep creation
 choices in presentation metadata, mutations in actions and membership in the store.
 Do not add editable object properties before their application behavior exists.
-Stage 3 still owns compact panel switching, mobile sheets, physical touch and
-assistive-technology verification; desktop tests are not mobile certification.
+`src/ui/responsivePanels.js` owns presentation only: breakpoint, visible panel,
+expanded sheet, active pointers and a panel-session counter. At 1024–1279px one
+304px dock switches between Objects and Selected. A canvas pick opens Selected;
+adding from the library keeps Objects available. Below 1024px a separate 56px
+selection row leaves the canvas unobscured. Controls expands the same inspector
+into a modal sheet; Done collapses without deselecting. Tablet Objects uses a
+320px drawer; below 768px it becomes a bottom sheet, normally at most 80dvh.
+At 320px cards use one column. Short screens can use full-height sheets.
+
+`src/ui/panelOverlay.js` owns dialog semantics, focus containment, Escape,
+background inertness and return focus. The backdrop blocks clicks only while a
+modal sheet is open. The compact selection row is non-modal. Bootstrap retains
+its own focus trap for Help/Share dialogs; the shell makes their background inert.
+Crossing breakpoints closes obsolete modal surfaces and preserves the actual form
+nodes and selection. Layout commits wait for both TransformControls dragging and
+active canvas pointers, including cancellation/lost capture. Drawer/sheet opening
+itself does not resize the canvas; the dock and compact row do.
+
+A successful phone catalog operation closes only the same sheet session that
+started it. Failed or null/stale operations keep their forms. Closing/reopening or
+crossing a breakpoint invalidates that UI session, so late completions do not
+steal focus. This supplements, without replacing, action-generation guards.
+
+`src/styles/responsive.css` extends the existing warm tokens, with 44px compact
+and coarse-pointer controls, 16px form fields, safe-area padding, dynamic viewport
+height, contained scrolling and forced-color boundaries. VisualViewport events
+coalesce into a single animation frame to keep focused sheet fields above a
+software keyboard; no idle polling is added. `createFeedback` derives empty-scene
+guidance from store membership notifications, gated by startup loading. It does
+not introduce scene state. Inspector mode/axis attributes update only when their
+value changes, not on every transform event.
+
+Accessibility conventions: use native buttons and labeled inputs; preserve live
+count/selection announcements and associated card errors; provide a visible close
+control for every modal surface. Scene shortcuts require workspace/inspector
+focus and pause for fields and modal sheets. Reduced motion keeps all tutorial
+text while suppressing GIF loading. Extend these patterns for future features,
+using actions for edits and existing component subtrees across breakpoints.
+Physical touch devices, software keyboards, screen readers, Safari and Firefox
+still need dedicated verification. Canvas object discovery and non-drag movement
+remain keyboard-accessibility limitations; this is not a WCAG conformance claim.
+The existing mobile warning remains pending the physical-device support decision.
 
 ## Saving and sharing
 
