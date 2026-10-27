@@ -16,6 +16,9 @@ import { renderCatalog } from '../ui/catalogRenderer.js';
 import { bindEditorShell } from '../ui/editorShell.js';
 import { bindSelectionPanel } from '../ui/selectionPanel.js';
 import { bindWorkspaceTheme } from '../theme/workspaceTheme.js';
+import { createSnappingPreference } from '../snapping/preference.js';
+import { bindSnapping } from '../interactions/snapping.js';
+import { bindSnappingUI } from '../ui/snappingUI.js';
 
 export function createApp({ THREE, host, document }) {
   host.performance.mark('planner:init-start');
@@ -53,7 +56,19 @@ export function createApp({ THREE, host, document }) {
     getObjects: () => state.objects,
     removeObject: (object) => state.remove(object),
   });
-  const actions = createActions({ state, selection, factory });
+  const actions = createActions({
+    state,
+    selection,
+    factory,
+    invalidateScene: view.invalidateScene,
+  });
+  const snapping = createSnappingPreference(host);
+  const snappingUI = bindSnappingUI({
+    document,
+    measurements,
+    snapping,
+    transforms: actions.transforms,
+  });
   const sharing = createSharing({
     state,
     actions,
@@ -66,6 +81,18 @@ export function createApp({ THREE, host, document }) {
     transformControls: view.transformControls,
   });
   const cleanup = [
+    bindSnapping({
+      host,
+      canvas,
+      view,
+      state,
+      snapping,
+      transforms: actions.transforms,
+      onGuidance: snappingUI.guidance,
+    }),
+    () => snappingUI.dispose(),
+    () => snapping.dispose(),
+    () => actions.transforms.dispose(),
     bindDimensionAnnotations({
       document,
       view,
@@ -95,6 +122,7 @@ export function createApp({ THREE, host, document }) {
       host,
       selection,
       transformControls: view.transformControls,
+      transforms: actions.transforms,
     }),
     bindPlannerUI({
       document,

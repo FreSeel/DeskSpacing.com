@@ -8,19 +8,33 @@ export function isEditable(target) {
   );
 }
 
-export function bindKeyboard({ host, selection, transformControls }) {
+export function bindKeyboard({
+  host,
+  selection,
+  transformControls,
+  transforms,
+}) {
   const command = createTransformCommands(transformControls);
   function onKeyDown(event) {
     if (
       isEditable(event.target) ||
-      event.ctrlKey ||
-      event.metaKey ||
       event.altKey ||
       host.document?.querySelector('.modal.show, [aria-modal="true"]') ||
       !event.target?.closest?.('[data-workspace-shortcuts]')
     )
       return;
     const key = event.key.toLowerCase();
+    if (event.ctrlKey || event.metaKey) {
+      if (transforms && key === 'z') {
+        if (!transformControls.dragging)
+          transforms[event.shiftKey ? 'redo' : 'undo']();
+        event.preventDefault();
+      }
+      return;
+    }
+    // Changing axes/mode or deleting an object mid-gesture invalidates the
+    // control's captured pointer offset and the single history transaction.
+    if (transformControls.dragging) return;
     if (['backspace', 'delete', 'd'].includes(key)) selection.deletePicked();
     else if (key === 'c') selection.unselectPickedObject();
     else if (key === 'r') command('toggle-mode');

@@ -376,7 +376,14 @@
   display: none;
 }
 
-/* Keep the unit selector in the existing single-row toolbar on narrow phones. */
+/* Give the growing toolbar its own row on phones; keep every control reachable. */
+@media (max-width: 540px) {
+  .planner-app .header-actions {
+    flex-basis: 100%;
+    justify-content: space-between;
+  }
+}
+
 @media (max-width: 374px) {
   .planner-app .editor-brand {
     font-size: 15px;

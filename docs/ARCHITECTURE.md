@@ -431,8 +431,8 @@ copy and search-match measurements use the same formatter.
 
 The existing add/replace actions perform edits; live transforms remain authoritative.
 Unit changes do not touch geometry, materials, camera, selection, scene membership,
-or serialization. There is currently no application undo/redo history or direct
-inspector dimension editor. Viewer annotations derive measurements from live
+or serialization. Transform gestures have undo/redo history (see below); there is
+no direct inspector dimension editor. Viewer annotations derive measurements from live
 geometry/transforms and use the shared formatter and preference. Authored catalog descriptions remain approximate
 product copy (including known historical inaccuracies), not measured mesh bounds.
 Retained historical planners are unchanged.
@@ -502,3 +502,70 @@ build). Coverage includes actual primitive and imported geometry scale,
 rotation/movement/resizing, unit changes, pointer picking/orbit, locked desks,
 deletion/reload, disposal and settled idle rendering. Screenshots are captured
 for visual inspection, not treated as cross-platform pixel baselines.
+
+## Grid snapping and transform history
+
+`src/snapping/resolveSnapping.js` is the DOM/Three.js-free strategy boundary.
+It accepts an object, proposed world position/quaternion/scale, nearby objects,
+configuration, camera/view context, placement axes/surface context, mode, bypass
+state and optional gesture context. Strategies return a resolved transform and
+optional guidance. Grid is the only implemented strategy; future magnetic or
+surface strategies can use this same entrypoint without another drag pipeline.
+No unfinished settings are exposed.
+
+`src/interactions/snapping.js` listens to the existing TransformControls
+`mouseDown`, `objectChange` and `mouseUp` events. Three.js continues to own pointer
+projection, drag offset, axis constraints and the unsnapped proposal from the
+original pointer-down transform. The adapter resolves that proposal in world
+space and applies its position through `actions.transforms.moveWorldPosition`.
+There is no parallel scene state or use of TransformControls' built-in rounding.
+The current controls use world axes; local-axis handles would need an explicit
+constraint policy before being exposed. The grid aligns authored root origins,
+not geometry bounds, which is relevant to future edge/surface alignment.
+
+Snapping defaults to off, with one-inch spacing. It snaps only the translated
+axes; untouched height, rotation, dimensions, authored mesh origins and geometry
+remain unchanged. A press or less than half a cell of initial movement retains
+the starting position on each axis. Once acquired, integer grid indices and a
+5%-of-cell midpoint hysteresis band prevent tremor from alternating adjacent
+cells. Raw proposals always come from Three.js, so corrections do not accumulate.
+Alt/Option bypasses resolution while held. Preference or modifier changes do not
+move objects on their own; the next pointer movement uses the new setting.
+
+`src/snapping/configuration.js` and `preference.js` keep physical spacing in inches
+under `deskspacing.snapping`, with in-memory fallback and cross-tab storage
+synchronization. Valid spacing is 1 mm through 100 inches. `src/ui/snappingUI.js`
+uses the shared CM/IN preference to display/edit spacing, never feeding a rounded
+display value back on a unit switch or unchanged focus/blur. The native Snap
+toolbar disclosure contains a checkbox and numeric field; its label and theme
+colors show the enabled state. A temporary workspace badge shows snapping/bypass
+without scene objects, dimension annotations or GPU allocations.
+
+The planner previously had no undo stack. `src/state/transformActions.js` adds a
+bounded, session-only history of 100 completed move/rotation gestures. Empty
+clicks add nothing and intermediate pointer updates never create entries.
+Undo/redo restores exact position, Euler rotation/order and scale snapshots,
+invalidates the scene and never re-snaps. More-menu buttons and workspace-scoped
+Ctrl/Cmd+Z and Ctrl/Cmd+Shift+Z provide access; fields and dialogs retain native
+shortcuts. Adds, removals, replacements, desk shifts and resets clear this
+transform-only history via store subscriptions. An in-flight gesture ends if
+membership changes invalidate its origin/candidates. Failed asynchronous loads
+preserve current history. Pointer cancellation/blur completes the current gesture
+and restores camera input. Deletion/creation undo and history persistence are
+outside this foundation. Share links still serialize final live transforms in
+the unchanged legacy format; preferences are separate from projects.
+
+Focused verification (Node 24.22.1, `npm ci`, Chromium installed):
+
+```sh
+npx vitest run tests/unit/snapping.test.js tests/unit/transform-snapping.test.js tests/unit/state-actions.test.js tests/unit/measurements.test.js
+npx playwright test --config playwright.snapping.config.js
+```
+
+The browser configuration uses Vite source serving at port 4173 and the project
+subpath, without a production build. Tests exercise native gizmo drags at two
+camera angles, signed grid positions, bypass, free movement, exact undo/redo and
+sharing, units/persistence, blocked storage, dimensions, cancellation, idle
+rendering and toolbar layouts. This does not certify mobile hardware, Safari or
+Firefox. The existing missing `drawerDesk` asset and legacy npm advisory remain
+open.

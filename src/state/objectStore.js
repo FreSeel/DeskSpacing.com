@@ -8,7 +8,16 @@ export function createObjectStore({
   const objects = [];
   let generation = 0;
   let deskOffset = 0;
+  const listeners = new Set();
+  const changed = () => {
+    onChange();
+    listeners.forEach((update) => update());
+  };
   return {
+    subscribe(update) {
+      listeners.add(update);
+      return () => listeners.delete(update);
+    },
     get objects() {
       return [...objects];
     },
@@ -20,6 +29,7 @@ export function createObjectStore({
     },
     set deskOffset(value) {
       deskOffset = value;
+      changed();
     },
     invalidate() {
       return ++generation;
@@ -41,7 +51,7 @@ export function createObjectStore({
       object.rotation.set(...record.rotation);
       objects.push(object);
       scene.add(object);
-      onChange();
+      changed();
       return object;
     },
     remove(object) {
@@ -50,13 +60,14 @@ export function createObjectStore({
       objects.splice(index, 1);
       scene.remove(object);
       disposeObject(object);
-      onChange();
+      changed();
       return true;
     },
     clear() {
       generation++;
       for (const object of [...objects]) this.remove(object);
       deskOffset = 0;
+      changed();
     },
   };
 }

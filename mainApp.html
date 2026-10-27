@@ -26,6 +26,18 @@
                     <label><input type="radio" name="measurementUnit" value="cm" aria-label="Centimeters"><span aria-hidden="true">CM</span></label>
                     <label><input type="radio" name="measurementUnit" value="in" aria-label="Inches" checked><span aria-hidden="true">IN</span></label>
                 </div>
+                <details class="toolbar-menu" id="snapMenu" data-enabled="false">
+                    <summary>Snap off</summary>
+                    <div class="menu-popover">
+                        <div class="snap-setting">
+                            <label class="checkbox-label"><input id="snapEnabled" type="checkbox"> Enable grid snapping</label>
+                            <label for="snapSpacing">Grid spacing (in)</label>
+                            <input id="snapSpacing" type="number" step="any" value="1" aria-describedby="snapSpacingHint snapSpacingError">
+                            <div id="snapSpacingError" class="card-error" role="alert" hidden></div>
+                        </div>
+                        <p id="snapSpacingHint">Snaps the object origin along the axes you move. Hold Alt / Option while dragging for free placement.</p>
+                    </div>
+                </details>
                 <details class="toolbar-menu" id="helpMenu">
                     <summary>Help <span aria-hidden="true">⌄</span></summary>
                     <div class="menu-popover">
@@ -37,6 +49,8 @@
                 <details class="toolbar-menu" id="moreMenu">
                     <summary>More <span aria-hidden="true">⌄</span></summary>
                     <div class="menu-popover">
+                        <button id="undoTransform" disabled>Undo move / rotation</button>
+                        <button id="redoTransform" disabled>Redo move / rotation</button>
                     <div class="theme-setting">
                         <label for="themePreference">Appearance</label>
                         <select id="themePreference" data-theme-select aria-describedby="themeStatus"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select>
@@ -75,6 +89,7 @@
             <section id="rightSideContainer" aria-label="3D workspace" data-workspace-shortcuts>
                 <canvas id="threeCanvas" tabindex="0" aria-label="Desk setup 3D workspace" aria-describedby="workspaceHints">Your browser needs WebGL to display this desk setup.</canvas>
                 <div class="workspace-heading"><p class="eyebrow">Workspace</p><p>Desk setup</p></div>
+                <div id="snapStatus" class="snap-status" hidden></div>
                 <button id="dimensionToggle" type="button" aria-pressed="true" aria-controls="dimensionAnnotations" title="Hide dimensions"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 7h18v10H3zM7 7v5m5-5v3m5-3v5"/></svg><span>Dimensions</span></button>
                 <div class="workspace-tools">
                     <button id="openLibrary" aria-controls="libraryPanel" aria-expanded="true">Objects</button>
@@ -115,7 +130,7 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document"><div class="modal-content">
             <div class="modal-header"><h2 class="modal-title" id="exampleModalLabel">Controls / Keybinds</h2><button class="icon-button" data-bs-dismiss="modal" aria-label="Close">×</button></div>
-            <div class="modal-body"><h3>Camera</h3><dl class="shortcut-list"><dt>Left drag</dt><dd>Orbit the scene</dd><dt>Shift + left drag</dt><dd>Pan the camera</dd><dt>Scroll wheel</dt><dd>Zoom in or out</dd></dl><p>Touch: drag with one finger to orbit. Use two fingers to pan, or pinch to zoom.</p><h3>Selected object</h3><p>Click the workspace or focus the selected-object controls to use shortcuts. Shortcuts pause while editing fields or viewing dialogs.</p><dl class="shortcut-list"><dt><kbd>R</kbd></dt><dd>Switch Move / Rotate</dd><dt><kbd>X</kbd> <kbd>Y</kbd> <kbd>Z</kbd></dt><dd>Toggle the corresponding axis</dd><dt><kbd>+</kbd> / <kbd>−</kbd></dt><dd>Change handle size</dd><dt><kbd>C</kbd></dt><dd>Deselect the object</dd><dt>Delete / Backspace / <kbd>D</kbd></dt><dd>Remove the selected object</dd></dl></div>
+            <div class="modal-body"><h3>Camera</h3><dl class="shortcut-list"><dt>Left drag</dt><dd>Orbit the scene</dd><dt>Shift + left drag</dt><dd>Pan the camera</dd><dt>Scroll wheel</dt><dd>Zoom in or out</dd></dl><p>Touch: drag with one finger to orbit. Use two fingers to pan, or pinch to zoom.</p><h3>Selected object</h3><p>Click the workspace or focus the selected-object controls to use shortcuts. Shortcuts pause while editing fields or viewing dialogs.</p><dl class="shortcut-list"><dt>Alt / Option + drag</dt><dd>Temporarily bypass grid snapping</dd><dt>Ctrl / ⌘ + Z</dt><dd>Undo the last move or rotation</dd><dt>Ctrl / ⌘ + Shift + Z</dt><dd>Redo the last move or rotation</dd><dt><kbd>R</kbd></dt><dd>Switch Move / Rotate</dd><dt><kbd>X</kbd> <kbd>Y</kbd> <kbd>Z</kbd></dt><dd>Toggle the corresponding axis</dd><dt><kbd>+</kbd> / <kbd>−</kbd></dt><dd>Change handle size</dd><dt><kbd>C</kbd></dt><dd>Deselect the object</dd><dt>Delete / Backspace / <kbd>D</kbd></dt><dd>Remove the selected object</dd></dl></div>
             <div class="modal-footer"><button data-bs-dismiss="modal">Close</button></div>
         </div></div>
     </div>

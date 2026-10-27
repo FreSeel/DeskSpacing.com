@@ -1,8 +1,15 @@
 import { createRecord, defaults, isDesk } from '../catalog/configuration.js';
 import { deskOffsets } from '../catalog/products.js';
 import { validateRecords } from '../sharing/legacyCodec.js';
+import { createTransformActions } from './transformActions.js';
 
-export function createActions({ state, selection, factory }) {
+export function createActions({
+  state,
+  selection,
+  factory,
+  invalidateScene = () => {},
+}) {
+  const transforms = createTransformActions({ state, invalidateScene });
   function remove(object) {
     if (selection.pickedObject === object) selection.unselectPickedObject();
     state.remove(object);
@@ -89,5 +96,5 @@ export function createActions({ state, selection, factory }) {
     const failed = results.find((result) => result.status === 'rejected');
     if (failed) throw failed.reason;
   }
-  return { add, remove, reset, restore, initialize };
+  return { add, remove, reset, restore, initialize, transforms };
 }
