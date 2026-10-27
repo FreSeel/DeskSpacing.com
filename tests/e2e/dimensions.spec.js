@@ -75,6 +75,82 @@ async function chooseUnit(page, unit) {
     .click();
 }
 
+test('complete cm-to-inch edit flow preserves untouched precision through save, reload and duplicate creation', async ({
+  page,
+}) => {
+  await start(page);
+  await chooseUnit(page, 'cm');
+  await page.locator('#catalogCategory').selectOption('shapes');
+  await page.locator('[data-options="referenceBox"]').click();
+  for (const [axis, value] of [
+    ['L', '30'],
+    ['W', '20'],
+    ['H', '10'],
+  ])
+    await page.locator(`#referenceBox${axis}`).fill(value);
+  await page
+    .locator('[data-product="referenceBox"]:not([data-replace])')
+    .click();
+  await frameSelection(page);
+  await labels(page, [30, 20, 10]);
+  await chooseUnit(page, 'in');
+  await labels(page, [11.81, 7.87, 3.94], 'in');
+  await expect(page.locator('#referenceBoxW')).toHaveValue('7.87');
+  await page.locator('#referenceBoxL').fill('12');
+  await page.locator('[data-product="referenceBox"][data-replace]').click();
+  await labels(page, [12, 7.87, 3.94], 'in');
+  await chooseUnit(page, 'cm');
+  await labels(page, [30.48, 20, 10]);
+  await expect(page.locator('#referenceBoxL')).toHaveValue('30.48');
+  await expect(page.locator('#referenceBoxW')).toHaveValue('20');
+  await expect(page.locator('#referenceBoxH')).toHaveValue('10');
+  for (let i = 0; i < 5; i++) {
+    await chooseUnit(page, 'in');
+    await chooseUnit(page, 'cm');
+  }
+  await page
+    .locator('[data-product="referenceBox"]:not([data-replace])')
+    .click();
+  await expect
+    .poll(() =>
+      page.evaluate(
+        async () =>
+          (await import(new URL('./src/main.js', window.location.href))).app
+            .state.objects.length,
+      ),
+    )
+    .toBe(2);
+  await page.locator('#saveModalButton').click();
+  const link = await page.locator('#customLinkForm').inputValue();
+  const saved = await page.evaluate(async () =>
+    (
+      await import(new URL('./src/main.js', window.location.href))
+    ).app.sharing.snapshot(),
+  );
+  expect(saved.map((record) => record.dimensions)).toEqual([
+    [12, 20 / 2.54, 10 / 2.54],
+    [12, 20 / 2.54, 10 / 2.54],
+  ]);
+  await start(page, link);
+  await expect(page.getByRole('radio', { name: 'Centimeters' })).toBeChecked();
+  expect(
+    await page.evaluate(async () =>
+      (
+        await import(new URL('./src/main.js', window.location.href))
+      ).app.sharing.snapshot(),
+    ),
+  ).toEqual(saved);
+  await page.evaluate(async () => {
+    const { app } = await import(
+      new URL('./src/main.js', window.location.href)
+    );
+    app.selection.pick(app.state.objects[1]);
+    app.actions.remove(app.state.objects[0]);
+  });
+  await frameSelection(page);
+  await labels(page, [30.48, 20, 10]);
+});
+
 test('Dimensions toggle hides lines and labels across selection and unit changes, with keyboard support', async ({
   page,
 }, testInfo) => {

@@ -77,7 +77,7 @@ export function bindCatalogDiscovery({
     for (const [index, item] of items.entries()) {
       const card = cards[index];
       const variants = (card.select?.options || []).filter((option) =>
-        `${option.label} ${card.id}${option.value}${card.stand ? 'NoStand no stand' : ''}`
+        `${option.label} ${formatMeasurementText(option.label, measurements.unit)} ${card.id}${option.value}${card.stand ? 'NoStand no stand' : ''}`
           .toLowerCase()
           .includes(query),
       );

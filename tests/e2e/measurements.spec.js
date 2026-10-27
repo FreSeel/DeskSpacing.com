@@ -34,6 +34,31 @@ async function options(page, id, category) {
     await button.click();
 }
 
+test('catalog search finds the displayed size in the active unit without changing product IDs', async ({
+  page,
+}) => {
+  await start(page);
+  await page
+    .locator('#measurementUnit')
+    .getByText('CM', { exact: true })
+    .click();
+  await page.locator('#catalogCategory').selectOption('monitors');
+  await page.locator('#catalogSearch').fill('80.01 cm');
+  await expect(page.locator('[data-card="small16x9Monitor"]')).toBeVisible();
+  await page.locator('[data-options="small16x9Monitor"]').click();
+  await page.locator('#small16x9MonitorForm').selectOption('31');
+  await expect(page.locator('#small16x9MonitorForm option:checked')).toHaveText(
+    '80.01 cm',
+  );
+  await page.locator('#catalogSearch').fill('31.5');
+  await page
+    .locator('#measurementUnit')
+    .getByText('IN', { exact: true })
+    .click();
+  await expect(page.locator('[data-card="small16x9Monitor"]')).toBeVisible();
+  await expect(page.locator('#small16x9MonitorForm')).toHaveValue('31');
+});
+
 test('converts all inputs and annotations without scene or draft drift; persists the preference', async ({
   page,
 }) => {
