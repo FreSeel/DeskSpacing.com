@@ -5,6 +5,16 @@ keyboards and accessories, move or rotate them, and share the arrangement throug
 an encoded URL. There is no backend, account system or database. This repository
 is the maintained [FreSeel fork](https://github.com/FreSeel/DeskSpacing.com).
 
+## About this fork
+
+This repository is a maintained fork of the original DeskSpacing project, a browser-based 3D desk configuration tool built with Three.js.
+
+My work focuses on modernizing the development and testing infrastructure, improving application structure and maintainability, and introducing automated validation while preserving compatibility with existing functionality.
+
+The fork includes Vite-based builds, modular JavaScript, unit and browser testing, and engineering documentation.
+
+**Original project:** DeskSpacing, with programming by Cooper Lappenbusch and 3D models by Travers Sorenson. The original creators retain credit for their work.
+
 ## Get started
 
 Use **Node 24.22.1** from `.nvmrc` (or the compatible Node range in `package.json`).
