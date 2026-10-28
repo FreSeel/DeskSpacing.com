@@ -378,8 +378,14 @@
 
 /* Give the growing toolbar its own row on phones; keep every control reachable. */
 @media (max-width: 540px) {
+  /* The toolbar wraps immediately in CSS, even before the layout observer
+     commits its breakpoint. Reserve both rows throughout that transition. */
+  .planner-app .editor-shell {
+    grid-template-rows: minmax(96px, max-content) minmax(0, 1fr);
+  }
   .planner-app .header-actions {
     flex-basis: 100%;
+    flex-wrap: wrap;
     justify-content: space-between;
   }
 }

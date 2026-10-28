@@ -52,6 +52,18 @@ export function createSnappingPreference(host) {
     setEnabled(enabled) {
       apply({ ...configuration, enabled }, true);
     },
+    setGridEnabled(enabled) {
+      apply(
+        { ...configuration, grid: { ...configuration.grid, enabled } },
+        true,
+      );
+    },
+    setObjectsEnabled(enabled) {
+      apply({ ...configuration, objects: { enabled } }, true);
+    },
+    setSurfaceEnabled(enabled) {
+      apply({ ...configuration, surface: { enabled } }, true);
+    },
     setSpacing(spacing) {
       if (!validSpacing(spacing)) return false;
       apply(

@@ -509,7 +509,7 @@ for visual inspection, not treated as cross-platform pixel baselines.
 It accepts an object, proposed world position/quaternion/scale, nearby objects,
 configuration, camera/view context, placement axes/surface context, mode, bypass
 state and optional gesture context. Strategies return a resolved transform and
-optional guidance. Grid is the only implemented strategy; future magnetic or
+optional guidance. Magnetic object alignment runs before grid resolution; future
 surface strategies can use this same entrypoint without another drag pipeline.
 No unfinished settings are exposed.
 
@@ -569,3 +569,199 @@ sharing, units/persistence, blocked storage, dimensions, cancellation, idle
 rendering and toolbar layouts. This does not certify mobile hardware, Safari or
 Firefox. The existing missing `drawerDesk` asset and legacy npm advisory remain
 open.
+
+## Magnetic object alignment
+
+The existing Snap disclosure now has a master checkbox and independent Grid and
+Objects checkboxes. Grid spacing remains in canonical inches and follows the
+existing CM/IN display preference. Existing stored preferences migrate to Grid
+on and Objects off; the master default remains off. Explicit strategy choices
+persist through reloads, unit changes and master toggles. Surface contact is
+an independent strategy described below; automatic distribution/symmetry is not exposed.
+
+### Geometry and supported anchors
+
+`src/snapping/objectFootprints.js` reuses the vertex-derived, authored-frame bounds
+from `createObjectDimensions`. That reader now accepts an optional mesh filter;
+dimension annotations retain their existing default. Alignment skips invisible
+meshes, including meshes with partially hidden material sets, and hidden ancestor
+hierarchies. Transforming the oriented proxy corners through the full world
+matrix accounts for root/descendant geometry offsets, rotations, parent transforms,
+nonuniform scales and mirrored transforms. The X/Z convex hull of those corners
+is used directly, without turning it into a larger world-axis box.
+
+Supported relationships are parallel edge-to-edge alignment (same edge or flush
+adjacency), world X/Z and target-oriented centerlines, paired edge/center
+constraints, and coincident footprint corners, including nonparallel objects.
+Different object dimensions and authored origins remain intact. For complex or
+curved objects these are bounding-footprint proxies, not invented manufacturer
+measurements or exact mesh contact. No rotation, resizing, collision prevention,
+stacking or permanent constraints are applied.
+
+Only registered scene objects enter target preparation. Self and supplied moving
+sets are excluded. Locked desks remain eligible as inspectable support objects;
+floors and other NoSelect roots are excluded. Bottom levels must agree within
+one inch, or the moving bottom must be within one inch of a desk's upper bound.
+Candidate footprints must be within a 12-inch gap on their separating axes.
+These are conservative horizontal alignment rules. The independent surface
+strategy resolves actual vertical contact before horizontal alignment.
+
+### Detection, priority and stability
+
+`src/snapping/magnetic.js` builds geometric relationships once per gesture.
+`cameraMetric.js` scores proposed corrections in CSS pixels through the current
+camera projection. Acquisition is limited to eight pixels and two world inches;
+a held relationship releases beyond fourteen pixels or 3.5 inches. The physical
+cap prevents large attraction in far-away or nearly edge-on views. Initial
+magnetic acquisition requires two pixels of intentional movement, preserving the
+pointer-down offset. Alt/Option or the master toggle bypasses all strategies.
+
+A compatible two-constraint match (corner, center pair, or edge plus center) wins
+over a single line match, then smaller pixel corrections and stable target/anchor
+keys break ties. A held match keeps its target until release; it can upgrade to a
+second constraint on that same target. Constraints from unrelated targets are
+not combined. Magnetic resolution claims the world axes its constraint needs;
+grid resolution only receives the remaining axes. A diagonal edge can reserve
+both X and Z. Guide positions follow the final result even when the grid adjusts
+a free axis. Undo/redo continues to record one exact completed gesture.
+
+### Guides and performance
+
+`src/scene/snappingGuides.js` owns a pointer-transparent SVG overlay, separate from
+object membership and dimension annotations. Six magnetic paths, four anchor markers and a surface contact outline
+are allocated once, projected through the active camera and reused. Guides use
+theme colors and disappear on release, bypass, preference changes, cancellation,
+deselection, membership changes and disposal; near/far-plane clipping suppresses
+invalid projections. No GPU geometry, materials or animation loop are added.
+
+Geometry readers are weakly cached per root. Vertex bounds are reused across
+gestures and invalidated by the existing geometry/version/descendant signature
+when preparing a gesture. During a gesture, both strategies share one per-update
+signature of root/descendant transforms, visibility, materials and geometry versions;
+changed signatures rebuild the prepared relationships. Uncorrected movement keeps
+the native local transform exactly, avoiding unnecessary world/local round trips.
+Separating-axis ranges and anchor constraints are precomputed. Pointer updates
+score nearby candidates without rescanning vertices. The current planner has
+static geometry during translation; runtime skinning/morph animation would need
+explicit in-gesture invalidation before being supported.
+
+## Surface contact snapping
+
+The Snap disclosure includes an independent Surface checkbox, defaulting off for
+both new and migrated preferences. The master toggle and Alt/Option bypass all
+three strategies. Surface contact uses inches internally; CM/IN changes only the
+display. No project fields, parenting, automatic attachment or dependencies are
+introduced. Existing authored origins and desk replacement offsets are preserved.
+Moving a support does not move previously placed accessories.
+
+### Eligible geometry and contact
+
+`src/catalog/placement.js` recognizes catalog desk IDs and the floor primitive.
+There are no shelf products or shelf placement semantics in this catalog; arbitrary
+boxes, chairs, monitors, lamps and other decorative geometry are not supports.
+Only registered objects enter preparation. Self, supplied moving sets, hidden
+ancestors/descendants, invisible materials and meshes marked `snappingIgnore` are
+excluded. Annotations, guides and gizmos are outside membership entirely.
+
+`src/snapping/surfaceGeometry.js` opts into cached vertex/topology data from the
+existing dimension reader. It transforms actual vertices through the complete
+world matrix, including authored descendant offsets, noncentral pivots, rotations,
+nonuniform scale and mirrored/nested parents. The moving contact height is the
+lowest physical vertex, not the object origin or a transformed bounding-box corner.
+The center of that lowest region (within 0.001 inches) is the support probe; its
+convex footprint is used only for feedback, never to enlarge support geometry.
+
+Known desks and floors use a controlled geometric fallback: the highest horizontal
+plane with at least 25% of the largest horizontal plane's area. This excludes small
+trim/leg caps. Coplanarity tolerates 0.01 inches of authored tabletop tessellation
+noise, including the slightly uneven Bekant tops. Nearby triangle heights are
+grouped by distance instead of rounding-bin boundaries. Contact is approximate
+within that tolerance; no slope-following rotation is applied. Real
+triangles are retained, so L-shaped cutouts and holes are not filled by a bounding
+rectangle. Sloped surfaces are excluded; accessory rotations are never changed.
+A product with raised structures or multiple usable levels would need explicit
+per-product regions before being supported. Decorative hanging parts on a moving
+accessory still count toward its physical bottom; there is no invented mounting
+point for monitor arms or lights.
+
+### Acquisition, release and precedence
+
+Acquisition starts after two CSS pixels of intentional native translation. The
+bottom must be within one inch of the surface, and its center must be inside the
+triangle union with a 0.05-inch inset. Partial overhang is allowed while that center
+remains supported; there are no collision constraints. A held target remains until
+the center crosses the actual boundary or vertical intent exceeds two inches.
+Nearest height wins initial selection, with stable target keys breaking ties. A
+held target wins over overlapping alternatives; horizontal transfers can only
+reacquire the same level (0.01-inch tolerance). Explicit Y movement permits other
+levels. After vertical release, acquisition waits until the object leaves that
+support's acquisition band, avoiding repeated sticking or switching during upward drags.
+
+`src/snapping/resolveSnapping.js` resolves support/contact first, magnetic X/Z next,
+then grid on the remaining X/Z axes. With Surface enabled, grid never quantizes Y.
+If a horizontal correction would take a valid raw contact off its support, that
+correction is rejected as a whole. A horizontal correction onto valid support can
+acquire contact in the same resolution, with guides following the final position.
+
+`src/interactions/snapping.js` remains the only adapter for native TransformControls
+proposals. A gesture-local vertical offset keeps acquired height when leaving a
+surface, toggling a strategy or bypassing. Free movement continues with subsequent
+native deltas instead of jumping back to the pre-contact Y. A new gesture starts
+from the live transform. The existing transform action records one exact undo/redo
+entry and the existing codec saves the final local position without re-snapping.
+
+### Feedback, caching and focused verification
+
+A reusable solid neutral outline and small contact cross distinguish surface
+contact from dashed accent magnetic guides and labeled dimension annotations.
+Feedback is pointer-transparent, theme-aware and removed with the shared gesture
+cleanup. It adds no GPU resources or render loop. Only eligible support roots and
+the moving object are inspected; gesture preparation caches triangles and contact
+vertices. Drag updates check transforms, visibility and geometry versions and only
+rebuild when these change. Geometry data is reused across gestures; runtime
+skinning/morph animation during a drag would need additional invalidation.
+
+Focused tests cover offsets/heights, actual tilted/scaled/nested contact, floor and
+concave boundaries, competing levels, free release, bypass/toggles, independent
+preferences, all three modes, exact history/codec/reload, units, indicator cleanup
+and idle rendering. Chromium also loads the modern, standing, Linnmon, Alex and both
+Bekant L-shaped desk families to verify their actual imported support geometry.
+The legacy wire format still has no general scale/parent serialization. No shelf,
+inclined-surface, physics or collision-placement behavior is claimed. The missing
+`drawerDesk` asset and legacy npm advisory remain open; desktop Chromium checks do
+not certify mobile interaction, Safari or Firefox.
+
+## Files and focused verification
+
+Added: `src/snapping/footprint.js`, `src/snapping/objectFootprints.js`,
+`src/snapping/cameraMetric.js`, `src/snapping/magnetic.js`,
+`src/scene/snappingGuides.js`, `tests/unit/magnetic-snapping.test.js`, and
+`tests/e2e/magnetic-snapping.spec.js`, `src/catalog/placement.js`,
+`src/snapping/surfaceGeometry.js`, `src/snapping/surface.js`,
+`tests/unit/surface-snapping.test.js` and `tests/e2e/surface-snapping.spec.js`.
+
+Updated: `mainApp.html`, `src/app/createApp.js`, `src/interactions/snapping.js`,
+`src/measurements/objectDimensions.js`, `src/snapping/configuration.js`,
+`src/snapping/preference.js`, `src/snapping/resolveSnapping.js`,
+`src/ui/snappingUI.js`, `src/styles/planner.css`,
+`tests/unit/snapping.test.js`, `tests/unit/transform-snapping.test.js`,
+`playwright.snapping.config.js`, and this document.
+
+```sh
+npx vitest run tests/unit/surface-snapping.test.js tests/unit/magnetic-snapping.test.js tests/unit/snapping.test.js tests/unit/transform-snapping.test.js tests/unit/object-dimensions.test.js
+npx playwright test --config playwright.snapping.config.js
+```
+
+The browser configuration runs only the grid, magnetic and surface feature tests against
+Vite source serving. Focused coverage includes signed edges, adjacency, centers,
+corners, authored offsets, rotated/mirrored/scaled parent geometry, target ties,
+hysteresis, camera scaling, grid priority, independent settings, bypass, exact
+undo/redo and sharing, guide cleanup, blocked storage, and idle rendering.
+A representative 50-object scene verifies guide/GPU-resource reuse after the
+native gizmo's initial resource upload; a 50-object calculation test verifies no
+vertex reads during 120 position updates. These are bounded resource/caching
+checks, not a throughput benchmark or a claimed speedup. Light/dark alignment
+captures and the narrow-screen settings layout are visually inspected. No full
+suite, production build, asset optimization or comprehensive regression run is
+part of this phase. The missing `drawerDesk` asset and legacy npm advisory remain
+open; Chromium checks do not certify Safari, Firefox or physical mobile hardware.

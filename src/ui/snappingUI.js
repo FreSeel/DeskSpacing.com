@@ -14,6 +14,9 @@ export function bindSnappingUI({
   const menu = document.getElementById('snapMenu');
   const summary = menu.querySelector('summary');
   const enabled = document.getElementById('snapEnabled');
+  const grid = document.getElementById('snapGridEnabled');
+  const objects = document.getElementById('snapObjectsEnabled');
+  const surface = document.getElementById('snapSurfaceEnabled');
   const spacing = document.getElementById('snapSpacing');
   const label = document.querySelector('label[for="snapSpacing"]');
   const error = document.getElementById('snapSpacingError');
@@ -29,6 +32,9 @@ export function bindSnappingUI({
   function render() {
     const { configuration } = snapping;
     enabled.checked = configuration.enabled;
+    grid.checked = configuration.grid.enabled;
+    objects.checked = configuration.objects.enabled;
+    surface.checked = configuration.surface.enabled;
     menu.dataset.enabled = String(configuration.enabled);
     summary.textContent = configuration.enabled ? 'Snap on' : 'Snap off';
     label.textContent = `Grid spacing (${measurements.unit})`;
@@ -43,6 +49,9 @@ export function bindSnappingUI({
     error.hidden = true;
   }
   listen(enabled, 'change', () => snapping.setEnabled(enabled.checked));
+  listen(grid, 'change', () => snapping.setGridEnabled(grid.checked));
+  listen(objects, 'change', () => snapping.setObjectsEnabled(objects.checked));
+  listen(surface, 'change', () => snapping.setSurfaceEnabled(surface.checked));
   listen(spacing, 'input', () => {
     spacing.removeAttribute('aria-invalid');
     error.hidden = true;
@@ -72,7 +81,23 @@ export function bindSnappingUI({
   return {
     guidance(guidance, bypass) {
       status.hidden = !guidance && !bypass;
-      const text = bypass ? 'Free move · Alt / Option' : 'Grid snapped';
+      const labels = {
+        edge: 'Edges aligned',
+        center: 'Centers aligned',
+        corner: 'Corners aligned',
+        'edge-center': 'Edge and center aligned',
+      };
+      const alignment =
+        guidance?.kind === 'magnetic'
+          ? labels[guidance.alignment]
+          : guidance?.kind === 'grid'
+            ? 'Grid snapped'
+            : '';
+      const text = bypass
+        ? 'Free move · Alt / Option'
+        : [guidance?.surface ? 'Surface contact' : '', alignment]
+            .filter(Boolean)
+            .join(' · ');
       if (status.textContent !== text) status.textContent = text;
     },
     dispose() {

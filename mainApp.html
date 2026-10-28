@@ -30,12 +30,17 @@
                     <summary>Snap off</summary>
                     <div class="menu-popover">
                         <div class="snap-setting">
-                            <label class="checkbox-label"><input id="snapEnabled" type="checkbox"> Enable grid snapping</label>
+                            <label class="checkbox-label"><input id="snapEnabled" type="checkbox"> Enable snapping</label>
+                            <div class="snap-strategies" role="group" aria-label="Snapping strategies">
+                                <label class="checkbox-label"><input id="snapGridEnabled" type="checkbox" checked> Grid</label>
+                                <label class="checkbox-label"><input id="snapObjectsEnabled" type="checkbox"> Objects</label>
+                                <label class="checkbox-label"><input id="snapSurfaceEnabled" type="checkbox"> Surface</label>
+                            </div>
                             <label for="snapSpacing">Grid spacing (in)</label>
                             <input id="snapSpacing" type="number" step="any" value="1" aria-describedby="snapSpacingHint snapSpacingError">
                             <div id="snapSpacingError" class="card-error" role="alert" hidden></div>
                         </div>
-                        <p id="snapSpacingHint">Snaps the object origin along the axes you move. Hold Alt / Option while dragging for free placement.</p>
+                        <p id="snapSpacingHint">Surface rests objects on desks and floors. Objects aligns nearby edges, centers and corners. Grid aligns remaining axes. Hold Alt / Option while dragging for free placement.</p>
                     </div>
                 </details>
                 <details class="toolbar-menu" id="helpMenu">
@@ -130,7 +135,7 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document"><div class="modal-content">
             <div class="modal-header"><h2 class="modal-title" id="exampleModalLabel">Controls / Keybinds</h2><button class="icon-button" data-bs-dismiss="modal" aria-label="Close">×</button></div>
-            <div class="modal-body"><h3>Camera</h3><dl class="shortcut-list"><dt>Left drag</dt><dd>Orbit the scene</dd><dt>Shift + left drag</dt><dd>Pan the camera</dd><dt>Scroll wheel</dt><dd>Zoom in or out</dd></dl><p>Touch: drag with one finger to orbit. Use two fingers to pan, or pinch to zoom.</p><h3>Selected object</h3><p>Click the workspace or focus the selected-object controls to use shortcuts. Shortcuts pause while editing fields or viewing dialogs.</p><dl class="shortcut-list"><dt>Alt / Option + drag</dt><dd>Temporarily bypass grid snapping</dd><dt>Ctrl / ⌘ + Z</dt><dd>Undo the last move or rotation</dd><dt>Ctrl / ⌘ + Shift + Z</dt><dd>Redo the last move or rotation</dd><dt><kbd>R</kbd></dt><dd>Switch Move / Rotate</dd><dt><kbd>X</kbd> <kbd>Y</kbd> <kbd>Z</kbd></dt><dd>Toggle the corresponding axis</dd><dt><kbd>+</kbd> / <kbd>−</kbd></dt><dd>Change handle size</dd><dt><kbd>C</kbd></dt><dd>Deselect the object</dd><dt>Delete / Backspace / <kbd>D</kbd></dt><dd>Remove the selected object</dd></dl></div>
+            <div class="modal-body"><h3>Camera</h3><dl class="shortcut-list"><dt>Left drag</dt><dd>Orbit the scene</dd><dt>Shift + left drag</dt><dd>Pan the camera</dd><dt>Scroll wheel</dt><dd>Zoom in or out</dd></dl><p>Touch: drag with one finger to orbit. Use two fingers to pan, or pinch to zoom.</p><h3>Selected object</h3><p>Click the workspace or focus the selected-object controls to use shortcuts. Shortcuts pause while editing fields or viewing dialogs.</p><dl class="shortcut-list"><dt>Alt / Option + drag</dt><dd>Temporarily bypass all snapping</dd><dt>Ctrl / ⌘ + Z</dt><dd>Undo the last move or rotation</dd><dt>Ctrl / ⌘ + Shift + Z</dt><dd>Redo the last move or rotation</dd><dt><kbd>R</kbd></dt><dd>Switch Move / Rotate</dd><dt><kbd>X</kbd> <kbd>Y</kbd> <kbd>Z</kbd></dt><dd>Toggle the corresponding axis</dd><dt><kbd>+</kbd> / <kbd>−</kbd></dt><dd>Change handle size</dd><dt><kbd>C</kbd></dt><dd>Deselect the object</dd><dt>Delete / Backspace / <kbd>D</kbd></dt><dd>Remove the selected object</dd></dl></div>
             <div class="modal-footer"><button data-bs-dismiss="modal">Close</button></div>
         </div></div>
     </div>

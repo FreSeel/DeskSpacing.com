@@ -120,6 +120,7 @@ it('persists canonical spacing independently of unit display and synchronizes ot
   const preference = createSnappingPreference(host);
   expect(preference.configuration).toEqual(defaultSnapping);
   preference.setEnabled(true);
+  preference.setSurfaceEnabled(true);
   preference.setSpacing(toInches(2.5, 'cm'));
   for (let i = 0; i < 1000; i++)
     fromInches(preference.configuration.grid.spacing, i % 2 ? 'cm' : 'in');
@@ -172,7 +173,9 @@ it('rejects invalid/small spacing and works with corrupt or disabled storage', (
   expect(preference.setSpacing(2)).toBe(true);
   expect(preference.configuration).toEqual({
     enabled: true,
-    grid: { spacing: 2 },
+    grid: { enabled: true, spacing: 2 },
+    objects: { enabled: false },
+    surface: { enabled: false },
   });
   preference.dispose();
 });

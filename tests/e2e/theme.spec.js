@@ -385,6 +385,9 @@ for (const colorScheme of ['light', 'dark']) {
             input.value = url.href;
           });
         }
+        // A toolbar reflow must not turn incidental close-button hover into
+        // a dialog visual regression. Capture a consistent neutral pointer.
+        await page.mouse.move(0, 0);
         await visual(page.locator(`#${id} .modal-content`), id);
         await page.keyboard.press('Escape');
         await expect(page.locator(`#${id}`)).toBeHidden();

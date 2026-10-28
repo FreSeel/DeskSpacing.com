@@ -9,7 +9,11 @@ export const dimensionAxes = [
 
 // Only the selected object's derived bounds are cached. This is not scene state:
 // geometry versions and descendant transforms invalidate the cache automatically.
-export function createObjectDimensions() {
+export function createObjectDimensions({
+  includeMesh = () => true,
+  collectGeometry = false,
+} = {}) {
+  let geometryData = [];
   let previous = [];
   const bounds = new Box3();
   const vertex = new Vector3();
@@ -28,28 +32,36 @@ export function createObjectDimensions() {
       if (!node.visible) return;
       signature.push(...matrix.elements);
       if (node.isMesh && node.geometry.attributes.position) {
-        const geometry = node.geometry;
-        const position = geometry.attributes.position;
-        signature.push(
-          geometry,
-          position,
-          position.version,
-          position.data?.version,
-        );
-        for (const attribute of geometry.morphAttributes.position || [])
-          signature.push(attribute, attribute.version);
-        signature.push(...(node.morphTargetInfluences || []));
-        if (node.isSkinnedMesh) {
-          for (const bone of node.skeleton.bones)
-            signature.push(...bone.matrixWorld.elements);
-        }
-        if (node.isInstancedMesh)
+        const included = includeMesh(node);
+        signature.push(included);
+        if (included) {
+          const geometry = node.geometry;
+          const position = geometry.attributes.position;
           signature.push(
-            node.count,
-            node.instanceMatrix,
-            node.instanceMatrix.version,
+            geometry,
+            position,
+            position.version,
+            position.data?.version,
+            geometry.index,
+            geometry.index?.version,
+            geometry.drawRange.start,
+            geometry.drawRange.count,
           );
-        meshes.push({ node, matrix });
+          for (const attribute of geometry.morphAttributes.position || [])
+            signature.push(attribute, attribute.version);
+          signature.push(...(node.morphTargetInfluences || []));
+          if (node.isSkinnedMesh) {
+            for (const bone of node.skeleton.bones)
+              signature.push(...bone.matrixWorld.elements);
+          }
+          if (node.isInstancedMesh)
+            signature.push(
+              node.count,
+              node.instanceMatrix,
+              node.instanceMatrix.version,
+            );
+          meshes.push({ node, matrix });
+        }
       }
       for (const child of node.children)
         visit(child, new Matrix4().multiplyMatrices(matrix, child.matrix));
@@ -63,6 +75,7 @@ export function createObjectDimensions() {
     ) {
       previous = signature;
       bounds.makeEmpty();
+      geometryData = [];
       for (const { node, matrix } of meshes) {
         const count = node.isInstancedMesh ? node.count : 1;
         for (let i = 0; i < count; i++) {
@@ -71,6 +84,7 @@ export function createObjectDimensions() {
             node.getMatrixAt(i, instance);
             transform.multiply(instance);
           }
+          const vertices = [];
           // Transform actual vertices, not child AABBs: rotating a child AABB
           // would overestimate the bounds of curved or diagonal geometry.
           for (
@@ -80,6 +94,23 @@ export function createObjectDimensions() {
           ) {
             node.getVertexPosition(index, vertex).applyMatrix4(transform);
             bounds.expandByPoint(vertex);
+            if (collectGeometry) vertices.push(vertex.clone());
+          }
+          if (collectGeometry) {
+            const indices = [];
+            const index = node.geometry.index;
+            const range = node.geometry.drawRange;
+            const end = Math.min(
+              index?.count ?? vertices.length,
+              range.start + range.count,
+            );
+            for (let i = range.start; i + 2 < end; i += 3)
+              indices.push(
+                index
+                  ? [index.getX(i), index.getX(i + 1), index.getX(i + 2)]
+                  : [i, i + 1, i + 2],
+              );
+            geometryData.push({ vertices, indices });
           }
         }
       }
@@ -101,12 +132,18 @@ export function createObjectDimensions() {
       const origin = new Vector3().applyMatrix4(matrix);
       dimensions[axis] = direction.applyMatrix4(matrix).distanceTo(origin);
     }
-    return { bounds, dimensions, matrix };
+    return {
+      bounds,
+      dimensions,
+      matrix,
+      ...(collectGeometry ? { geometry: geometryData } : {}),
+    };
   }
   return {
     read,
     clear() {
       previous = [];
+      geometryData = [];
       bounds.makeEmpty();
     },
   };

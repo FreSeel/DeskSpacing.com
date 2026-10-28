@@ -19,6 +19,7 @@ import { bindWorkspaceTheme } from '../theme/workspaceTheme.js';
 import { createSnappingPreference } from '../snapping/preference.js';
 import { bindSnapping } from '../interactions/snapping.js';
 import { bindSnappingUI } from '../ui/snappingUI.js';
+import { bindSnappingGuides } from '../scene/snappingGuides.js';
 
 export function createApp({ THREE, host, document }) {
   host.performance.mark('planner:init-start');
@@ -69,6 +70,7 @@ export function createApp({ THREE, host, document }) {
     snapping,
     transforms: actions.transforms,
   });
+  const snappingGuides = bindSnappingGuides({ document, view });
   const sharing = createSharing({
     state,
     actions,
@@ -88,8 +90,12 @@ export function createApp({ THREE, host, document }) {
       state,
       snapping,
       transforms: actions.transforms,
-      onGuidance: snappingUI.guidance,
+      onGuidance(guidance, bypass) {
+        snappingUI.guidance(guidance, bypass);
+        snappingGuides.show(guidance);
+      },
     }),
+    () => snappingGuides.dispose(),
     () => snappingUI.dispose(),
     () => snapping.dispose(),
     () => actions.transforms.dispose(),

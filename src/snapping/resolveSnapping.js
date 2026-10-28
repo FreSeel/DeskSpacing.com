@@ -1,9 +1,12 @@
 import { validSpacing } from './configuration.js';
+import { magneticStrategy, offsetMagneticGuidance } from './magnetic.js';
+import { selectSurface, supportsPosition, surfaceGuidance } from './surface.js';
 
 // Strategies receive world-space transforms, the object, nearbyObjects, view,
-// placement (allowed world axes / future surface), configuration and gesture.
+// placement (allowed world axes), configuration and gesture.
 // They return a transform plus guidance; they never mutate scene objects.
 export function gridStrategy({ proposed, configuration, placement, gesture }) {
+  if (configuration.grid?.enabled === false) return null;
   const spacing = configuration.grid?.spacing;
   if (!validSpacing(spacing)) return null;
   const position = { ...proposed.position };
@@ -39,7 +42,9 @@ export function gridStrategy({ proposed, configuration, placement, gesture }) {
   };
 }
 
-export function createSnappingResolver(strategies = [gridStrategy]) {
+export function createSnappingResolver(
+  strategies = [magneticStrategy, gridStrategy],
+) {
   return (context) => {
     let result = { transform: context.proposed, guidance: null };
     if (
@@ -48,9 +53,89 @@ export function createSnappingResolver(strategies = [gridStrategy]) {
       context.mode !== 'translate'
     )
       return result;
+    const support = selectSurface(context);
+    const contactTransform = (target, transform) => ({
+      ...transform,
+      position: {
+        ...transform.position,
+        y:
+          target.height -
+          context.surface.moving.minY +
+          context.surface.moving.origin.y,
+      },
+    });
+    if (support) result.transform = contactTransform(support, result.transform);
+    const supportedProposal = result.transform;
+    const claimed = new Set(
+      context.configuration.surface?.enabled ? ['y'] : [],
+    );
     for (const strategy of strategies) {
-      const resolved = strategy({ ...context, proposed: result.transform });
-      if (resolved) result = resolved;
+      const resolved = strategy({
+        ...context,
+        proposed: result.transform,
+        placement: {
+          ...context.placement,
+          axes: context.placement.axes.filter((axis) => !claimed.has(axis)),
+        },
+      });
+      if (resolved) {
+        const magnetic =
+          result.guidance?.kind === 'magnetic' ? result.guidance : null;
+        result = {
+          transform: resolved.transform,
+          guidance: magnetic
+            ? {
+                ...offsetMagneticGuidance(
+                  magnetic,
+                  result.transform.position,
+                  resolved.transform.position,
+                ),
+                gridAxes: resolved.guidance?.axes || [],
+              }
+            : resolved.guidance,
+        };
+        for (const axis of resolved.claimedAxes || []) claimed.add(axis);
+      }
+    }
+    let finalSupport = support;
+    if (
+      support &&
+      !supportsPosition(
+        support,
+        context.surface.moving,
+        result.transform.position,
+      )
+    ) {
+      // Do not let horizontal snapping push a valid raw placement off its
+      // support. Reject the conflicting horizontal correction as a whole.
+      result = { transform: supportedProposal, guidance: null };
+    } else if (!support) {
+      finalSupport = selectSurface(context, result.transform.position);
+      if (finalSupport) {
+        const before = result.transform.position;
+        result.transform = contactTransform(finalSupport, result.transform);
+        if (result.guidance?.kind === 'magnetic')
+          result.guidance = offsetMagneticGuidance(
+            result.guidance,
+            before,
+            result.transform.position,
+          );
+        else if (result.guidance?.kind === 'grid')
+          result.guidance = {
+            ...result.guidance,
+            position: result.transform.position,
+          };
+      }
+    }
+    if (finalSupport) {
+      result.guidance = {
+        ...(result.guidance || { kind: 'surface' }),
+        surface: surfaceGuidance(
+          finalSupport,
+          context.surface.moving,
+          result.transform.position,
+        ),
+      };
     }
     return result;
   };
