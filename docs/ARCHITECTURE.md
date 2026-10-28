@@ -128,6 +128,14 @@ The store owns membership, identity and desk offset; selection owns its current
 root. Live Three.js transforms are authoritative. Saving reads a fresh plain-data
 snapshot, so gizmo movement cannot leave a second state model out of sync.
 
+Numerical transformation infrastructure is available through `actions.transforms`.
+It provides precise world-position and local-degree rotation patches, physical
+dimension reads, and owned primitive resizing with the same history. See
+[NUMERICAL_TRANSFORMS.md](NUMERICAL_TRANSFORMS.md) for units, capabilities,
+validation, legacy persistence, and the next inspector phase's subscription
+contract. The numerical inspector UI and relative-spacing interface are not
+implemented yet; verification of this infrastructure is deferred.
+
 Model requests are deduplicated by URL, including pending requests. Instances use
 SkeletonUtils cloning and independent materials/transforms with shared immutable
 geometries/textures. Reference counts protect surviving instances. Unused templates
@@ -541,14 +549,16 @@ toolbar disclosure contains a checkbox and numeric field; its label and theme
 colors show the enabled state. A temporary workspace badge shows snapping/bypass
 without scene objects, dimension annotations or GPU allocations.
 
-The planner previously had no undo stack. `src/state/transformActions.js` adds a
-bounded, session-only history of 100 completed move/rotation gestures. Empty
-clicks add nothing and intermediate pointer updates never create entries.
-Undo/redo restores exact position, Euler rotation/order and scale snapshots,
-invalidates the scene and never re-snaps. More-menu buttons and workspace-scoped
+`src/state/transformActions.js` owns a bounded, session-only history of 100
+completed gestures or numerical edits. Empty clicks add nothing and intermediate
+pointer updates never create entries. Undo/redo restores position, Euler
+rotation/order, scale, and owned primitive geometry parameters, invalidates the
+scene and never re-snaps. Numerical edits and primitive resizing are documented
+in [NUMERICAL_TRANSFORMS.md](NUMERICAL_TRANSFORMS.md); their verification is deferred.
+More-menu buttons and workspace-scoped
 Ctrl/Cmd+Z and Ctrl/Cmd+Shift+Z provide access; fields and dialogs retain native
 shortcuts. Adds, removals, replacements, desk shifts and resets clear this
-transform-only history via store subscriptions. An in-flight gesture ends if
+object-edit history via store subscriptions. An in-flight gesture ends if
 membership changes invalidate its origin/candidates. Failed asynchronous loads
 preserve current history. Pointer cancellation/blur completes the current gesture
 and restores camera input. Deletion/creation undo and history persistence are

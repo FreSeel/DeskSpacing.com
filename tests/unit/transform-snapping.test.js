@@ -106,6 +106,29 @@ it('resolves native proposals with no press jump, one history action, and exact 
   s.dispose();
 });
 
+it('keeps numerical placement exact with snapping enabled and resumes snapping on the next drag', () => {
+  const s = setup();
+  s.snapping.setEnabled(true);
+  const before = objectToRecord(s.object);
+  const centimeters = 10.123456789;
+  s.transforms.setPosition(s.object, { x: centimeters }, { unit: 'cm' });
+  expect(s.object.position.x).toBe(centimeters / 2.54);
+  expect(s.transforms.read(s.object).position.x).toBe(s.object.position.x);
+  const exact = objectToRecord(s.object);
+  expect(decodeSetup(encodeSetup([exact]))).toEqual([exact]);
+  s.start();
+  s.move(6.2);
+  expect(s.transforms.read(s.object).position.x).toBe(6);
+  s.end();
+  s.transforms.undo();
+  expect(objectToRecord(s.object)).toEqual(exact);
+  s.transforms.undo();
+  expect(objectToRecord(s.object)).toEqual(before);
+  s.transforms.redo();
+  expect(objectToRecord(s.object)).toEqual(exact);
+  s.dispose();
+});
+
 it('supports free movement, Alt bypass/release, preference toggles without moving, and blur cleanup', () => {
   const s = setup();
   s.start();

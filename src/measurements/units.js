@@ -7,6 +7,8 @@ export const fromInches = (value, unit) =>
   unit === 'cm' ? value * centimetersPerInch : value;
 export const toInches = (value, unit) =>
   unit === 'cm' ? value / centimetersPerInch : value;
+export const radiansToDegrees = (value) => value * (180 / Math.PI);
+export const degreesToRadians = (value) => value * (Math.PI / 180);
 
 export function formatMeasurement(inches, unit) {
   const value = fromInches(inches, unit);

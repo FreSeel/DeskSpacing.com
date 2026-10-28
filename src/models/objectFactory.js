@@ -2,11 +2,16 @@ import { textures } from '../catalog/products.js';
 import { createModelLoader } from './modelLoader.js';
 import { disposeResources } from './resources.js';
 import { legacyColor } from '../scene/appearance.js';
+import {
+  createPrimitiveGeometry,
+  readPrimitiveDimensions,
+} from './primitiveGeometry.js';
 
 export function createObjectFactory({ THREE, modelOptions }) {
   const models = createModelLoader(modelOptions);
   const textureLoader = new THREE.TextureLoader();
   const ownedResources = new WeakMap();
+  const primitiveMeshes = new WeakMap();
   const released = new WeakSet();
   let disposed = false;
   async function create(record) {
@@ -16,10 +21,11 @@ export function createObjectFactory({ THREE, modelOptions }) {
       ownedResources.set(object, release);
       return object;
     }
-    const geometry = record.type.includes('Sphere')
-      ? // r116 subdivided edges 2^detail times; modern detail means detail + 1.
-        new THREE.OctahedronGeometry(record.dimensions[0], 31)
-      : new THREE.BoxGeometry(...record.dimensions);
+    const geometry = createPrimitiveGeometry(
+      THREE,
+      record.type,
+      record.dimensions,
+    );
     let texture;
     try {
       if (record.texture !== 'null') {
@@ -44,7 +50,35 @@ export function createObjectFactory({ THREE, modelOptions }) {
     mesh.receiveShadow = true;
     const object = new THREE.Group();
     object.add(mesh);
+    primitiveMeshes.set(object, mesh);
     return object;
+  }
+  function primitiveDimensions(object) {
+    const mesh = primitiveMeshes.get(object);
+    if (
+      disposed ||
+      released.has(object) ||
+      !mesh ||
+      object.children.length !== 1 ||
+      object.children[0] !== mesh
+    )
+      return null;
+    return readPrimitiveDimensions(object);
+  }
+  // Actions validate the complete proposed record before entering this method.
+  // Allocate before swapping, so an allocation failure retains the old geometry.
+  function resizePrimitive(object, dimensions) {
+    if (!primitiveDimensions(object))
+      throw new Error('This object has no owned primitive geometry to resize.');
+    const mesh = primitiveMeshes.get(object);
+    const geometry = createPrimitiveGeometry(
+      THREE,
+      object.userData.type,
+      dimensions,
+    );
+    const previous = mesh.geometry;
+    mesh.geometry = geometry;
+    previous.dispose();
   }
   function dispose(object) {
     if (released.has(object)) return;
@@ -59,6 +93,8 @@ export function createObjectFactory({ THREE, modelOptions }) {
   }
   return {
     create,
+    primitiveDimensions,
+    resizePrimitive,
     dispose,
     disposeAll() {
       disposed = true;

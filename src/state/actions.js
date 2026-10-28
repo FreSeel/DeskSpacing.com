@@ -9,7 +9,7 @@ export function createActions({
   factory,
   invalidateScene = () => {},
 }) {
-  const transforms = createTransformActions({ state, invalidateScene });
+  const transforms = createTransformActions({ state, invalidateScene, factory });
   function remove(object) {
     if (selection.pickedObject === object) selection.unselectPickedObject();
     state.remove(object);
