@@ -215,7 +215,8 @@
     flex-basis: 44px;
   }
   .planner-app input:not([type='checkbox']),
-  .planner-app select {
+  .planner-app select,
+  .planner-app .precise-spacing select {
     font-size: 16px;
   }
   .planner-app .checkbox-label {

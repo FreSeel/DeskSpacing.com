@@ -15,4 +15,3 @@ export function objectToRecord(object) {
   }
   return record;
 }
-

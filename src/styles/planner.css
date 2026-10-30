@@ -538,6 +538,93 @@
   margin-top: 24px;
   padding-top: 20px;
 }
+.planner-app .numerical-transform-group {
+  min-inline-size: 0;
+  margin: 0 0 14px;
+  padding: 0;
+  border: 0;
+}
+.planner-app .numerical-transform-group legend {
+  float: none;
+  width: auto;
+  margin: 0 0 8px;
+  padding: 0;
+  color: var(--color-text);
+  font-size: 12px;
+  font-weight: 600;
+}
+.planner-app .numerical-transform-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+.planner-app .numerical-transform-field {
+  min-width: 0;
+}
+.planner-app .numerical-transform-field label {
+  margin-bottom: 4px;
+  font-size: 11px;
+}
+.planner-app .numerical-transform-field input {
+  min-width: 0;
+  padding: 8px 6px;
+  font: 12px/1.5 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.planner-app .numerical-transform-field input[readonly] {
+  background: var(--color-surface-muted);
+  color: var(--color-text-muted);
+}
+.planner-app .numerical-transform-hint {
+  min-height: 2.8em;
+  margin: 6px 0 0;
+  font-size: 11px;
+  line-height: 1.4;
+}
+.planner-app .numerical-transform-diameter {
+  margin-top: 8px;
+}
+.planner-app .numerical-transform-status {
+  min-height: 4.2em;
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 11px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.planner-app .numerical-transform-status.has-error {
+  color: var(--color-danger);
+}
+.planner-app .precise-spacing-field {
+  min-width: 0;
+  margin-top: 12px;
+}
+.planner-app .precise-spacing-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.planner-app .precise-spacing select {
+  padding-inline: 6px;
+  font-size: 12px;
+}
+.planner-app .precise-spacing input,
+.planner-app .precise-spacing output {
+  font: 12px/1.5 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.planner-app #selectionSpacingApply {
+  width: 100%;
+  margin-top: 12px;
+}
+.planner-app .precise-spacing-measurement {
+  margin: 12px 0 8px;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.planner-app .precise-spacing .numerical-transform-status {
+  min-height: 7em;
+}
 .planner-app .segmented-control {
   display: flex;
   gap: 6px;

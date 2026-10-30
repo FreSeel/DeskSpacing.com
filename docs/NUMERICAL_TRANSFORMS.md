@@ -1,7 +1,9 @@
 # Numerical transformation API
 
-The infrastructure is exposed as `app.actions.transforms`. This phase adds no
-inspector controls or relative-spacing interface. Live Three.js roots and their
+The infrastructure is exposed as `app.actions.transforms`. The existing object
+inspector now binds to it through `src/ui/numericalTransformPanel.js`.
+[Precise spacing](PRECISE_SPACING.md) uses the same world-position setter through
+`app.actions.spacing`. Live Three.js roots and their
 owned geometry remain authoritative; reads are derived snapshots, and history
 contains bounded before/after values. There is no second live transformation
 model, new render loop, or change to the snapping resolver.
@@ -95,12 +97,12 @@ decimal step is imposed by this API.
 
 ## Resizing capabilities and resource ownership
 
-| Object                 | Writable dimensions  | Other constraints                                                 |
-| ---------------------- | -------------------- | ----------------------------------------------------------------- |
-| Reference box          | width, height, depth | Normal movement/rotation lock applies                             |
+| Object                 | Writable dimensions  | Other constraints                                                  |
+| ---------------------- | -------------------- | ------------------------------------------------------------------ |
+| Reference box          | width, height, depth | Normal movement/rotation lock applies                              |
 | Reference sphere       | diameter             | W/H/D are read-only and remain equal                               |
 | Custom desktop         | width, depth         | Position/rotation remain locked; current thickness stays unchanged |
-| Catalog model or floor | none                 | Dimensions remain available as measurements                       |
+| Catalog model or floor | none                 | Dimensions remain available as measurements                        |
 
 Custom desktops created by the application retain their one-inch (2.54 cm)
 thickness. If a legacy link supplies another thickness, editing width/depth
@@ -155,33 +157,67 @@ invertible transformed parent, but arbitrary parent hierarchies and scene
 transforms still are not saved by the legacy format. This phase does not claim
 grouped-scene round trips; a grouping feature must design its own persistence.
 
-## Contract for the next UI phase
+## Inspector binding
 
-Use `selection.subscribe`, the measurement preference, and
-`view.subscribeRender` to refresh the selected object's derived readout.
+`src/ui/numericalTransformPanel.js` builds stable fieldsets inside the existing
+object menu: world-origin position X/Y/Z, local rotation X/Y/Z, and physical
+width/height/depth. Fields use centimeters and degrees explicitly, regardless
+of the catalog/annotation CM/IN preference. Fixed dimensions and locked axes
+are read-only; spheres have an additional diameter field for uniform resizing.
+Labels state the world-origin, Y-up, parent-local Euler order, and object-axis
+dimension conventions. Styling uses the existing inspector and theme tokens.
+
+The binding uses `selection.subscribe` and `view.subscribeRender` to refresh
+the selected object's derived readout.
 `transforms.subscribe` is the existing immediate history/availability
 subscription: it fires on begin/commit, numerical changes, undo/redo, and
 membership clearing. It is not a per-pointer-update stream. Read after the
 existing invalidated render to observe final snapping corrections. Camera-only
 renders may reuse the readout; compare values before writing DOM fields.
 
-Keep input drafts in the UI only. Rendering a value must never invoke a setter.
-Send only changed fields on Apply/Enter; Escape discards the draft. Do not
-re-import rounded labels on blur, unit switches, or selection changes. Disable
-commits while `isTransforming` is true, and invalidate stale drafts when the
-selection or underlying object changes. Unsubscribe on teardown. No timer,
-extra animation loop, or production debug global is needed.
+Inputs are text fields with decimal keyboards so temporary values such as an
+empty string, `-`, or `1e-` remain intact while typing. Complete signed decimal
+numbers and scientific notation are accepted; NaN, Infinity, hex, unit suffixes,
+and decimal commas are rejected. Dimensions must be positive. Validation still
+runs through the authoritative transformation action before mutation.
 
-## Deferred verification
+Only a focused field's uncommitted text, original value, and dirty/conflict flags
+are kept in the UI. Enter and blur commit just that field as one action. Escape
+cancels its draft without dismissing the responsive inspector sheet. Invalid
+Enter retains the text with an accessible error; invalid blur restores the live
+value and reports that the edit was not applied. IME composition is not committed
+by an intermediate Enter. Unchanged focus/blur never submits a rounded value.
 
-Regression cases were added in `tests/unit/numerical-transforms.test.js` and
-`tests/unit/transform-snapping.test.js`. They cover exact edits, conversion
-no-ops, geometry/history ownership, read-only capabilities, failed allocation,
-parent conversion, legacy round trips, and numerical placement followed by a
-snapped drag. They have **not been executed** in this phase. The application,
-lint, formatting checks, and final evaluation have not been run either.
+Unfocused values display up to six decimal places (very small nonzero values
+remain nonzero). Focus exposes the full-precision value; tooltips also retain
+it. Formatting never modifies the object. Dirty fields retain their text and
+caret through unrelated renders. If that same live value changes externally,
+the draft stays visible but cannot overwrite the newer value: Escape, Enter,
+or blur discards it and refreshes from the scene. Other axes can update without
+invalidating a partial single-field edit. Selection changes discard old drafts
+and rebind the same DOM fields, including when a field retains focus.
 
-After the remaining phases, use Node 24.22.1 and `npm ci`, install Chromium,
-and run the required repository checks plus the new UI/interaction regressions.
-Retain the existing limitations: missing `drawerDesk`, legacy npm advisory, and
-no mobile/Safari/Firefox certification from Chromium results.
+The binding uses read-only inputs while `isTransforming` is true. A capture-phase
+canvas pointer-down listener commits a preceding valid draft before native
+TransformControls begins its gesture; otherwise the normal canvas focus/blur
+sequence would attempt to commit inside an already pending drag. It does not
+cancel, synthesize, or change pointer events or snapping resolution. All other
+commits use Enter/blur and the existing actions. Rendering never calls a setter
+or requests another frame. Subscriptions and listeners are removed on teardown.
+No timer, extra animation loop, or production debug global is introduced.
+
+## Verification
+
+The combined evaluation executes the API, input, native gesture, inspector,
+history, and persistence regressions using Node 24.22.1 and Chromium against
+the production build. See [PRECISE_CONTROLS_EVALUATION.md](PRECISE_CONTROLS_EVALUATION.md)
+for executed results, numerical tolerances, manual UI evidence, corrections,
+and platform limitations. Inspector and help visual baselines were reviewed
+and updated for the added controls and editing instructions.
+
+Exact-input assertions compare stored values with the corresponding JavaScript
+unit conversion, without rounding. Display assertions allow six-decimal
+formatting; focus/blur must not feed that formatting back into state. The
+spacing regression tolerance is 1e-8 cm for its tested fixtures, including
+near-limit coordinates. This is an arithmetic tolerance, not a claim about
+physical model accuracy or Float32 mesh precision.

@@ -15,6 +15,8 @@ import { bindPlannerUI } from '../ui/bindPlannerUI.js';
 import { renderCatalog } from '../ui/catalogRenderer.js';
 import { bindEditorShell } from '../ui/editorShell.js';
 import { bindSelectionPanel } from '../ui/selectionPanel.js';
+import { bindNumericalTransformPanel } from '../ui/numericalTransformPanel.js';
+import { bindPreciseSpacingPanel } from '../ui/preciseSpacingPanel.js';
 import { bindWorkspaceTheme } from '../theme/workspaceTheme.js';
 import { createSnappingPreference } from '../snapping/preference.js';
 import { bindSnapping } from '../interactions/snapping.js';
@@ -117,6 +119,20 @@ export function createApp({ THREE, host, document }) {
       actions,
       transformControls: view.transformControls,
       shell,
+    }),
+    bindNumericalTransformPanel({
+      document,
+      selection,
+      transforms: actions.transforms,
+      view,
+    }),
+    bindPreciseSpacingPanel({
+      document,
+      selection,
+      state,
+      transforms: actions.transforms,
+      spacing: actions.spacing,
+      view,
     }),
     bindPointer({
       canvas,

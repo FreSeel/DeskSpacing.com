@@ -132,9 +132,17 @@ Numerical transformation infrastructure is available through `actions.transforms
 It provides precise world-position and local-degree rotation patches, physical
 dimension reads, and owned primitive resizing with the same history. See
 [NUMERICAL_TRANSFORMS.md](NUMERICAL_TRANSFORMS.md) for units, capabilities,
-validation, legacy persistence, and the next inspector phase's subscription
-contract. The numerical inspector UI and relative-spacing interface are not
-implemented yet; verification of this infrastructure is deferred.
+validation, legacy persistence, and the inspector's subscription contract.
+`src/ui/numericalTransformPanel.js` binds the existing object menu to these
+actions with centimeter/degree inputs, read-only dimensions, transient drafts,
+and Enter/blur/Escape handling. `actions.spacing` and
+`src/ui/preciseSpacingPanel.js` add one-time relative positioning using projected
+geometry bounds along signed world axes. Placement calls the same position
+setter; it adds no constraints or saved fields and bypasses snapping. See
+[PRECISE_SPACING.md](PRECISE_SPACING.md) for measurement semantics, validation,
+parent handling, and acceptance criteria. Executed integration results and
+limitations are recorded in
+[PRECISE_CONTROLS_EVALUATION.md](PRECISE_CONTROLS_EVALUATION.md).
 
 Model requests are deduplicated by URL, including pending requests. Instances use
 SkeletonUtils cloning and independent materials/transforms with shared immutable
@@ -439,8 +447,10 @@ copy and search-match measurements use the same formatter.
 
 The existing add/replace actions perform edits; live transforms remain authoritative.
 Unit changes do not touch geometry, materials, camera, selection, scene membership,
-or serialization. Transform gestures have undo/redo history (see below); there is
-no direct inspector dimension editor. Viewer annotations derive measurements from live
+or serialization. Transform gestures and numerical inspector edits share
+undo/redo history (see below). The inspector always displays centimeters and
+degrees, with resizing limited by the transformation API's capabilities.
+Viewer annotations derive measurements from live
 geometry/transforms and use the shared formatter and preference. Authored catalog descriptions remain approximate
 product copy (including known historical inaccuracies), not measured mesh bounds.
 Retained historical planners are unchanged.
@@ -554,7 +564,8 @@ completed gestures or numerical edits. Empty clicks add nothing and intermediate
 pointer updates never create entries. Undo/redo restores position, Euler
 rotation/order, scale, and owned primitive geometry parameters, invalidates the
 scene and never re-snaps. Numerical edits and primitive resizing are documented
-in [NUMERICAL_TRANSFORMS.md](NUMERICAL_TRANSFORMS.md); their verification is deferred.
+in [NUMERICAL_TRANSFORMS.md](NUMERICAL_TRANSFORMS.md), with executed verification
+in [PRECISE_CONTROLS_EVALUATION.md](PRECISE_CONTROLS_EVALUATION.md).
 More-menu buttons and workspace-scoped
 Ctrl/Cmd+Z and Ctrl/Cmd+Shift+Z provide access; fields and dialogs retain native
 shortcuts. Adds, removals, replacements, desk shifts and resets clear this

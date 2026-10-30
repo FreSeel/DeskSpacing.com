@@ -2,6 +2,7 @@ import { createRecord, defaults, isDesk } from '../catalog/configuration.js';
 import { deskOffsets } from '../catalog/products.js';
 import { validateRecords } from '../sharing/legacyCodec.js';
 import { createTransformActions } from './transformActions.js';
+import { createSpacingActions } from './spacingActions.js';
 
 export function createActions({
   state,
@@ -9,7 +10,12 @@ export function createActions({
   factory,
   invalidateScene = () => {},
 }) {
-  const transforms = createTransformActions({ state, invalidateScene, factory });
+  const transforms = createTransformActions({
+    state,
+    invalidateScene,
+    factory,
+  });
+  const spacing = createSpacingActions({ state, transforms });
   function remove(object) {
     if (selection.pickedObject === object) selection.unselectPickedObject();
     state.remove(object);
@@ -96,5 +102,5 @@ export function createActions({
     const failed = results.find((result) => result.status === 'rejected');
     if (failed) throw failed.reason;
   }
-  return { add, remove, reset, restore, initialize, transforms };
+  return { add, remove, reset, restore, initialize, transforms, spacing };
 }

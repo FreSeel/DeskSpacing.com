@@ -520,6 +520,13 @@ test('the camera orbits and resets; object translation and rotation use the live
     (item) => item.product === 'referenceBox',
   );
   expect(moved.position[0]).not.toBe(original.position[0]);
+  // Native movement must refresh the same inspector values as exact edits.
+  for (const [index, axis] of ['X', 'Y', 'Z'].entries())
+    await expect
+      .poll(async () =>
+        Number(await page.locator(`#selectionPosition${axis}`).inputValue()),
+      )
+      .toBeCloseTo(moved.position[index] * 2.54, 6);
   await page.keyboard.press('r');
   expect(
     await page.evaluate(() => window.planner.view.transformControls.getMode()),
@@ -545,10 +552,24 @@ test('the camera orbits and resets; object translation and rotation use the live
   await page.mouse.down();
   await page.mouse.move(ring.x + 30, ring.y + 15, { steps: 12 });
   await page.mouse.up();
+  const rotated = (await records(page)).find(
+    (item) => item.product === 'referenceBox',
+  );
+  expect(rotated.rotation[1]).not.toBe(original.rotation[1]);
+  await expect
+    .poll(async () =>
+      Number(await page.locator('#selectionRotationY').inputValue()),
+    )
+    .toBeCloseTo(rotated.rotation[1] * (180 / Math.PI), 6);
+  await page.keyboard.press('Control+z');
+  await expect(page.locator('#selectionRotationY')).toHaveValue('0');
   expect(
-    (await records(page)).find((item) => item.product === 'referenceBox')
-      .rotation[1],
-  ).not.toBe(original.rotation[1]);
+    (await records(page)).find((item) => item.product === 'referenceBox'),
+  ).toEqual(moved);
+  await page.keyboard.press('Control+Shift+z');
+  expect(
+    (await records(page)).find((item) => item.product === 'referenceBox'),
+  ).toEqual(rotated);
 });
 
 test('remaining product categories add and delete through their catalog buttons', async ({

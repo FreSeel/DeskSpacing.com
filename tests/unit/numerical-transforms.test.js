@@ -62,7 +62,9 @@ function setup(engine = THREE) {
 }
 
 afterEach(() => {
-  for (const { actions, factory, disposeUnusedTemplate } of fixtures.splice(0)) {
+  for (const { actions, factory, disposeUnusedTemplate } of fixtures.splice(
+    0,
+  )) {
     actions.transforms.dispose();
     actions.reset();
     factory.disposeAll();
@@ -192,7 +194,11 @@ it('resizes sphere diameter uniformly and persists radius without changing tesse
   expect(s.transforms.read(sphere).capabilities.dimensions).toEqual([
     'diameter',
   ]);
-  s.transforms.setDimensions(sphere, { diameter: 20.123456789 }, { unit: 'cm' });
+  s.transforms.setDimensions(
+    sphere,
+    { diameter: 20.123456789 },
+    { unit: 'cm' },
+  );
   const record = objectToRecord(sphere);
   expect(record.dimensions).toEqual([20.123456789 / 2.54 / 2, -1, -1]);
   const values = s.transforms.read(sphere, { unit: 'cm' }).dimensions;
@@ -338,7 +344,9 @@ it('protects an active gesture and clears history on membership changes', async 
   expect(s.transforms.canRedo).toBe(false);
   s.actions.remove(object);
   expect(s.transforms.read(object)).toBeNull();
-  expect(() => s.transforms.setPosition(object, { x: 10 })).toThrow('no longer');
+  expect(() => s.transforms.setPosition(object, { x: 10 })).toThrow(
+    'no longer',
+  );
 });
 
 it('retains object state and history when replacement geometry allocation fails', async () => {

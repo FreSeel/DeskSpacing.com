@@ -181,6 +181,30 @@ test('Snap preferences use the global units, persist without drift, validate spa
   });
 });
 
+test('leaving a numerical draft for a gizmo drag commits exactly before snapping begins', async ({
+  page,
+}) => {
+  await start(page);
+  await fixture(page);
+  await enable(page);
+  const before = await snapshot(page);
+  const x = page.locator('#selectionPositionX');
+  await x.fill('1.23456789');
+  const { end } = await beginDrag(page);
+  expect((await snapshot(page))[0].position[0]).toBe(1.23456789 / 2.54);
+  await page.mouse.move(end.x, end.y, { steps: 12 });
+  await page.mouse.up();
+  const snapped = (await snapshot(page))[0].position[0];
+  expect(snapped).toBe(Math.round(snapped));
+  await expect
+    .poll(async () => Number(await x.inputValue()))
+    .toBeCloseTo(snapped * 2.54, 6);
+  await page.keyboard.press('Control+z');
+  expect((await snapshot(page))[0].position[0]).toBe(1.23456789 / 2.54);
+  await page.keyboard.press('Control+z');
+  expect(await snapshot(page)).toEqual(before);
+});
+
 test('native gizmo drags snap at two camera angles, preserve geometry and save exact final transforms', async ({
   page,
 }) => {

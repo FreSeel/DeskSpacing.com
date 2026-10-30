@@ -160,10 +160,12 @@ export function createNumericalTransforms({ factory } = {}) {
           changed = true;
         }
         if (
-          world.toArray().some(
-            (value) =>
-              !Number.isFinite(value) || Math.abs(value) > limits.coordinate,
-          )
+          world
+            .toArray()
+            .some(
+              (value) =>
+                !Number.isFinite(value) || Math.abs(value) > limits.coordinate,
+            )
         )
           throw new Error('Position exceeds the supported coordinate range.');
         // Preserve native local bits on read/apply and unit-switch no-ops.
@@ -180,9 +182,7 @@ export function createNumericalTransforms({ factory } = {}) {
           const value = patch.dimensions[name];
           const index = name === 'diameter' ? 0 : dimensionIndices[name];
           const multiplier = name === 'diameter' ? 2 : 1;
-          if (
-            value !== fromInches(record.dimensions[index] * multiplier, unit)
-          )
+          if (value !== fromInches(record.dimensions[index] * multiplier, unit))
             record.dimensions[index] = toInches(value, unit) / multiplier;
         }
       }

@@ -54,8 +54,8 @@
                 <details class="toolbar-menu" id="moreMenu">
                     <summary>More <span aria-hidden="true">⌄</span></summary>
                     <div class="menu-popover">
-                        <button id="undoTransform" disabled>Undo move / rotation</button>
-                        <button id="redoTransform" disabled>Redo move / rotation</button>
+                        <button id="undoTransform" disabled>Undo object edit</button>
+                        <button id="redoTransform" disabled>Redo object edit</button>
                     <div class="theme-setting">
                         <label for="themePreference">Appearance</label>
                         <select id="themePreference" data-theme-select aria-describedby="themeStatus"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select>
@@ -109,6 +109,8 @@
                 <p id="selectionVariation" class="muted"></p>
                 <div id="selectionPreview" class="thumbnail-well"></div>
                 <p id="selectionInstance" class="instance-label"></p>
+                <section id="selectionNumericalTransforms" class="inspector-section numerical-transforms" aria-label="Numerical transformations" hidden></section>
+                <section id="selectionPreciseSpacing" class="inspector-section precise-spacing" aria-label="Precise Spacing" hidden></section>
                 <section id="selectionTransforms" class="inspector-section" aria-label="Object controls">
                     <h3 class="eyebrow">Transform</h3>
                     <div class="segmented-control"><button data-command="translate" aria-pressed="true">Move</button><button data-command="rotate" aria-pressed="false">Rotate</button></div>
@@ -135,7 +137,7 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document"><div class="modal-content">
             <div class="modal-header"><h2 class="modal-title" id="exampleModalLabel">Controls / Keybinds</h2><button class="icon-button" data-bs-dismiss="modal" aria-label="Close">×</button></div>
-            <div class="modal-body"><h3>Camera</h3><dl class="shortcut-list"><dt>Left drag</dt><dd>Orbit the scene</dd><dt>Shift + left drag</dt><dd>Pan the camera</dd><dt>Scroll wheel</dt><dd>Zoom in or out</dd></dl><p>Touch: drag with one finger to orbit. Use two fingers to pan, or pinch to zoom.</p><h3>Selected object</h3><p>Click the workspace or focus the selected-object controls to use shortcuts. Shortcuts pause while editing fields or viewing dialogs.</p><dl class="shortcut-list"><dt>Alt / Option + drag</dt><dd>Temporarily bypass all snapping</dd><dt>Ctrl / ⌘ + Z</dt><dd>Undo the last move or rotation</dd><dt>Ctrl / ⌘ + Shift + Z</dt><dd>Redo the last move or rotation</dd><dt><kbd>R</kbd></dt><dd>Switch Move / Rotate</dd><dt><kbd>X</kbd> <kbd>Y</kbd> <kbd>Z</kbd></dt><dd>Toggle the corresponding axis</dd><dt><kbd>+</kbd> / <kbd>−</kbd></dt><dd>Change handle size</dd><dt><kbd>C</kbd></dt><dd>Deselect the object</dd><dt>Delete / Backspace / <kbd>D</kbd></dt><dd>Remove the selected object</dd></dl></div>
+            <div class="modal-body"><h3>Camera</h3><dl class="shortcut-list"><dt>Left drag</dt><dd>Orbit the scene</dd><dt>Shift + left drag</dt><dd>Pan the camera</dd><dt>Scroll wheel</dt><dd>Zoom in or out</dd></dl><p>Touch: drag with one finger to orbit. Use two fingers to pan, or pinch to zoom.</p><h3>Selected object</h3><p>Click the workspace or focus the selected-object controls to use shortcuts. Shortcuts pause while editing fields or viewing dialogs.</p><p>Numerical controls use centimeters and degrees. Enter or leave a field to apply a valid edit; Escape cancels unfinished input. Numerical positioning stays exact when snapping is on.</p><dl class="shortcut-list"><dt>Alt / Option + drag</dt><dd>Temporarily bypass all snapping</dd><dt>Ctrl / ⌘ + Z</dt><dd>Undo the last object edit</dd><dt>Ctrl / ⌘ + Shift + Z</dt><dd>Redo the last object edit</dd><dt><kbd>R</kbd></dt><dd>Switch Move / Rotate</dd><dt><kbd>X</kbd> <kbd>Y</kbd> <kbd>Z</kbd></dt><dd>Toggle the corresponding axis</dd><dt><kbd>+</kbd> / <kbd>−</kbd></dt><dd>Change handle size</dd><dt><kbd>C</kbd></dt><dd>Deselect the object</dd><dt>Delete / Backspace / <kbd>D</kbd></dt><dd>Remove the selected object</dd></dl></div>
             <div class="modal-footer"><button data-bs-dismiss="modal">Close</button></div>
         </div></div>
     </div>
