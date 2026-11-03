@@ -168,7 +168,6 @@ test('magnetic center alignment handles rotated objects and a second camera view
   expect((await appCall(page, 'snapshot'))[0].rotation).toEqual(
     before[0].rotation,
   );
-  await page.keyboard.press('Control+z');
   expect(await appCall(page, 'snapshot')).toEqual(before);
 });
 

@@ -28,6 +28,7 @@ async function setup() {
   const object = await actions.add('referenceBox', { dimensions: [2, 3, 5] });
   reference.position.set(3.25, 7.75, -12.125);
   object.position.set(-18.5, 23.25, 41.75);
+  actions.history.clear();
   const fixture = {
     scene,
     state,
@@ -42,8 +43,7 @@ async function setup() {
 }
 afterEach(() => {
   for (const { actions, factory } of fixtures.splice(0)) {
-    actions.transforms.dispose();
-    actions.reset();
+    actions.dispose();
     factory.disposeAll();
   }
 });

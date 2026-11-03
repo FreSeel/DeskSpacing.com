@@ -12,6 +12,7 @@ async function start(page) {
     );
     await app.ready;
     await app.actions.add('referenceBox', { dimensions: [3, 4, 5] });
+    app.actions.history.clear();
   });
   await expect(page.locator('#selectionNumericalTransforms')).toBeVisible();
 }

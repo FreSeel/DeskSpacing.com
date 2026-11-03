@@ -325,9 +325,10 @@ test('pointer cancellation ends the gesture, restores camera controls and settle
   await start(page);
   await fixture(page);
   await enable(page);
+  const before = await snapshot(page);
   const { end } = await beginDrag(page);
   await page.mouse.move(end.x, end.y, { steps: 8 });
-  const moved = await snapshot(page);
+  expect(await snapshot(page)).not.toEqual(before);
   await page
     .locator('#threeCanvas')
     .dispatchEvent('pointercancel', { pointerId: 1 });
@@ -346,7 +347,7 @@ test('pointer cancellation ends the gesture, restores camera controls and settle
   ).toEqual({ dragging: false, camera: true, undo: true });
   await page.mouse.move(end.x + 15, end.y + 15);
   await page.mouse.up();
-  expect(await snapshot(page)).toEqual(moved);
+  expect(await snapshot(page)).toEqual(before);
   const frames = await page.evaluate(async () => {
     const { app } = await import(
       new URL('./src/main.js', window.location.href)

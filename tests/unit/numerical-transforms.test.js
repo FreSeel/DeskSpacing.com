@@ -42,7 +42,11 @@ function setup(engine = THREE) {
     },
   };
   const actions = createActions({ state, selection, factory, invalidateScene });
-  const box = () => actions.add('referenceBox', { dimensions: [3, 4, 5] });
+  const box = async () => {
+    const object = await actions.add('referenceBox', { dimensions: [3, 4, 5] });
+    actions.history.clear();
+    return object;
+  };
   const fixture = {
     actions,
     transforms: actions.transforms,
@@ -65,8 +69,7 @@ afterEach(() => {
   for (const { actions, factory, disposeUnusedTemplate } of fixtures.splice(
     0,
   )) {
-    actions.transforms.dispose();
-    actions.reset();
+    actions.dispose();
     factory.disposeAll();
     // The synthetic loader template is unused in primitive-only cases.
     disposeUnusedTemplate();
@@ -118,7 +121,7 @@ it('applies a precise combined edit to the live object as one undoable, serializ
   expect(objectToRecord(object)).toEqual(after);
   await s.actions.restore(decodeSetup(encodeSetup([after])));
   expect(objectToRecord(s.state.objects[0])).toEqual(after);
-  expect(s.transforms.canUndo).toBe(false);
+  expect(s.transforms.canUndo).toBe(true);
 });
 
 it('preserves untouched axes and orientation, and never feeds rounded vertices or unit conversions back into edits', async () => {
@@ -253,6 +256,7 @@ it('resizes only custom desktop width/depth, preserving locks, thickness, offset
 it('measures catalog import wrappers and keeps shared model geometry read-only', async () => {
   const s = setup();
   const object = await s.actions.add('appleStudioDisplay');
+  s.actions.history.clear();
   const values = s.transforms.read(object, { unit: 'cm' });
   expect(values.dimensions.width).toBeCloseTo(140, 4);
   expect(values.dimensions.height).toBeCloseTo(75, 4);
