@@ -5,12 +5,7 @@ import {
 } from '../measurements/units.js';
 import { spacingLimits } from '../snapping/configuration.js';
 
-export function bindSnappingUI({
-  document,
-  measurements,
-  snapping,
-  transforms,
-}) {
+export function bindSnappingUI({ document, measurements, snapping }) {
   const menu = document.getElementById('snapMenu');
   const summary = menu.querySelector('summary');
   const enabled = document.getElementById('snapEnabled');
@@ -21,8 +16,6 @@ export function bindSnappingUI({
   const label = document.querySelector('label[for="snapSpacing"]');
   const error = document.getElementById('snapSpacingError');
   const status = document.getElementById('snapStatus');
-  const undo = document.getElementById('undoTransform');
-  const redo = document.getElementById('redoTransform');
   const cleanup = [];
   const listen = (target, name, callback) => {
     target.addEventListener(name, callback);
@@ -69,14 +62,6 @@ export function bindSnappingUI({
       error.hidden = false;
     }
   });
-  listen(undo, 'click', () => transforms.undo());
-  listen(redo, 'click', () => transforms.redo());
-  cleanup.push(
-    transforms.subscribe(() => {
-      undo.disabled = !transforms.canUndo;
-      redo.disabled = !transforms.canRedo;
-    }),
-  );
   cleanup.push(snapping.subscribe(render), measurements.subscribe(render));
   return {
     guidance(guidance, bypass) {

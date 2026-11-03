@@ -881,3 +881,12 @@
   stroke-dasharray: none;
   fill: none;
 }
+.planner-app .menu-popover .history-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.planner-app .history-button:disabled {
+  color: var(--color-disabled-text);
+  cursor: not-allowed;
+}

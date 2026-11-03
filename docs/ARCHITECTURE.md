@@ -559,22 +559,62 @@ toolbar disclosure contains a checkbox and numeric field; its label and theme
 colors show the enabled state. A temporary workspace badge shows snapping/bypass
 without scene objects, dimension annotations or GPU allocations.
 
-`src/state/transformActions.js` owns a bounded, session-only history of 100
-completed gestures or numerical edits. Empty clicks add nothing and intermediate
-pointer updates never create entries. Undo/redo restores position, Euler
-rotation/order, scale, and owned primitive geometry parameters, invalidates the
-scene and never re-snaps. Numerical edits and primitive resizing are documented
-in [NUMERICAL_TRANSFORMS.md](NUMERICAL_TRANSFORMS.md), with executed verification
-in [PRECISE_CONTROLS_EVALUATION.md](PRECISE_CONTROLS_EVALUATION.md).
-More-menu buttons and workspace-scoped
-Ctrl/Cmd+Z and Ctrl/Cmd+Shift+Z provide access; fields and dialogs retain native
-shortcuts. Adds, removals, replacements, desk shifts and resets clear this
-object-edit history via store subscriptions. An in-flight gesture ends if
-membership changes invalidate its origin/candidates. Failed asynchronous loads
-preserve current history. Pointer cancellation/blur completes the current gesture
-and restores camera input. Deletion/creation undo and history persistence are
-outside this foundation. Share links still serialize final live transforms in
-the unchanged legacy format; preferences are separate from projects.
+`src/state/history.js` owns one session-only history, bounded to 100 actions
+(configurable through `createActions({ historyLimit })`). It records before/after
+checkpoints of membership, desk offset, exact position, Euler rotation/order,
+scale, and owned primitive dimensions. Live Three.js transforms remain the source
+of truth. Checkpoints retain instance references and copy only small value arrays;
+they never clone geometries, textures, or model hierarchies. The store releases a
+detached instance after its last history reference expires, including redo
+invalidation, limit eviction and app disposal. This avoids asynchronous asset
+reloads and preserves UUIDs, names, metadata and unchanged object references.
+The trade-off is O(history length × scene size) value storage and retention of
+deleted objects' resources until eviction; the action limit is not a GPU byte cap.
+
+The small API is `transaction(label, synchronousEdit)` for atomic actions and
+`begin` / `commit` / `cancel` for gestures, plus `undo`, `redo`, availability
+getters, `subscribe`, `clear` and `dispose`. Nested synchronous transactions join
+the outer action. Load assets before opening a transaction. All geometry needed
+for restoration is allocated before applying any values; failed allocation keeps
+the scene and stacks intact. Restoration suppresses history recording, applies
+exact values without re-snapping, and invalidates pending asynchronous loads.
+Raw store edits outside an action invalidate history defensively.
+
+Supported actions are adds, deletion (keyboard and inspector), replacements
+(including custom material/dimension choices), desk replacement with accessory
+height shifts, setup clear/restore, numerical position/rotation/dimensions,
+precise spacing, and complete free/grid/magnetic/surface-snapped gestures.
+Unchanged edits preserve redo. Input fields commit on Enter/blur. Pointer
+cancellation or Escape rolls a gesture back without recording; window blur
+commits its current result and restores camera input. An asynchronous membership
+change finishes the active gesture before starting its own transaction. Initial
+URL/default loading establishes a baseline and is excluded from undo.
+
+Transform-only undo preserves selection, including a deliberate deselection.
+Across membership changes, selection stays on the selected object if it survives;
+otherwise the checkpoint's selected instance is picked if available, or selection
+is cleared. A transform-only undo does not change an existing selection. Cameras,
+menus, theme, measurement units and snapping preferences are excluded. No scene,
+renderer or canvas is recreated. Share links continue to serialize the final live
+scene using the unchanged legacy format; history is never saved in links/storage.
+
+The toolbar's More menu provides Lucide Undo/Redo buttons, disabled states,
+shortcut tooltips and accessible labels. Editor-wide history shortcuts support
+Ctrl/Cmd+Z, Ctrl/Cmd+Shift+Z and Ctrl+Y, including focus on catalog buttons. Editable fields and
+dialogs retain their native shortcuts; browser defaults are prevented only when
+an undo/redo succeeds. Listeners are removed on app disposal.
+
+No duplication command, scene-property sliders, or object scale gizmo currently
+exists. Future operations must use the action/transaction API; new editable
+metadata must extend checkpoint capture/application. Retained legacy HTML planners
+are unchanged. Numerical edits and primitive resizing are documented in
+[NUMERICAL_TRANSFORMS.md](NUMERICAL_TRANSFORMS.md). The earlier verification below
+predates centralized history; this implementation phase runs static checks only.
+QA should cover mixed operation ordering, eviction/disposal, failed loads and
+resize allocation, async completion during gestures, cancellation, keyboard/input
+scope, camera stability, and selection through membership restoration. The
+missing `drawerDesk` asset and legacy npm advisory remain open. Chromium coverage
+does not certify mobile, Safari or Firefox.
 
 Focused verification (Node 24.22.1, `npm ci`, Chromium installed):
 

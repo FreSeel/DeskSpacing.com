@@ -37,7 +37,7 @@ export function bindSnapping({
   function begin() {
     const object = controls.object;
     if (!object || !state.has(object)) return;
-    transforms.begin(object);
+    if (!transforms.begin(object)) return;
     gesture = {
       object,
       origin: object.getWorldPosition(object.position.clone()),
@@ -264,6 +264,15 @@ export function bindSnapping({
     gesture = null;
     onGuidance(null, false);
   }
+  function cancel() {
+    if (!gesture) return;
+    // Clear adapter context before restoration notifies membership observers.
+    gesture = null;
+    transforms.cancel();
+    controls.pointerUp(null);
+    view.controls.enabled = true;
+    onGuidance(null, false);
+  }
   function modifier(event) {
     const next = Boolean(event.altKey);
     if (next === bypass) return;
@@ -297,6 +306,12 @@ export function bindSnapping({
   // Do not cancel events: camera gestures and browser shortcuts keep working.
   listen(canvas, 'pointerdown', modifier, true);
   listen(canvas, 'pointermove', modifier, true);
+  listen(canvas, 'pointercancel', cancel, true);
+  listen(host, 'keydown', (event) => {
+    if (event.key !== 'Escape' || !gesture || event.isComposing) return;
+    cancel();
+    event.preventDefault();
+  });
   listen(host, 'keydown', modifier);
   listen(host, 'keyup', modifier);
   listen(host, 'blur', blur);

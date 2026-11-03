@@ -54,8 +54,8 @@
                 <details class="toolbar-menu" id="moreMenu">
                     <summary>More <span aria-hidden="true">⌄</span></summary>
                     <div class="menu-popover">
-                        <button id="undoTransform" disabled>Undo object edit</button>
-                        <button id="redoTransform" disabled>Redo object edit</button>
+                        <button id="undoTransform" type="button" class="history-button" aria-label="Undo" title="Undo (Cmd+Z / Ctrl+Z)" aria-keyshortcuts="Meta+Z Control+Z" data-workspace-shortcuts disabled><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-2"/></svg><span>Undo</span></button>
+                        <button id="redoTransform" type="button" class="history-button" aria-label="Redo" title="Redo (Cmd+Shift+Z / Ctrl+Shift+Z / Ctrl+Y)" aria-keyshortcuts="Meta+Shift+Z Control+Shift+Z Control+Y" data-workspace-shortcuts disabled><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9H10a6 6 0 0 0 0 12h2"/></svg><span>Redo</span></button>
                     <div class="theme-setting">
                         <label for="themePreference">Appearance</label>
                         <select id="themePreference" data-theme-select aria-describedby="themeStatus"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select>

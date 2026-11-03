@@ -67,7 +67,7 @@ export function createObjectFactory({ THREE, modelOptions }) {
   }
   // Actions validate the complete proposed record before entering this method.
   // Allocate before swapping, so an allocation failure retains the old geometry.
-  function resizePrimitive(object, dimensions) {
+  function preparePrimitiveResize(object, dimensions) {
     if (!primitiveDimensions(object))
       throw new Error('This object has no owned primitive geometry to resize.');
     const mesh = primitiveMeshes.get(object);
@@ -76,9 +76,24 @@ export function createObjectFactory({ THREE, modelOptions }) {
       object.userData.type,
       dimensions,
     );
-    const previous = mesh.geometry;
-    mesh.geometry = geometry;
-    previous.dispose();
+    let finished = false;
+    return {
+      commit() {
+        if (finished) return;
+        finished = true;
+        const previous = mesh.geometry;
+        mesh.geometry = geometry;
+        previous.dispose();
+      },
+      cancel() {
+        if (finished) return;
+        finished = true;
+        geometry.dispose();
+      },
+    };
+  }
+  function resizePrimitive(object, dimensions) {
+    preparePrimitiveResize(object, dimensions).commit();
   }
   function dispose(object) {
     if (released.has(object)) return;
@@ -95,6 +110,7 @@ export function createObjectFactory({ THREE, modelOptions }) {
     create,
     primitiveDimensions,
     resizePrimitive,
+    preparePrimitiveResize,
     dispose,
     disposeAll() {
       disposed = true;

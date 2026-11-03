@@ -3,26 +3,50 @@ import { deskOffsets } from '../catalog/products.js';
 import { validateRecords } from '../sharing/legacyCodec.js';
 import { createTransformActions } from './transformActions.js';
 import { createSpacingActions } from './spacingActions.js';
+import { createHistory, sameArray } from './history.js';
+import { objectToRecord } from '../sharing/sceneRecords.js';
 
 export function createActions({
   state,
   selection,
   factory,
   invalidateScene = () => {},
+  historyLimit = 100,
 }) {
+  const history = createHistory({
+    state,
+    selection,
+    factory,
+    invalidateScene,
+    limit: historyLimit,
+  });
   const transforms = createTransformActions({
     state,
     invalidateScene,
     factory,
+    history,
   });
   const spacing = createSpacingActions({ state, transforms });
-  function remove(object) {
+  function removeObject(object) {
     if (selection.pickedObject === object) selection.unselectPickedObject();
-    state.remove(object);
+    return state.remove(object);
   }
-  function reset() {
+  function clearObjects() {
     selection.unselectPickedObject();
     state.clear();
+  }
+  // A load can finish during a gesture. Commit its final live transform first;
+  // membership notifications then end the native gizmo and clear snap guides.
+  function edit(label, mutation) {
+    transforms.commit();
+    return history.transaction(label, mutation);
+  }
+  function remove(object) {
+    if (!state.has(object)) return false;
+    return edit('Delete object', () => removeObject(object));
+  }
+  function reset() {
+    return edit('Clear setup', clearObjects);
   }
   async function add(product, options = {}) {
     selection.pickEnabled = true;
@@ -48,29 +72,47 @@ export function createActions({
       factory.dispose(object);
       return null;
     }
-    // Allocate identity before removal, matching existing instance names.
-    state.add(object, record);
-    if (target) remove(target);
-    if (desk) {
-      const offset = deskOffsets[product];
-      const difference = offset - state.deskOffset;
-      for (const existing of state.objects) {
-        if (
-          existing !== object &&
-          !existing.userData.type.includes('Furniture')
-        )
-          existing.position.y += difference;
+    return edit(target ? 'Replace object' : 'Add object', () => {
+      // Allocate identity before removal, matching existing instance names.
+      state.add(object, record);
+      if (target) removeObject(target);
+      if (desk) {
+        const offset = deskOffsets[product];
+        const difference = offset - state.deskOffset;
+        for (const existing of state.objects) {
+          if (
+            existing !== object &&
+            !existing.userData.type.includes('Furniture')
+          )
+            existing.position.y += difference;
+        }
+        state.deskOffset = offset;
       }
-      state.deskOffset = offset;
-    }
-    // Inspect desks after creation; selection keeps their manipulation lock.
-    if (desk || !record.dimensions || !record.type.includes('NoSelect'))
-      selection.pick(object);
-    return object;
+      // Inspect desks after creation; selection keeps their manipulation lock.
+      if (desk || !record.dimensions || !record.type.includes('NoSelect'))
+        selection.pick(object);
+      return object;
+    });
   }
 
   async function restore(records) {
     validateRecords(records);
+    const current = state.objects.map(objectToRecord);
+    if (
+      records.length === current.length &&
+      records.every((record, index) => {
+        const previous = current[index];
+        return (
+          record.type === previous.type &&
+          record.product === previous.product &&
+          record.texture === previous.texture &&
+          ['position', 'rotation', 'dimensions'].every((key) =>
+            sameArray(record[key] || [], previous[key] || []),
+          )
+        );
+      })
+    )
+      return false;
     const generation = state.invalidate();
     // Load into temporary ownership; a failed asset leaves the current setup intact.
     const results = await Promise.allSettled(
@@ -83,15 +125,17 @@ export function createActions({
       if (failed && generation === state.generation) throw failed.reason;
       return false;
     }
-    reset();
-    selection.pickEnabled = true;
-    records.forEach((record, index) => {
-      const object = state.add(results[index].value, record);
-      if (isDesk(record.product))
-        state.deskOffset = deskOffsets[record.product];
-      if (!record.dimensions) selection.pick(object);
+    return edit('Restore setup', () => {
+      clearObjects();
+      selection.pickEnabled = true;
+      records.forEach((record, index) => {
+        const object = state.add(results[index].value, record);
+        if (isDesk(record.product))
+          state.deskOffset = deskOffsets[record.product];
+        if (!record.dimensions) selection.pick(object);
+      });
+      return true;
     });
-    return true;
   }
   async function initialize() {
     // Independent requests preserve the responsive default-loading behavior.
@@ -102,5 +146,20 @@ export function createActions({
     const failed = results.find((result) => result.status === 'rejected');
     if (failed) throw failed.reason;
   }
-  return { add, remove, reset, restore, initialize, transforms, spacing };
+  function dispose() {
+    transforms.dispose();
+    history.dispose();
+    clearObjects();
+  }
+  return {
+    add,
+    remove,
+    reset,
+    restore,
+    initialize,
+    transforms,
+    spacing,
+    history,
+    dispose,
+  };
 }

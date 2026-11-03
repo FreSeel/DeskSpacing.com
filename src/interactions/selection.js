@@ -43,8 +43,9 @@ export function createSelection({
     deletePicked() {
       if (selection.pickedObject && selection.pickEnabled) {
         const object = selection.pickedObject;
-        selection.unselectPickedObject();
         removeObject(object);
+        // The action normally clears selection, after capturing history.
+        if (selection.pickedObject === object) selection.unselectPickedObject();
       }
       return getObjects();
     },

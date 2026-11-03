@@ -22,6 +22,7 @@ import { createSnappingPreference } from '../snapping/preference.js';
 import { bindSnapping } from '../interactions/snapping.js';
 import { bindSnappingUI } from '../ui/snappingUI.js';
 import { bindSnappingGuides } from '../scene/snappingGuides.js';
+import { bindHistoryUI } from '../ui/historyUI.js';
 
 export function createApp({ THREE, host, document }) {
   host.performance.mark('planner:init-start');
@@ -57,7 +58,7 @@ export function createApp({ THREE, host, document }) {
     camera: view.camera,
     transformControls: view.transformControls,
     getObjects: () => state.objects,
-    removeObject: (object) => state.remove(object),
+    removeObject: (object) => actions.remove(object),
   });
   const actions = createActions({
     state,
@@ -65,12 +66,13 @@ export function createApp({ THREE, host, document }) {
     factory,
     invalidateScene: view.invalidateScene,
   });
+  // URL/default loading establishes the baseline, not a user editing action.
+  actions.history.setEnabled(false);
   const snapping = createSnappingPreference(host);
   const snappingUI = bindSnappingUI({
     document,
     measurements,
     snapping,
-    transforms: actions.transforms,
   });
   const snappingGuides = bindSnappingGuides({ document, view });
   const sharing = createSharing({
@@ -100,7 +102,11 @@ export function createApp({ THREE, host, document }) {
     () => snappingGuides.dispose(),
     () => snappingUI.dispose(),
     () => snapping.dispose(),
-    () => actions.transforms.dispose(),
+    bindHistoryUI({
+      document,
+      history: actions.history,
+      onError: feedback.error,
+    }),
     bindDimensionAnnotations({
       document,
       view,
@@ -145,6 +151,8 @@ export function createApp({ THREE, host, document }) {
       selection,
       transformControls: view.transformControls,
       transforms: actions.transforms,
+      history: actions.history,
+      onError: feedback.error,
     }),
     bindPlannerUI({
       document,
@@ -185,6 +193,7 @@ export function createApp({ THREE, host, document }) {
       if (disposed) return;
       feedback.empty(state.objects.length === 0);
       feedback.loading(false);
+      actions.history.setEnabled(true);
       canvas.setAttribute('aria-busy', 'false');
       host.performance.mark('planner:assets-ready');
     });
@@ -192,7 +201,7 @@ export function createApp({ THREE, host, document }) {
     if (disposed) return;
     disposed = true;
     cleanup.forEach((remove) => remove());
-    actions.reset();
+    actions.dispose();
     factory.disposeAll();
     feedback.dispose();
     view.dispose();

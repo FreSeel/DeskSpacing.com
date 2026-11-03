@@ -8,12 +8,69 @@ export function createObjectStore({
   const objects = [];
   let generation = 0;
   let deskOffset = 0;
+  const retained = new Map();
+  let batchDepth = 0;
+  let dirty = false;
   const listeners = new Set();
   const changed = () => {
+    if (batchDepth) {
+      dirty = true;
+      return;
+    }
     onChange();
     listeners.forEach((update) => update());
   };
   return {
+    // History owns references, not scene membership. Detached instances are
+    // released only after their last history reference goes away.
+    retain(object) {
+      retained.set(object, (retained.get(object) || 0) + 1);
+    },
+    release(object) {
+      const count = retained.get(object);
+      if (!count) return;
+      if (count > 1) retained.set(object, count - 1);
+      else {
+        retained.delete(object);
+        if (!objects.includes(object)) disposeObject(object);
+      }
+    },
+    batch(edit) {
+      batchDepth++;
+      try {
+        return edit();
+      } finally {
+        batchDepth--;
+        if (!batchDepth && dirty) {
+          dirty = false;
+          changed();
+        }
+      }
+    },
+    restoreMembership(entries) {
+      if (
+        entries.length === objects.length &&
+        entries.every(
+          ({ object, parent }, index) =>
+            object === objects[index] && object.parent === parent,
+        )
+      )
+        return;
+      this.batch(() => {
+        const wanted = new Set(entries.map(({ object }) => object));
+        for (const object of [...objects])
+          if (!wanted.has(object)) this.remove(object);
+        for (const { object, parent } of entries) {
+          if (object.parent !== parent) (parent || scene).add(object);
+        }
+        objects.splice(
+          0,
+          objects.length,
+          ...entries.map(({ object }) => object),
+        );
+        changed();
+      });
+    },
     subscribe(update) {
       listeners.add(update);
       return () => listeners.delete(update);
@@ -58,8 +115,8 @@ export function createObjectStore({
       const index = objects.indexOf(object);
       if (index < 0) return false;
       objects.splice(index, 1);
-      scene.remove(object);
-      disposeObject(object);
+      object.removeFromParent();
+      if (!retained.has(object)) disposeObject(object);
       changed();
       return true;
     },

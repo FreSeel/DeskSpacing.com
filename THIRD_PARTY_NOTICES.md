@@ -28,6 +28,35 @@ The audit preserved existing author/template credits and did not delete original
 fork still contains upstream analytics and contact references; these need an
 explicit ownership/privacy decision before a public fork launch.
 
+## Lucide history icons
+
+- Files: inline `undo-2` and `redo-2` SVG paths in `mainApp.html`.
+- Creator: Lucide Icons and Contributors.
+- Sources: https://github.com/lucide-icons/lucide/blob/main/icons/undo-2.svg
+  and https://github.com/lucide-icons/lucide/blob/main/icons/redo-2.svg.
+- License: ISC; verified against the upstream
+  https://raw.githubusercontent.com/lucide-icons/lucide/main/LICENSE on 2026-11-03.
+- Modifications: embedded inline with accessible button labels and existing
+  theme-controlled size/stroke. No icon runtime dependency was added.
+- Distribution: this notice is copied into `dist/` by `scripts/legacy-site.js`.
+
+```text
+ISC License
+
+Copyright (c) 2026 Lucide Icons and Contributors
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+```
+
 ## Apple Pro Display XDR
 
 - File: `public/models/GLTFs/monitors/16 9 monitor/apple_pro_display_xdr.glb`.
