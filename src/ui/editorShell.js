@@ -30,8 +30,11 @@ export function bindEditorShell({ document, host, transformControls }) {
     document.querySelector('.skip-link').inert = false;
     const target = returnFocus.get(event.target);
     host.queueMicrotask(() => {
-      if (!disposed && target?.isConnected)
+      if (disposed) return;
+      if (target?.getClientRects().length)
         target.focus({ preventScroll: true });
+      else if (target?.id === 'openImport')
+        document.getElementById('openLibrary').focus({ preventScroll: true });
     });
   });
   const motion = host.matchMedia('(prefers-reduced-motion: reduce)');

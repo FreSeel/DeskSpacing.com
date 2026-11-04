@@ -8,7 +8,6 @@ import {
 
 const modelOrigin = 'https://models.test';
 const projectId = 'Imported setup';
-const modelBytes = [...triangleGlb()];
 
 test('renders imported models and restores a saved project after reload', async ({
   page,
@@ -42,17 +41,23 @@ test('renders imported models and restores a saved project after reload', async 
     });
   });
   await page.goto('mainApp.html?customSetup=%5B%20%5D');
+  await page.locator('#openImport').click();
+  const dialog = page.getByRole('dialog', { name: 'Import a 3D model' });
+  await dialog.getByLabel('Model file').setInputFiles({
+    name: 'Local object.glb',
+    mimeType: 'model/gltf-binary',
+    buffer: Buffer.from(triangleGlb()),
+  });
+  await dialog.getByRole('button', { name: 'Import', exact: true }).click();
+  await expect(dialog).toBeHidden();
+  await expect(page.locator('#selectionTitle')).toHaveText('Local object.glb');
   const saved = await page.evaluate(
-    async ({ modelBytes, modelOrigin, projectId }) => {
+    async ({ modelOrigin, projectId }) => {
       const { app } = await import(
         new URL('./src/main.js', window.location.href)
       );
       await app.ready;
-      const local = new window.File(
-        [Uint8Array.from(modelBytes)],
-        'Local object.glb',
-      );
-      const imported = await app.modelImports.importModelFromFile(local).result;
+      const imported = app.selection.pickedObject;
       app.actions.transforms.setPosition(imported, { x: 7 });
       app.actions.transforms.setRotationDegrees(imported, { y: 20 });
       app.actions.transforms.setScale(imported, 1.25);
@@ -74,7 +79,7 @@ test('renders imported models and restores a saved project after reload', async 
         textureWidth: mesh.material.map.image.width,
       };
     },
-    { modelBytes, modelOrigin, projectId },
+    { modelOrigin, projectId },
   );
   expect(saved.beforeSave).toEqual([]);
   expect(saved.sharedGeometry).toBe(true);

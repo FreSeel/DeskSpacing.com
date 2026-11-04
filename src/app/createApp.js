@@ -1,3 +1,4 @@
+import { bindImportDialog } from '../ui/importDialog.js';
 import { createImportRegistry } from '../models/importRegistry.js';
 import { createModelImports } from '../models/modelImports.js';
 import { createLocalProjects } from '../projects/localProjects.js';
@@ -204,6 +205,14 @@ export function createApp({ THREE, host, document }) {
       host.performance.mark('planner:assets-ready');
     });
   const modelImports = createModelImports({ state, actions, factory, ready });
+  cleanup.push(
+    bindImportDialog({
+      document,
+      modelImports,
+      feedback,
+      close: (modal) => host.bootstrap.Modal.getInstance(modal).hide(),
+    }),
+  );
   const projects = createLocalProjects({
     state,
     actions,

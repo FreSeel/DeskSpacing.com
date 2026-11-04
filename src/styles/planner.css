@@ -890,3 +890,101 @@
   color: var(--color-disabled-text);
   cursor: not-allowed;
 }
+
+.planner-app .library-actions {
+  padding: 10px 20px;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+}
+.planner-app .library-actions button {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.planner-app .import-methods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin-bottom: 12px;
+}
+.planner-app .import-methods label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  cursor: pointer;
+}
+.planner-app .import-methods input[type='radio'] {
+  appearance: auto;
+  accent-color: var(--color-accent);
+  width: 16px;
+  min-height: auto;
+  padding: 0;
+}
+.planner-app .import-source {
+  min-height: 178px;
+  display: grid;
+}
+.planner-app .import-source > div {
+  grid-area: 1 / 1;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+}
+.planner-app .import-source > [inert] {
+  visibility: hidden;
+}
+.planner-app #importDrop[data-dragging] {
+  border-color: var(--color-accent);
+  background: var(--color-selected);
+}
+.planner-app .import-source input {
+  margin-block: 6px 8px;
+}
+.planner-app #importModal .import-source p {
+  margin-bottom: 0;
+}
+.planner-app #importFileDetails {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+.planner-app #importFileSummary {
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+.planner-app #importModal .import-note {
+  margin: 12px 0 0;
+  font-size: 13px;
+}
+.planner-app #importProgress:not(:empty),
+.planner-app #importError:not(:empty) {
+  margin-top: 10px;
+}
+.planner-app #importProgress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.planner-app #importProgress .spinner-border {
+  width: 1rem;
+  height: 1rem;
+}
+.planner-app .planner-feedback[data-success] {
+  color: var(--color-text);
+  background: var(--color-surface);
+  border-color: var(--color-border);
+}
+.planner-app #importError:empty {
+  padding: 0;
+  border: 0;
+  margin: 0;
+}

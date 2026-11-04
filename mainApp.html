@@ -89,6 +89,9 @@
                     <ul id="catalogGrid" class="catalog-grid"></ul>
                     <div id="catalogEmpty" hidden><p>No objects match your search.</p><button id="clearFilters">Clear filters</button></div>
                 </div>
+                <div class="library-actions">
+                    <button id="openImport" type="button" aria-haspopup="dialog" data-bs-toggle="modal" data-bs-target="#importModal"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 16V3m-5 5 5-5 5 5M4 16v5h16v-5"/></svg>Import</button>
+                </div>
                 <p class="library-footer">11 categories · Configure sizes in inches</p>
             </aside>
             <section id="rightSideContainer" aria-label="3D workspace" data-workspace-shortcuts>
@@ -127,6 +130,48 @@
         </main>
     </div>
     <p id="selectionStatus" class="sr-only" role="status" aria-live="polite"></p>
+    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="modal-content" id="importForm" novalidate>
+                <div class="modal-header">
+                    <h2 class="modal-title" id="importTitle">Import a 3D model</h2>
+                    <button type="button" class="icon-button" data-bs-dismiss="modal" aria-label="Close">×</button>
+                </div>
+                <div class="modal-body">
+                    <fieldset id="importInputs">
+                        <legend class="eyebrow">Import method</legend>
+                        <div class="import-methods">
+                            <label><input type="radio" name="importMethod" value="file" checked> Upload file</label>
+                            <label><input type="radio" name="importMethod" value="url"> Import from URL</label>
+                        </div>
+                        <div class="import-source">
+                            <div id="importDrop">
+                                <label for="importFile">Model file</label>
+                                <input id="importFile" type="file" accept=".glb,.gltf" aria-describedby="importFileHint importError">
+                                <p id="importFileHint" class="muted">Choose or drop one .glb or self-contained .gltf file. Up to 32 MiB.</p>
+                                <div id="importFileDetails" hidden>
+                                    <span id="importFileSummary" role="status"></span>
+                                    <button id="clearImportFile" type="button">Clear file</button>
+                                </div>
+                            </div>
+                            <div id="importUrlPanel" inert>
+                                <label for="importUrl">Direct model URL</label>
+                                <input id="importUrl" type="url" placeholder="https://example.com/model.glb" maxlength="4096" spellcheck="false" autocomplete="off" aria-describedby="importUrlHint importError">
+                                <p id="importUrlHint" class="muted">Use a direct .glb or .gltf link. Sketchfab and other model pages won’t work. The host must allow cross-origin requests (CORS).</p>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <p class="import-note muted">Only import models you have permission to use. Unsaved imports are temporary. Browser-local project saves reopen in the same browser. Share links support catalog objects.</p>
+                    <div id="importError" class="card-error" role="alert"></div>
+                    <div id="importProgress" role="status"></div>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancelImport" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <button id="submitImport" type="submit" class="button-primary" disabled>Import</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document"><div class="modal-content">
             <div class="modal-header"><h2 class="modal-title" id="saveModalLabel">Share / Save your setup</h2><button class="icon-button" data-bs-dismiss="modal" aria-label="Close">×</button></div>

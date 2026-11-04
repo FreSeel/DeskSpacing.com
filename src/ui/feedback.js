@@ -32,7 +32,15 @@ export function createFeedback(document) {
       message.hidden = true;
       message.textContent = '';
     },
+    success(text) {
+      message.setAttribute('role', 'status');
+      message.setAttribute('data-success', '');
+      message.textContent = text;
+      message.hidden = false;
+    },
     error(error) {
+      message.setAttribute('role', 'alert');
+      message.removeAttribute('data-success');
       message.textContent =
         error.message || 'The setup could not be updated. Please try again.';
       message.hidden = false;

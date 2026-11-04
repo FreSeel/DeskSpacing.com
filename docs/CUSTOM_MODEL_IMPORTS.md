@@ -1,6 +1,6 @@
 # Custom model imports
 
-Phase 1 adds services to the modern planner. The existing inspector displays the imported filename, dimensions and optional attribution or license. A missing asset appears as a selectable wireframe marker with its failure reason. The import dialog and local project controls are reserved for the UI phase.
+Phase 1 adds services to the modern planner. The existing inspector displays the imported filename, dimensions and optional attribution or license. A missing asset appears as a selectable wireframe marker with its failure reason. Open **Objects** and choose **Import** to upload a file or enter a direct model URL. Browser-local project management is available through the planner API.
 
 ## Planner API
 
