@@ -34,7 +34,7 @@ export function createTransformActions({
     const after = {
       position: record.position,
       rotation: [...record.rotation, object.rotation.order],
-      scale: [...before.scale],
+      scale: record.scale || before.scale,
       dimensions: before.dimensions ? record.dimensions : null,
     };
     if (sameValues(before, after)) return false;
@@ -58,6 +58,11 @@ export function createTransformActions({
       update(object, { position }, options),
     setRotationDegrees: (object, rotationDegrees) =>
       update(object, { rotationDegrees }),
+    setScale: (object, scale) =>
+      update(object, {
+        scale:
+          typeof scale === 'number' ? { x: scale, y: scale, z: scale } : scale,
+      }),
     setDimensions: (object, dimensions, options) =>
       update(object, { dimensions }, options),
     // Compatibility aliases; there is only one history for all editing actions.

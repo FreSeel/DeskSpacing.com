@@ -8,7 +8,11 @@ import {
   degreesToRadians,
 } from '../measurements/units.js';
 import { objectToRecord } from '../sharing/sceneRecords.js';
-import { limits, validateRecords } from '../sharing/legacyCodec.js';
+import { limits } from '../sharing/legacyCodec.js';
+import {
+  importedType,
+  validateProjectRecords,
+} from '../projects/projectRecords.js';
 
 const axes = ['x', 'y', 'z'];
 const dimensionAxes = { width: 'x', height: 'y', depth: 'z' };
@@ -90,6 +94,9 @@ export function createNumericalTransforms({ factory } = {}) {
       position: movable && invertibleParent(object) ? [...axes] : [],
       rotationDegrees: movable ? [...axes] : [],
       dimensions,
+      ...(movable && object.userData.type === importedType
+        ? { scale: [...axes] }
+        : {}),
     };
   }
 
@@ -132,6 +139,13 @@ export function createNumericalTransforms({ factory } = {}) {
         axes.map((axis) => [axis, radiansToDegrees(object.rotation[axis])]),
       ),
       dimensions,
+      ...(object.userData.type === importedType
+        ? {
+            scale: Object.fromEntries(
+              axes.map((axis) => [axis, object.scale[axis]]),
+            ),
+          }
+        : {}),
       capabilities: capabilities(object),
     };
   }
@@ -142,13 +156,17 @@ export function createNumericalTransforms({ factory } = {}) {
     const unit = unitOption(options);
     const sections = patchFields(
       patch,
-      ['position', 'rotationDegrees', 'dimensions'],
+      ['position', 'rotationDegrees', 'dimensions', 'scale'],
       'transformation',
     );
     const allowed = capabilities(object);
     const record = objectToRecord(object);
     for (const section of sections) {
-      const fields = patchFields(patch[section], allowed[section], section);
+      const fields = patchFields(
+        patch[section],
+        allowed[section] || [],
+        section,
+      );
       for (const field of fields) finite(patch[section][field], field);
       if (section === 'position' && fields.length) {
         const world = object.getWorldPosition(new Vector3());
@@ -177,6 +195,9 @@ export function createNumericalTransforms({ factory } = {}) {
           if (value !== radiansToDegrees(object.rotation[axis]))
             record.rotation[axes.indexOf(axis)] = degreesToRadians(value);
         }
+      } else if (section === 'scale') {
+        for (const axis of fields)
+          record.scale[axes.indexOf(axis)] = patch.scale[axis];
       } else if (section === 'dimensions') {
         for (const name of fields) {
           const value = patch.dimensions[name];
@@ -187,7 +208,7 @@ export function createNumericalTransforms({ factory } = {}) {
         }
       }
     }
-    validateRecords([record]);
+    validateProjectRecords([record]);
     return record;
   }
   return { read, prepare, capabilities };

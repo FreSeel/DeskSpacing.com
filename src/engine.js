@@ -8,6 +8,7 @@ export {
   HemisphereLight,
   LinearSRGBColorSpace,
   Mesh,
+  MeshBasicMaterial,
   MeshLambertMaterial,
   OctahedronGeometry,
   PCFShadowMap,

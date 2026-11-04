@@ -1,10 +1,16 @@
 import { createRecord, defaults, isDesk } from '../catalog/configuration.js';
 import { deskOffsets } from '../catalog/products.js';
-import { validateRecords } from '../sharing/legacyCodec.js';
+import { limits, validateRecords } from '../sharing/legacyCodec.js';
 import { createTransformActions } from './transformActions.js';
 import { createSpacingActions } from './spacingActions.js';
 import { createHistory, sameArray } from './history.js';
 import { objectToRecord } from '../sharing/sceneRecords.js';
+import {
+  importedType,
+  validateProjectRecords,
+} from '../projects/projectRecords.js';
+import { createSurfaceGeometry } from '../snapping/surfaceGeometry.js';
+import { supportsPosition } from '../snapping/surface.js';
 
 export function createActions({
   state,
@@ -95,6 +101,63 @@ export function createActions({
     });
   }
 
+  const surfaces = createSurfaceGeometry();
+  function importPosition() {
+    const position = { x: 0, y: 0, z: -57 };
+    const origin = { x: 0, y: 0, z: 0 };
+    const desk = state.objects.find((object) =>
+      isDesk(object.userData.objectName),
+    );
+    const floor = state.objects.find(
+      (object) => object.userData.objectName === 'floor',
+    );
+    const target =
+      (desk && surfaces.target(desk)) || (floor && surfaces.target(floor));
+    if (!target)
+      return [position.x, desk ? 31.7 + state.deskOffset : 0, position.z];
+    if (
+      !supportsPosition(target, { center: origin, origin, minY: 0 }, position)
+    ) {
+      const [a, b, c] = target.triangles[0];
+      position.x = (a.x + b.x + c.x) / 3;
+      position.z = (a.z + b.z + c.z) / 3;
+    }
+    return [position.x, target.height, position.z];
+  }
+
+  async function addImported(
+    record,
+    { blob, signal, place, target, duplicate } = {},
+  ) {
+    validateProjectRecords([record]);
+    const generation = state.generation;
+    const object = await factory.createImported(record, { blob, signal });
+    try {
+      signal.throwIfAborted();
+      if (
+        generation !== state.generation ||
+        (target && !state.has(target)) ||
+        (duplicate && !state.has(duplicate))
+      )
+        return null;
+      if (!target && state.objects.length >= limits.objects)
+        throw new Error('The project has reached its object limit.');
+      return edit(
+        target ? 'Recover model' : place ? 'Import model' : 'Duplicate model',
+        () => {
+          if (place) record = { ...record, position: importPosition() };
+          if (target) removeObject(target);
+          state.add(object, record);
+          selection.pickEnabled = true;
+          selection.pick(object);
+          return object;
+        },
+      );
+    } finally {
+      if (!state.has(object)) factory.dispose(object);
+    }
+  }
+
   async function restore(records) {
     validateRecords(records);
     const current = state.objects.map(objectToRecord);
@@ -113,29 +176,74 @@ export function createActions({
       })
     )
       return false;
-    const generation = state.invalidate();
-    // Load into temporary ownership; a failed asset leaves the current setup intact.
-    const results = await Promise.allSettled(
-      records.map((record) => factory.create(record)),
+    return restoreRecords(
+      records,
+      (record) => factory.create(record),
+      state.invalidate(),
     );
-    const failed = results.find((result) => result.status === 'rejected');
-    if (generation !== state.generation || failed) {
-      for (const result of results)
-        if (result.status === 'fulfilled') factory.dispose(result.value);
-      if (failed && generation === state.generation) throw failed.reason;
-      return false;
-    }
-    return edit('Restore setup', () => {
-      clearObjects();
-      selection.pickEnabled = true;
-      records.forEach((record, index) => {
-        const object = state.add(results[index].value, record);
-        if (isDesk(record.product))
-          state.deskOffset = deskOffsets[record.product];
-        if (!record.dimensions) selection.pick(object);
+  }
+
+  function restoreProject(records, { files, signal, generation }) {
+    validateProjectRecords(records);
+    return restoreRecords(
+      records,
+      (record) =>
+        record.type === importedType
+          ? factory.createImported(record, {
+              blob: files.get(record.asset.id),
+              signal,
+              allowMissing: true,
+            })
+          : factory.create(record),
+      generation,
+      signal,
+      4,
+    );
+  }
+
+  async function restoreRecords(
+    records,
+    create,
+    generation,
+    signal,
+    batchSize = records.length || 1,
+  ) {
+    const loaded = [];
+    const stale = () => generation !== state.generation || signal?.aborted;
+    let committed = false;
+    try {
+      // Stage instances in temporary ownership until the whole restore is ready.
+      // Limit concurrent downloads when restoring projects with external assets.
+      for (let start = 0; start < records.length; start += batchSize) {
+        if (stale()) return false;
+        const results = await Promise.allSettled(
+          records.slice(start, start + batchSize).map(create),
+        );
+        for (const result of results)
+          if (result.status === 'fulfilled') loaded.push(result.value);
+        if (stale()) return false;
+        const failure = results.find((result) => result.status === 'rejected');
+        if (failure) throw failure.reason;
+      }
+      if (stale()) return false;
+      committed = edit('Restore setup', () => {
+        clearObjects();
+        selection.pickEnabled = true;
+        records.forEach((record, index) => {
+          const object = state.add(loaded[index], record);
+          if (isDesk(record.product))
+            state.deskOffset = deskOffsets[record.product];
+          if (!record.dimensions && !object.userData.missingAsset)
+            selection.pick(object);
+        });
+        return true;
       });
-      return true;
-    });
+      return committed;
+    } finally {
+      if (!committed)
+        for (const object of loaded)
+          if (!state.has(object)) factory.dispose(object);
+    }
   }
   async function initialize() {
     // Independent requests preserve the responsive default-loading behavior.
@@ -153,6 +261,8 @@ export function createActions({
   }
   return {
     add,
+    addImported,
+    restoreProject,
     remove,
     reset,
     restore,

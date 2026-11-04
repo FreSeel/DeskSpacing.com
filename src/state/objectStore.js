@@ -1,3 +1,5 @@
+import { importedType } from '../projects/projectRecords.js';
+
 // Owns membership and identity. Three.js transforms remain the source of truth;
 // saving takes a plain-data snapshot rather than maintaining a second mutable copy.
 export function createObjectStore({
@@ -12,6 +14,12 @@ export function createObjectStore({
   let batchDepth = 0;
   let dirty = false;
   const listeners = new Set();
+  const invalidations = new Set();
+  function invalidate() {
+    generation++;
+    invalidations.forEach((listener) => listener());
+    return generation;
+  }
   const changed = () => {
     if (batchDepth) {
       dirty = true;
@@ -88,20 +96,29 @@ export function createObjectStore({
       deskOffset = value;
       changed();
     },
-    invalidate() {
-      return ++generation;
+    invalidate,
+    subscribeInvalidation(listener) {
+      invalidations.add(listener);
+      return () => invalidations.delete(listener);
     },
     has(object) {
       return objects.includes(object);
     },
     add(object, record) {
-      let next = 0;
-      for (const existing of objects) {
-        if (existing.userData.objectName === record.product) {
-          next = Math.max(next, Number(existing.name.split('-').at(-1)) + 1);
+      if (record.type === importedType) {
+        object.name = record.asset.filename;
+        object.userData.objectId = record.objectId;
+        object.userData.asset = Object.freeze({ ...record.asset });
+        object.scale.fromArray(record.scale);
+      } else {
+        let next = 0;
+        for (const existing of objects) {
+          if (existing.userData.objectName === record.product) {
+            next = Math.max(next, Number(existing.name.split('-').at(-1)) + 1);
+          }
         }
+        object.name = `${record.product}-${next}`;
       }
-      object.name = `${record.product}-${next}`;
       object.userData.type = record.type;
       object.userData.objectName = record.product;
       object.position.set(...record.position);
@@ -121,7 +138,7 @@ export function createObjectStore({
       return true;
     },
     clear() {
-      generation++;
+      invalidate();
       for (const object of [...objects]) this.remove(object);
       deskOffset = 0;
       changed();

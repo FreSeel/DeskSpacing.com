@@ -1,13 +1,16 @@
-function collectResources(root) {
-  const resources = new Set();
-  root.traverse((object) => {
+function collectMaterial(material, resources) {
+  resources.add(material);
+  for (const value of Object.values(material)) {
+    if (value?.isTexture) resources.add(value);
+  }
+}
+
+function collectResources(root, resources = new Set()) {
+  root?.traverse((object) => {
     if (object.geometry) resources.add(object.geometry);
     if (object.skeleton) resources.add(object.skeleton);
     for (const material of [object.material].flat().filter(Boolean)) {
-      resources.add(material);
-      for (const value of Object.values(material)) {
-        if (value?.isTexture) resources.add(value);
-      }
+      collectMaterial(material, resources);
     }
   });
   return resources;
@@ -33,9 +36,14 @@ export function estimateResourceBytes(root) {
   return bytes;
 }
 
-export function disposeResources(root) {
+export function disposeResources(root, additional = [], decodedImages = []) {
   const resources = collectResources(root);
-  const images = new Set();
+  for (const resource of additional) {
+    if (resource.isObject3D) collectResources(resource, resources);
+    else if (resource.isMaterial) collectMaterial(resource, resources);
+    else resources.add(resource);
+  }
+  const images = new Set(decodedImages.filter((image) => image.close));
   for (const resource of resources) {
     if (resource.isTexture && resource.image?.close) images.add(resource.image);
   }

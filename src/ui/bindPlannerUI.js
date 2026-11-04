@@ -91,9 +91,11 @@ export function bindPlannerUI({
   ))
     listen(button, 'click', resetCamera);
   listen(document.getElementById('saveModalButton'), 'click', () => {
+    const link = document.getElementById('customLinkForm');
     try {
-      document.getElementById('customLinkForm').value = sharing.createLink();
+      link.value = sharing.createLink();
     } catch (error) {
+      link.value = '';
       feedback.error(error);
     }
   });

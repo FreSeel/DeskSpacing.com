@@ -1,5 +1,5 @@
 import { formatMeasurementText } from '../measurements/units.js';
-import { describeProduct } from '../catalog/presentation.js';
+import { describeObject } from './objectPresentation.js';
 import { createTransformCommands } from '../interactions/commands.js';
 import { thumbnail } from './dom.js';
 
@@ -68,7 +68,7 @@ export function bindSelectionPanel({
         'Selection cleared.';
       return;
     }
-    const info = describeProduct(object.userData.objectName);
+    const info = describeObject(object);
     if (info.id === 'customDesk') {
       const texture = object.children[0]?.material?.name;
       const material = info.select.options.find(
@@ -83,7 +83,8 @@ export function bindSelectionPanel({
     document.getElementById('selectionVariation').textContent =
       formatMeasurementText(info.variation, measurements.unit);
     preview.replaceChildren(thumbnail(document, info.thumbnail, info.name));
-    document.getElementById('selectionInstance').textContent = object.name;
+    document.getElementById('selectionInstance').textContent =
+      object.userData.objectId || object.name;
     const locked = object.userData.type.includes('NoSelect');
     document.getElementById('selectionTransforms').hidden = locked;
     document.getElementById('selectionLocked').hidden = !locked;
@@ -122,7 +123,7 @@ export function bindSelectionPanel({
   const unsubscribeUnits = measurements.subscribe(() => {
     const object = selection.pickedObject;
     if (!object) return;
-    const info = describeProduct(object.userData.objectName);
+    const info = describeObject(object);
     if (info.id !== 'customDesk')
       document.getElementById('selectionVariation').textContent =
         formatMeasurementText(info.variation, measurements.unit);

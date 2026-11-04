@@ -123,6 +123,7 @@ export function createSurfaceGeometry() {
     };
   }
   return {
+    target,
     prepare(object, objects, movingObjects = new Set([object])) {
       return {
         moving: moving(object),

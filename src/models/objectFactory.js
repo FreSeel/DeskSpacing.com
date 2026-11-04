@@ -7,11 +7,12 @@ import {
   readPrimitiveDimensions,
 } from './primitiveGeometry.js';
 
-export function createObjectFactory({ THREE, modelOptions }) {
+export function createObjectFactory({ THREE, modelOptions, imports }) {
   const models = createModelLoader(modelOptions);
   const textureLoader = new THREE.TextureLoader();
   const ownedResources = new WeakMap();
   const primitiveMeshes = new WeakMap();
+  const importedFiles = new WeakMap();
   const released = new WeakSet();
   let disposed = false;
   async function create(record) {
@@ -51,6 +52,39 @@ export function createObjectFactory({ THREE, modelOptions }) {
     const object = new THREE.Group();
     object.add(mesh);
     primitiveMeshes.set(object, mesh);
+    return object;
+  }
+  async function createImported(
+    record,
+    { blob, signal, allowMissing = false },
+  ) {
+    if (disposed) throw new Error('Object factory has been disposed.');
+    let object;
+    try {
+      if (record.asset.kind === 'local' && !blob)
+        throw new Error('The original local model file is missing.');
+      const instance = await imports.acquire(record.asset, blob, signal);
+      object = instance.object;
+      ownedResources.set(object, instance.release);
+      if (disposed || signal.aborted) {
+        dispose(object);
+        signal.throwIfAborted();
+        throw new Error('Object factory has been disposed.');
+      }
+    } catch (error) {
+      if (!allowMissing || disposed || signal.aborted) throw error;
+      object = new THREE.Group();
+      const geometry = new THREE.BoxGeometry(
+        ...record.scale.map((value) => 2 / Math.abs(value)),
+      );
+      const material = new THREE.MeshBasicMaterial({
+        color: 0xdd7700,
+        wireframe: true,
+      });
+      object.add(new THREE.Mesh(geometry, material));
+      object.userData.missingAsset = error.message;
+    }
+    if (blob && record.asset.kind === 'local') importedFiles.set(object, blob);
     return object;
   }
   function primitiveDimensions(object) {
@@ -98,6 +132,7 @@ export function createObjectFactory({ THREE, modelOptions }) {
   function dispose(object) {
     if (released.has(object)) return;
     released.add(object);
+    importedFiles.delete(object);
     const release = ownedResources.get(object);
     if (release) {
       release();
@@ -112,6 +147,8 @@ export function createObjectFactory({ THREE, modelOptions }) {
     resizePrimitive,
     preparePrimitiveResize,
     dispose,
+    createImported,
+    importedFile: (object) => importedFiles.get(object),
     disposeAll() {
       disposed = true;
       models.dispose();

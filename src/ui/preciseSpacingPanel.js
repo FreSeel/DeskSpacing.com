@@ -1,4 +1,4 @@
-import { describeProduct } from '../catalog/presentation.js';
+import { describeObject } from './objectPresentation.js';
 import { element } from './dom.js';
 import { parseTransformInput } from './numericalTransformPanel.js';
 
@@ -137,7 +137,7 @@ export function bindPreciseSpacingPanel({
     }
     for (const object of objects) {
       if (options.has(object)) continue;
-      const info = describeProduct(object.userData.objectName);
+      const info = describeObject(object);
       const option = element(
         document,
         'option',

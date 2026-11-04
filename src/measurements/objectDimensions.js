@@ -19,6 +19,7 @@ export function createObjectDimensions({
   const vertex = new Vector3();
   const instance = new Matrix4();
   function read(object) {
+    if (object.userData.missingAsset) return null;
     object.updateWorldMatrix(true, true);
     // Catalog rotation establishes the authored W/D frame (many legacy models
     // were exported sideways). User rotation is deliberately excluded.

@@ -1,3 +1,6 @@
+import { createImportRegistry } from '../models/importRegistry.js';
+import { createModelImports } from '../models/modelImports.js';
+import { createLocalProjects } from '../projects/localProjects.js';
 import { createMeasurementPreference } from '../measurements/preference.js';
 import { bindMeasurementUI } from '../ui/measurementUI.js';
 import { bindDimensionAnnotations } from '../scene/dimensionAnnotations.js';
@@ -44,7 +47,10 @@ export function createApp({ THREE, host, document }) {
   );
   const feedback = createFeedback(document);
   feedback.loading(true);
-  const factory = createObjectFactory({ THREE });
+  const factory = createObjectFactory({
+    THREE,
+    imports: createImportRegistry(),
+  });
   const state = createObjectStore({
     scene: view.scene,
     disposeObject: factory.dispose,
@@ -197,14 +203,40 @@ export function createApp({ THREE, host, document }) {
       canvas.setAttribute('aria-busy', 'false');
       host.performance.mark('planner:assets-ready');
     });
+  const modelImports = createModelImports({ state, actions, factory, ready });
+  const projects = createLocalProjects({
+    state,
+    actions,
+    factory,
+    modelImports,
+    ready,
+    onMissingAssets: (missing) =>
+      feedback.error(
+        new Error(
+          `Project opened with ${missing.length} missing model${missing.length === 1 ? '' : 's'}. ${missing[0].message}`,
+        ),
+      ),
+  });
   function dispose() {
     if (disposed) return;
     disposed = true;
     cleanup.forEach((remove) => remove());
+    projects.dispose();
+    modelImports.dispose();
     actions.dispose();
     factory.disposeAll();
     feedback.dispose();
     view.dispose();
   }
-  return { state, actions, selection, sharing, view, ready, dispose };
+  return {
+    state,
+    actions,
+    selection,
+    sharing,
+    modelImports,
+    projects,
+    view,
+    ready,
+    dispose,
+  };
 }
