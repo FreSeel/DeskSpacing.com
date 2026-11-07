@@ -176,8 +176,15 @@ export function validateGltf(json, limits) {
   for (const accessor of json.accessors) {
     const component = componentBytes[accessor.componentType];
     const width = components[accessor.type] * component;
+    // Index accessors can be longer than vertex attributes. The scene walk
+    // below separately enforces expanded vertex and triangle-index budgets.
     requireModel(
-      Number.isFinite(width) && validInt(accessor.count, 1, limits.maxVertices),
+      Number.isFinite(width) &&
+        validInt(
+          accessor.count,
+          1,
+          Math.max(limits.maxVertices, limits.maxIndices),
+        ),
       'Invalid or excessive glTF accessor.',
     );
     requireModel(!accessor.sparse, 'Sparse glTF accessors are unsupported.');

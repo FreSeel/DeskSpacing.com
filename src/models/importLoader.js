@@ -159,6 +159,9 @@ function modelBounds(root) {
     if (indices && indices.array.some((index) => index >= position.count))
       throw new Error('The model has out-of-range triangle indices.');
     geometry.computeBoundingBox();
+    // GLTFLoader seeds both bounds from authored accessor min/max. Recompute
+    // the sphere too: raycasting and frustum culling must use actual vertices.
+    geometry.computeBoundingSphere();
   }
   const bounds = new Box3().setFromObject(root, true);
   const size = bounds.getSize(new Vector3()).multiplyScalar(inchesPerMeter);

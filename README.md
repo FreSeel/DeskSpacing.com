@@ -2,7 +2,7 @@
 
 DeskSpacing is a static, browser-based 3D desk setup planner. Add desks, monitors,
 keyboards and accessories, move or rotate them, and share the arrangement through
-an encoded URL. There is no backend, account system or database. This repository
+an encoded URL. There is no backend, account system or server database. This repository
 is the maintained [FreSeel fork](https://github.com/FreSeel/DeskSpacing.com).
 
 ## About this fork
@@ -30,6 +30,12 @@ npm run dev
 Open `http://127.0.0.1:5173/`, then **Create**, or open `/mainApp.html` directly.
 The modern planner requires a desktop browser with WebGL 2. The historical mobile
 route remains available but is not a certified mobile version of the modern app.
+
+Choose **Objects → Import** to add a local `.glb`, self-contained `.gltf`, or
+direct model URL. Unsaved imports are temporary. Explicit browser-local project
+saves use IndexedDB through the planner API; the Share / Save link format cannot
+include imported models. See [Custom model imports](docs/CUSTOM_MODEL_IMPORTS.md)
+for supported formats, CORS, persistence, recovery and licensing expectations.
 
 ## Checks and production build
 

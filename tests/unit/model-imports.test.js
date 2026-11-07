@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import * as THREE from '../../src/engine.js';
+import { Vector3, Triangle } from 'three';
 import { createImportLoader } from '../../src/models/importLoader.js';
 import { createImportRegistry } from '../../src/models/importRegistry.js';
 import { createModelImports } from '../../src/models/modelImports.js';
@@ -23,7 +24,10 @@ import {
   selfContainedGltf,
   triangleBytes,
   triangleGlb,
+  indexedGltf,
 } from '../fixtures/importModel.js';
+import { pixelPng } from '../fixtures/importTexture.js';
+import { objectToRecord } from '../../src/sharing/sceneRecords.js';
 
 const file = (bytes, name = 'desk model.gltf') =>
   new globalThis.File([bytes], name);
@@ -66,6 +70,8 @@ function harness({ load, storage } = {}) {
     getLocation: () => 'https://test.example/mainApp.html',
   });
   return {
+    factory,
+    invalidateScene,
     state,
     actions,
     selection,
@@ -83,6 +89,169 @@ function harness({ load, storage } = {}) {
 }
 
 describe('custom glTF validation', () => {
+  it('accepts a large index array within the production triangle budget', async () => {
+    const model = gltfFile(indexedGltf(300_000));
+    const asset = await createImportLoader()(
+      localModelSource(model),
+      model,
+      signal(),
+    );
+    expect(
+      asset.root.getObjectsByProperty('isMesh', true)[0].geometry.index.count,
+    ).toBe(300_000);
+    asset.dispose();
+  });
+  it('uses the triangle-index budget independently of the vertex budget', async () => {
+    const model = gltfFile(indexedGltf());
+    const load = createImportLoader({
+      limits: { maxVertices: 3, maxIndices: 6 },
+    });
+    const asset = await load(localModelSource(model), model, signal());
+    expect(
+      asset.root.getObjectsByProperty('isMesh', true)[0].geometry.index.count,
+    ).toBe(6);
+    asset.dispose();
+    const excessive = gltfFile(indexedGltf(9));
+    await expect(
+      load(localModelSource(excessive), excessive, signal()),
+    ).rejects.toThrow(/accessor|budget/);
+  });
+
+  it('raycasts actual geometry even when authored accessor bounds are incorrect', async () => {
+    const json = selfContainedGltf();
+    json.accessors[0].min = json.accessors[0].max = [0, 0, 0];
+    const model = gltfFile(json);
+    const asset = await createImportLoader()(
+      localModelSource(model),
+      model,
+      signal(),
+    );
+    asset.root.updateMatrixWorld(true);
+    const mesh = asset.root.getObjectsByProperty('isMesh', true)[0];
+    const vertices = [0, 1, 2].map((index) =>
+      new Vector3()
+        .fromBufferAttribute(mesh.geometry.attributes.position, index)
+        .applyMatrix4(mesh.matrixWorld),
+    );
+    const triangle = new Triangle(...vertices);
+    const normal = triangle.getNormal(new Vector3());
+    const center = triangle.getMidpoint(new Vector3());
+    const ray = new THREE.Raycaster(
+      center.clone().add(normal),
+      normal.negate(),
+    );
+    expect(ray.intersectObject(asset.root, true)).toHaveLength(1);
+    asset.dispose();
+  });
+
+  it('loads direct remote GLB bytes without storing or requesting dependencies', async () => {
+    const fetch = vi.fn(async () => new globalThis.Response(triangleGlb()));
+    const asset = await createImportLoader({ fetch })(
+      remoteModelSource('https://models.test/item.glb'),
+      undefined,
+      signal(),
+    );
+    expect(asset.root.children).toHaveLength(2);
+    expect(fetch).toHaveBeenCalledOnce();
+    asset.dispose();
+  });
+
+  it.each([
+    [
+      'HTML returned by a model URL',
+      () => '<html>Model page</html>',
+      /invalid glTF JSON/,
+    ],
+    [
+      'unsupported format',
+      () => JSON.stringify({ asset: { version: '1.0' } }),
+      /glTF 2.0/,
+    ],
+    [
+      'missing dependency',
+      () => JSON.stringify(modelJson('missing.bin')),
+      /HTTP 404/,
+    ],
+  ])('rejects %s', async (_name, content, message) => {
+    const fetch = vi.fn(
+      async () => new globalThis.Response(null, { status: 404 }),
+    );
+    fetch.mockResolvedValueOnce(new globalThis.Response(content()));
+    await expect(
+      createImportLoader({ fetch })(
+        remoteModelSource('https://models.test/item.gltf'),
+        undefined,
+        signal(),
+      ),
+    ).rejects.toThrow(message);
+  });
+
+  it('cancels streaming downloads when the actual body exceeds the budget', async () => {
+    const cancel = vi.fn();
+    const fetch = vi.fn(
+      async () =>
+        new globalThis.Response(
+          new globalThis.ReadableStream({
+            start(controller) {
+              controller.enqueue(new Uint8Array(17));
+            },
+            cancel,
+          }),
+        ),
+    );
+    await expect(
+      createImportLoader({ fetch, limits: { maxBytes: 16 } })(
+        remoteModelSource('https://models.test/item.glb'),
+        undefined,
+        signal(),
+      ),
+    ).rejects.toThrow(/size limit/);
+    expect(cancel).toHaveBeenCalledOnce();
+  });
+
+  it('limits decoded textures before allocation and closes earlier bitmaps on failure', async () => {
+    const json = selfContainedGltf();
+    json.images = [1, 2].map((size) => ({
+      uri: `data:image/png;base64,${pixelPng(size, size).toString('base64')}`,
+    }));
+    const image = { width: 1, height: 1, close: vi.fn() };
+    const decodeImage = vi.fn(async () => image);
+    const model = gltfFile(json);
+    await expect(
+      createImportLoader({ decodeImage, limits: { maxTexturePixels: 4 } })(
+        localModelSource(model),
+        model,
+        signal(),
+      ),
+    ).rejects.toThrow(/texture size limit/);
+    expect(decodeImage).toHaveBeenCalledOnce();
+    expect(image.close).toHaveBeenCalledOnce();
+  });
+
+  it('closes bitmaps decoded after cancellation without publishing a model', async () => {
+    const json = selfContainedGltf();
+    json.images = [
+      { uri: `data:image/png;base64,${pixelPng().toString('base64')}` },
+    ];
+    const deferred = Promise.withResolvers();
+    const decodeImage = vi.fn(() => deferred.promise);
+    const controller = new globalThis.AbortController();
+    const model = gltfFile(json);
+    const result = createImportLoader({ decodeImage })(
+      localModelSource(model),
+      model,
+      controller.signal,
+    );
+    const rejected = expect(result).rejects.toMatchObject({
+      name: 'AbortError',
+    });
+    await vi.waitFor(() => expect(decodeImage).toHaveBeenCalledOnce());
+    controller.abort();
+    const close = vi.fn();
+    deferred.resolve({ width: 1, height: 1, close });
+    await rejected;
+    expect(close).toHaveBeenCalledOnce();
+  });
   it.each([gltfFile(), glbFile()])(
     'loads local $name with all authored roots',
     async (model) => {
@@ -217,6 +386,162 @@ describe('custom glTF validation', () => {
 });
 
 describe('scene and asset ownership', () => {
+  it('treats import, transform and duplicate as independent undo steps without mutating shared geometry', async () => {
+    const app = harness();
+    const object = await app.imports.importModelFromFile(glbFile()).result;
+    const original = objectToRecord(object);
+    const geometry = object.getObjectsByProperty('isMesh', true)[0].geometry;
+    const vertices = geometry.attributes.position.array.slice();
+    app.actions.history.undo();
+    expect(app.state.objects).toEqual([]);
+    expect(app.actions.history.canUndo).toBe(false);
+    app.actions.history.redo();
+    expect(app.state.objects).toEqual([object]);
+    app.actions.transforms.update(object, {
+      position: { x: 7 },
+      rotationDegrees: { y: 35 },
+      scale: { x: 2, y: 3, z: 4 },
+    });
+    const transformed = objectToRecord(object);
+    app.actions.history.undo();
+    expect(objectToRecord(object)).toEqual(original);
+    app.actions.history.redo();
+    expect(objectToRecord(object)).toEqual(transformed);
+    const duplicate = await app.imports.duplicateImportedObject(
+      object.userData.objectId,
+    ).result;
+    app.actions.history.undo();
+    expect(app.state.objects).toEqual([object]);
+    app.actions.history.redo();
+    expect(app.state.objects).toEqual([object, duplicate]);
+    app.actions.transforms.setPosition(duplicate, { x: 100 });
+    expect(objectToRecord(object)).toEqual(transformed);
+    const inches = app.actions.transforms.read(object, { unit: 'in' });
+    for (let i = 0; i < 10; i++) {
+      const cm = app.actions.transforms.read(object, { unit: 'cm' });
+      expect(cm.dimensions.width).toBeCloseTo(inches.dimensions.width * 2.54);
+      app.actions.transforms.read(object, { unit: 'in' });
+    }
+    expect(objectToRecord(object)).toEqual(transformed);
+    expect(geometry.attributes.position.array).toEqual(vertices);
+    app.selection.unselectPickedObject();
+    expect(app.selection.pickedObject).toBeNull();
+    app.dispose();
+  });
+
+  it('releases geometry, materials and decoded images after repeated import/delete/history clearing', async () => {
+    const json = selfContainedGltf();
+    json.images = [
+      { uri: `data:image/png;base64,${pixelPng().toString('base64')}` },
+    ];
+    json.textures = [{ source: 0 }];
+    json.materials = [
+      { pbrMetallicRoughness: { baseColorTexture: { index: 0 } } },
+    ];
+    json.meshes[0].primitives[0].material = 0;
+    const bitmaps = [];
+    const load = createImportLoader({
+      decodeImage: async () => {
+        const bitmap = { width: 1, height: 1, close: vi.fn() };
+        bitmaps.push(bitmap);
+        return bitmap;
+      },
+    });
+    const app = harness({ load });
+    const model = gltfFile(json);
+    for (let i = 0; i < 12; i++) {
+      const object = await app.imports.importModelFromFile(model).result;
+      const mesh = object.getObjectsByProperty('isMesh', true)[0];
+      const releases = [mesh.geometry, mesh.material, mesh.material.map].map(
+        (resource) => {
+          const release = vi.fn();
+          resource.addEventListener('dispose', release);
+          return release;
+        },
+      );
+      app.actions.remove(object);
+      releases.forEach((release) => expect(release).not.toHaveBeenCalled());
+      app.actions.history.clear();
+      releases.forEach((release) => expect(release).toHaveBeenCalledOnce());
+      expect(app.factory.importedFile(object)).toBeUndefined();
+    }
+    app.dispose();
+    expect(bitmaps).toHaveLength(12);
+    bitmaps.forEach((bitmap) => expect(bitmap.close).toHaveBeenCalledOnce());
+  });
+
+  it('preserves membership, selection and history on failed imports', async () => {
+    const app = harness();
+    const object = await app.imports.importModelFromFile(glbFile()).result;
+    const before = objectToRecord(object);
+    const task = app.imports.importModelFromFile(file('corrupt', 'bad.glb'));
+    await expect(task.result).rejects.toThrow(/GLB header/);
+    expect(app.imports.getImportStatus(task).state).toBe('failure');
+    expect(app.state.objects).toEqual([object]);
+    expect(app.selection.pickedObject).toBe(object);
+    expect(objectToRecord(object)).toEqual(before);
+    app.actions.history.undo();
+    expect(app.state.objects).toEqual([]);
+    app.dispose();
+  });
+
+  it.each(['undo', 'dispose'])(
+    'cancels an in-flight import on %s and releases a late load',
+    async (operation) => {
+      const deferred = Promise.withResolvers();
+      const asset = await createImportLoader()(
+        localModelSource(glbFile()),
+        glbFile(),
+        signal(),
+      );
+      const release = vi.spyOn(asset, 'dispose');
+      const load = vi.fn(() => deferred.promise);
+      const app = harness({ load });
+      await app.actions.add('referenceBox', {
+        dimensions: [1, 2, 3],
+        texture: 'null',
+      });
+      const task = app.imports.importModelFromUrl(
+        'https://models.test/late.glb',
+      );
+      await vi.waitFor(() => expect(load).toHaveBeenCalledOnce());
+      if (operation === 'undo') app.actions.history.undo();
+      else app.dispose();
+      expect(await task.result).toBeNull();
+      deferred.resolve(asset);
+      await vi.waitFor(() => expect(release).toHaveBeenCalledOnce());
+      expect(app.state.objects).toEqual([]);
+      if (operation !== 'dispose') app.dispose();
+    },
+  );
+
+  it('keeps a replacement cache entry alive when an older cancelled request finishes late', async () => {
+    const old = Promise.withResolvers();
+    const load = vi
+      .fn(createImportLoader())
+      .mockImplementationOnce(() => old.promise);
+    const registry = createImportRegistry({ load });
+    const model = glbFile();
+    const source = localModelSource(model);
+    const controller = new globalThis.AbortController();
+    const first = registry.acquire(source, model, controller.signal);
+    const rejection = expect(first).rejects.toMatchObject({
+      name: 'AbortError',
+    });
+    await vi.waitFor(() => expect(load).toHaveBeenCalledOnce());
+    controller.abort();
+    await rejection;
+    const second = await registry.acquire(source, model, signal());
+    const stale = await createImportLoader()(source, model, signal());
+    const dispose = vi.spyOn(stale, 'dispose');
+    old.resolve(stale);
+    await vi.waitFor(() => expect(dispose).toHaveBeenCalledOnce());
+    const third = await registry.acquire(source, model, signal());
+    expect(load).toHaveBeenCalledTimes(2);
+    expect(second.object).not.toBe(third.object);
+    second.release();
+    third.release();
+  });
   it('shares immutable geometry and integrates selection, dimensions, transforms and undo', async () => {
     const load = vi.fn(createImportLoader());
     const { state, actions, selection, transformControls, imports, dispose } =
@@ -304,6 +629,94 @@ describe('scene and asset ownership', () => {
 });
 
 describe('local project integration', () => {
+  it('saves one local asset for duplicate instances and no remote bytes', async () => {
+    let saved;
+    const storage = {
+      write: vi.fn(async (_id, project) => {
+        saved = globalThis.structuredClone(project);
+      }),
+    };
+    const fetch = vi.fn(async () => new globalThis.Response(triangleGlb()));
+    const app = harness({ storage, load: createImportLoader({ fetch }) });
+    const local = await app.imports.importModelFromFile(glbFile(), {
+      attribution: 'Fixture author',
+      license: 'CC0-1.0',
+    }).result;
+    const duplicate = await app.imports.duplicateImportedObject(
+      local.userData.objectId,
+    ).result;
+    await app.imports.importModelFromUrl('https://models.test/item.glb').result;
+    expect(storage.write).not.toHaveBeenCalled();
+    await app.projects.save('one');
+    expect(saved.files.size).toBe(1);
+    expect(saved.records).toHaveLength(3);
+    expect(saved.files.get(local.userData.asset.id)).toBeInstanceOf(
+      globalThis.Blob,
+    );
+    app.actions.remove(local);
+    app.actions.history.clear();
+    await app.projects.save('two');
+    expect(saved.files.size).toBe(1);
+    expect(saved.records[0].objectId).toBe(duplicate.userData.objectId);
+    expect(saved.records[0].asset).toEqual(duplicate.userData.asset);
+    app.dispose();
+  });
+
+  it('does not restore a delayed storage read after reset or a newer open', async () => {
+    const deferred = Promise.withResolvers();
+    const storage = {
+      read: vi.fn(async () => ({ version: 1, records: [], files: new Map() })),
+    };
+    storage.read.mockReturnValueOnce(deferred.promise);
+    const app = harness({ storage });
+    const object = await app.imports.importModelFromFile(glbFile()).result;
+    const records = [objectToRecord(object)];
+    const open = app.projects.open('old');
+    await vi.waitFor(() => expect(storage.read).toHaveBeenCalledOnce());
+    expect((await app.projects.open('new')).restored).toBe(true);
+    deferred.resolve({ version: 1, records, files: new Map() });
+    expect(await open).toEqual({ restored: false });
+    expect(app.state.objects).toEqual([]);
+    app.dispose();
+  });
+
+  it('restores legacy setups and rejects invalid imported metadata transactionally', async () => {
+    const storage = { read: vi.fn() };
+    const app = harness({ storage });
+    const object = await app.imports.importModelFromFile(glbFile()).result;
+    for (const modify of [
+      (record) => {
+        record.scale[0] = 0;
+      },
+      (record) => {
+        record.position[1] = Infinity;
+      },
+      (record) => {
+        record.asset.format = 'obj';
+      },
+      (record) => {
+        record.asset.license = 'x'.repeat(2049);
+      },
+    ]) {
+      const record = objectToRecord(object);
+      modify(record);
+      storage.read.mockResolvedValueOnce({
+        version: 1,
+        records: [record],
+        files: new Map(),
+      });
+      await expect(app.projects.open('invalid')).rejects.toThrow(
+        /Invalid imported/,
+      );
+      expect(app.state.objects).toEqual([object]);
+    }
+    storage.read.mockResolvedValueOnce('[ ]');
+    expect((await app.projects.open('legacy')).restored).toBe(true);
+    expect(app.state.objects).toEqual([]);
+    app.actions.history.undo();
+    expect(app.state.objects).toEqual([object]);
+    app.dispose();
+  });
   it('persists bytes only on save, restores stable IDs and can relink a missing local model', async () => {
     const storage = {
       write: vi.fn(async (_id, project) => {

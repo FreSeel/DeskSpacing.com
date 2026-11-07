@@ -1,6 +1,12 @@
 # Custom model imports
 
-Phase 1 adds services to the modern planner. The existing inspector displays the imported filename, dimensions and optional attribution or license. A missing asset appears as a selectable wireframe marker with its failure reason. Open **Objects** and choose **Import** to upload a file or enter a direct model URL. Browser-local project management is available through the planner API.
+The modern planner supports custom static glTF models through the Import dialog and planner services. The inspector displays the imported filename, dimensions and optional attribution or license. A missing asset appears as a selectable wireframe marker with its failure reason. Open **Objects** and choose **Import** to upload a file or enter a direct model URL. Browser-local project management, duplication, scaling and missing-file recovery are available through the planner API; the existing Share / Save dialog does not save imported assets.
+
+## Importing a model
+
+Choose one `.glb` or self-contained `.gltf` file, or paste a direct HTTP(S) model URL. A model's web page is not a downloadable model URL. Local glTF files must embed buffers and PNG/JPEG images; a separate `.bin` file or texture folder cannot be selected alongside the model. Export to a self-contained file first. Remote glTF may reference accessible relative dependencies, resolved against the final URL after redirects. The model server and every dependency server must permit CORS. Requests do not include login credentials, so private authenticated model links generally fail.
+
+Import is one Undo action. The new model is selected and placed on the current desk or floor; use the existing inspector and gizmo to move or rotate it. Escape, Cancel and Close cancel pending dialog imports. A failed import keeps the current scene and input intact so the source can be corrected and retried. A browser-local save must be explicit: unsaved files disappear when the page closes. Share links cannot include custom models.
 
 ## Planner API
 
@@ -27,19 +33,34 @@ Unsaved imported files stay in memory. An explicit save uses one IndexedDB trans
 
 Remote projects store source URLs and metadata. Opening a project loads the URLs again, reusing any active in-memory asset. Remote models and dependencies require direct HTTP(S) access and appropriate server CORS headers. Imports use credential-free requests and the browser's normal HTTP cache. The planner keeps no permanent download cache, uploads no bytes and uses no fetching proxy.
 
-Legacy setup links and their catalog IDs continue to work. The existing share format supports catalog objects, so creating a link for a scene with imported models gives an actionable error. Local projects are scoped to the browser profile and deployment origin. Portable exports containing custom models are outside Phase 1.
+Legacy setup links and their catalog IDs continue to work. The existing share format supports catalog objects, so creating a link for a scene with imported models gives an actionable error. Local projects are scoped to the browser profile and deployment origin, with a common project namespace for paths on that origin. Clearing site data, changing browsers/profiles or moving to another origin loses access to saved local assets. Keep original files separately. Portable exports containing custom models are not implemented.
+
+Deleting a saved project deletes its records and embedded local files together, without affecting another saved project or a live/history-retained instance. Removing a scene instance does not edit a previously saved project; save again to update it. Quota failures leave the earlier stored snapshot intact. Missing remote files or unavailable local bytes become recoverable placeholders; local relinking and remote retry preserve the instance ID and transforms and require another explicit save.
 
 ## Validation and coverage
 
 The import boundary accepts glTF 2.0 `.glb` and `.gltf` files. Local glTF must embed all resources. Remote resource paths resolve against the final model URL after redirects. The default limits are 32 MiB for the model and its dependencies, 250,000 expanded vertices, 750,000 triangle indices, 32 PNG/JPEG images, 4,096 pixels per texture side, roughly 16 million decoded texture pixels in total, and a 30-second load deadline. Budget overrides live in `createImportLoader`. The 32 MiB budget includes decoded embedded dependencies as well as the input file.
 
-Phase 1 accepts static triangle meshes and a limited set of material extensions. Compressed geometry and textures, sparse accessors, instancing, skinning, morph targets, non-triangle primitives and alternate formats require later support. Animation tracks and cameras are ignored. Very large, degenerate or non-finite geometry is rejected.
+The importer accepts static triangle meshes and a limited set of material extensions. Compressed geometry and textures (including Draco, Meshopt and KTX2), sparse accessors, instancing, skinning, morph targets, non-triangle primitives and alternate formats require later support. Animation tracks and cameras are ignored. Empty, excessive or non-finite bounds are rejected; a flat model is allowed if it spans at least two axes. Bounds used for picking and culling are recomputed from actual geometry instead of trusting accessor metadata.
+
+These are per-asset safety budgets, not performance guarantees. Many unique assets and Undo/Redo-retained instances can still consume substantial memory. Image pixels expand to decoded bitmap and GPU storage; the compressed download size is not a memory estimate. Parsing and geometry validation run on the main thread, and image decoding cannot be forcibly interrupted; cancellation prevents scene publication and disposes resources when pending work returns. Surface contact preparation scans actual vertices on a new or changed gesture; repeated drag updates reuse derived geometry. Imported models can snap onto catalog desks/floors but do not become support surfaces themselves. No new renderer, workers or format dependencies were added.
+
+## Rights and attribution
+
+Only import files you have permission to use. A public URL, product name or successful download does not establish a license. Supply known `attribution` and `license` metadata through the API and retain any required source/license evidence separately. These strings survive project save/load and appear as text in the inspector; the importer does not infer or grant rights, extract arbitrary glTF extras into planner metadata, or remove obligations when making a local copy. The dialog currently has no attribution fields. Test models and textures are generated mathematical fixtures, with their provenance recorded in `THIRD_PARTY_NOTICES.md`.
+
+## Extending loaders
+
+Keep source recognition in `importSource.js` and validation independent of DOM and Three.js. A future format adapter should produce the existing loader contract `{ root, offset, scale, dispose }`, with geometry budgets, finite bounds, credential-free bounded downloads, cancellation and exact resource ownership enforced before publication. Integrate behind `createImportLoader` / the injected registry `load` function; keep `modelImports`, actions, history and the object store as the single instance lifecycle. Update project record validation/versioning if source metadata changes. Do not enable a GLTFLoader extension without validating its referenced resources, decoded allocations and cleanup behavior. Add format-specific rejection, restore, cancellation and shared-instance disposal tests before advertising support.
 
 Run the focused checks on Node 24.22.1.
 
 ```sh
 npm test -- tests/unit/model-imports.test.js
-npx playwright test --config=playwright.imports.config.js
+npm run build
+npx playwright test tests/e2e/model-imports.spec.js tests/e2e/import-dialog.spec.js
 ```
 
-Chromium coverage includes local file persistence across reload, relative remote resources, and recovery after a remote failure. Mobile, Safari and Firefox are unverified. The repository's existing missing `drawerDesk` asset and legacy npm advisory remain open.
+The optional `playwright.imports.config.js` runs the same focused cases against the development server. The default configuration exercises the production bundle. Install Chromium first (`npx playwright install chromium`) and leave port 4173 free. Run `npm run check` for the complete checks. This repository is JavaScript-only and has no TypeScript compiler or typecheck script.
+
+See [the Phase 3 review](CUSTOM_MODEL_IMPORT_REVIEW.md) for results and limits. Chromium viewport checks do not certify mobile touch hardware, Safari or Firefox. The repository's existing missing `drawerDesk` asset and legacy npm advisory remain open.

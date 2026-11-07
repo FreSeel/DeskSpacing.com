@@ -28,6 +28,24 @@ The audit preserved existing author/template credits and did not delete original
 fork still contains upstream analytics and contact references; these need an
 explicit ownership/privacy decision before a public fork launch.
 
+## Custom-import QA fixtures
+
+- Sources: `tests/fixtures/importModel.js` and `tests/fixtures/importTexture.js`.
+- Asset provenance: glTF/GLB test data is synthesized from the explicit triangle
+  coordinates in the fixture generator; PNGs are generated from solid RGBA pixels
+  using Node's zlib. There is no downloaded model, texture or external source URL.
+- New contributions in the Phase 3 review: indexed geometry fixture generation
+  and the PNG generator, authored for this repository with Codex assistance.
+  These new fixture contributions and their generated test assets are dedicated
+  under CC0-1.0 (`https://creativecommons.org/publicdomain/zero/1.0/`). This is
+  limited to these contributions, not a license for inherited application code,
+  catalog models or other assets.
+- Required credit: none for these new CC0 fixtures. The provenance above is
+  retained for auditability. Tests generate larger index arrays, varied image
+  dimensions and invalid variants in memory; fixtures are not deployed assets.
+- User imports: optional attribution/license strings are user-supplied metadata,
+  not verified rights or permission inferred from a public download URL.
+
 ## Lucide history icons
 
 - Files: inline `undo-2` and `redo-2` SVG paths in `mainApp.html`.

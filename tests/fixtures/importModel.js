@@ -40,6 +40,30 @@ export function selfContainedGltf() {
   return modelJson(`data:application/octet-stream;base64,${encoded}`);
 }
 
+// Original mathematical fixtures; no downloaded model data (see notices).
+export function indexedGltf(count = 6) {
+  const bytes = new Uint8Array(36 + count * 2);
+  bytes.set(new Uint8Array(triangleBytes()));
+  const indices = new DataView(bytes.buffer, 36);
+  for (let index = 0; index < count; index++)
+    indices.setUint16(index * 2, index % 3, true);
+  let binary = '';
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  const json = modelJson(
+    `data:application/octet-stream;base64,${globalThis.btoa(binary)}`,
+  );
+  json.buffers[0].byteLength = bytes.length;
+  json.bufferViews.push({ buffer: 0, byteOffset: 36, byteLength: count * 2 });
+  json.accessors.push({
+    bufferView: 1,
+    componentType: 5123,
+    type: 'SCALAR',
+    count,
+  });
+  json.meshes[0].primitives[0].indices = 1;
+  return json;
+}
+
 export function triangleGlb() {
   const json = new globalThis.TextEncoder().encode(JSON.stringify(modelJson()));
   const paddedLength = Math.ceil(json.length / 4) * 4;

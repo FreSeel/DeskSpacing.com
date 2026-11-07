@@ -60,7 +60,13 @@ test('places an exact bounds clearance with snapping on, updating coordinates, h
   await page.locator('#moreMenu summary').click();
   await page.locator('#undoTransform').click();
   expect(await snapshot(page)).toEqual(before);
-  await expect(page.locator('#undoTransform')).toBeDisabled();
+  // Object creation belongs to the same history as placement. Undoing the
+  // placement must leave the earlier add available, not empty the history.
+  await expect(page.locator('#undoTransform')).toBeEnabled();
+  await page.locator('#undoTransform').click();
+  expect(await snapshot(page)).toEqual([before[0]]);
+  await page.locator('#redoTransform').click();
+  expect(await snapshot(page)).toHaveLength(2);
   await page.locator('#redoTransform').click();
   expect(await snapshot(page)).toEqual(placed);
   await page.locator('#saveModalButton').click();

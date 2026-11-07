@@ -5,48 +5,39 @@ async function start(page) {
   await page.route(/^https?:\/\/(?!127\.0\.0\.1:4173\/)/, (route) =>
     route.abort(),
   );
-  await page.route('**/src/main.js', (route) =>
-    route.fulfill({
-      contentType: 'text/javascript',
-      body: `
-      import { bindImportDialog } from './ui/importDialog.js';
-      import { bindEditorShell } from './ui/editorShell.js';
-      import { createFeedback } from './ui/feedback.js';
-      const mock = window.importMock = { calls: [], cancellations: 0 };
-      function start(method, value) {
-        mock.calls.push([method, value]);
-        const { promise, resolve, reject } = Promise.withResolvers();
-        const task = { result: promise, resolve, reject, state: 'loading' };
-        mock.task = task;
-        mock.fail = (message) => {
-          Object.assign(task, { state: 'failure', message });
-          reject(new Error(message));
-        };
-        mock.succeed = () => {
-          task.state = 'success';
-          resolve({});
-        };
-        return task;
-      }
-      bindEditorShell({ document, host: window, transformControls: new EventTarget() });
-      bindImportDialog({
-        document,
-        feedback: createFeedback(document),
-        close: (modal) => window.bootstrap.Modal.getInstance(modal).hide(),
-        modelImports: {
-          importModelFromFile: (file) => start('file', file.name),
-          importModelFromUrl: (url) => start('url', url),
-          getImportStatus: (task) => task,
-          cancelImport(task) {
-            mock.cancellations++;
-            task.resolve(null);
-          },
-        },
-      });
-    `,
-    }),
-  );
-  await page.goto('mainApp.html');
+  await page.goto('mainApp.html?customSetup=%5B%20%5D');
+  await page.evaluate(async () => {
+    const { app } = await import(
+      new URL('./src/main.js', window.location.href)
+    );
+    await app.ready;
+    // Mock only the service boundary, keeping the production UI bundle intact.
+    const mock = (window.importMock = { calls: [], cancellations: 0 });
+    function start(method, value) {
+      mock.calls.push([method, value]);
+      const { promise, resolve, reject } = Promise.withResolvers();
+      const task = { result: promise, resolve, reject, state: 'loading' };
+      mock.task = task;
+      mock.fail = (message) => {
+        Object.assign(task, { state: 'failure', message });
+        reject(new Error(message));
+      };
+      mock.succeed = () => {
+        task.state = 'success';
+        resolve({});
+      };
+      return task;
+    }
+    Object.assign(app.modelImports, {
+      importModelFromFile: (file) => start('file', file.name),
+      importModelFromUrl: (url) => start('url', url),
+      getImportStatus: (task) => task,
+      cancelImport(task) {
+        mock.cancellations++;
+        task.resolve(null);
+      },
+    });
+  });
 }
 
 const dialog = (page) =>
@@ -59,6 +50,42 @@ const fixture = (name) => ({
   mimeType: 'application/octet-stream',
   buffer: Buffer.from('model'),
 });
+
+for (const theme of ['light', 'dark']) {
+  test(`import controls fit and remain keyboard accessible in ${theme} on desktop and phone`, async ({
+    page,
+  }, testInfo) => {
+    await page.emulateMedia({ colorScheme: theme });
+    await start(page);
+    for (const width of [1280, 375, 320]) {
+      await page.setViewportSize({ width, height: 640 });
+      if (width < 768) await page.locator('#openLibrary').click();
+      const trigger = page.locator('#openImport');
+      await expect(trigger).toBeVisible();
+      const bounds = await trigger.boundingBox();
+      expect(bounds.x).toBeGreaterThanOrEqual(0);
+      expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
+      await trigger.click();
+      await expect(upload(page)).toBeFocused();
+      await upload(page).setInputFiles(fixture('review.glb'));
+      await submit(page).focus();
+      await page.keyboard.press('Tab');
+      await expect(
+        dialog(page).getByRole('button', { name: 'Close' }),
+      ).toBeFocused();
+      await page.keyboard.press('Shift+Tab');
+      await expect(submit(page)).toBeFocused();
+      const buttons = await submit(page).boundingBox();
+      expect(buttons.x + buttons.width).toBeLessThanOrEqual(width);
+      expect(buttons.y + buttons.height).toBeLessThanOrEqual(640);
+      await page.screenshot({
+        path: testInfo.outputPath(`import-${theme}-${width}.png`),
+      });
+      await page.keyboard.press('Escape');
+      await expect(dialog(page)).toBeHidden();
+    }
+  });
+}
 
 test('opens with focus, switches methods, validates and replaces files', async ({
   page,

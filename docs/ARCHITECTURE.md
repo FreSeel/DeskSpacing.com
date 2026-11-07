@@ -86,7 +86,7 @@ avoids silently changing their distinct UI/control behavior.
    Ordinary navigation releases the page through the browser lifecycle.
 
 The public lifecycle object exposes `state`, `actions`, `selection`, `sharing`,
-`view`, `ready` and `dispose`. Browser tests import that same entrypoint and create
+`modelImports`, `projects`, `view`, `ready` and `dispose`. Browser tests import that same entrypoint and create
 their own test-only inspection alias; production does not publish `objectsArr`,
 `scene`, `renderer` or inline-handler globals.
 
@@ -152,6 +152,30 @@ order; active templates are not counted against that idle budget. Full app dispo
 releases the cache, including loads completing after shutdown. Primitive resources
 remain independently owned. Original paths stay in the catalog; a generated
 `optimizedModels.js` manifest redirects five verified startup assets to copies.
+
+## Custom model import boundary
+
+`src/models/importSource.js` and `gltfValidation.js` validate plain source and
+glTF data. `importLoader.js` bounds downloads, image decoding and static geometry,
+then recomputes actual mesh bounds. `importRegistry.js` coalesces remote URLs or
+local Blob identities and returns reference-counted instance leases. Imported
+instances share immutable geometry, materials and textures; the registry has no
+permanent library or idle cache. Catalog loading retains its separate first-root
+and idle-cache behavior.
+
+`modelImports.js` owns cancellable task handles; `actions.addImported` and
+`restoreProject` stage loads before committing through the existing history/store.
+History retains detached instances until they are no longer undoable. The factory
+tracks local bytes and lease releases per instance. `src/ui/importDialog.js` reads
+file/URL inputs and handles accessible progress, cancellation and errors.
+
+`src/projects/projectRecords.js` validates stable instance/asset IDs and transforms;
+`localProjects.js` snapshots live objects only on explicit save. `projectStorage.js`
+stores each project and its referenced local Blobs in one IndexedDB record and
+transaction. Remote sources store metadata and URLs, not downloaded bytes. Missing
+assets restore as selectable placeholders. See [CUSTOM_MODEL_IMPORTS.md](CUSTOM_MODEL_IMPORTS.md)
+for the API and extension contract and [CUSTOM_MODEL_IMPORT_REVIEW.md](CUSTOM_MODEL_IMPORT_REVIEW.md)
+for Phase 3 verification.
 
 ## Adding a product or model
 

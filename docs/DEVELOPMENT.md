@@ -80,6 +80,15 @@ preserves models instead of silently dropping assets to meet a hosting quota.
 `npm run check` runs lint, formatting, unit tests, the production build and the
 Chromium suite. All `src/` JavaScript is included in lint and formatting. Existing
 HTML, vendor code and retained legacy scripts/styles are not reformatted wholesale.
+There are no TypeScript sources, compiler dependency or typecheck script; a
+TypeScript check is not part of this JavaScript project.
+
+For custom-model import work, start with `npm test -- tests/unit/model-imports.test.js`,
+then build and run `npx playwright test tests/e2e/model-imports.spec.js tests/e2e/import-dialog.spec.js`.
+These checks use generated fixtures and mocked remote resources, including
+storage failure, asset disposal, snapping and responsive dialog workflows. See
+[custom model imports](CUSTOM_MODEL_IMPORTS.md) for the user/API contract and
+[Phase 3 review](CUSTOM_MODEL_IMPORT_REVIEW.md) for the QA findings.
 
 Tests exercise catalog compatibility, path existence, variant configuration,
 primitive placement, bounded legacy codecs, URL handling, object membership,
