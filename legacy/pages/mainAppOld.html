@@ -2335,6 +2335,7 @@
     </div>
     </div>
     <script src="js/share-url.js"></script>
+    <script src="js/share-setup.js"></script>
     <script src="three.min.js"></script>
     <script src="OrbitControls.js"></script>
     <!--<script src="./three/examples/jsm/controls/DragControls.js"></script>-->
@@ -3601,189 +3602,32 @@
             console.log(objectsArr);
         }
 
-        // takes in the shareable string and places all the objects contained in it
+        // Validate the complete payload before selection, height or scene changes.
         function parseShareableString(string) {
+            let records;
+            try {
+                records = window.DeskSpacingLegacySetup.decode(string, coordinateDictionary, textureDictionary, deskHeightDiff);
+            } catch (error) {
+                console.warn(error.message);
+                return false;
+            }
+
             pickHelper.pickedObject = null;
             resetScene();
             heightDiff = 0;
-
-
-            let dataType = 0;
-            let objectName = "";
-            let objectType = "";
-            let textureName = "";
-
-            let vector = new THREE.Vector3();
-            let position = new THREE.Vector3();
-            let rotation = new THREE.Vector3();
-            let dimension = new THREE.Vector3();
-            let vecStr = "";
-            let xyz;
-            let primitiveData = false;
-
-            let object;
-
-            let index = 2;
-            let exitCode = 0; // becomes 1 if there is a problem in the string
-            let c = string.charAt(0);
-            if (c == '[') {
-                //while loop to go through string
-                while (c != ']' && !exitCode) {
-                    c = string.charAt(index);
-
-                    if (c == ' ') {
-                        dataType = 0;
-                        objectType = "";
-                        objectName = "";
-                        textureName = "";
-                    } else if (c == '^') { // toggle primitive mode
-                        primitiveData = !primitiveData;
-                    } else if (primitiveData) { // primitive
-                        if (c == '|') {
-                            if (dataType == 0) {
-                                // type
-                            } else if (dataType == 1) {
-                                // name
-                                if (objectType.includes("Desk")) {
-                                    updateDeskHeightDiff(objectName, "modernDesk");
-                                }
-                            } else if (dataType == 2) {
-                                // position
-                                //console.log("SETTING POSITION");
-                                position = vector;
-                                //console.log(position);
-                                vector = new THREE.Vector3(); // without this it doesn't work for some reason
-                            } else if (dataType == 3) {
-                                // rotation
-                                //console.log("SETTING ROTATION");
-                                rotation = vector;
-                                //console.log(rotation);
-                                vector = new THREE.Vector3(); // without this it doesn't work for some reason
-                            } else if (dataType == 4) {
-                                // dimensions
-                                dimension = vector;
-
-                                vector = new THREE.Vector3();
-                            } else if (dataType == 5) {
-                                // texture name
-                                addPrimitivePosRotDimText(objectType, objectName, position, rotation, dimension, textureName);
-                                objectType = "";
-                                objectName = "";
-                                textureName = "";
-                            }
-                            dataType++;
-                            xyz = 0
-                        } else {
-                            if (dataType == 0) {
-                                // getting the objectType
-                                objectType += c;
-                            } else if (dataType == 1) {
-                                // getting the objectName
-                                objectName += c;
-                            } else if (dataType == 2 || dataType == 3 || dataType == 4) {
-                                // getting the position or rotation
-                                if (c != ',') {
-                                    vecStr += c;
-                                } else {
-                                    if (xyz == 0) {
-                                        //console.log("VECTOR X: " + vecStr)
-                                        vector.x = parseFloat(vecStr);
-                                    } else if (xyz == 1) {
-                                        //console.log("VECTOR Y: " + vecStr)
-                                        vector.y = parseFloat(vecStr);
-                                    } else if (xyz == 2) {
-                                        //console.log("VECTOR Z: " + vecStr)
-                                        vector.z = parseFloat(vecStr);
-                                    } else {
-                                        console.log("UH OH");
-                                        exitCode = 1;
-                                    }
-                                    vecStr = "";
-                                    xyz++;
-                                }
-                            } else if (dataType == 5) {
-                                textureName += c;
-                            } else {
-                                console.log("PARSE ERROR. INDEX IS: " + index + "c is: " + c + "datatype is: " + dataType);
-                                exitCode = 1;
-                            }
-                        }
-                    } else { // not primitive
-                        if (c == '|') {
-                            if (dataType == 0) {
-                                // type
-                            } else if (dataType == 1) {
-                                // name
-                                if (objectType.includes("Desk")) {
-                                    updateDeskHeightDiff(objectName, "modernDesk");
-                                }
-                            } else if (dataType == 2) {
-                                // position
-                                //console.log("SETTING POSITION");
-                                position = vector;
-                                //console.log(position);
-                                vector = new THREE.Vector3(); // without this it doesn't work for some reason
-                            } else if (dataType == 3) {
-                                // rotation
-                                //console.log("SETTING ROTATION");
-                                rotation = vector;
-                                //console.log(rotation);
-                                vector = new THREE.Vector3(); // without this it doesn't work for some reason
-
-                                //console.log("THE VECTORS BEING PASSED FOR OBJECT: " + objectName);
-                                //console.log(position);
-                                //console.log(rotation);
-                                addDefaultPosRot(objectType, objectName, position, rotation);
-                                objectType = "";
-                                objectName = "";
-                            }
-                            dataType++;
-                            xyz = 0
-                        } else {
-                            if (dataType == 0) {
-                                // getting the objectType
-                                objectType += c;
-                            } else if (dataType == 1) {
-                                // getting the objectName
-                                objectName += c;
-                            } else if (dataType == 2 || dataType == 3) {
-                                // getting the position or rotation
-                                if (c != ',') {
-                                    vecStr += c;
-                                } else {
-                                    if (xyz == 0) {
-                                        //console.log("VECTOR X: " + vecStr)
-                                        vector.x = parseFloat(vecStr);
-                                    } else if (xyz == 1) {
-                                        //console.log("VECTOR Y: " + vecStr)
-                                        vector.y = parseFloat(vecStr);
-                                    } else if (xyz == 2) {
-                                        //console.log("VECTOR Z: " + vecStr)
-                                        vector.z = parseFloat(vecStr);
-                                    } else {
-                                        console.log("UH OH");
-                                        exitCode = 1;
-                                    }
-                                    vecStr = "";
-                                    xyz++;
-                                }
-                            } else {
-                                console.log("PARSE ERROR. INDEX IS: " + index + "c is: " + c + "datatype is: " + dataType);
-                                exitCode = 1;
-                            }
-                        }
-                    }
-                    index++;
+            for (const record of records) {
+                if (record.type.includes("Desk")) {
+                    updateDeskHeightDiff(record.product, "modernDesk");
                 }
-                if (index > 10000) {
-                    exitCode = 1;
-                    console.log("infinite loop");
+                const position = new THREE.Vector3(...record.position);
+                const rotation = new THREE.Vector3(...record.rotation);
+                if (record.dimensions) {
+                    addPrimitivePosRotDimText(record.type, record.product, position, rotation, new THREE.Vector3(...record.dimensions), record.texture);
+                } else {
+                    addDefaultPosRot(record.type, record.product, position, rotation);
                 }
-            } else {
-                console.log("Error: invalid input string");
-                exitCode = 1;
             }
-
+            return true;
         }
 
         // creates the shareable string
@@ -3821,22 +3665,12 @@
         }
 
         function loadCustomSetup() {
-            var returnedParams = parseURLParams(window.location.href);
-            if (returnedParams != undefined) {
-                if (returnedParams.hasOwnProperty("customSetup")) {
-                    console.log("ENTERED");
-                    console.log("ENTERED");
-
-                    console.log(returnedParams["customSetup"][0]);
-                    parseShareableString(returnedParams["customSetup"][0]);
-                }
-            } else {
+            const setup = window.DeskSpacingLegacySetup.read(window.location.href);
+            if (setup === null) {
                 initializeObjects();
+            } else {
+                return parseShareableString(setup);
             }
-
-
-            //console.log
-            //initializeObjects();
         }
 
         function createCustomLink() {
@@ -3845,26 +3679,6 @@
         createCustomLink();
         //This function call checks if the URL has custom data, and implements that data if so
         loadCustomSetup();
-        //From StackOverflow https://stackoverflow.com/questions/814613/how-to-read-get-data-from-a-url-using-javascript
-        function parseURLParams(url) {
-            var queryStart = url.indexOf("?") + 1,
-                queryEnd = url.indexOf("#") + 1 || url.length + 1,
-                query = url.slice(queryStart, queryEnd - 1),
-                pairs = query.replace(/\+/g, " ").split("&"),
-                parms = {}, i, n, v, nv;
-
-            if (query === url || query === "") return;
-
-            for (i = 0; i < pairs.length; i++) {
-                nv = pairs[i].split("=", 2);
-                n = decodeURIComponent(nv[0]);
-                v = decodeURIComponent(nv[1]);
-
-                if (!parms.hasOwnProperty(n)) parms[n] = [];
-                parms[n].push(nv.length === 2 ? v : null);
-            }
-            return parms;
-        }
     </script>
 
 

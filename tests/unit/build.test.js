@@ -29,6 +29,9 @@ it('publishes stable asset paths and pinned dependencies without repository inte
     'about.html': 'retained page',
     'textures/wood.jpg': 'texture',
     'js/share-url.js': 'unbundled script',
+    'js/share-setup.js': 'classic setup validator',
+    'mainAppMobile.html': '<script src="js/share-setup.js"></script>',
+    'mainAppOld.html': '<script src="js/share-setup.js"></script>',
     'src/styles/planner.css': 'planner style',
     'js/jquery-3.2.1.slim.min.js': 'retired jquery',
     'js/ScrollMagic.min.js': 'retired scrollmagic',
@@ -60,6 +63,9 @@ it('publishes stable asset paths and pinned dependencies without repository inte
     'scene.bin': 'sidecar bytes',
     'about.html': 'retained page',
     'textures/wood.jpg': 'texture',
+    'js/share-setup.js': 'classic setup validator',
+    'mainAppMobile.html': '<script src="js/share-setup.js"></script>',
+    'mainAppOld.html': '<script src="js/share-setup.js"></script>',
   }))
     expect(await readFile(path.join(output, file), 'utf8')).toBe(content);
   expect(await readFile(path.join(output, 'js/share-url.js'), 'utf8')).toBe(

@@ -51,6 +51,7 @@ export const siteMounts = {
   'js/ui.js': 'src/legacy/ui.js',
   'js/ScrollMagic.min.js': 'legacy/scripts/js/ScrollMagic.min.js',
   'js/share-url.js': 'src/legacy/share-url.js',
+  'js/share-setup.js': 'src/legacy/share-setup.js',
   'js/debug.addIndicators.min.js':
     'legacy/scripts/js/debug.addIndicators.min.js',
   'js/main.js': 'src/legacy/main.js',
