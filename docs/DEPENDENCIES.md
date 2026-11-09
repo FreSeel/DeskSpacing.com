@@ -78,19 +78,28 @@ claim that Bootstrap supports mixing major versions out of the box.
 
 ## Security review
 
-`npm audit` now reports **one high-severity finding**, down from three vulnerable
-packages. Bootstrap and jQuery findings were removed by upgrading/removing them.
-The remaining finding applies to the retained `three-legacy` alias, not the
-modern desktop engine: [CVE-2020-28496 / GHSA-fq6p-x6j3-cmmq](https://github.com/advisories/GHSA-fq6p-x6j3-cmmq),
-a denial-of-service issue in Three.js RGB/HSL color parsing before 0.125.0. No new
-untrusted color-input feature was introduced. This is not a proof of
-non-exploitability; the finding remains open and `npm audit` intentionally exits 1.
-No development-tool vulnerability was reported. Archived vendor code and external
-font/analytics services are outside npm audit's coverage.
+On **2026-11-08**, `npm audit --omit=dev --json` again reported **one high-severity
+finding**, on `node_modules/three-legacy`: [CVE-2020-28496 /
+GHSA-fq6p-x6j3-cmmq](https://github.com/advisories/GHSA-fq6p-x6j3-cmmq), a
+denial-of-service issue in RGB/HSL color parsing before 0.125.0. The modern engine
+is outside that range. This production-only refresh does not re-certify the
+earlier development-tool audit. Archived vendor code and external font/analytics
+services are outside npm audit's coverage.
 
-The legacy shared-setup parser's separately documented malformed-input risks also
-remain open; npm audit cannot detect them. CI runs correctness checks without
-pretending the retained engine advisory is fixed or suppressing it with an override.
+The [A-009 security review](LEGACY_SECURITY_REVIEW.md) traces the legacy input
+paths and finds no confirmed attacker-controlled application input reaching the
+affected parser. It implements a hash-checked backport of the upstream whitespace
+fix in both published legacy engine files, using the same transformation in
+development and production. Installed/package-lock versions and archived originals
+remain unchanged; direct use of those originals bypasses the distribution fix.
+The npm finding remains visible and the audit exits 1. **A-009 awaits explicit
+release-owner acceptance** of the backport, maintenance and distribution
+constraints; it is not marked closed or suppressed with an override.
+
+The shared-setup decoder on `fix/v1-legacy-safety` already bounds malformed
+inputs in both retained planners. That separate A-001 work is not this engine
+fix and npm audit cannot assess it. See the security review for the focused
+compatibility checks and their limits.
 
 ## Licensing and validation
 

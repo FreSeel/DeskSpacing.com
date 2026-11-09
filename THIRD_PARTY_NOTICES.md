@@ -28,6 +28,22 @@ The audit preserved existing author/template credits and did not delete original
 fork still contains upstream analytics and contact references; these need an
 explicit ownership/privacy decision before a public fork launch.
 
+## Legacy Three.js color-parser security backport
+
+- Upstream: Three.js authors, `three@0.116.1`, MIT; license verified from the
+  installed package's `LICENSE`. The full notice is retained at
+  `dist/vendor/THREE-LEGACY-LICENSE.txt`.
+- Modification: `scripts/legacy-three-security.js` adapts the whitespace parsing
+  fix from [Three.js PR #21143](https://github.com/mrdoob/three.js/pull/21143)
+  (including [4a582355216b620176a291ff319d740e619d583e](https://github.com/mrdoob/three.js/commit/4a582355216b620176a291ff319d740e619d583e))
+  to the r116 RGB/HSL expressions, retaining their original alpha captures.
+- Distribution: generated `three.min.js` and `three.module.js`, with a modification
+  header, through the shared development/build pipeline. Archived originals and
+  installed dependency bytes remain intact. This notice accompanies `dist/`.
+- Review date: 2026-11-08. See
+  [LEGACY_SECURITY_REVIEW.md](docs/LEGACY_SECURITY_REVIEW.md) in the source
+  repository for evidence, tests and the pending release-owner acceptance.
+
 ## Custom-import QA fixtures
 
 - Sources: `tests/fixtures/importModel.js` and `tests/fixtures/importTexture.js`.

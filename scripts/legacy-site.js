@@ -2,10 +2,12 @@ import { cp, mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 import { siteMounts, siteSourcePath } from './site-layout.js';
+import { patchLegacyThree } from './legacy-three-security.js';
 
 // Legacy routes retain their npm r116 engine; the desktop bundles modern ES modules.
 export const dependencies = {
   'three.min.js': 'three-legacy/build/three.min.js',
+  'three.module.js': 'three-legacy/build/three.module.js',
   'three/examples/js/controls/DragControls.js':
     'three-legacy/examples/js/controls/DragControls.js',
   'three/examples/js/controls/TransformControls.js':
@@ -51,7 +53,12 @@ export async function copySite(root, outDir) {
     ...siteMounts,
   };
   for (const [target, source] of Object.entries(mounts)) {
-    if (target === 'js/share-url.js' || retiredScripts.has(target)) continue;
+    if (
+      target === 'js/share-url.js' ||
+      retiredScripts.has(target) ||
+      Object.hasOwn(dependencies, target)
+    )
+      continue;
     await mkdir(path.dirname(path.join(outDir, target)), { recursive: true });
     await cp(path.join(root, source), path.join(outDir, target), {
       recursive: true,
@@ -59,9 +66,12 @@ export async function copySite(root, outDir) {
   }
   for (const [target, source] of Object.entries(dependencies)) {
     await mkdir(path.dirname(path.join(outDir, target)), { recursive: true });
-    await cp(
-      path.join(root, 'node_modules', source),
+    await writeFile(
       path.join(outDir, target),
+      patchLegacyThree(
+        target,
+        await readFile(path.join(root, 'node_modules', source)),
+      ),
     );
   }
   // Never publish a custom domain implicitly; configure one on the fork host.
@@ -103,6 +113,7 @@ export function legacySite() {
             ? path.join(config.root, 'node_modules', dependency)
             : path.join(config.root, source);
           let contents = await readFile(file);
+          if (dependency) contents = patchLegacyThree(name, contents);
           if (!dependency)
             contents = contents
               .toString()

@@ -4,6 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { expect, it } from 'vitest';
 import { copySite, dependencies } from '../../scripts/legacy-site.js';
+import { patchLegacyThree } from '../../scripts/legacy-three-security.js';
 
 it('publishes stable asset paths and pinned dependencies without repository internals or CNAME', async () => {
   const root = await mkdtemp(path.join(os.tmpdir(), 'deskspacing-build-'));
@@ -49,7 +50,9 @@ it('publishes stable asset paths and pinned dependencies without repository inte
     });
     await writeFile(
       path.join(root, 'node_modules', source),
-      `pinned: ${source}`,
+      source.match(/three-legacy\/build\/three\.(min|module)\.js$/)
+        ? await readFile(path.join('node_modules', source))
+        : `pinned: ${source}`,
     );
   }
   await mkdir(path.join(output, 'js'));
@@ -77,9 +80,14 @@ it('publishes stable asset paths and pinned dependencies without repository inte
   expect(
     await readFile(path.join(output, 'THIRD_PARTY_NOTICES.md'), 'utf8'),
   ).toBe('asset provenance and notices');
-  expect(await readFile(path.join(output, 'three.min.js'), 'utf8')).toBe(
-    'pinned: three-legacy/build/three.min.js',
-  );
+  for (const name of ['three.min.js', 'three.module.js']) {
+    expect(await readFile(path.join(output, name), 'utf8')).toBe(
+      patchLegacyThree(
+        name,
+        await readFile(path.join('node_modules', dependencies[name])),
+      ),
+    );
+  }
   for (const file of [
     'CNAME',
     'public/models/GLTFs/model with spaces.glb',
