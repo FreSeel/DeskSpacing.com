@@ -54,8 +54,13 @@ export function createActions({
   function reset() {
     return edit('Clear setup', clearObjects);
   }
+  function requireCapacity(target) {
+    if (!target && state.objects.length >= limits.objects)
+      throw new Error(
+        `The scene has reached its supported ${limits.objects}-object limit.`,
+      );
+  }
   async function add(product, options = {}) {
-    selection.pickEnabled = true;
     const desk = isDesk(product);
     const target = desk
       ? state.objects.find((object) => object.userData.type.includes('Desk'))
@@ -74,31 +79,38 @@ export function createActions({
     validateRecords([record]);
     const generation = state.generation;
     const object = await factory.create(record);
-    if (generation !== state.generation || (target && !state.has(target))) {
-      factory.dispose(object);
-      return null;
-    }
-    return edit(target ? 'Replace object' : 'Add object', () => {
-      // Allocate identity before removal, matching existing instance names.
-      state.add(object, record);
-      if (target) removeObject(target);
-      if (desk) {
-        const offset = deskOffsets[product];
-        const difference = offset - state.deskOffset;
-        for (const existing of state.objects) {
-          if (
-            existing !== object &&
-            !existing.userData.type.includes('Furniture')
-          )
-            existing.position.y += difference;
+    let stored = false;
+    try {
+      if (generation !== state.generation || (target && !state.has(target)))
+        return null;
+      requireCapacity(target);
+      return edit(target ? 'Replace object' : 'Add object', () => {
+        requireCapacity(target);
+        // Allocate identity before removal, matching existing instance names.
+        state.add(object, record);
+        stored = true;
+        if (target) removeObject(target);
+        if (desk) {
+          const offset = deskOffsets[product];
+          const difference = offset - state.deskOffset;
+          for (const existing of state.objects) {
+            if (
+              existing !== object &&
+              !existing.userData.type.includes('Furniture')
+            )
+              existing.position.y += difference;
+          }
+          state.deskOffset = offset;
         }
-        state.deskOffset = offset;
-      }
-      // Inspect desks after creation; selection keeps their manipulation lock.
-      if (desk || !record.dimensions || !record.type.includes('NoSelect'))
-        selection.pick(object);
-      return object;
-    });
+        selection.pickEnabled = true;
+        // Inspect desks after creation; selection keeps their manipulation lock.
+        if (desk || !record.dimensions || !record.type.includes('NoSelect'))
+          selection.pick(object);
+        return object;
+      });
+    } finally {
+      if (!stored && !state.has(object)) factory.dispose(object);
+    }
   }
 
   const surfaces = createSurfaceGeometry();
@@ -132,6 +144,7 @@ export function createActions({
     validateProjectRecords([record]);
     const generation = state.generation;
     const object = await factory.createImported(record, { blob, signal });
+    let stored = false;
     try {
       signal.throwIfAborted();
       if (
@@ -140,21 +153,22 @@ export function createActions({
         (duplicate && !state.has(duplicate))
       )
         return null;
-      if (!target && state.objects.length >= limits.objects)
-        throw new Error('The project has reached its object limit.');
+      requireCapacity(target);
       return edit(
         target ? 'Recover model' : place ? 'Import model' : 'Duplicate model',
         () => {
+          requireCapacity(target);
           if (place) record = { ...record, position: importPosition() };
           if (target) removeObject(target);
           state.add(object, record);
+          stored = true;
           selection.pickEnabled = true;
           selection.pick(object);
           return object;
         },
       );
     } finally {
-      if (!state.has(object)) factory.dispose(object);
+      if (!stored && !state.has(object)) factory.dispose(object);
     }
   }
 

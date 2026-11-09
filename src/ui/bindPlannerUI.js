@@ -74,7 +74,8 @@ export function bindPlannerUI({
         // A null result is a discarded stale operation, never a success toast.
       } catch (error) {
         if (disposed) return;
-        errorText.textContent = `${error.message || 'The object could not be loaded.'} Please try again.`;
+        errorText.textContent =
+          error.message || 'The object could not be loaded. Please try again.';
         errorText.hidden = false;
       } finally {
         if (!disposed) {

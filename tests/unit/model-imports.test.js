@@ -28,6 +28,8 @@ import {
 } from '../fixtures/importModel.js';
 import { pixelPng } from '../fixtures/importTexture.js';
 import { objectToRecord } from '../../src/sharing/sceneRecords.js';
+import { createRecord } from '../../src/catalog/configuration.js';
+import { limits } from '../../src/sharing/legacyCodec.js';
 
 const file = (bytes, name = 'desk model.gltf') =>
   new globalThis.File([bytes], name);
@@ -386,6 +388,53 @@ describe('custom glTF validation', () => {
 });
 
 describe('scene and asset ownership', () => {
+  it('applies the shared limit to imports and duplicates and releases rejected instances', async () => {
+    const app = harness();
+    for (let index = 0; index < limits.objects - 1; index++)
+      app.state.add(new THREE.Group(), createRecord('defaultMouse'));
+    const dispose = vi.spyOn(app.factory, 'dispose');
+    const imported = await app.imports.importModelFromFile(glbFile()).result;
+    expect(app.state.objects).toHaveLength(limits.objects);
+    const before = app.state.objects;
+    const selection = app.selection.pickedObject;
+    const another = app.imports.importModelFromFile(glbFile());
+    await expect(another.result).rejects.toThrow('supported 500-object limit');
+    expect(app.imports.getImportStatus(another).state).toBe('failure');
+    const duplicate = app.imports.duplicateImportedObject(
+      imported.userData.objectId,
+    );
+    await expect(duplicate.result).rejects.toThrow(
+      'supported 500-object limit',
+    );
+    expect(app.state.objects).toEqual(before);
+    expect(app.selection.pickedObject).toBe(selection);
+    expect(dispose).toHaveBeenCalledTimes(2);
+    // Replacing an imported instance uses its existing membership slot.
+    const replacement = await app.actions.addImported(
+      objectToRecord(imported),
+      {
+        blob: app.factory.importedFile(imported),
+        signal: signal(),
+        target: imported,
+      },
+    );
+    expect(app.state.objects).toHaveLength(limits.objects);
+    expect(app.state.has(imported)).toBe(false);
+    expect(app.state.has(replacement)).toBe(true);
+    app.actions.remove(app.state.objects[0]);
+    expect(app.state.objects).toHaveLength(limits.objects - 1);
+    const copy = await app.imports.duplicateImportedObject(
+      replacement.userData.objectId,
+    ).result;
+    expect(app.state.has(copy)).toBe(true);
+    expect(app.state.objects).toHaveLength(limits.objects);
+    app.actions.history.undo();
+    expect(app.state.objects).toHaveLength(limits.objects - 1);
+    app.actions.history.redo();
+    expect(app.state.objects).toHaveLength(limits.objects);
+    app.dispose();
+  });
+
   it('treats import, transform and duplicate as independent undo steps without mutating shared geometry', async () => {
     const app = harness();
     const object = await app.imports.importModelFromFile(glbFile()).result;
