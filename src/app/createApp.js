@@ -30,224 +30,276 @@ import { bindSnappingGuides } from '../scene/snappingGuides.js';
 import { bindHistoryUI } from '../ui/historyUI.js';
 
 export function createApp({ THREE, host, document }) {
-  host.performance.mark('planner:init-start');
-  renderCatalog(document);
-  const measurements = createMeasurementPreference(host);
-  const measurementUI = bindMeasurementUI({ document, measurements });
-  const canvas = document.getElementById('threeCanvas');
-  const view = createScene({
-    THREE,
-    canvas,
-    container: document.getElementById('rightSideContainer'),
-    host,
-  });
-  host.performance.mark('planner:scene-ready');
-  host.performance.measure(
-    'planner:scene-init',
-    'planner:init-start',
-    'planner:scene-ready',
-  );
-  const feedback = createFeedback(document);
-  feedback.loading(true);
-  const factory = createObjectFactory({
-    THREE,
-    imports: createImportRegistry(),
-  });
-  const state = createObjectStore({
-    scene: view.scene,
-    disposeObject: factory.dispose,
-    onChange: () => {
-      view.invalidateScene();
-      feedback.empty(state.objects.length === 0);
-    },
-  });
-  const selection = createSelection({
-    THREE,
-    camera: view.camera,
-    transformControls: view.transformControls,
-    getObjects: () => state.objects,
-    removeObject: (object) => actions.remove(object),
-  });
-  const actions = createActions({
-    state,
-    selection,
-    factory,
-    invalidateScene: view.invalidateScene,
-  });
-  // URL/default loading establishes the baseline, not a user editing action.
-  actions.history.setEnabled(false);
-  const snapping = createSnappingPreference(host);
-  const snappingUI = bindSnappingUI({
-    document,
-    measurements,
-    snapping,
-  });
-  const snappingGuides = bindSnappingGuides({ document, view });
-  const sharing = createSharing({
-    state,
-    actions,
-    getLocation: () => host.location.href,
-  });
-  canvas.setAttribute('aria-busy', 'true');
-  const shell = bindEditorShell({
-    document,
-    host,
-    transformControls: view.transformControls,
-  });
-  const cleanup = [
-    bindSnapping({
-      host,
-      canvas,
-      view,
-      state,
-      snapping,
-      transforms: actions.transforms,
-      onGuidance(guidance, bypass) {
-        snappingUI.guidance(guidance, bypass);
-        snappingGuides.show(guidance);
-      },
-    }),
-    () => snappingGuides.dispose(),
-    () => snappingUI.dispose(),
-    () => snapping.dispose(),
-    bindHistoryUI({
-      document,
-      history: actions.history,
-      onError: feedback.error,
-    }),
-    bindDimensionAnnotations({
-      document,
-      view,
-      selection,
-      measurements,
-      state,
-    }),
-    () => measurementUI.dispose(),
-    () => measurements.dispose(),
-    bindWorkspaceTheme({ host, document, view }),
-    () => shell.dispose(),
-    bindSelectionPanel({
-      document,
-      measurements,
-      selection,
-      actions,
-      transformControls: view.transformControls,
-      shell,
-    }),
-    bindNumericalTransformPanel({
-      document,
-      selection,
-      transforms: actions.transforms,
-      view,
-    }),
-    bindPreciseSpacingPanel({
-      document,
-      selection,
-      state,
-      transforms: actions.transforms,
-      spacing: actions.spacing,
-      view,
-    }),
-    bindPointer({
-      canvas,
-      selection,
-      controls: view.controls,
-      transformControls: view.transformControls,
-    }),
-    bindKeyboard({
-      host,
-      selection,
-      transformControls: view.transformControls,
-      transforms: actions.transforms,
-      history: actions.history,
-      onError: feedback.error,
-    }),
-    bindPlannerUI({
-      document,
-      measurements,
-      measurementUI,
-      actions,
-      selection,
-      resetCamera: view.resetCamera,
-      sharing,
-      feedback,
-      shell,
-    }),
-  ];
+  const cleanup = [];
   let disposed = false;
-  const ready = sharing
-    .loadFromUrl()
-    .then(() => undefined)
-    .catch(async (error) => {
-      if (disposed) return;
-      feedback.error(error);
-      // Invalid initial links get the same usable defaults as a fresh visit.
-      // A later failed restore preserves the current setup in actions.restore().
-      if (
-        readSetupParameter(host.location.href) !== null &&
-        state.objects.length === 0
-      ) {
+  try {
+    host.performance.mark('planner:init-start');
+    renderCatalog(document);
+    const measurements = createMeasurementPreference(host);
+    cleanup.push(() => measurements.dispose());
+    const measurementUI = bindMeasurementUI({ document, measurements });
+    cleanup.push(() => measurementUI.dispose());
+    const canvas = document.getElementById('threeCanvas');
+    const failure = document.getElementById('graphicsFailure');
+    const failureMessage = document.getElementById('graphicsFailureMessage');
+    const shellNode = document.querySelector('.editor-shell');
+    let contextLost = false;
+    function showGraphicsFailure(message) {
+      failureMessage.textContent = message;
+      failure.hidden = false;
+      shellNode.inert = true;
+      failure.focus();
+    }
+    const view = createScene({
+      THREE,
+      canvas,
+      container: document.getElementById('rightSideContainer'),
+      host,
+      onContextLost() {
+        contextLost = true;
+        showGraphicsFailure(
+          'The graphics connection was lost. The workspace is paused. Wait for recovery or reload the editor.',
+        );
+      },
+      onContextRecovered() {
+        if (!contextLost || disposed) return;
+        contextLost = false;
+        failure.hidden = true;
+        if (!document.querySelector('.modal.show')) shellNode.inert = false;
+        canvas.focus();
+      },
+    });
+    cleanup.push(() => view.dispose());
+    host.performance.mark('planner:scene-ready');
+    host.performance.measure(
+      'planner:scene-init',
+      'planner:init-start',
+      'planner:scene-ready',
+    );
+    const feedback = createFeedback(document);
+    cleanup.push(() => feedback.dispose());
+    feedback.loading(true);
+    const factory = createObjectFactory({
+      THREE,
+      imports: createImportRegistry(),
+    });
+    cleanup.push(() => factory.disposeAll());
+    const state = createObjectStore({
+      scene: view.scene,
+      disposeObject: factory.dispose,
+      onChange: () => {
+        view.invalidateScene();
+        feedback.empty(state.objects.length === 0);
+      },
+    });
+    const selection = createSelection({
+      THREE,
+      camera: view.camera,
+      transformControls: view.transformControls,
+      getObjects: () => state.objects,
+      removeObject: (object) => actions.remove(object),
+    });
+    const actions = createActions({
+      state,
+      selection,
+      factory,
+      invalidateScene: view.invalidateScene,
+    });
+    cleanup.push(() => actions.dispose());
+    // URL/default loading establishes the baseline, not a user editing action.
+    actions.history.setEnabled(false);
+    const snapping = createSnappingPreference(host);
+    cleanup.push(() => snapping.dispose());
+    const snappingUI = bindSnappingUI({
+      document,
+      measurements,
+      snapping,
+    });
+    cleanup.push(() => snappingUI.dispose());
+    const snappingGuides = bindSnappingGuides({ document, view });
+    cleanup.push(() => snappingGuides.dispose());
+    const sharing = createSharing({
+      state,
+      actions,
+      getLocation: () => host.location.href,
+    });
+    canvas.setAttribute('aria-busy', 'true');
+    const shell = bindEditorShell({
+      document,
+      host,
+      transformControls: view.transformControls,
+    });
+    cleanup.push(() => shell.dispose());
+    cleanup.push(
+      bindSnapping({
+        host,
+        canvas,
+        view,
+        state,
+        snapping,
+        transforms: actions.transforms,
+        onGuidance(guidance, bypass) {
+          snappingUI.guidance(guidance, bypass);
+          snappingGuides.show(guidance);
+        },
+      }),
+    );
+    cleanup.push(
+      bindHistoryUI({
+        document,
+        history: actions.history,
+        onError: feedback.error,
+      }),
+    );
+    cleanup.push(
+      bindDimensionAnnotations({
+        document,
+        view,
+        selection,
+        measurements,
+        state,
+      }),
+    );
+    cleanup.push(bindWorkspaceTheme({ host, document, view }));
+    cleanup.push(
+      bindSelectionPanel({
+        document,
+        measurements,
+        selection,
+        actions,
+        transformControls: view.transformControls,
+        shell,
+      }),
+    );
+    cleanup.push(
+      bindNumericalTransformPanel({
+        document,
+        selection,
+        transforms: actions.transforms,
+        view,
+      }),
+    );
+    cleanup.push(
+      bindPreciseSpacingPanel({
+        document,
+        selection,
+        state,
+        transforms: actions.transforms,
+        spacing: actions.spacing,
+        view,
+      }),
+    );
+    cleanup.push(
+      bindPointer({
+        canvas,
+        selection,
+        controls: view.controls,
+        transformControls: view.transformControls,
+      }),
+    );
+    cleanup.push(
+      bindKeyboard({
+        host,
+        selection,
+        transformControls: view.transformControls,
+        transforms: actions.transforms,
+        history: actions.history,
+        onError: feedback.error,
+      }),
+    );
+    cleanup.push(
+      bindPlannerUI({
+        document,
+        measurements,
+        measurementUI,
+        actions,
+        selection,
+        resetCamera: view.resetCamera,
+        sharing,
+        feedback,
+        shell,
+      }),
+    );
+    const ready = sharing
+      .loadFromUrl()
+      .then(() => undefined)
+      .catch(async (error) => {
+        if (disposed) return;
+        feedback.error(error);
+        // Invalid initial links get the same usable defaults as a fresh visit.
+        // A later failed restore preserves the current setup in actions.restore().
+        if (
+          readSetupParameter(host.location.href) !== null &&
+          state.objects.length === 0
+        ) {
+          feedback.error(
+            new Error(
+              `${error.message} The shared setup could not be restored; showing the default setup.`,
+            ),
+          );
+          await actions.initialize().catch((failure) => {
+            if (!disposed) feedback.error(failure);
+          });
+        }
+      })
+      .finally(() => {
+        if (disposed) return;
+        feedback.empty(state.objects.length === 0);
+        feedback.loading(false);
+        actions.history.setEnabled(true);
+        canvas.setAttribute('aria-busy', 'false');
+        host.performance.mark('planner:assets-ready');
+      });
+    const modelImports = createModelImports({ state, actions, factory, ready });
+    cleanup.push(() => modelImports.dispose());
+    cleanup.push(
+      bindImportDialog({
+        document,
+        modelImports,
+        feedback,
+        close: (modal) => host.bootstrap.Modal.getInstance(modal).hide(),
+      }),
+    );
+    const projects = createLocalProjects({
+      state,
+      actions,
+      factory,
+      modelImports,
+      ready,
+      onMissingAssets: (missing) =>
         feedback.error(
           new Error(
-            `${error.message} The shared setup could not be restored; showing the default setup.`,
+            `Project opened with ${missing.length} missing model${missing.length === 1 ? '' : 's'}. ${missing[0].message}`,
           ),
-        );
-        await actions.initialize().catch((failure) => {
-          if (!disposed) feedback.error(failure);
-        });
-      }
-    })
-    .finally(() => {
-      if (disposed) return;
-      feedback.empty(state.objects.length === 0);
-      feedback.loading(false);
-      actions.history.setEnabled(true);
-      canvas.setAttribute('aria-busy', 'false');
-      host.performance.mark('planner:assets-ready');
-    });
-  const modelImports = createModelImports({ state, actions, factory, ready });
-  cleanup.push(
-    bindImportDialog({
-      document,
-      modelImports,
-      feedback,
-      close: (modal) => host.bootstrap.Modal.getInstance(modal).hide(),
-    }),
-  );
-  const projects = createLocalProjects({
-    state,
-    actions,
-    factory,
-    modelImports,
-    ready,
-    onMissingAssets: (missing) =>
-      feedback.error(
-        new Error(
-          `Project opened with ${missing.length} missing model${missing.length === 1 ? '' : 's'}. ${missing[0].message}`,
         ),
-      ),
-  });
-  cleanup.push(bindProjectsDialog({ document, projects, state }));
-  function dispose() {
-    if (disposed) return;
+    });
+    cleanup.push(() => projects.dispose());
+    cleanup.push(bindProjectsDialog({ document, projects, state }));
+    function dispose() {
+      if (disposed) return;
+      disposed = true;
+      cleanup.reverse().forEach((remove) => remove());
+    }
+    return {
+      state,
+      actions,
+      selection,
+      sharing,
+      modelImports,
+      projects,
+      view,
+      ready,
+      dispose,
+    };
+  } catch (error) {
     disposed = true;
-    cleanup.forEach((remove) => remove());
-    projects.dispose();
-    modelImports.dispose();
-    actions.dispose();
-    factory.disposeAll();
-    feedback.dispose();
-    view.dispose();
+    cleanup.reverse().forEach((remove) => {
+      try {
+        remove();
+      } catch {
+        // Continue releasing independently owned services.
+      }
+    });
+    throw error;
   }
-  return {
-    state,
-    actions,
-    selection,
-    sharing,
-    modelImports,
-    projects,
-    view,
-    ready,
-    dispose,
-  };
 }

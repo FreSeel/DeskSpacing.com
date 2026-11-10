@@ -26,11 +26,13 @@ export function bindEditorShell({ document, host, transformControls }) {
     });
   });
   listen(document, 'hidden.bs.modal', (event) => {
-    document.querySelector('.editor-shell').inert = false;
+    if (document.getElementById('graphicsFailure').hidden)
+      document.querySelector('.editor-shell').inert = false;
     document.querySelector('.skip-link').inert = false;
     const target = returnFocus.get(event.target);
     host.queueMicrotask(() => {
-      if (disposed) return;
+      if (disposed || !document.getElementById('graphicsFailure').hidden)
+        return;
       if (target?.getClientRects().length)
         target.focus({ preventScroll: true });
       else if (target?.id === 'openImport')

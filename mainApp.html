@@ -16,6 +16,11 @@
     <link rel="stylesheet" href="src/styles/responsive.css">
 </head>
 <body class="planner-app">
+    <section id="graphicsFailure" class="graphics-failure" role="alert" aria-labelledby="graphicsFailureTitle" tabindex="-1" hidden>
+        <h1 id="graphicsFailureTitle">The 3D workspace is unavailable</h1>
+        <p id="graphicsFailureMessage">DeskSpacing needs WebGL2 graphics support. Check your browser or graphics settings, then reload the page.</p>
+        <button id="retryGraphics" type="button" onclick="location.reload()">Reload editor</button>
+    </section>
     <a class="skip-link" href="#threeCanvas">Skip to workspace</a>
     <div class="editor-shell">
         <header class="editor-header">

@@ -1,6 +1,7 @@
 export function bindHistoryUI({ document, history, onError }) {
   const undo = document.getElementById('undoTransform');
   const redo = document.getElementById('redoTransform');
+  if (!undo || !redo) throw new Error('History controls are unavailable.');
   function invoke(action) {
     try {
       history[action]();

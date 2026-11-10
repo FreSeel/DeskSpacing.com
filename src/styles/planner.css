@@ -1,4 +1,22 @@
 /* Modern editor only. Retained planners keep their historical styles. */
+.planner-app .graphics-failure {
+  position: fixed;
+  z-index: 2000;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 16px;
+  padding: clamp(24px, 6vw, 64px);
+  background: var(--color-dialog);
+  color: var(--color-text);
+}
+.planner-app .graphics-failure[hidden] {
+  display: none;
+}
+.planner-app .graphics-failure p {
+  max-width: 50ch;
+}
 .planner-app .snapping-guides {
   position: absolute;
   inset: 0;
