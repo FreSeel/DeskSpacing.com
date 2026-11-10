@@ -91,13 +91,23 @@ export function bindPlannerUI({
     '[data-action="reset-camera"]',
   ))
     listen(button, 'click', resetCamera);
-  listen(document.getElementById('saveModalButton'), 'click', () => {
+  listen(document.getElementById('saveModal'), 'show.bs.modal', () => {
     const link = document.getElementById('customLinkForm');
+    const panel = document.getElementById('shareLinkPanel');
+    const intro = document.getElementById('shareIntro');
+    const errorText = document.getElementById('shareError');
+    link.value = '';
+    panel.hidden = true;
+    errorText.hidden = true;
+    errorText.textContent = '';
     try {
       link.value = sharing.createLink();
+      panel.hidden = false;
+      intro.hidden = false;
     } catch (error) {
-      link.value = '';
-      feedback.error(error);
+      intro.hidden = true;
+      errorText.textContent = `${error.message} Open More → Projects to save this setup in this browser. Local projects cannot be opened on another device.`;
+      errorText.hidden = false;
     }
   });
   listen(document.getElementById('customLinkForm'), 'click', (event) =>

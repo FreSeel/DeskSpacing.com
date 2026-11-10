@@ -51,6 +51,18 @@
 .planner-app .modal-footer {
   flex-shrink: 0;
 }
+@media (max-width: 480px) {
+  .planner-app .project-save-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .planner-app .project-item {
+    flex-wrap: wrap;
+  }
+  .planner-app .project-item-name {
+    flex-basis: 100%;
+  }
+}
 .planner-app [data-layout='compact'] {
   --library-width: 304px;
   --inspector-width: 304px;

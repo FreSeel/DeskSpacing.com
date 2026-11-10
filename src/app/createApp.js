@@ -1,4 +1,5 @@
 import { bindImportDialog } from '../ui/importDialog.js';
+import { bindProjectsDialog } from '../ui/projectsDialog.js';
 import { createImportRegistry } from '../models/importRegistry.js';
 import { createModelImports } from '../models/modelImports.js';
 import { createLocalProjects } from '../projects/localProjects.js';
@@ -226,6 +227,7 @@ export function createApp({ THREE, host, document }) {
         ),
       ),
   });
+  cleanup.push(bindProjectsDialog({ document, projects, state }));
   function dispose() {
     if (disposed) return;
     disposed = true;

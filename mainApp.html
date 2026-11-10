@@ -56,6 +56,7 @@
                     <div class="menu-popover">
                         <button id="undoTransform" type="button" class="history-button" aria-label="Undo" title="Undo (Cmd+Z / Ctrl+Z)" aria-keyshortcuts="Meta+Z Control+Z" data-workspace-shortcuts disabled><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-2"/></svg><span>Undo</span></button>
                         <button id="redoTransform" type="button" class="history-button" aria-label="Redo" title="Redo (Cmd+Shift+Z / Ctrl+Shift+Z / Ctrl+Y)" aria-keyshortcuts="Meta+Shift+Z Control+Shift+Z Control+Y" data-workspace-shortcuts disabled><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9H10a6 6 0 0 0 0 12h2"/></svg><span>Redo</span></button>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#projectsModal">Projects</button>
                     <div class="theme-setting">
                         <label for="themePreference">Appearance</label>
                         <select id="themePreference" data-theme-select aria-describedby="themeStatus"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select>
@@ -65,7 +66,7 @@
                         <a href="mainApp.html" aria-current="page">Setup Creator</a>
                         <a href="about.html">Contact</a>
                         <a href="https://twitter.com/DeskSpacing" target="_blank" rel="noopener noreferrer">Twitter ↗</a>
-                        <p>Leaving the editor? Keep a share link to reopen your setup.</p>
+                        <p>Leaving the editor? Save a local project or keep a share link for catalog-only setups.</p>
                     </div>
                 </details>
                 <button id="saveModalButton" aria-label="Share / Save" class="button-primary" data-bs-toggle="modal" data-bs-target="#saveModal"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 3h12l3 3v15H4V3h1Zm3 0v7h8V3M8 21v-7h8v7"/></svg><span class="share-label">Share / Save</span><span class="share-compact" aria-hidden="true">Share</span></button>
@@ -172,10 +173,33 @@
             </form>
         </div>
     </div>
+    <div class="modal fade" id="projectsModal" tabindex="-1" aria-labelledby="projectsTitle" aria-hidden="true">
+        <div class="modal-dialog"><div class="modal-content">
+            <div class="modal-header"><h2 class="modal-title" id="projectsTitle">Local projects</h2><button type="button" class="icon-button" data-bs-dismiss="modal" aria-label="Close">×</button></div>
+            <div class="modal-body">
+                <p class="muted">Projects stay in this browser on this site. Clearing browser storage can erase them. They are not synced to the cloud or portable backups.</p>
+                <form id="projectForm" novalidate>
+                    <label for="projectName">Project name</label>
+                    <div class="project-save-row"><input id="projectName" type="text" maxlength="200" autocomplete="off" aria-describedby="projectError"><button type="submit" class="button-primary">Save project</button></div>
+                </form>
+                <p id="projectError" class="project-error" role="alert" hidden></p>
+                <p id="projectStatus" class="muted" role="status" aria-live="polite"></p>
+                <h3>Saved projects</h3>
+                <ul id="projectList" class="project-list"></ul>
+                <p id="projectEmpty" class="muted" hidden>No local projects yet. Name this setup and save it above.</p>
+                <div id="projectConfirmation" class="project-confirmation" role="group" aria-labelledby="projectConfirmationText" hidden>
+                    <p id="projectConfirmationText"></p>
+                    <button id="confirmProjectAction" type="button" class="button-primary">Continue</button>
+                    <button id="cancelProjectAction" type="button">Cancel</button>
+                </div>
+            </div>
+            <div class="modal-footer"><button type="button" data-bs-dismiss="modal">Close</button></div>
+        </div></div>
+    </div>
     <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document"><div class="modal-content">
             <div class="modal-header"><h2 class="modal-title" id="saveModalLabel">Share / Save your setup</h2><button class="icon-button" data-bs-dismiss="modal" aria-label="Close">×</button></div>
-            <div class="modal-body"><p>Keep this link to reopen this setup, or share it with a friend.</p><label for="customLinkForm">Your setup link</label><input type="url" id="customLinkForm" readonly aria-describedby="shareInstructions"><p id="shareInstructions" class="muted">Select and copy the link, then keep it somewhere safe. After edits, open Share / Save again to generate a new link.</p></div>
+            <div class="modal-body"><p id="shareIntro">Keep this link to reopen this setup, or share it with a friend.</p><div id="shareLinkPanel"><label for="customLinkForm">Your setup link</label><input type="url" id="customLinkForm" readonly aria-describedby="shareInstructions"><p id="shareInstructions" class="muted">Select and copy the link, then keep it somewhere safe. After edits, open Share / Save again to generate a new link.</p></div><p id="shareError" class="project-error" role="alert" hidden></p></div>
             <div class="modal-footer"><button data-bs-dismiss="modal">Close</button></div>
         </div></div>
     </div>
