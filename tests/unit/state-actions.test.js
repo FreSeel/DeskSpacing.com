@@ -44,6 +44,11 @@ function seedCatalog({ state, factory }, count) {
   // Seeding bypasses actions so the boundary tests start with empty history.
   factory.create.mockClear();
 }
+function desks(state) {
+  return state.objects.filter((object) =>
+    object.userData.type.includes('Desk'),
+  );
+}
 
 describe('object state and asynchronous actions', () => {
   it('accepts the 500th catalog object, rejects the 501st without changing state, and serializes the valid scene', async () => {
@@ -257,6 +262,260 @@ describe('object state and asynchronous actions', () => {
     );
     expect(state.has(desk)).toBe(true);
     expect(mouse.position.y).toBe(height);
+  });
+  it('keeps only the latest requested desk when the older empty-scene load finishes first', async () => {
+    const { actions, state, selection, factory } = setup();
+    const first = deferred();
+    const second = deferred();
+    factory.create
+      .mockReturnValueOnce(first.promise)
+      .mockReturnValueOnce(second.promise);
+    const older = actions.add('modernDesk');
+    const newer = actions.add('standingDesk');
+    const stale = new THREE.Group();
+    first.resolve(stale);
+    expect(await older).toBeNull();
+    expect(state.objects).toEqual([]);
+    expect(actions.history.canUndo).toBe(false);
+    const winner = new THREE.Group();
+    second.resolve(winner);
+    expect(await newer).toBe(winner);
+    expect(desks(state)).toEqual([winner]);
+    expect(state.deskOffset).toBe(-0.62);
+    expect(selection.pickedObject).toBe(winner);
+    expect(
+      factory.dispose.mock.calls.filter(([object]) => object === stale),
+    ).toHaveLength(1);
+    expect(actions.history.undo()).toBe(true);
+    expect(desks(state)).toEqual([]);
+    expect(actions.history.undo()).toBe(false);
+    expect(actions.history.redo()).toBe(true);
+    expect(desks(state)).toEqual([winner]);
+  });
+  it('keeps only the latest requested desk when it finishes before the superseded load', async () => {
+    const { actions, state, selection, factory } = setup();
+    const first = deferred();
+    const second = deferred();
+    factory.create
+      .mockReturnValueOnce(first.promise)
+      .mockReturnValueOnce(second.promise);
+    const older = actions.add('modernDesk');
+    const newer = actions.add('standingDesk');
+    const winner = new THREE.Group();
+    second.resolve(winner);
+    expect(await newer).toBe(winner);
+    const stale = new THREE.Group();
+    first.resolve(stale);
+    expect(await older).toBeNull();
+    expect(desks(state)).toEqual([winner]);
+    expect(state.deskOffset).toBe(-0.62);
+    expect(selection.pickedObject).toBe(winner);
+    expect(
+      factory.dispose.mock.calls.filter(([object]) => object === stale),
+    ).toHaveLength(1);
+    expect(actions.history.undo()).toBe(true);
+    expect(actions.history.undo()).toBe(false);
+  });
+  it('applies the winning replacement offset once and restores positions through history', async () => {
+    const { actions, state, selection, factory } = setup();
+    const original = await actions.add('modernDesk');
+    const mouse = await actions.add('defaultMouse');
+    const chair = await actions.add('simpleChair');
+    const mouseY = mouse.position.y;
+    const chairY = chair.position.y;
+    actions.history.clear();
+    const first = deferred();
+    const second = deferred();
+    factory.create
+      .mockReturnValueOnce(first.promise)
+      .mockReturnValueOnce(second.promise);
+    const older = actions.add('alexDesk61');
+    const newer = actions.add('standingDesk');
+    const stale = new THREE.Group();
+    first.resolve(stale);
+    expect(await older).toBeNull();
+    expect(state.objects).toContain(original);
+    expect(mouse.position.y).toBe(mouseY);
+    const winner = new THREE.Group();
+    second.resolve(winner);
+    expect(await newer).toBe(winner);
+    expect(desks(state)).toEqual([winner]);
+    expect(state.deskOffset).toBe(-0.62);
+    expect(mouse.position.y).toBe(mouseY - 0.62);
+    expect(chair.position.y).toBe(chairY);
+    expect(selection.pickedObject).toBe(winner);
+    expect(
+      factory.dispose.mock.calls.filter(([object]) => object === stale),
+    ).toHaveLength(1);
+    expect(actions.history.undo()).toBe(true);
+    expect(desks(state)).toEqual([original]);
+    expect(state.deskOffset).toBe(0);
+    expect(mouse.position.y).toBe(mouseY);
+    expect(actions.history.undo()).toBe(false);
+    expect(actions.history.redo()).toBe(true);
+    expect(desks(state)).toEqual([winner]);
+    expect(mouse.position.y).toBe(mouseY - 0.62);
+  });
+  it('preserves the committed desk when the latest request fails and discards the older request', async () => {
+    const { actions, state, selection, factory } = setup();
+    const original = await actions.add('modernDesk');
+    const mouse = await actions.add('defaultMouse');
+    const mouseY = mouse.position.y;
+    const selected = selection.pickedObject;
+    actions.history.clear();
+    const first = deferred();
+    const second = deferred();
+    factory.create
+      .mockReturnValueOnce(first.promise)
+      .mockReturnValueOnce(second.promise);
+    const older = actions.add('standingDesk');
+    const newer = actions.add('alexDesk61');
+    second.reject(new Error('asset unavailable'));
+    await expect(newer).rejects.toThrow('asset unavailable');
+    const stale = new THREE.Group();
+    first.resolve(stale);
+    expect(await older).toBeNull();
+    expect(desks(state)).toEqual([original]);
+    expect(state.deskOffset).toBe(0);
+    expect(mouse.position.y).toBe(mouseY);
+    expect(selection.pickedObject).toBe(selected);
+    expect(actions.history.canUndo).toBe(false);
+    expect(
+      factory.dispose.mock.calls.filter(([object]) => object === stale),
+    ).toHaveLength(1);
+  });
+  it('ignores a superseded desk load failure after the latest desk commits', async () => {
+    const { actions, state, factory } = setup();
+    const first = deferred();
+    const second = deferred();
+    factory.create
+      .mockReturnValueOnce(first.promise)
+      .mockReturnValueOnce(second.promise);
+    const older = actions.add('modernDesk');
+    const newer = actions.add('standingDesk');
+    const winner = new THREE.Group();
+    second.resolve(winner);
+    expect(await newer).toBe(winner);
+    first.reject(new Error('older asset unavailable'));
+    expect(await older).toBeNull();
+    expect(desks(state)).toEqual([winner]);
+  });
+  it('does not restore a deleted desk when its replacement finishes late', async () => {
+    const { actions, state, factory } = setup();
+    const original = await actions.add('modernDesk');
+    actions.history.clear();
+    const load = deferred();
+    factory.create.mockReturnValueOnce(load.promise);
+    const pending = actions.add('standingDesk');
+    expect(actions.remove(original)).toBe(true);
+    const stale = new THREE.Group();
+    load.resolve(stale);
+    expect(await pending).toBeNull();
+    expect(desks(state)).toEqual([]);
+    expect(
+      factory.dispose.mock.calls.filter(([object]) => object === stale),
+    ).toHaveLength(1);
+    expect(actions.history.undo()).toBe(true);
+    expect(desks(state)).toEqual([original]);
+    expect(actions.history.undo()).toBe(false);
+  });
+  it('does not commit a pending desk replacement across undo and redo', async () => {
+    const { actions, state, factory } = setup();
+    const original = await actions.add('modernDesk');
+    const mouse = await actions.add('defaultMouse');
+    const load = deferred();
+    factory.create.mockReturnValueOnce(load.promise);
+    const pending = actions.add('standingDesk');
+    expect(actions.history.undo()).toBe(true);
+    expect(state.has(mouse)).toBe(false);
+    expect(actions.history.redo()).toBe(true);
+    const stale = new THREE.Group();
+    load.resolve(stale);
+    expect(await pending).toBeNull();
+    expect(desks(state)).toEqual([original]);
+    expect(state.deskOffset).toBe(0);
+    expect(
+      factory.dispose.mock.calls.filter(([object]) => object === stale),
+    ).toHaveLength(1);
+  });
+  it('allows a desk replacement at the shared object capacity', async () => {
+    const app = setup();
+    seedCatalog(app, limits.objects - 1);
+    const { actions, state } = app;
+    const original = await actions.add('modernDesk');
+    const firstMouse = state.objects[0];
+    const mouseY = firstMouse.position.y;
+    const replacement = await actions.add('standingDesk');
+    expect(desks(state)).toEqual([replacement]);
+    expect(state.has(original)).toBe(false);
+    expect(state.objects).toHaveLength(limits.objects);
+    expect(firstMouse.position.y).toBe(mouseY - 0.62);
+    await expect(actions.add('defaultMouse')).rejects.toThrow(
+      'supported 500-object limit',
+    );
+    expect(state.objects).toHaveLength(limits.objects);
+  });
+  it('does not let an invalid desk request supersede an earlier valid one', async () => {
+    const { actions, state, factory } = setup();
+    const load = deferred();
+    factory.create.mockReturnValueOnce(load.promise);
+    const pending = actions.add('modernDesk');
+    await expect(
+      actions.add('customDesk', {
+        dimensions: [-1, 1, 20],
+        texture: 'italianOak',
+      }),
+    ).rejects.toThrow('Invalid setup');
+    const desk = new THREE.Group();
+    load.resolve(desk);
+    expect(await pending).toBe(desk);
+    expect(desks(state)).toEqual([desk]);
+  });
+  it.each(['reset', 'shared restore', 'project restore'])(
+    'discards a desk load invalidated by %s',
+    async (operation) => {
+      const { actions, state, factory } = setup();
+      const load = deferred();
+      factory.create.mockReturnValueOnce(load.promise);
+      const pending = actions.add('modernDesk');
+      if (operation === 'reset') actions.reset();
+      else if (operation === 'shared restore')
+        await actions.restore([createRecord('defaultMouse')]);
+      else
+        await actions.restoreProject([createRecord('defaultMouse')], {
+          files: new Map(),
+          signal: new globalThis.AbortController().signal,
+          generation: state.invalidate(),
+        });
+      const stale = new THREE.Group();
+      load.resolve(stale);
+      expect(await pending).toBeNull();
+      expect(desks(state)).toEqual([]);
+      expect(
+        factory.dispose.mock.calls.filter(([object]) => object === stale),
+      ).toHaveLength(1);
+    },
+  );
+  it('allows unrelated object loads to commit concurrently with a pending desk', async () => {
+    const { actions, state, factory } = setup();
+    const deskLoad = deferred();
+    const mouseLoad = deferred();
+    const padLoad = deferred();
+    factory.create
+      .mockReturnValueOnce(deskLoad.promise)
+      .mockReturnValueOnce(mouseLoad.promise)
+      .mockReturnValueOnce(padLoad.promise);
+    const desk = actions.add('modernDesk');
+    const mouse = actions.add('defaultMouse');
+    const pad = actions.add('QCKSmall');
+    mouseLoad.resolve(new THREE.Group());
+    padLoad.resolve(new THREE.Group());
+    await Promise.all([mouse, pad]);
+    expect(state.objects).toHaveLength(2);
+    deskLoad.resolve(new THREE.Group());
+    expect(await desk).not.toBeNull();
+    expect(desks(state)).toHaveLength(1);
+    expect(state.objects).toHaveLength(3);
   });
   it('disposes late completions after reset and does not repopulate the scene', async () => {
     const { actions, state, factory } = setup();

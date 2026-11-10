@@ -33,6 +33,7 @@ export function createActions({
     history,
   });
   const spacing = createSpacingActions({ state, transforms });
+  let latestDeskRequest = 0;
   function removeObject(object) {
     if (selection.pickedObject === object) selection.unselectPickedObject();
     return state.remove(object);
@@ -77,14 +78,26 @@ export function createActions({
       record.position[2] = target.position.z;
     }
     validateRecords([record]);
+    // A newer valid desk request supersedes every older pending desk load.
+    const deskRequest = desk ? ++latestDeskRequest : 0;
     const generation = state.generation;
-    const object = await factory.create(record);
+    const stale = () =>
+      generation !== state.generation ||
+      (desk && deskRequest !== latestDeskRequest) ||
+      (target && !state.has(target));
+    let object;
+    try {
+      object = await factory.create(record);
+    } catch (error) {
+      if (desk && stale()) return null;
+      throw error;
+    }
     let stored = false;
     try {
-      if (generation !== state.generation || (target && !state.has(target)))
-        return null;
+      if (stale()) return null;
       requireCapacity(target);
       return edit(target ? 'Replace object' : 'Add object', () => {
+        if (stale()) return null;
         requireCapacity(target);
         // Allocate identity before removal, matching existing instance names.
         state.add(object, record);
