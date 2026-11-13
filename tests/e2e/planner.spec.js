@@ -432,6 +432,10 @@ test('the camera orbits and resets; object translation and rotation use the live
 }) => {
   await page.goto('mainApp.html');
   await ready(page);
+  await page
+    .locator('#measurementUnit')
+    .getByText('CM', { exact: true })
+    .click();
   const cameraPose = () =>
     page.evaluate(() => window.planner.view.camera.position.toArray());
   await page.evaluate(() => window.planner.selection.unselectPickedObject());

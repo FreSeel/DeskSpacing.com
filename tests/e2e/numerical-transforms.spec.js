@@ -15,6 +15,10 @@ async function start(page) {
     app.actions.history.clear();
   });
   await expect(page.locator('#selectionNumericalTransforms')).toBeVisible();
+  await page
+    .locator('#measurementUnit')
+    .getByText('CM', { exact: true })
+    .click();
 }
 
 const snapshot = (page) =>
@@ -103,7 +107,7 @@ test('preserves partial text through unrelated renders and cancels invalid draft
   await expect(page.locator('#undoTransform')).toBeDisabled();
 });
 
-test('focus, blur, and catalog unit changes do not round stored values or change inspector units', async ({
+test('focus, blur, and unit changes do not round stored values', async ({
   page,
 }) => {
   await start(page);
@@ -119,15 +123,15 @@ test('focus, blur, and catalog unit changes do not round stored values or change
   const x = page.locator('#selectionPositionX');
   await expect(x).toHaveValue('3.135802');
   await x.focus();
-  expect(Number(await x.inputValue())).toBe(before[0].position[0] * 2.54);
+  await expect(x).toHaveValue('3.135802');
   await x.press('Tab');
   for (const unit of ['CM', 'IN', 'CM', 'IN'])
     await page
       .locator('#measurementUnit')
       .getByText(unit, { exact: true })
       .click();
-  await expect(x).toHaveAttribute('aria-label', 'Position X (cm)');
-  await expect(x).toHaveValue('3.135802');
+  await expect(x).toHaveAttribute('aria-label', 'Position X (in)');
+  await expect(x).toHaveValue('1.234568');
   expect(await snapshot(page)).toEqual(before);
   await page.evaluate(async () => {
     const { app } = await import(
@@ -136,6 +140,55 @@ test('focus, blur, and catalog unit changes do not round stored values or change
     app.actions.transforms.undo();
   });
   expect((await snapshot(page))[0].position[0]).toBe(0);
+});
+
+test('unit switching cancels drafts, preserves canonical values and edits inches', async ({
+  page,
+}) => {
+  await start(page);
+  await page.evaluate(async () => {
+    const { app } = await import('./src/main.js');
+    app.actions.transforms.setPosition(app.selection.pickedObject, {
+      x: 1.2345678912345,
+    });
+  });
+  const before = await snapshot(page);
+  const x = page.locator('#selectionPositionX');
+  const width = page.locator('#selectionDimensionsWidth');
+  const unit = page.locator('#measurementUnit');
+  await expect(x).toHaveValue('3.135802');
+  for (const value of ['IN', 'CM', 'IN'])
+    await unit.getByText(value, { exact: true }).click();
+  expect(await snapshot(page)).toEqual(before);
+  await expect(x).toHaveAttribute('aria-label', 'Position X (in)');
+  await expect(width).toHaveValue('3');
+  await expect(page.locator('#selectionRotationY')).toHaveAttribute(
+    'aria-label',
+    'Rotation Y (°)',
+  );
+  await x.fill('-');
+  await unit.getByText('CM', { exact: true }).click();
+  await expect(page.locator('#selectionTransformStatus')).toContainText(
+    'cancelled',
+  );
+  expect(await snapshot(page)).toEqual(before);
+  await x.fill('25.4');
+  await unit.getByText('IN', { exact: true }).click();
+  expect(await snapshot(page)).toEqual(before);
+  await x.fill('-');
+  await x.press('Escape');
+  expect(await snapshot(page)).toEqual(before);
+  await x.fill('2');
+  await expect(x).toHaveValue('2');
+  await x.press('Enter');
+  expect((await snapshot(page))[0].position[0]).toBe(2);
+  await width.fill('4');
+  await width.press('Tab');
+  expect((await snapshot(page))[0].dimensions[0]).toBe(4);
+  await page.evaluate(async () =>
+    (await import('./src/main.js')).app.actions.transforms.undo(),
+  );
+  expect((await snapshot(page))[0].dimensions[0]).toBe(3);
 });
 
 test('updates native rotation and geometry readouts and rejects stale drafts on the same field', async ({

@@ -363,6 +363,10 @@ for (const colorScheme of ['light', 'dark']) {
       await expect(page.locator('#selectionTitle')).toHaveText(
         'DeathAdder Mouse',
       );
+      await page
+        .locator('#measurementUnit')
+        .getByText('CM', { exact: true })
+        .click();
       if (size === 'phone') await page.locator('#toggleSelectionPanel').click();
       await visual(page.locator('#selectionPanel'), 'inspector');
       if (size === 'phone') await page.keyboard.press('Escape');

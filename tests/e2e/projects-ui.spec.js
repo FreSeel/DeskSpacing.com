@@ -338,3 +338,84 @@ test('Projects remains usable in a dark phone viewport', async ({ page }) => {
   expect(bounds.x + bounds.width).toBeLessThanOrEqual(360);
   expect(bounds.height).toBeLessThanOrEqual(640);
 });
+
+test('CM spacing, undo, local save and IN reopen retain scene, history and renderer', async ({
+  page,
+}) => {
+  await start(page);
+  await page
+    .locator('#measurementUnit')
+    .getByText('CM', { exact: true })
+    .click();
+  const referenceId = await page.evaluate(async () => {
+    const app = window.planner;
+    window.initialRenderer = app.view.renderer;
+    const reference = await app.actions.add('referenceBox', {
+      dimensions: [4, 4, 4],
+    });
+    const moving = await app.actions.add('referenceBox', {
+      dimensions: [2, 2, 2],
+    });
+    app.actions.transforms.setPosition(reference, { x: 0 });
+    app.actions.transforms.setPosition(moving, { x: -10 });
+    app.actions.history.clear();
+    return reference.uuid;
+  });
+  await page.locator('#selectionSpacingReference').selectOption(referenceId);
+  const before = await page.evaluate(() => window.planner.sharing.snapshot());
+  await page.locator('#selectionSpacingClearance').fill('10');
+  await page.locator('#selectionSpacingApply').click();
+  const placed = await page.evaluate(() => window.planner.sharing.snapshot());
+  expect(placed).not.toEqual(before);
+  await page.locator('#moreMenu summary').click();
+  await page.locator('#undoTransform').click();
+  expect(await page.evaluate(() => window.planner.sharing.snapshot())).toEqual(
+    before,
+  );
+  await page.locator('#selectionSpacingApply').click();
+  expect(await page.evaluate(() => window.planner.sharing.snapshot())).toEqual(
+    placed,
+  );
+  let dialog = await projects(page);
+  await save(dialog, 'Combined setup');
+  await expect(dialog.getByRole('status')).toContainText(
+    'Saved Combined setup',
+  );
+  await dialog
+    .getByRole('button', { name: 'Close', exact: true })
+    .first()
+    .click();
+  await page
+    .locator('#measurementUnit')
+    .getByText('IN', { exact: true })
+    .click();
+  const x = page.locator('#selectionPositionX');
+  await expect(x).toHaveAttribute('aria-label', 'Position X (in)');
+  await x.fill('10');
+  await x.press('Enter');
+  const modified = await page.evaluate(() => window.planner.sharing.snapshot());
+  dialog = await projects(page);
+  await dialog.getByRole('button', { name: 'Open Combined setup' }).click();
+  await dialog.getByRole('button', { name: 'Open project' }).click();
+  await expect(dialog.getByRole('status')).toContainText(
+    'Opened Combined setup',
+  );
+  expect(await page.evaluate(() => window.planner.sharing.snapshot())).toEqual(
+    placed,
+  );
+  expect(
+    await page.evaluate(
+      () => window.planner.view.renderer === window.initialRenderer,
+    ),
+  ).toBe(true);
+  await dialog
+    .getByRole('button', { name: 'Close', exact: true })
+    .first()
+    .click();
+  await expect(x).toHaveAttribute('aria-label', 'Position X (in)');
+  await page.locator('#moreMenu summary').click();
+  await page.locator('#undoTransform').click();
+  expect(await page.evaluate(() => window.planner.sharing.snapshot())).toEqual(
+    modified,
+  );
+});

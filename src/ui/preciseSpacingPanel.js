@@ -1,6 +1,7 @@
 import { describeObject } from './objectPresentation.js';
 import { element } from './dom.js';
 import { parseTransformInput } from './numericalTransformPanel.js';
+import { fromInches, toInches } from '../measurements/units.js';
 
 const directions = [
   { value: 'x+', axis: 'x', direction: 1, label: '+X' },
@@ -27,6 +28,7 @@ export function bindPreciseSpacingPanel({
   state,
   transforms,
   spacing,
+  measurements,
   view,
 }) {
   const panel = document.getElementById('selectionPreciseSpacing');
@@ -35,7 +37,8 @@ export function bindPreciseSpacingPanel({
   let selected = null;
   let reference = null;
   let feedback = null;
-  let acceptedClearance = '10';
+  let acceptedInches = toInches(10, 'cm');
+  let acceptedClearance = String(fromInches(acceptedInches, measurements.unit));
   let disposed = false;
   const listen = (node, type, listener) => {
     node.addEventListener(type, listener);
@@ -84,7 +87,7 @@ export function bindPreciseSpacingPanel({
     direction.append(option);
   }
   const clearance = field(
-    'Clearance (cm)',
+    'Clearance',
     'selectionSpacingClearance',
     'input',
     row,
@@ -101,10 +104,7 @@ export function bindPreciseSpacingPanel({
   const measured = element(document, 'output', '', '—');
   measured.id = 'selectionSpacingMeasured';
   measured.setAttribute('aria-live', 'off');
-  measured.setAttribute(
-    'aria-label',
-    'Measured bounds clearance in centimeters',
-  );
+  measured.setAttribute('aria-label', 'Measured bounds clearance');
   measured.setAttribute('aria-describedby', hint.id);
   measurement.append('Measured: ', measured);
   const status = element(document, 'p', 'numerical-transform-status');
@@ -117,7 +117,7 @@ export function bindPreciseSpacingPanel({
 
   const settings = () => ({
     ...directions.find((item) => item.value === direction.value),
-    unit: 'cm',
+    unit: measurements.unit,
   });
 
   function refreshReferences() {
@@ -185,8 +185,19 @@ export function bindPreciseSpacingPanel({
         'Finish the active transform gesture before applying spacing.';
     apply.disabled = Boolean(unavailable);
     clearance.readOnly = transforms.isTransforming;
-    setText(measured, value === null ? '—' : `${displayClearance(value)} cm`);
-    const title = value === null ? 'Measurement unavailable' : `${value} cm`;
+    const unit = measurements.unit;
+    panel.querySelector('label[for="selectionSpacingClearance"]').textContent =
+      `Clearance (${unit})`;
+    measured.setAttribute(
+      'aria-label',
+      `Measured bounds clearance in ${unit === 'cm' ? 'centimeters' : 'inches'}`,
+    );
+    setText(
+      measured,
+      value === null ? '—' : `${displayClearance(value)} ${unit}`,
+    );
+    const title =
+      value === null ? 'Measurement unavailable' : `${value} ${unit}`;
     if (measured.title !== title) measured.title = title;
     const negative =
       value !== null && value < 0
@@ -208,7 +219,7 @@ export function bindPreciseSpacingPanel({
     if (number === null || number < 0) {
       clearance.setAttribute('aria-invalid', 'true');
       feedback = {
-        text: 'Enter a complete clearance of zero or more centimeters. Placement not applied.',
+        text: `Enter a complete clearance of zero or more ${measurements.unit}. Placement not applied.`,
         error: true,
       };
       render();
@@ -216,10 +227,13 @@ export function bindPreciseSpacingPanel({
     }
     clearance.removeAttribute('aria-invalid');
     try {
+      const unchangedDraft = clearance.value === acceptedClearance;
       const changed = spacing.place(selected, reference, {
         ...settings(),
-        clearance: number,
+        unit: unchangedDraft ? 'in' : measurements.unit,
+        clearance: unchangedDraft ? acceptedInches : number,
       });
+      if (!unchangedDraft) acceptedInches = toInches(number, measurements.unit);
       acceptedClearance = clearance.value;
       feedback = {
         text: changed
@@ -277,7 +291,10 @@ export function bindPreciseSpacingPanel({
         selected = object;
         reference = null;
         feedback = null;
-        acceptedClearance = '10';
+        acceptedInches = toInches(10, 'cm');
+        acceptedClearance = String(
+          fromInches(acceptedInches, measurements.unit),
+        );
         clearance.value = acceptedClearance;
         clearance.removeAttribute('aria-invalid');
         direction.value = 'x+';
@@ -291,6 +308,20 @@ export function bindPreciseSpacingPanel({
     }),
     transforms.subscribe(render),
     view.subscribeRender(render),
+  );
+  cleanup.push(
+    measurements.subscribe((unit) => {
+      const dirty = clearance.value !== acceptedClearance;
+      acceptedClearance = String(fromInches(acceptedInches, unit));
+      clearance.value = acceptedClearance;
+      clearance.removeAttribute('aria-invalid');
+      if (dirty)
+        feedback = {
+          text: 'Unfinished clearance cancelled when changing units.',
+          error: false,
+        };
+      render();
+    }),
   );
   return () => {
     disposed = true;

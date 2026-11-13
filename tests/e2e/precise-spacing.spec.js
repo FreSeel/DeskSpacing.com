@@ -23,6 +23,10 @@ async function start(page) {
     return reference.uuid;
   });
   await page.locator('#selectionSpacingReference').selectOption(referenceId);
+  await page
+    .locator('#measurementUnit')
+    .getByText('CM', { exact: true })
+    .click();
   return referenceId;
 }
 const snapshot = (page) =>
@@ -157,4 +161,34 @@ test('measures live edits, applies negative directions with Enter, and resets wh
   await expect(page.locator('#selectionSpacingMeasured')).toHaveText('—');
   await expect(page.locator('#selectionSpacingDirection')).toHaveValue('x+');
   await expect(clearance).toHaveValue('10');
+});
+
+test('spacing follows the global unit and cancels unfinished drafts without drift', async ({
+  page,
+}) => {
+  await start(page);
+  const before = await snapshot(page);
+  const unit = page.locator('#measurementUnit');
+  const clearance = page.locator('#selectionSpacingClearance');
+  await unit.getByText('IN', { exact: true }).click();
+  await expect(page.getByLabel('Clearance (in)')).toBeVisible();
+  await expect(clearance).toHaveValue(String(10 / 2.54));
+  await clearance.fill('-');
+  await unit.getByText('CM', { exact: true }).click();
+  await expect(clearance).toHaveValue('10');
+  await expect(page.locator('#selectionSpacingStatus')).toContainText(
+    'cancelled',
+  );
+  expect(await snapshot(page)).toEqual(before);
+  await unit.getByText('IN', { exact: true }).click();
+  await clearance.fill('2.5');
+  await clearance.press('Enter');
+  await expect(page.locator('#selectionSpacingMeasured')).toHaveText('2.5 in');
+  const placed = await snapshot(page);
+  expect(placed[1].position[0]).toBe(3.25 + 2 + 2.5 + 1);
+  await unit.getByText('CM', { exact: true }).click();
+  await expect(page.locator('#selectionSpacingMeasured')).toHaveText('6.35 cm');
+  await unit.getByText('IN', { exact: true }).click();
+  await page.locator('#selectionSpacingApply').click();
+  expect(await snapshot(page)).toEqual(placed);
 });

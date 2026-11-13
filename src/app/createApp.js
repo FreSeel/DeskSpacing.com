@@ -176,6 +176,7 @@ export function createApp({ THREE, host, document }) {
         document,
         selection,
         transforms: actions.transforms,
+        measurements,
         view,
       }),
     );
@@ -186,6 +187,7 @@ export function createApp({ THREE, host, document }) {
         state,
         transforms: actions.transforms,
         spacing: actions.spacing,
+        measurements,
         view,
       }),
     );

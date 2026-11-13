@@ -14,6 +14,10 @@ async function start(page) {
     await app.ready;
     await app.actions.add('referenceBox', { dimensions: [3, 4, 5] });
   });
+  await page
+    .locator('#measurementUnit')
+    .getByText('CM', { exact: true })
+    .click();
 }
 
 const snapshot = (page) =>

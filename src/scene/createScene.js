@@ -81,7 +81,7 @@ export function createScene({
       render: () => {
         renderer.render(scene, camera);
         renderListeners.forEach((update) => update());
-        if (recovering) {
+        if (recovering && !renderer.getContext().isContextLost()) {
           recovering = false;
           onContextRecovered();
         }
@@ -101,7 +101,7 @@ export function createScene({
       contextLost = false;
       recovering = true;
       renderer.shadowMap.needsUpdate = true;
-      scheduler.setSuspended(false);
+      scheduler.setSuspended(host.document.hidden);
     };
     canvas.addEventListener('webglcontextlost', lost);
     canvas.addEventListener('webglcontextrestored', restored);
@@ -170,7 +170,8 @@ export function createScene({
       : null;
     owned.push(() => observer?.disconnect());
     observer?.observe(container);
-    const visibility = () => scheduler.setSuspended(host.document.hidden);
+    const visibility = () =>
+      scheduler.setSuspended(host.document.hidden || contextLost);
     host.document.addEventListener('visibilitychange', visibility);
     owned.push(() =>
       host.document.removeEventListener('visibilitychange', visibility),

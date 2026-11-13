@@ -185,8 +185,12 @@ test('leaving a numerical draft for a gizmo drag commits exactly before snapping
   page,
 }) => {
   await start(page);
+  await page
+    .locator('#measurementUnit')
+    .getByText('CM', { exact: true })
+    .click();
   await fixture(page);
-  await enable(page);
+  await enable(page, '2.54');
   const before = await snapshot(page);
   const x = page.locator('#selectionPositionX');
   await x.fill('1.23456789');

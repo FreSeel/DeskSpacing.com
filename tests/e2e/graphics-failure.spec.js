@@ -184,3 +184,96 @@ test('simulated context loss pauses editing and clears only after a restored fra
   });
   expect(count).toBe(1);
 });
+
+test('context loss keeps recovery controls reachable while a dialog is open', async ({
+  page,
+}) => {
+  await page.goto('mainApp.html?customSetup=%5B%20%5D');
+  await page.evaluate(async () => (await import('./src/main.js')).app.ready);
+  await page.locator('#moreMenu summary').click();
+  await page.locator('#moreMenu [data-bs-target="#projectsModal"]').click();
+  await expect(page.locator('#projectsModal')).toBeVisible();
+  await page.locator('#threeCanvas').evaluate((canvas) => {
+    canvas.dispatchEvent(
+      new globalThis.Event('webglcontextlost', { cancelable: true }),
+    );
+  });
+  await expect(page.locator('#graphicsFailure')).toBeVisible();
+  await expect(page.locator('#graphicsFailure')).toBeFocused();
+  await page.keyboard.press('Tab');
+  await expect(page.locator('#retryGraphics')).toBeFocused();
+});
+
+test('visibility changes do not resume rendering before context restoration', async ({
+  page,
+}) => {
+  await page.goto('mainApp.html?customSetup=%5B%20%5D');
+  await page.evaluate(async () => {
+    const { app } = await import('./src/main.js');
+    await app.ready;
+    const renderer = app.view.renderer;
+    const render = renderer.render.bind(renderer);
+    window.renderCount = 0;
+    renderer.render = (...args) => {
+      window.renderCount++;
+      return render(...args);
+    };
+    const canvas = document.getElementById('threeCanvas');
+    canvas.dispatchEvent(
+      new globalThis.Event('webglcontextlost', { cancelable: true }),
+    );
+    window.renderCount = 0;
+    Object.defineProperty(document, 'hidden', {
+      configurable: true,
+      value: true,
+    });
+    document.dispatchEvent(new globalThis.Event('visibilitychange'));
+    Object.defineProperty(document, 'hidden', {
+      configurable: true,
+      value: false,
+    });
+    document.dispatchEvent(new globalThis.Event('visibilitychange'));
+    app.view.invalidateScene();
+    await new Promise((resolve) =>
+      globalThis.requestAnimationFrame(() =>
+        globalThis.requestAnimationFrame(resolve),
+      ),
+    );
+  });
+  expect(await page.evaluate(() => window.renderCount)).toBe(0);
+  await page.locator('#threeCanvas').evaluate((canvas) => {
+    canvas.dispatchEvent(new globalThis.Event('webglcontextrestored'));
+  });
+  await expect(page.locator('#graphicsFailure')).toBeHidden();
+  expect(await page.evaluate(() => window.renderCount)).toBeGreaterThan(0);
+});
+
+test('restored event keeps failure visible while the context still reports lost', async ({
+  page,
+}) => {
+  await page.goto('mainApp.html?customSetup=%5B%20%5D');
+  await page.evaluate(async () => {
+    const { app } = await import('./src/main.js');
+    await app.ready;
+    const originalGetContext = app.view.renderer.getContext.bind(
+      app.view.renderer,
+    );
+    window.graphicsRecoveryBlocked = true;
+    app.view.renderer.getContext = () => ({
+      isContextLost: () => window.graphicsRecoveryBlocked,
+    });
+    window.restoreRendererContext = () => {
+      app.view.renderer.getContext = originalGetContext;
+      app.view.invalidateScene();
+    };
+  });
+  await page.locator('#threeCanvas').evaluate((canvas) => {
+    canvas.dispatchEvent(
+      new globalThis.Event('webglcontextlost', { cancelable: true }),
+    );
+    canvas.dispatchEvent(new globalThis.Event('webglcontextrestored'));
+  });
+  await expect(page.locator('#graphicsFailure')).toBeVisible();
+  await page.evaluate(() => window.restoreRendererContext());
+  await expect(page.locator('#graphicsFailure')).toBeHidden();
+});

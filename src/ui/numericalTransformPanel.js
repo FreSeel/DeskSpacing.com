@@ -57,6 +57,7 @@ export function bindNumericalTransformPanel({
   document,
   selection,
   transforms,
+  measurements,
   view,
 }) {
   const panel = document.getElementById('selectionNumericalTransforms');
@@ -68,6 +69,7 @@ export function bindNumericalTransformPanel({
   let committing = false;
   let disposed = false;
   let composing = false;
+  let switchingUnit = false;
   const listen = (node, type, listener, options) => {
     node.addEventListener(type, listener, options);
     cleanup.push(() => node.removeEventListener(type, listener, options));
@@ -81,7 +83,7 @@ export function bindNumericalTransformPanel({
     if (status.textContent !== text) status.textContent = text;
     status.classList.toggle('has-error', error);
   }
-  const read = () => transforms.read(selected, { unit: 'cm' });
+  const read = () => transforms.read(selected, { unit: measurements.unit });
   const valueOf = (values, field) => values?.[field.section]?.[field.key];
   const editable = (values, field) =>
     Boolean(values?.capabilities[field.section].includes(field.key));
@@ -107,6 +109,10 @@ export function bindNumericalTransformPanel({
     const busy = transforms.isTransforming;
     for (const field of fields) {
       const { input } = field;
+      const unit =
+        field.section === 'rotationDegrees' ? '°' : measurements.unit;
+      input.setAttribute('aria-label', `${field.name} (${unit})`);
+      field.unit = unit;
       const value = valueOf(values, field);
       const canEdit = editable(values, field) && Number.isFinite(value);
       const readOnly = !canEdit || busy;
@@ -120,8 +126,9 @@ export function bindNumericalTransformPanel({
             'This value is now read-only. Unfinished edit discarded.',
             true,
           );
-        } else if (draft.dirty) {
-          if (value !== draft.base) {
+        } else if (focused || draft.dirty) {
+          if (focused && input.value !== draft.initial) draft.dirty = true;
+          if (draft.dirty && value !== draft.base) {
             draft.stale = true;
             message(
               'This value changed in the scene. Press Esc to use it.',
@@ -144,7 +151,10 @@ export function bindNumericalTransformPanel({
         : 'Unavailable';
       if (input.title !== title) input.title = title;
     }
-    for (const { section, hint, diameter } of groups) {
+    for (const { section, legend, hint, diameter } of groups) {
+      const unit = section.key === 'rotationDegrees' ? '°' : measurements.unit;
+      const label = `${section.name} (${unit})`;
+      if (legend.textContent !== label) legend.textContent = label;
       const allowed = values.capabilities[section.key];
       let text =
         section.key === 'rotationDegrees'
@@ -165,12 +175,10 @@ export function bindNumericalTransformPanel({
 
   function beginEdit(field) {
     if (disposed) return;
-    render();
     const values = read();
     if (!editable(values, field) || field.input.readOnly) return;
     const value = valueOf(values, field);
-    const text = displayValue(value, true);
-    if (field.input.value !== text) field.input.value = text;
+    const text = field.input.value;
     startDraft(field, value, text);
     composing = false;
   }
@@ -217,7 +225,7 @@ export function bindNumericalTransformPanel({
       transforms.update(
         selected,
         { [field.section]: { [field.key]: number } },
-        { unit: 'cm' },
+        { unit: measurements.unit },
       );
     } catch (error) {
       committing = false;
@@ -264,13 +272,28 @@ export function bindNumericalTransformPanel({
     container.append(wrapper);
     listen(input, 'focus', () => beginEdit(field));
     listen(input, 'input', () => {
-      if (draft?.field !== field) return;
+      if (draft?.field !== field) {
+        const value = valueOf(read(), field);
+        startDraft(field, value, displayValue(value, true));
+      }
       draft.dirty = input.value !== draft.initial;
       input.removeAttribute('aria-invalid');
       if (!draft.stale) message();
     });
-    listen(input, 'blur', () => {
-      if (draft?.field === field) commit(true);
+    listen(input, 'blur', (event) => {
+      if (draft?.field === field) {
+        if (
+          switchingUnit ||
+          document
+            .getElementById('measurementUnit')
+            .contains(event.relatedTarget)
+        )
+          discard({
+            text: 'Unfinished edit cancelled when changing units.',
+            leaving: true,
+          });
+        else commit(true);
+      }
       render();
     });
     listen(input, 'keydown', (event) => {
@@ -323,10 +346,35 @@ export function bindNumericalTransformPanel({
       addField(section, 'diameter', 'Diameter', diameter, hint.id);
       group.append(diameter);
     }
-    groups.push({ section, hint, diameter });
+    groups.push({ section, legend, hint, diameter });
     panel.append(group);
   }
   panel.append(status);
+  const selector = document.getElementById('measurementUnit');
+  listen(
+    selector,
+    'pointerdown',
+    () => {
+      switchingUnit = true;
+    },
+    true,
+  );
+  listen(
+    selector,
+    'pointerup',
+    () => {
+      switchingUnit = false;
+    },
+    true,
+  );
+  listen(
+    selector,
+    'pointercancel',
+    () => {
+      switchingUnit = false;
+    },
+    true,
+  );
 
   // Canvas focus normally changes after TransformControls starts its gesture.
   // Finish a valid field draft first, without cancelling or synthesizing any
@@ -352,6 +400,15 @@ export function bindNumericalTransformPanel({
     }),
   );
   cleanup.push(transforms.subscribe(render), view.subscribeRender(render));
+  cleanup.push(
+    measurements.subscribe(() => {
+      if (draft?.dirty) {
+        draft = null;
+        message('Unfinished edit cancelled when changing units.');
+      } else draft = null;
+      render();
+    }),
+  );
   return () => {
     disposed = true;
     draft = null;
