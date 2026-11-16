@@ -105,22 +105,29 @@ test('home destinations retain project paths and help opens existing editor dial
     expect((await request.get(url)).status(), url).toBe(200);
   }
   for (const destination of [
-    'mailto:deskspacing@gmail.com',
-    'https://github.com/cooperlappenbusch/DeskSpacing.com',
-    'https://twitter.com/DeskSpacing',
+    'https://github.com/FreSeel/DeskSpacing.com',
     'https://uicookies.com/',
     'https://unsplash.com/',
   ])
     expect(links).toContain(destination);
+  expect(links).not.toContain('mailto:deskspacing@gmail.com');
+  expect(links).not.toContain('https://twitter.com/DeskSpacing');
+  expect(links).not.toContain(
+    'https://github.com/cooperlappenbusch/DeskSpacing.com',
+  );
   const newTabLinks = page.locator('a[target="_blank"]');
   for (const link of await newTabLinks.all())
     await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
 
-  await page
-    .getByRole('link', { name: 'Contact', exact: true })
-    .first()
-    .click();
+  await page.getByRole('link', { name: 'About', exact: true }).first().click();
   await expect(page).toHaveURL(/\/DeskSpacing.com\/about.html$/);
+  await expect(
+    page.getByRole('heading', { name: 'About DeskSpacing v1.0' }),
+  ).toBeVisible();
+  await expect(page.getByText('Original project creators')).toBeVisible();
+  await expect(
+    page.getByText('There is no published direct support email'),
+  ).toBeVisible();
   await page.getByRole('link', { name: 'Home', exact: true }).click();
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 
@@ -137,6 +144,44 @@ test('home destinations retain project paths and help opens existing editor dial
     await page.locator('.editor-brand').click();
     await expect(page).toHaveURL(/\/DeskSpacing.com\/index.html$/);
   }
+});
+
+test('published routes contain no inherited analytics or upstream support links', async ({
+  page,
+  request,
+}) => {
+  const trackingRequests = [];
+  page.on('request', (outgoing) => {
+    if (/google-analytics|googletagmanager|UA-172455339-1/.test(outgoing.url()))
+      trackingRequests.push(outgoing.url());
+  });
+  for (const route of [
+    'index.html',
+    'mainApp.html',
+    'about.html',
+    'contact.html',
+    'mainAppMobile.html',
+    'mainAppOld.html',
+  ]) {
+    const response = await request.get(route);
+    expect(response.status(), route).toBe(200);
+    const html = await response.text();
+    expect(html, route).not.toMatch(
+      /UA-172455339-1|googletagmanager|deskspacing@gmail\.com|twitter\.com\/DeskSpacing|cooperlappenbusch\/DeskSpacing\.com|tag=deskspacing-20/,
+    );
+  }
+  for (const route of [
+    'index.html',
+    'mainApp.html',
+    'mainAppMobile.html',
+    'mainAppOld.html',
+  ])
+    await page.goto(route, { waitUntil: 'domcontentloaded' });
+  expect(trackingRequests).toEqual([]);
+  await page.goto('mainApp.html#tutorial');
+  await expect(page.locator('#tutorialModal')).toContainText('CM or IN unit');
+  await page.goto('mainApp.html#starter');
+  await expect(page.locator('#starterModal')).toContainText('DeskSpacing v1.0');
 });
 
 test('home remains readable with reduced motion, zoom and without JavaScript', async ({
@@ -180,7 +225,7 @@ test('home remains readable with reduced motion, zoom and without JavaScript', a
   await staticPage.goto('http://127.0.0.1:4173/DeskSpacing.com/');
   await staticPage.locator('#siteMenu summary').click();
   await expect(
-    staticPage.locator('#siteMenu').getByRole('link', { name: 'Contact' }),
+    staticPage.locator('#siteMenu').getByRole('link', { name: 'About' }),
   ).toBeVisible();
   await expect(
     staticPage.getByRole('link', { name: 'Open Setup Creator' }),

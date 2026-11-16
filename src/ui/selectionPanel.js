@@ -88,9 +88,7 @@ export function bindSelectionPanel({
     const locked = object.userData.type.includes('NoSelect');
     document.getElementById('selectionTransforms').hidden = locked;
     document.getElementById('selectionLocked').hidden = !locked;
-    // Retain the historical MX Master copy in the catalog, but don't present
-    // its known implausible width as an authoritative inspector measurement.
-    const description = info.id === 'MXMaster3' ? '' : info.description;
+    const description = info.description;
     document.getElementById('selectionDetails').hidden = !description;
     document.getElementById('selectionDescription').textContent =
       formatMeasurementText(description, measurements.unit);
@@ -131,10 +129,7 @@ export function bindSelectionPanel({
     document.getElementById('selectionStatus').textContent =
       `Selected ${info.name}${variation ? `, ${variation}` : ''}.`;
     document.getElementById('selectionDescription').textContent =
-      formatMeasurementText(
-        info.id === 'MXMaster3' ? '' : info.description,
-        measurements.unit,
-      );
+      formatMeasurementText(info.description, measurements.unit);
   });
   return () => {
     unsubscribe();

@@ -545,7 +545,7 @@ export const cards = [
     category: 'mice',
     name: 'MX Master Mouse',
     thumbnail: 'Model thumbnails/mouse 2.jpg',
-    description: '4.9" L x 43.5" W x 2" H',
+    description: 'Dimensions not verified',
     desk: false,
   },
   {

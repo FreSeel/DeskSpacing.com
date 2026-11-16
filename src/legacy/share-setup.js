@@ -84,6 +84,9 @@
       } else if (!owns(models, product) || !models[product][4]) {
         invalid('product');
       }
+      // This historical ID has no original file in the published collection.
+      // Reject the whole setup before the inline planners clear their scenes.
+      if (product === 'drawerDesk') invalid('Drawer Desk model unavailable');
       if (type.includes('Desk') && !owns(desks, product)) invalid('desk');
       return record;
     });

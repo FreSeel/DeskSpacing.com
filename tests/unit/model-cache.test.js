@@ -17,6 +17,15 @@ function fixture() {
   const load = vi.fn((_url, resolve) => resolve({ scene }));
   return { scene, image, texture, geometry, material, load };
 }
+it('rejects the missing historical drawer desk without starting a model request', async () => {
+  const load = vi.fn();
+  const cache = createModelLoader({ loader: { load } });
+  await expect(cache.load('drawerDesk')).rejects.toThrow(
+    'Drawer Desk is unavailable: original model is missing.',
+  );
+  expect(load).not.toHaveBeenCalled();
+  cache.dispose();
+});
 it('deduplicates concurrent loads and isolates transforms/materials while sharing geometry and textures', async () => {
   const f = fixture();
   const cache = createModelLoader({

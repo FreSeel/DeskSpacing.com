@@ -28,8 +28,11 @@ npm run dev
 ```
 
 Open `http://127.0.0.1:5173/`, then **Create**, or open `/mainApp.html` directly.
-The modern planner requires a desktop browser with WebGL 2. The historical mobile
-route remains available but is not a certified mobile version of the modern app.
+The modern planner requires WebGL2. Desktop Chromium is the verified automated
+baseline; phone and tablet layouts have only viewport and touch-emulation checks.
+The historical mobile route remains available but is not a certified mobile
+version of the modern app. See [v1 release scope](docs/V1_RELEASE_SCOPE.md) for
+device, accessibility and historical Drawer Desk limits.
 
 Choose **Objects → Import** to add a local `.glb`, self-contained `.gltf`, or
 direct model URL. Unsaved imports are temporary. Explicit browser-local project
@@ -119,12 +122,12 @@ with independent transforms/materials and explicit release ownership.
 3. Add a permanent product ID to `src/catalog/products.js` with its legacy type,
    `modelPath`, position, rotation and display dimensions. Add a desk offset for
    desks. Coordinates are inch-based; rotations are radians.
-4. Add a card in `mainApp.html` with `data-action="add"` and
-   `data-product="yourId"`; replacement buttons also use `data-replace="true"`.
-   Families use `data-family`, definitions in `configuration.js`, and matching
-   form/stand/preview IDs. See the architecture guide for naming conventions.
-5. Add a thumbnail, update intentional compatibility fixtures/tests, run the asset
-   audit and full checks, and inspect the real model in the browser. Verify
+4. Add a card in `src/catalog/presentation.js` with the product ID, category,
+   thumbnail and verified display copy. The catalog renderer creates the form
+   and action buttons from this data. Families use definitions in
+   `src/catalog/configuration.js`; see the architecture guide for naming conventions.
+5. Update intentional compatibility fixtures/tests, run the asset audit and
+   full checks, and inspect the real model in the browser. Verify
    placement, selection, replacement, deletion and share restoration. Do not
    update fixtures merely to hide accidental changes.
 
@@ -154,7 +157,7 @@ Start with [ARCHITECTURE.md](docs/ARCHITECTURE.md),
 follow [AGENTS.md](AGENTS.md).
 
 Known debt includes the legacy engine advisory, older inline planners, a missing
-historical `drawerDesk` model, large original assets, upstream analytics/contact
-references, and incomplete asset-license provenance. See
+historical `drawerDesk` model, large original assets, and incomplete asset-license
+provenance. See
 [third-party notices](THIRD_PARTY_NOTICES.md): public availability does not establish
 permission to redistribute, and no blanket license is asserted for this repository.

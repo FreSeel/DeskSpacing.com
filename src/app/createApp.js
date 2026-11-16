@@ -20,6 +20,7 @@ import { bindPlannerUI } from '../ui/bindPlannerUI.js';
 import { renderCatalog } from '../ui/catalogRenderer.js';
 import { bindEditorShell } from '../ui/editorShell.js';
 import { bindSelectionPanel } from '../ui/selectionPanel.js';
+import { bindSceneObjectList } from '../ui/sceneObjectList.js';
 import { bindNumericalTransformPanel } from '../ui/numericalTransformPanel.js';
 import { bindPreciseSpacingPanel } from '../ui/preciseSpacingPanel.js';
 import { bindWorkspaceTheme } from '../theme/workspaceTheme.js';
@@ -161,6 +162,7 @@ export function createApp({ THREE, host, document }) {
       }),
     );
     cleanup.push(bindWorkspaceTheme({ host, document, view }));
+    cleanup.push(bindSceneObjectList({ document, state, selection }));
     cleanup.push(
       bindSelectionPanel({
         document,

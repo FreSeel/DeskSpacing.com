@@ -32,6 +32,12 @@ export function createModelLoader({
   return {
     async load(product) {
       if (disposed) throw new Error('Model loader has been disposed.');
+      // The historical product ID remains decodable, but its original file has
+      // never been present in this repository. Fail before fetching or mutating.
+      if (product === 'drawerDesk')
+        throw new Error(
+          'Drawer Desk is unavailable: original model is missing.',
+        );
       const sourcePath = products[product]?.modelPath;
       const path = optimizedModels[sourcePath] || sourcePath;
       if (!path) throw new Error(`No model configured for ${product}`);

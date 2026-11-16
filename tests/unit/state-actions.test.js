@@ -595,6 +595,24 @@ describe('object state and asynchronous actions', () => {
     expect(factory.dispose).toHaveBeenCalledWith(staged);
     expect(factory.dispose).not.toHaveBeenCalledWith(original);
   });
+  it('preserves the scene when a shared setup contains the unavailable drawer desk', async () => {
+    const { actions, state, factory } = setup();
+    const original = await actions.add('defaultMouse');
+    const staged = new THREE.Group();
+    factory.create.mockImplementation(async (record) => {
+      if (record.product === 'drawerDesk')
+        throw new Error(
+          'Drawer Desk is unavailable: original model is missing.',
+        );
+      return staged;
+    });
+    await expect(
+      actions.restore([createRecord('QCKSmall'), createRecord('drawerDesk')]),
+    ).rejects.toThrow('Drawer Desk is unavailable');
+    expect(state.objects).toEqual([original]);
+    expect(factory.dispose).toHaveBeenCalledWith(staged);
+    expect(factory.dispose).not.toHaveBeenCalledWith(original);
+  });
   it('disposes each shared resource once within an owned model hierarchy', () => {
     const root = new THREE.Group();
     const geometry = new THREE.BoxGeometry();

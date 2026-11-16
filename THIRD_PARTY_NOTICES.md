@@ -24,9 +24,11 @@ them. If rights cannot be established, track the asset for replacement rather th
 silently claiming permission or stripping its attribution.
 
 The audit preserved existing author/template credits and did not delete original
-3D assets, textures, legacy pages or the historical vendor tree. The modernized
-fork still contains upstream analytics and contact references; these need an
-explicit ownership/privacy decision before a public fork launch.
+3D assets, textures, legacy pages or the historical vendor tree. The fork
+removes inherited analytics, upstream support links and legacy product-link
+affiliate parameters for v1.0. Original
+creator, template and asset attribution remains. The fork has no
+published direct support email or social account.
 
 ## Legacy Three.js color-parser security backport
 

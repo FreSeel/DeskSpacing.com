@@ -51,8 +51,19 @@ it('resolves product variations and rejects unavailable combinations', async () 
 it('preserves existing asset paths and catches missing paths for any new catalog entry', async () => {
   const { existsSync } = await import('node:fs');
   for (const [id, product] of Object.entries(products)) {
-    // This unexposed legacy product was already missing at the audit baseline.
-    if (!product.modelPath || id === 'drawerDesk') continue;
+    if (!product.modelPath) continue;
+    if (id === 'drawerDesk') {
+      expect(product.modelPath).toBe('desks/regular_desk_1.glb');
+      expect(
+        existsSync(
+          new URL(
+            `../../${siteSourcePath(product.modelPath)}`,
+            import.meta.url,
+          ),
+        ),
+      ).toBe(false);
+      continue;
+    }
     expect(
       existsSync(
         new URL(`../../${siteSourcePath(product.modelPath)}`, import.meta.url),

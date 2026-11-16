@@ -82,6 +82,45 @@ test('all categories filter locally; variation search retains choices and scene'
   ).toBe(true);
 });
 
+test('keyboard object list selects and follows scene membership changes', async ({
+  page,
+}) => {
+  await start(page);
+  const disclosure = page.locator('.scene-objects summary');
+  await disclosure.focus();
+  await page.keyboard.press('Enter');
+  const items = page.locator('#sceneObjectList button');
+  await expect(items).toHaveCount(6);
+  await page.keyboard.press('Tab');
+  await expect(items.first()).toBeFocused();
+  await page.keyboard.press('Space');
+  await expect(items.first()).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('#selectionTitle')).not.toHaveText(
+    'No object selected',
+  );
+  await page.locator('#clearSceneSelection').click();
+  await expect(items.first()).toHaveAttribute('aria-pressed', 'false');
+  await items.first().focus();
+  await page.keyboard.press('Enter');
+  await page.locator('#removeObject').click();
+  await expect(items).toHaveCount(5);
+  await page.locator('#moreMenu summary').click();
+  await page.locator('#undoTransform').click();
+  await expect(items).toHaveCount(6);
+  await page.locator('#redoTransform').click();
+  await expect(items).toHaveCount(5);
+  await page.evaluate(async () => {
+    const record = window.planner.sharing.snapshot()[0];
+    await window.planner.actions.restore([record]);
+  });
+  await expect(items).toHaveCount(1);
+  await page.locator('#catalogCategory').selectOption('mice');
+  await page
+    .locator('[data-product="defaultMouse"]:not([data-replace])')
+    .click();
+  await expect(items).toHaveCount(2);
+});
+
 test('inspector commands, focus and shortcuts follow actual selection', async ({
   page,
 }) => {

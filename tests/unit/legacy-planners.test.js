@@ -147,6 +147,14 @@ describe.each(['mainAppMobile.html', 'mainAppOld.html'])(
       expect(p.scene).toHaveLength(decodeSetup(fixtures.mobile).length);
     });
 
+    it('rejects a missing drawer desk before clearing an existing scene', () => {
+      const p = planner(page);
+      const setup = `[ ${mouse} FurnitureDeskNoSelect|drawerDesk|0,1,-38,|0,3.141592653589793,0,| ]`;
+      expect(p.parse(setup)).toBe(false);
+      expect(p.scene).toEqual([p.previous]);
+      expect(p.calls).not.toContain('reset');
+    });
+
     it('initializes defaults when no setup parameter exists', () => {
       const p = planner(page);
       p.load('');
@@ -229,7 +237,7 @@ describe.each(['mainAppMobile.html', 'mainAppOld.html'])(
       expect(p.calls).toEqual([]);
     });
 
-    it('accepts all historical model IDs and texture IDs from the actual page', () => {
+    it('accepts available historical model IDs and texture IDs from the actual page', () => {
       const p = planner(page);
       const models = p.run(
         'Object.keys(coordinateDictionary).filter(key => coordinateDictionary[key][4])',
@@ -238,7 +246,7 @@ describe.each(['mainAppMobile.html', 'mainAppOld.html'])(
         expect(
           p.parse(`[ Object|${product}|-1e-3,2,3,|0,0,0,| ]`),
           product,
-        ).toBe(true);
+        ).toBe(product !== 'drawerDesk');
       }
       const textures = p.run('Object.keys(textureDictionary)');
       for (const texture of textures) {
