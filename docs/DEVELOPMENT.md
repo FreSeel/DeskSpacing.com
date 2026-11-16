@@ -68,7 +68,8 @@ The upstream-domain `CNAME` was removed during the final audit. The build also
 excludes CNAME files, preventing accidental reuse of the original domain.
 No workflow deploys, changes DNS, or configures a custom domain.
 
-The preserved asset set currently produces **approximately 1.11 GB**.
+The 2026-11-16 release-candidate build produced **1,214,206,675 bytes
+(1,157.96 MiB)**; see [release packaging](RELEASE_PACKAGING.md).
 Although URL/base-path compatibility is tested, this exceeds GitHub Pages' published
 [1 GB site limit](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits).
 Do not assume this full artifact can be deployed to Pages yet. A later verified
